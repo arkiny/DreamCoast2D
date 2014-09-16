@@ -19,10 +19,16 @@ private:
 	ID2D1Bitmap* m_ipD2DBitmapBG;
 	ID2D1Bitmap* m_ipD2DBitmap;
 	ID2D1Bitmap* m_ipD2DBitmapFlip;
+
+	ID2D1Bitmap* m_ipD2DBitmapAnimation;
+	ID2D1Bitmap* m_ipD2DBitmapHeadFlipped;
 	
 	float x;
 	float y;
 	float m_fAngle;
 	float m_fAlpha;
+
+	float m_fframe;
+	int m_nframe;
 };
 
