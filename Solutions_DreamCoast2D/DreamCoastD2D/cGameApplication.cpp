@@ -85,9 +85,16 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
 
+	// Window Size내의 Client를 정확하게 원하는 사이즈로 만든다.
+	::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX, NULL);
+	hWnd = CreateWindow(_szWindowClass, _szTitle,
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+		CW_USEDEFAULT, 0, 
+		_wndRect.right - _wndRect.left, 
+		_wndRect.bottom - _wndRect.top, 
+		NULL, NULL, hInstance, NULL);
 
-	hWnd = CreateWindow(_szWindowClass, _szTitle, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+	
 
 	if (!hWnd)
 	{
@@ -183,9 +190,8 @@ void cGameApplication::Run()
 				accumTime -= 1000;
 				accumFrame = 0;
 
-
 				swprintf(fpsString, L"FPS : %2.2f", _fps);
-				//SetWindowText(_hwnd,fpsString);
+				SetWindowText(_hwnd,fpsString);
 			}
 			Update(deltaTime / 1000.0f);
 			Render();

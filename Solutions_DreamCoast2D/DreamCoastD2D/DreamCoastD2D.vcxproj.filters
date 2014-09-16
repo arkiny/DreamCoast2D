@@ -16,6 +16,15 @@
     <Filter Include="Core">
       <UniqueIdentifier>{cef7c08f-0712-48a5-8e55-24be810af95f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{9253b6b4-f60c-4678-8a6a-fe368fcf1ea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Trash">
+      <UniqueIdentifier>{6f3d1d32-1d1b-48b0-9f84-7a37195fddce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control">
+      <UniqueIdentifier>{164c0588-c794-44d2-8a62-41df2a4a7dd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -45,6 +54,15 @@
     <ClInclude Include="cIGameMgr.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="mIObject.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="mPlayer.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="coControl.h">
+      <Filter>Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -64,6 +82,18 @@
     </ClCompile>
     <ClCompile Include="cIGameMgr.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="mIObject.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="mPlayer.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Trash.cpp">
+      <Filter>Trash</Filter>
+    </ClCompile>
+    <ClCompile Include="coControl.cpp">
+      <Filter>Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
