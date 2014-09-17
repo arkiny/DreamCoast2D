@@ -4,7 +4,9 @@
 class coControl;
 class uSprite;
 
-enum OBJECTSTATE{Idle, Move, Attack, GetHitted};
+// up to first entering
+enum DIRECTION{LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP};
+enum OBJECTSTATE{ONMOVE, ONATTACK, ONHIT};
 
 class mPlayer : public mIObject
 {
@@ -13,36 +15,34 @@ public:
 	~mPlayer();
 	void onInit(cD2DRenderer& renderer);
 	void onUpdate(float fdeltatime);
-	void onRender(cD2DRenderer& renderer);
+	//void onRender(cD2DRenderer& renderer);
 
 	void setKeyControl(coControl* in);
 
 private:
+	DIRECTION m_SeeDir; // 보고 있는 방향
+	OBJECTSTATE m_State;
+
+	// player sprite처리를 담당하는 class
+	// 차후 object위로 승격할지 고민할것
 	
-	// Sprite Atlas 클래스로 나중에 분리(?)
-	//float m_frameWidth;
-	//float m_frameHeight;
-	//float m_frameX;
-	//float m_frameY;
-	//void pickSpriteAtlas(float x, float y, float width, float height);
-
-	uSprite* m_spriteAtlas;
-
-	// 차후 위의 Sprite Atlas를 인수로 받아서 피봇화한 좌표를 리턴
-	//D2D1_RECT_F getCoordinateFromPivot(VECTOR2D& pos);
+	// Player의 움직임을 가지고 있는 빗맵
+	// 차후 uSprite클래스내로 옮길지 고민
+	// 그렇게 되면 렌더에 관한 처리는
+	// 대부분 uSprite가 처리하게 되므로
+	// player클래스는 업데이트 관련 모듈에
+	// 집중가능
+	
+	
+	
+	coControl *m_pControl;
 
 	// 키보드 입력에 따른 움직임
 	void onMove(float deltaTime);
+	void onAttack(float deltaTime);
 
-	ID2D1Bitmap* m_ipD2DBitmap;
-	float m_accumtime;
-	int m_nframe;	
+	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
-	// pivot 연구용
-	RECT playerCollisionBox;
-	float m_playerPivotX;
-	float m_playerPivotY;
-
-	coControl *m_pControl;
+	float m_attackSpeed = 2.0f;
 };
 

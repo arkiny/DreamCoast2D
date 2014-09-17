@@ -12,10 +12,9 @@ mPlayer::mPlayer()
 	//임시로 중앙에 대기
 	_posVector = new VECTOR2D(514.0f, 384.0f);
 
-	m_accumtime = 0.0f;
-	m_nframe = 0;
-
 	m_spriteAtlas = new uSprite();
+	m_SeeDir = RIGHTDOWN;
+	m_State = ONMOVE;
 }
 
 
@@ -36,38 +35,54 @@ void mPlayer::onInit(cD2DRenderer& renderer){
 	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/sprites.png", NULL);
 }
 
-void mPlayer::onUpdate(float fdeltatime){
-	mPlayer::onMove(fdeltatime);
+void mPlayer::onUpdate(float fdeltatime){	
+	if (m_pControl->getKeyControlInfo()[0x5A]){
+		if (m_State == ONATTACK){
+			mPlayer::onAttack(fdeltatime);
+		}
+		else {
+			m_State = ONATTACK;
+			// 본의아니게 이거 기모으기가 댐...
+			m_spriteAtlas->setCurrentFrame(0);
+			
+		}
+	}
+	else if (m_State == ONATTACK){
+		mPlayer::onAttack(fdeltatime);
+	}
+	else if (m_State == ONMOVE){
+		mPlayer::onMove(fdeltatime);
+	}
 }
 
-void mPlayer::onRender(cD2DRenderer& renderer){
-	
-	// 몸
-	if (m_ipD2DBitmap != nullptr){
-		
-		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
-		::D2D1_RECT_F dxArea
-			= m_spriteAtlas->getCoordinateFromPivot(*_posVector);
-
-		//
-		float pickframeX = m_nframe * m_spriteAtlas->getframeWidth();
-		::D2D1_RECT_F srcArea 
-			= ::D2D1::RectF(
-			m_spriteAtlas->getframeX() + pickframeX, 
-			m_spriteAtlas->getframeY(),
-			m_spriteAtlas->getframeX() + pickframeX + m_spriteAtlas->getframeWidth(),
-			m_spriteAtlas->getframeY() + m_spriteAtlas->getframeHeight());
-		//
-
-		//D2D1::Matrix3x2F rot = D2D1::Matrix3x2F::Rotation(m_fAngle, D2D1::Point2F(x + 50, y + 50));
-		//renderer.GetRenderTarget()->SetTransform(rot);
-
-		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
-			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-			srcArea);
-
-		renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+// 공속조정 변수가 필요함
+void mPlayer::onAttack(float fdeltatime){
+	if (m_spriteAtlas->getCurrentFrame() == 7){
+		m_spriteAtlas->setCurrentFrame(0);
+		m_State = ONMOVE;
+		return;
 	}
+
+	// 데미지 처리는 일정 프레임에 트리거 되도록
+
+	if (m_SeeDir == LEFTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, 7);
+	}
+	else if (m_SeeDir == LEFTUP){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 700.0f, 103.0f, 84.0f, 7);
+	}
+	else if (m_SeeDir == RIGHTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 800.0f, 121.0f, 98.0f, 7);
+	}
+	else if (m_SeeDir == RIGHTUP){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 900.0f, 103.0f, 84.0f, 7);
+	}
+	//leftdown (0.0f, 600.0f, 121.0f, 98.0f, 7)
+	//leftup (0.0f, 700.0f, 103.0f, 84.0f, 7)
+	//rightdown (0.0f, 800.0f, 121.0f, 98.0f, 7)
+	//rightup (0.0f, 900.0f, 103.0f, 84.0f, 7)
+
+	m_spriteAtlas->nextFrame(fdeltatime*m_attackSpeed);
 }
 
 // 키를 받아와서 업데이트
@@ -75,71 +90,155 @@ void mPlayer::setKeyControl(coControl* in){
 	m_pControl = in;
 }
 
+
+VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
+	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
+	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);
+	switch (dir)
+	{
+	case LEFT:
+		vDir = vLeft;
+		break;
+	case RIGHT:
+		vDir = vRight;
+		break;
+	case UP:
+		vDir = vUp;
+		break;
+	case DOWN:
+		vDir = vDown;
+		break;
+	case RIGHTDOWN:
+		vDir = vRight + vDown;
+		break;
+	case LEFTUP:
+		vDir = vLeft + vUp;
+		break;
+	case LEFTDOWN:
+		vDir = vLeft + vDown;
+		break;
+	case RIGHTUP:
+		vDir = vRight + vUp;
+		break;
+	default:
+		break;
+	}
+	
+	vDir.Normalize();
+	vMover = vDir*(100.0f * fdeltatime);
+
+	return vMover;
+}
+
 // 이동간에 따른 무브무브
+// 아마 onMove 보단 onControl
 void mPlayer::onMove(float fdeltatime){
 	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
-	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);;
 
-	if (m_pControl->getKeyControlInfo()[VK_RIGHT]){
+	// sprite data
+	//leftdown (360.0f, 0.0f,39.0f, 94.0f, 6)
+	//leftup (360.0f, 100.0f, 44.0f, 95.0f, 6)
+	//rightdown (360.0f, 200.0f, 39.0f, 94.0f, 6)
+	//rightup (360.0f, 300.0f, 44.0f, 95.0f, 6)
+	// idle left up
+	//(360.0f, 400.0f, 42.0f, 89.0f, 4)
+	// idle right up
+	//(360.0f, 500.0f, 42.0f, 89.0f, 4)
+	// idle left down
+	//(0.0f, 500.0f, 64.0f, 92.0f, 4)
 
-		vMover = vRight*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f);
+	if (m_pControl->getKeyControlInfo()[VK_LEFT] &&
+		m_pControl->getKeyControlInfo()[VK_DOWN]){
+		m_SeeDir = LEFTDOWN;
 
-		m_accumtime += fdeltatime;
-		if (m_accumtime > 0.125f){
-			m_nframe++;
-			m_accumtime = 0.0f;
+		vMover = mPlayer::vectorMove(fdeltatime, LEFTDOWN);
+		m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);		
+	}
+	else if (m_pControl->getKeyControlInfo()[VK_LEFT] &&
+		m_pControl->getKeyControlInfo()[VK_UP]){
+		m_SeeDir = LEFTUP;
+
+		vMover = mPlayer::vectorMove(fdeltatime, LEFTUP);
+		m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);		
+	}
+	else if (m_pControl->getKeyControlInfo()[VK_RIGHT] &&
+		m_pControl->getKeyControlInfo()[VK_DOWN]){
+		m_SeeDir = RIGHTDOWN;
+
+		vMover = mPlayer::vectorMove(fdeltatime, RIGHTDOWN);
+		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);		
+	}
+	else if (m_pControl->getKeyControlInfo()[VK_RIGHT] &&
+		m_pControl->getKeyControlInfo()[VK_UP]){
+		m_SeeDir = RIGHTUP;		
+		
+		vMover = mPlayer::vectorMove(fdeltatime, RIGHTUP);
+		m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);		
+	}
+	else if (m_pControl->getKeyControlInfo()[VK_RIGHT]){
+		if (m_SeeDir == LEFTUP){
+			m_SeeDir = RIGHTUP;
 		}
-		if (m_nframe > 6){
-			m_nframe = 0;
+		else if (m_SeeDir == LEFTDOWN){
+			m_SeeDir = RIGHTDOWN;
 		}
+
+		vMover = mPlayer::vectorMove(fdeltatime, RIGHT);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f, 6);		
 	}
 	else if (m_pControl->getKeyControlInfo()[VK_LEFT]){
-
-		vMover = vLeft*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f);
-
-		m_accumtime += fdeltatime;
-		if (m_accumtime > 0.125f){
-			m_nframe++;
-			m_accumtime = 0.0f;
+		if (m_SeeDir == RIGHTUP){
+			m_SeeDir = LEFTUP;
 		}
-		if (m_nframe > 6){
-			m_nframe = 0;
+		else if (m_SeeDir == RIGHTDOWN){
+			m_SeeDir = LEFTDOWN;
 		}
+
+		vMover = mPlayer::vectorMove(fdeltatime, LEFT);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f, 6);		
 	}
 	else if (m_pControl->getKeyControlInfo()[VK_DOWN]){
-
-		vMover = vDown*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f);
-
-		m_accumtime += fdeltatime;
-		if (m_accumtime > 0.125f){
-			m_nframe++;
-			m_accumtime = 0.0f;
+		if (m_SeeDir == LEFTUP){
+			m_SeeDir = LEFTDOWN;
 		}
-		if (m_nframe > 6){
-			m_nframe = 0;
+		else if (m_SeeDir == RIGHTUP){
+			m_SeeDir = RIGHTDOWN;
 		}
+
+		vMover = mPlayer::vectorMove(fdeltatime, DOWN);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f, 6);		
 	}
 	else if (m_pControl->getKeyControlInfo()[VK_UP]){
-
-		vMover = vUp*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f);
-
-		m_accumtime += fdeltatime;
-		if (m_accumtime > 0.125f){
-			m_nframe++;
-			m_accumtime = 0.0f;
+		if (m_SeeDir == LEFTDOWN){
+			m_SeeDir = LEFTUP;
 		}
-		if (m_nframe > 6){
-			m_nframe = 0;
+		else if (m_SeeDir == RIGHTDOWN){
+			m_SeeDir = RIGHTUP;
+		}
+
+		vMover = mPlayer::vectorMove(fdeltatime, UP);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f, 6);		
+	}
+	else { // Idling
+
+		if (m_SeeDir == RIGHTDOWN){
+			// idle right down
+			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, 4);			
+		}
+		else if (m_SeeDir == LEFTUP){
+			m_spriteAtlas->pickSpriteAtlas(360.0f, 400.0f, 42.0f, 89.0f, 4);			
+		}
+		else if (m_SeeDir == RIGHTUP){
+			m_spriteAtlas->pickSpriteAtlas(360.0f, 500.0f, 42.0f, 89.0f, 4);			
+		}
+		else if (m_SeeDir == LEFTDOWN){
+			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 4);
 		}
 	}
-	else {
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f);
-		m_nframe = 0;
-	}
-
+	
+	// frame update
+	m_spriteAtlas->nextFrame(fdeltatime);
+	
+	// move update
 	*_posVector = *_posVector + vMover;
 }

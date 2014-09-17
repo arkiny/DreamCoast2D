@@ -11,25 +11,34 @@ uSprite::uSprite()
 	m_frameHeight = 0.0f;
 	m_frameX = 0.0f;
 	m_frameY = 0.0f;
-}
 
+	m_nmaxFrame = 0;
+	m_currentFrame = 0;
+	m_accumtime = 0.0f;
+}
 
 uSprite::~uSprite()
 {
 }
 
-uSprite::uSprite(float x, float y, float width, float height){
+uSprite::uSprite(float x, float y, float width, float height, int maxFrame){
 	m_frameWidth = width;
 	m_frameHeight = height;
 	m_frameX = x;
 	m_frameY = y;
+	m_nmaxFrame = maxFrame;
+	m_currentFrame = 0;
+	m_accumtime = 0.0f;
 }
 
-void uSprite::pickSpriteAtlas(float x, float y, float width, float height){
+void uSprite::pickSpriteAtlas(float x, float y, float width, float height, int maxFrame){
 	m_frameWidth = width;
 	m_frameHeight = height;
 	m_frameX = x;
 	m_frameY = y;
+	m_nmaxFrame = maxFrame;
+	//m_currentFrame = 0;
+	//m_accumtime = 0.0f;
 }
 
 ::D2D1_RECT_F uSprite::getCoordinateFromPivot(VECTOR2D& pos){
@@ -40,4 +49,26 @@ void uSprite::pickSpriteAtlas(float x, float y, float width, float height){
 		(pos.x - (m_frameWidth / 2.0f)) + m_frameWidth,
 		(pos.y - (m_frameHeight)) + m_frameHeight);
 	return ret;
+}
+
+::D2D1_RECT_F uSprite::getSrcFrameFromSprite(){
+	float pickframeX = m_currentFrame * m_frameWidth;
+	::D2D1_RECT_F srcArea
+		= ::D2D1::RectF(
+		m_frameX + pickframeX,
+		m_frameY,
+		m_frameX + pickframeX + m_frameWidth,
+		m_frameY + m_frameHeight);
+	return srcArea;
+}
+
+void uSprite::nextFrame(float fdeltatime){
+	m_accumtime += fdeltatime;
+	if (m_accumtime > FRAMERATE){
+		m_currentFrame++;
+		m_accumtime = 0.0f;
+	}
+	if (m_currentFrame > m_nmaxFrame){
+		m_currentFrame = 0;
+	}
 }
