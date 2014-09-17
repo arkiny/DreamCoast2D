@@ -86,9 +86,9 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
 
 	// Window Size내의 Client를 정확하게 원하는 사이즈로 만든다.
-	::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX, NULL);
+	::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, NULL);
 	hWnd = CreateWindow(_szWindowClass, _szTitle,
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU ,
 		CW_USEDEFAULT, 0, 
 		_wndRect.right - _wndRect.left, 
 		_wndRect.bottom - _wndRect.top, 

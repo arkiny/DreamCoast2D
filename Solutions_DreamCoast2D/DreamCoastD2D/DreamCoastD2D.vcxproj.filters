@@ -25,6 +25,9 @@
     <Filter Include="Control">
       <UniqueIdentifier>{164c0588-c794-44d2-8a62-41df2a4a7dd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{feebceb4-aaae-438d-944e-4f1519cb31e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -63,6 +66,12 @@
     <ClInclude Include="coControl.h">
       <Filter>Control</Filter>
     </ClInclude>
+    <ClInclude Include="VECTOR2D.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="uSprite.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -94,6 +103,12 @@
     </ClCompile>
     <ClCompile Include="coControl.cpp">
       <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="VECTOR2D.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="uSprite.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

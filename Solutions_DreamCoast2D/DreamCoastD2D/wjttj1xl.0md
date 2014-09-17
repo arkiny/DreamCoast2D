@@ -3,7 +3,6 @@
 #include "mPlayer.h"
 #include "coControl.h"
 #include "VECTOR2D.h"
-#include "uSprite.h"
 
 mPlayer::mPlayer()
 {	
@@ -14,8 +13,13 @@ mPlayer::mPlayer()
 
 	m_accumtime = 0.0f;
 	m_nframe = 0;
+	m_frameWidth = 0.0f;
+	m_frameHeight=0.0f;
 
-	m_spriteAtlas = new uSprite();
+	// pivot 연구용
+	playerCollisionBox = {};
+	m_playerPivotX = 0.0f;
+	m_playerPivotY = 0.0f;
 }
 
 
@@ -25,9 +29,6 @@ mPlayer::~mPlayer()
 
 	if (_posVector != NULL){
 		delete _posVector;
-	}
-	if (m_spriteAtlas != NULL){
-		delete m_spriteAtlas;
 	}
 }
 
@@ -40,23 +41,34 @@ void mPlayer::onUpdate(float fdeltatime){
 	mPlayer::onMove(fdeltatime);
 }
 
+void mPlayer::pickSpriteAtlas(float x, float y, float width, float height){
+	m_frameWidth = width;
+	m_frameHeight = height;
+	m_frameX = x;
+	m_frameY = y;
+}
+
 void mPlayer::onRender(cD2DRenderer& renderer){
 	
 	// 몸
 	if (m_ipD2DBitmap != nullptr){
-		
-		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
-		::D2D1_RECT_F dxArea
-			= m_spriteAtlas->getCoordinateFromPivot(*_posVector);
+		// 일단 하드 코딩으로 Pivot 구현
+		// 이미지의 한가운데 바닥 -> dxArea에서 지정
 
+		::D2D1_RECT_F dxArea 
+			= ::D2D1::RectF(
+			_posVector->x - (m_frameWidth / 2.0f), 
+			_posVector->y - (m_frameHeight), 
+			(_posVector->x - (m_frameWidth / 2.0f)) + m_frameWidth,
+			(_posVector->y - (m_frameHeight)) + m_frameHeight);
 		//
-		float pickframeX = m_nframe * m_spriteAtlas->getframeWidth();
+		float pickframeX = m_nframe * m_frameWidth;
 		::D2D1_RECT_F srcArea 
 			= ::D2D1::RectF(
-			m_spriteAtlas->getframeX() + pickframeX, 
-			m_spriteAtlas->getframeY(),
-			m_spriteAtlas->getframeX() + pickframeX + m_spriteAtlas->getframeWidth(),
-			m_spriteAtlas->getframeY() + m_spriteAtlas->getframeHeight());
+			m_frameX + pickframeX, 
+			m_frameY, 
+			m_frameX + pickframeX + m_frameWidth,
+			m_frameY+m_frameHeight);
 		//
 
 		//D2D1::Matrix3x2F rot = D2D1::Matrix3x2F::Rotation(m_fAngle, D2D1::Point2F(x + 50, y + 50));
@@ -70,12 +82,10 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 	}
 }
 
-// 키를 받아와서 업데이트
 void mPlayer::setKeyControl(coControl* in){
 	m_pControl = in;
 }
 
-// 이동간에 따른 무브무브
 void mPlayer::onMove(float fdeltatime){
 	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
 	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);;
@@ -83,7 +93,8 @@ void mPlayer::onMove(float fdeltatime){
 	if (m_pControl->getKeyControlInfo()[VK_RIGHT]){
 
 		vMover = vRight*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f);
+		
+		mPlayer::pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f);
 
 		m_accumtime += fdeltatime;
 		if (m_accumtime > 0.125f){
@@ -97,7 +108,8 @@ void mPlayer::onMove(float fdeltatime){
 	else if (m_pControl->getKeyControlInfo()[VK_LEFT]){
 
 		vMover = vLeft*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f);
+		
+		mPlayer::pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f);
 
 		m_accumtime += fdeltatime;
 		if (m_accumtime > 0.125f){
@@ -111,8 +123,9 @@ void mPlayer::onMove(float fdeltatime){
 	else if (m_pControl->getKeyControlInfo()[VK_DOWN]){
 
 		vMover = vDown*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f);
 
+		mPlayer::pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f);
+		m_frameY = 279.0f;
 		m_accumtime += fdeltatime;
 		if (m_accumtime > 0.125f){
 			m_nframe++;
@@ -125,7 +138,8 @@ void mPlayer::onMove(float fdeltatime){
 	else if (m_pControl->getKeyControlInfo()[VK_UP]){
 
 		vMover = vUp*(100.0f * fdeltatime);
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f);
+
+		mPlayer::pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f);
 
 		m_accumtime += fdeltatime;
 		if (m_accumtime > 0.125f){
@@ -137,9 +151,22 @@ void mPlayer::onMove(float fdeltatime){
 		}
 	}
 	else {
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f);
+		mPlayer::pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f);
 		m_nframe = 0;
+		//mPlayer::pickSpriteAtlas(0.0f, 90.0f, 64.0f, 94.0f);
+		//m_accumtime += fdeltatime;
+		//if (m_accumtime > 0.125f){
+		//	m_nframe++;
+		//	m_accumtime = 0.0f;
+		//}
+		//if (m_nframe > 4){
+		//	m_nframe = 0;
+		//}
 	}
 
 	*_posVector = *_posVector + vMover;
+}
+
+D2D1_RECT_F mPlayer::getCoordinateFromPivot(VECTOR2D& pos){
+
 }
