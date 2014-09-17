@@ -14,6 +14,7 @@ public:
 	void Normalize();
 	VECTOR2D operator*(float scalar) const;
 	void DrawVector(HDC hdc, int x, int y, COLORREF color);
+
 }*LPVECTOR2D;
 
 const VECTOR2D vRight(1, 0);

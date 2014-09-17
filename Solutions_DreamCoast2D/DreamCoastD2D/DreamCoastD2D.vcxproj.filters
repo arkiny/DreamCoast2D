@@ -72,6 +72,12 @@
     <ClInclude Include="uSprite.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="mTileMap.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="uTile.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,6 +114,12 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="uSprite.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="mTileMap.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="uTile.cpp">
       <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
