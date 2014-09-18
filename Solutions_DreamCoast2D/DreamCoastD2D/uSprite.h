@@ -17,6 +17,7 @@ public:
 	//
 	::D2D1_RECT_F getCoordinateFromPivot(VECTOR2D& pos);
 	::D2D1_RECT_F getSrcFrameFromSprite();
+	::D2D1_RECT_F getCoordinateFromPivotCenter(VECTOR2D& pos);
 
 	// frame animation.. onUpdate?
 	void nextFrame(float fdeltatime);

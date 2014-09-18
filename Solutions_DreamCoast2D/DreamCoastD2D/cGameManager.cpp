@@ -48,6 +48,7 @@ void cGameManager::OnInit(cD2DRenderer& renderer)
 
 	m_map = new mTileMap();
 	m_map->onInit(renderer);
+	m_map->setPlayer(m_player);
 }
 
 void cGameManager::Render(cD2DRenderer& renderer)

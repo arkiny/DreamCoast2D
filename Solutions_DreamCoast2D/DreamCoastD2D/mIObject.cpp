@@ -25,5 +25,8 @@ void mIObject::onRender(cD2DRenderer& renderer){
 
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
-	}
+
+		//debug 용
+		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+	}	
 }

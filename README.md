@@ -1,7 +1,21 @@
 DreamCoast2D
 ============
 Game DreamCoast2D Portfolio Project based on Direct2D
+============
 
+09192014 새벽 작업 종료 및 결산
+- Ordering
+- Picking (For문 말고, 해당 좌표를 받으면 좌표를 IsoMetric 타일 좌표화 하여 확인하기)
+reference : http://jskiles1.wordpress.com/2014/01/04/2d-tile-maps-tile-picking/
+- 플레이char가 해당 타일에 있을 때 해당 타일 색입히기
+이상 완료
+
+해야할 것
+- Class를 이용해서 데이터 베이스화(해당 데이터베이스는 확대축소를 편하게 하기 위해, STL을 이용한다.)
+- 시간이 남을 경우 Pivot 조절 (현재 피봇은 무조건 스프라이트의 가장 밑, 가운데지만, 자연스러운 피벗 조절이 필요할듯)
+- 해당 타일을 렌더할때 해당 오브젝트의 색을 변형시키는 함수가 있나?
+
+============
 
 09182014 목표 및 노트
 - TileMap Draw
@@ -14,6 +28,8 @@ Game DreamCoast2D Portfolio Project based on Direct2D
 - 각 타일이 렌더될때, 해당 타일에 캐릭터 정보가 있을때, 해당 오브젝트도 같이 렌더한다.
 - ?? 맵이 매번 렌더될때마다 렌더 될텐데, 배경으로 따로 렌더하면서, 
 	맵 정보 변경시만 렌더할수 있게 할순 없을까?
+	
+============
 
 09172014 목표
  - Player(object 이동)

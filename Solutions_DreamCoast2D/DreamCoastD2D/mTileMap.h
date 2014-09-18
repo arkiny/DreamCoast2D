@@ -10,7 +10,12 @@ public:
 	void onInit(cD2DRenderer& renderer);
 	void onUpdate(float fdeltatime);
 	void onRender(cD2DRenderer& renderer);
+
+	// 카메라 테스트용
+	void setPlayer(mIObject* p);
 private:
+	mIObject* m_player;
+
 	// tile의 갯수
 	float _vertical;
 	float _horizontal;
@@ -21,10 +26,16 @@ private:
 	//
 
 	// 차후 스크린과 HUD에 따른 동적 변경
+	//(카메라는 맵의 첫 타일의 좌표를 변경하면서 조정하는 걸로... 실시)
+	// 차후에 offset을 통한 타일 좌표의 변화도 적용해야 할것 같다.
+
 	float _cameraX;
 	float _cameraY;
+	//float _leftp;
+	//float _topp;
 	//
 
+	void hRender(cD2DRenderer& renderer, VECTOR2D tilePos);
 	// 모든 타일을 렌더하는 함수
 	void renderMap(cD2DRenderer& renderer);
 
@@ -32,7 +43,11 @@ private:
 	void renderTile(float x, float y, int type, cD2DRenderer& renderer);
 
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
-	VECTOR2D twoDtoISO(VECTOR2D in);	
+	VECTOR2D twoDtoISO(VECTOR2D in);
+	
+	VECTOR2D getTileCoordinates(VECTOR2D in);
+
+	::D2D1_RECT_F mapSize;
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음

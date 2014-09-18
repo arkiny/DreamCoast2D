@@ -12,7 +12,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
 
 	app = new cGameApplication(new cGameManager);
-	app->Init(hInstance, L"MyD2DGame", L"MyD2DClass", nCmdShow);
+	app->Init(hInstance, L"DreamCoast2D", L"DreamCoast2DClass", nCmdShow);
 	app->Run();
 	delete app;
 

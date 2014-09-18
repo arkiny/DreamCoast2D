@@ -51,6 +51,16 @@ void uSprite::pickSpriteAtlas(float x, float y, float width, float height, int m
 	return ret;
 }
 
+::D2D1_RECT_F uSprite::getCoordinateFromPivotCenter(VECTOR2D& pos){
+	::D2D1_RECT_F ret
+		= ::D2D1::RectF(
+		pos.x - (m_frameWidth / 2.0f),
+		pos.y - (m_frameHeight / 2.0f),
+		(pos.x - (m_frameWidth / 2.0f)) + m_frameWidth,
+		(pos.y - (m_frameHeight / 2.0f)) + m_frameHeight);
+	return ret;
+}
+
 ::D2D1_RECT_F uSprite::getSrcFrameFromSprite(){
 	float pickframeX = m_currentFrame * m_frameWidth;
 	::D2D1_RECT_F srcArea

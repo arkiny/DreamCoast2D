@@ -169,8 +169,6 @@ void cD2DRenderer::BeginRender(HWND hWnd)
 {
 	m_hWnd = hWnd;
 	hdc = BeginPaint(hWnd, &ps);
-
-
 }
 
 void cD2DRenderer::Setup(HWND hWnd)
