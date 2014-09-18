@@ -13,6 +13,7 @@ public:
 	float Length();
 	void Normalize();
 	VECTOR2D operator*(float scalar) const;
+	VECTOR2D operator/(float scalar) const;
 	void DrawVector(HDC hdc, int x, int y, COLORREF color);
 
 }*LPVECTOR2D;

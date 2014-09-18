@@ -38,6 +38,11 @@ VECTOR2D VECTOR2D::operator*(float scalar) const
 	return VECTOR2D(x * scalar, y * scalar);
 }
 
+VECTOR2D VECTOR2D::operator/(float scalar) const
+{
+	return VECTOR2D(x / scalar, y / scalar);
+}
+
 void VECTOR2D::DrawVector(HDC hdc, int x, int y, COLORREF color)
 {
 	HPEN hPen = ::CreatePen(PS_SOLID, 3, color);

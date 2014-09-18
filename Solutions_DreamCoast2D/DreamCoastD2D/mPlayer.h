@@ -40,9 +40,9 @@ private:
 	// 키보드 입력에 따른 움직임
 	void onMove(float deltaTime);
 	void onAttack(float deltaTime);
-
 	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
+	// 공속 변수
 	float m_attackSpeed = 2.0f;
 };
 

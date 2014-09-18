@@ -109,16 +109,16 @@ VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
 		vDir = vDown;
 		break;
 	case RIGHTDOWN:
-		vDir = vRight + vDown;
+		vDir = vRight + (vDown/2.0f);
 		break;
 	case LEFTUP:
-		vDir = vLeft + vUp;
+		vDir = vLeft + (vUp/2.0f);
 		break;
 	case LEFTDOWN:
-		vDir = vLeft + vDown;
+		vDir = vLeft + (vDown/2.0f);
 		break;
 	case RIGHTUP:
-		vDir = vRight + vUp;
+		vDir = vRight + (vUp/2.0f);
 		break;
 	default:
 		break;

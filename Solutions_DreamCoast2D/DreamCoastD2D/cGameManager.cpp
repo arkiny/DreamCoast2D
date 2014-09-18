@@ -1,7 +1,9 @@
 #include "StdAfx.h"
 #include "cGameManager.h"
 #include "mPlayer.h"
+#include "mTileMap.h"
 #include "coControl.h"
+
 //#include "cPlayer.h"
 
 cGameManager::cGameManager(void)
@@ -11,6 +13,7 @@ cGameManager::cGameManager(void)
 	//m_ipD2DBitmapFlip = nullptr;
 	m_player = nullptr;
 	m_pControl = nullptr;
+	m_map = nullptr;
 }
 
 
@@ -24,6 +27,8 @@ cGameManager::~cGameManager(void)
 		delete m_player;
 	if (m_pControl != NULL)
 		delete m_pControl;
+	if (m_map != NULL)
+		delete m_map;
 }
 
 
@@ -40,6 +45,9 @@ void cGameManager::OnInit(cD2DRenderer& renderer)
 	m_player = new mPlayer();
 	m_player->setKeyControl(m_pControl);
 	m_player->onInit(renderer);
+
+	m_map = new mTileMap();
+	m_map->onInit(renderer);
 }
 
 void cGameManager::Render(cD2DRenderer& renderer)
@@ -57,6 +65,7 @@ void cGameManager::Render(cD2DRenderer& renderer)
 	//		srcArea);
 	//}
 
+	m_map->onRender(renderer);
 	m_player->onRender(renderer);
 	
 
@@ -84,6 +93,7 @@ void cGameManager::Update(float deltaTime)
 {
 	// 게임의 업데이트 처리
 	m_player->onUpdate(deltaTime);
+	m_map->onUpdate(deltaTime);
 }
 
 void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

@@ -6,6 +6,7 @@
 
 class mPlayer;
 class coControl;
+class mTileMap;
 
 class cGameManager :
 	public cIGameMgr
@@ -25,6 +26,7 @@ private:
 	ID2D1Bitmap* m_ipD2DBitmapFlip;*/
 
 	mPlayer* m_player;
+	mTileMap* m_map;
 	coControl* m_pControl;
 
 	//float x;
