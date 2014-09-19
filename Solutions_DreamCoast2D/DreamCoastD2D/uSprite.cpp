@@ -15,6 +15,9 @@ uSprite::uSprite()
 	m_nmaxFrame = 0;
 	m_currentFrame = 0;
 	m_accumtime = 0.0f;
+
+	m_offsetX = 0.0f;
+	m_offsetY = 0.0f;
 }
 
 uSprite::~uSprite()
@@ -41,13 +44,25 @@ void uSprite::pickSpriteAtlas(float x, float y, float width, float height, int m
 	//m_accumtime = 0.0f;
 }
 
+void uSprite::pickSpriteAtlas(float x, float y, float width, float height, float offsetX, float offsetY, int maxFrame){
+	m_frameWidth = width;
+	m_frameHeight = height;
+	m_frameX = x;
+	m_frameY = y;
+	m_nmaxFrame = maxFrame;
+	m_offsetX = offsetX;
+	m_offsetY = offsetY;
+	//m_currentFrame = 0;
+	//m_accumtime = 0.0f;
+}
+
 ::D2D1_RECT_F uSprite::getCoordinateFromPivot(VECTOR2D& pos){
 	::D2D1_RECT_F ret
 		= ::D2D1::RectF(
-		pos.x - (m_frameWidth / 2.0f),
-		pos.y - (m_frameHeight),
-		(pos.x - (m_frameWidth / 2.0f)) + m_frameWidth,
-		(pos.y - (m_frameHeight)) + m_frameHeight);
+		pos.x - (m_frameWidth / 2.0f) + m_offsetX,
+		pos.y - (m_frameHeight) + m_offsetY,
+		(pos.x - (m_frameWidth / 2.0f)) + m_frameWidth + m_offsetX,
+		(pos.y - (m_frameHeight)) + m_frameHeight + m_offsetY);
 	return ret;
 }
 

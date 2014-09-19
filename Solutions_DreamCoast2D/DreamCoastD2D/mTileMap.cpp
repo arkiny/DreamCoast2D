@@ -30,6 +30,31 @@ mTileMap::mTileMap()
 	//_cameraY - (_RectTileHeight / 2.0f);
 	//_cameraY + ((_RectTileHeight * _vertical) / 2.0f) 
 		//+ (_RectTileHeight / 2.0f);
+	
+	//debug및 테스트용 코드
+	for (int i = 0; i < 14; i++){
+		for (int j = 0; j < 14; j++){
+			m_mapinfo[i][j] = 0;
+		}
+	}
+
+	for (int i = 0; i < 14; i++){
+		m_mapinfo[i][0] = 2;
+	}
+	
+	for (int i = 0; i < 14; i++){
+		m_mapinfo[0][i] = 2;
+	}
+
+	for (int i = 0; i < 14; i++){
+		m_mapinfo[13][i] = 2;
+	}
+	
+	for (int i = 0; i < 14; i++){
+		m_mapinfo[i][13] = 2;
+	}
+	
+	//
 }
 
 
@@ -97,6 +122,9 @@ void mTileMap::renderTile(float x, float y, int type, cD2DRenderer& renderer){
 	case 1:
 		m_spriteAtlas->pickSpriteAtlas(100.0f, 0.0f, 90.0f, 45.0f, 0);		
 		break;
+	case 2:
+		m_spriteAtlas->pickSpriteAtlas(200.0f, 0.0f, 90.0f, 62.0f, 0);
+		break;
 	default:
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
 		break;
@@ -119,11 +147,12 @@ void mTileMap::renderMap(cD2DRenderer& renderer){
 
 			pt = twoDtoISO(in);
 
+			
 			if (test.x == i && test.y == j){
 				type = 1;
 			}
 			else {
-				type = 0;
+				type = m_mapinfo[i][j];
 			}
 
 			//if (mTileMap::isInISOTile(*m_player->getPos(), screen)){

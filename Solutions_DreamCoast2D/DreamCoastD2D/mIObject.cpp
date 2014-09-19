@@ -28,5 +28,11 @@ void mIObject::onRender(cD2DRenderer& renderer){
 
 		//debug ¿ë
 		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		::D2D1_RECT_F pivotArea;
+		pivotArea.top = _posVector->y - 2.0f;
+		pivotArea.bottom = _posVector->y + 2.0f;
+		pivotArea.left = _posVector->x - 2.0f;
+		pivotArea.right = _posVector->x + 2.0f;
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
 	}	
 }

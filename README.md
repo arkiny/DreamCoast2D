@@ -3,6 +3,14 @@ DreamCoast2D
 Game DreamCoast2D Portfolio Project based on Direct2D
 ============
 
+09192014 오후 작업 시작
+- Sprite Pivot 조정 Clear
+- 첫 맵 생성시 설정에 맞게 크기 조절 및 데이터 로딩
+- 플레이어 및 오브젝트 오더링 실시 -> 타일 렌더시, 해당 오브젝트가 그 좌표에 있을시에 렌더한다.
+- 각 타일별로 데이터 저장하여 이동 못하게 충돌할 것
+
+============
+
 09192014 새벽 작업 종료 및 결산
 - Ordering
 - Picking (For문 말고, 해당 좌표를 받으면 좌표를 IsoMetric 타일 좌표화 하여 확인하기)

@@ -48,6 +48,10 @@ private:
 	VECTOR2D getTileCoordinates(VECTOR2D in);
 
 	::D2D1_RECT_F mapSize;
+
+	// debug
+	// 차후 동적으로 데이타 저장
+	int m_mapinfo[14][14];
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음

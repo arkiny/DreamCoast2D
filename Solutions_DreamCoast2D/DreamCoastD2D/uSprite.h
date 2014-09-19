@@ -12,13 +12,16 @@ public:
 	uSprite();
 	uSprite(float x, float y, float width, float height, int maxFrame);
 	~uSprite();
+	
+	//
 	void pickSpriteAtlas(float x, float y, float width, float height, int maxFrame);
+	void pickSpriteAtlas(float x, float y, float width, float height, float offsetX, float offsetY, int maxFrame);
 
 	//
-	::D2D1_RECT_F getCoordinateFromPivot(VECTOR2D& pos);
-	::D2D1_RECT_F getSrcFrameFromSprite();
+	::D2D1_RECT_F getCoordinateFromPivot(VECTOR2D& pos);	
 	::D2D1_RECT_F getCoordinateFromPivotCenter(VECTOR2D& pos);
 
+	::D2D1_RECT_F getSrcFrameFromSprite();
 	// frame animation.. onUpdate?
 	void nextFrame(float fdeltatime);
 
@@ -35,6 +38,9 @@ private:
 	float m_frameHeight;
 	float m_frameX;
 	float m_frameY;
+
+	float m_offsetX;
+	float m_offsetY;
 
 	int m_nmaxFrame;
 	int m_currentFrame;

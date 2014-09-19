@@ -66,13 +66,13 @@ void mPlayer::onAttack(float fdeltatime){
 	// 데미지 처리는 일정 프레임에 트리거 되도록
 
 	if (m_SeeDir == LEFTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, 7);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, -15.0f, 12.0f, 7);
 	}
 	else if (m_SeeDir == LEFTUP){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 700.0f, 103.0f, 84.0f, 7);
 	}
 	else if (m_SeeDir == RIGHTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 800.0f, 121.0f, 98.0f, 7);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 800.0f, 121.0f, 98.0f, 15.0f, 12.0f, 7);
 	}
 	else if (m_SeeDir == RIGHTUP){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 900.0f, 103.0f, 84.0f, 7);
@@ -154,6 +154,7 @@ void mPlayer::onMove(float fdeltatime){
 		vMover = mPlayer::vectorMove(fdeltatime, LEFTDOWN);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);		
 	}
+
 	else if (m_pControl->getKeyControlInfo()[VK_LEFT] &&
 		m_pControl->getKeyControlInfo()[VK_UP]){
 		m_SeeDir = LEFTUP;
@@ -161,6 +162,7 @@ void mPlayer::onMove(float fdeltatime){
 		vMover = mPlayer::vectorMove(fdeltatime, LEFTUP);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);		
 	}
+
 	else if (m_pControl->getKeyControlInfo()[VK_RIGHT] &&
 		m_pControl->getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = RIGHTDOWN;
@@ -168,6 +170,7 @@ void mPlayer::onMove(float fdeltatime){
 		vMover = mPlayer::vectorMove(fdeltatime, RIGHTDOWN);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);		
 	}
+
 	else if (m_pControl->getKeyControlInfo()[VK_RIGHT] &&
 		m_pControl->getKeyControlInfo()[VK_UP]){
 		m_SeeDir = RIGHTUP;		
@@ -175,6 +178,7 @@ void mPlayer::onMove(float fdeltatime){
 		vMover = mPlayer::vectorMove(fdeltatime, RIGHTUP);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);		
 	}
+
 	else if (m_pControl->getKeyControlInfo()[VK_RIGHT]){
 		if (m_SeeDir == LEFTUP){
 			m_SeeDir = RIGHTUP;
@@ -223,7 +227,8 @@ void mPlayer::onMove(float fdeltatime){
 
 		if (m_SeeDir == RIGHTDOWN){
 			// idle right down
-			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, 4);			
+			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, 0.0f, 12.0f, 4);			
+			//m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, 4);
 		}
 		else if (m_SeeDir == LEFTUP){
 			m_spriteAtlas->pickSpriteAtlas(360.0f, 400.0f, 42.0f, 89.0f, 4);			
@@ -232,7 +237,8 @@ void mPlayer::onMove(float fdeltatime){
 			m_spriteAtlas->pickSpriteAtlas(360.0f, 500.0f, 42.0f, 89.0f, 4);			
 		}
 		else if (m_SeeDir == LEFTDOWN){
-			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 4);
+			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 0.0f, 12.0f, 4);
+			//m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 4);
 		}
 	}
 	
