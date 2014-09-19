@@ -6,7 +6,6 @@ Game DreamCoast2D Portfolio Project based on Direct2D
 09192014 새벽 작업 종료 및 결산
 - Ordering
 - Picking (For문 말고, 해당 좌표를 받으면 좌표를 IsoMetric 타일 좌표화 하여 확인하기)
-reference : http://jskiles1.wordpress.com/2014/01/04/2d-tile-maps-tile-picking/
 - 플레이char가 해당 타일에 있을 때 해당 타일 색입히기
 이상 완료
 
