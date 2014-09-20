@@ -2,6 +2,7 @@
 #include <Windows.h>
 #pragma comment(lib, "winmm.lib")
 class cIGameMgr;
+
 class cGameApplication
 {
 public:
@@ -16,6 +17,7 @@ public:
 	virtual void Draw(HDC hdc){}
 	HWND GetHWND(){ return _hwnd; }
 	static RECT _wndRect;
+
 private:
 	BOOL	InitInstance(HINSTANCE, int);
 	ATOM	MyRegisterClass(HINSTANCE hInstance);

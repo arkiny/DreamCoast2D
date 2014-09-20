@@ -3,15 +3,15 @@
 #include "cD2DRenderer.h"
 #include "VECTOR2D.h"
 #include "uSprite.h"
-#include "mTileMap.h"
+#include "wTileMap.h"
+#include "mIObject.h"
 
-
-mTileMap::mTileMap()
+wTileMap::wTileMap()
 {	
-	//m_player = nullptr;
+	m_player = nullptr;
 	m_ipD2DBitmap = nullptr;
+
 	//임시로 타일맵 중앙에 배치
-	_posVector = new VECTOR2D(514.0f, 384.0f);
 	m_spriteAtlas = new uSprite();
 
 	_vertical = 14.0f;
@@ -26,10 +26,6 @@ mTileMap::mTileMap()
 	mapSize.right = _cameraX + ((_RectTileWidth * _horizontal));
 	mapSize.top = _cameraY - (_RectTileHeight / 2.0f);	
 	mapSize.bottom = _cameraY + ((_RectTileHeight * _vertical) - (_RectTileHeight/2.0f));
-	
-	//_cameraY - (_RectTileHeight / 2.0f);
-	//_cameraY + ((_RectTileHeight * _vertical) / 2.0f) 
-		//+ (_RectTileHeight / 2.0f);
 	
 	//debug및 테스트용 코드
 	for (int i = 0; i < 14; i++){
@@ -53,42 +49,44 @@ mTileMap::mTileMap()
 	for (int i = 0; i < 14; i++){
 		m_mapinfo[i][13] = 2;
 	}
-	
+	m_mapinfo[3][5] = 2;
+	m_mapinfo[4][8] = 2;
+	m_mapinfo[11][3] = 3;
+	m_mapinfo[12][12] = 3;
+	m_mapinfo[6][1] = 2;
 	//
 }
 
-
-
-mTileMap::~mTileMap()
+wTileMap::~wTileMap()
 {
 	SafeRelease(m_ipD2DBitmap);
-	if (_posVector != NULL){
-		delete _posVector;
-	}
 	if (m_spriteAtlas != NULL){
 		delete m_spriteAtlas;
 	}
 }
 
-void mTileMap::onInit(cD2DRenderer& renderer){
+void wTileMap::onInit(cD2DRenderer& renderer){
 	HWND hWnd = renderer.GetHwnd();
 	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/maptile.png", NULL);
 }
-void mTileMap::onUpdate(float fdeltatime){	
+
+void wTileMap::onUpdate(float fdeltatime){	
+	m_player->onUpdate(fdeltatime);
 }
 
-void mTileMap::onRender(cD2DRenderer& renderer){
+void wTileMap::onRender(cD2DRenderer& renderer){
 	// debug
 	renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBrush());
 	//
 	renderMap(renderer);	
+	m_player->onRender(renderer);
 }
 
-void mTileMap::setPlayer(mIObject* p){
+void wTileMap::setPlayer(mIObject* p){
 	m_player = p;
 }
 
-void mTileMap::hRender(cD2DRenderer& renderer, VECTOR2D tilePos){
+void wTileMap::hRender(cD2DRenderer& renderer, VECTOR2D tilePos){
 	if (m_ipD2DBitmap != nullptr){
 
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
@@ -102,17 +100,13 @@ void mTileMap::hRender(cD2DRenderer& renderer, VECTOR2D tilePos){
 		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
-
 		
-
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());	
-	}
-
-	
+	}	
 }
 
-void mTileMap::renderTile(float x, float y, int type, cD2DRenderer& renderer){
+void wTileMap::renderTile(float x, float y, int type, cD2DRenderer& renderer){
 	VECTOR2D tilePos(x, y);
 	// debug
 	switch (type){
@@ -125,18 +119,23 @@ void mTileMap::renderTile(float x, float y, int type, cD2DRenderer& renderer){
 	case 2:
 		m_spriteAtlas->pickSpriteAtlas(200.0f, 0.0f, 90.0f, 62.0f, 0);
 		break;
+	case 3:
+		// offsetY = -((높이 - 원래타일높이) / 2)
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.5f, 0);
+		break;
 	default:
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
 		break;
 	}
-	mTileMap::hRender(renderer, tilePos);
-	
+	wTileMap::hRender(renderer, tilePos);	
 }
 
-void mTileMap::renderMap(cD2DRenderer& renderer){
+void wTileMap::renderMap(cD2DRenderer& renderer){
 	VECTOR2D pt;
 	float x, y;
 	int type = 0;
+	bool onTilecheck = false;
+
 	VECTOR2D test = getTileCoordinates(*m_player->getPos());
 
 	for (int j = 0; j < _vertical; j++){
@@ -147,46 +146,38 @@ void mTileMap::renderMap(cD2DRenderer& renderer){
 
 			pt = twoDtoISO(in);
 
-			
+			// 플레이어가 타일위에 있을때 
 			if (test.x == i && test.y == j){
 				type = 1;
+				//
+				//onTilecheck = true;
+				//
 			}
 			else {
 				type = m_mapinfo[i][j];
 			}
 
-			//if (mTileMap::isInISOTile(*m_player->getPos(), screen)){
-			//	type = 1;
-			//} else{
-			//	type = 0;
-			//}
-
 			renderTile(pt.x, pt.y, type, renderer);
-			//drawTile(x, y, 1, hdc);
+			// 오더링 타일 뒤에 플레이어 숨기도록 해당 타일위에 있을때에 렌더하게 한다.
+			// Todo: 매번 업데이트 할 필요 없도록 미리 계산해놓도록?
+			// 이러면 타일을 넘어가게 될경우 캐릭터 렌더가 다음 타일에 가려버리게 되는데...
+			//if (onTilecheck) {
+			//	m_player->onRender(renderer);
+			//	onTilecheck = false;
+			//}
+			//
 		}
 	}
 }
 
-VECTOR2D mTileMap::twoDtoISO(VECTOR2D in){
+VECTOR2D wTileMap::twoDtoISO(VECTOR2D in){
 	VECTOR2D ret = VECTOR2D(
 		((in.x - in.y) + _cameraX), ((in.x + in.y) / 2) + _cameraY);
 	return ret;
 }
 
-VECTOR2D mTileMap::getTileCoordinates(VECTOR2D in){
-	/*var tileY = ((mouseY * 2) - ((gridSize*tileWidth) / 2) + mouseX) / 2;
-	var tileX = mouseX - tileY;
-	tileY = Math.round(tileY / tileHeight);
-	tileX = Math.round(tileX / tileHeight);*/
-
+VECTOR2D wTileMap::getTileCoordinates(VECTOR2D in){
 	VECTOR2D temp(0.0f, 0.0f);
-
-	/*float tileY = ((in.y * 2.0f) - (_RectTileWidth*_vertical) + in.x) / 2.0f;
-	float tileX = in.x - tileY;
-	tileY = roundf(tileY / _RectTileHeight);
-	tileX = roundf(tileX / _RectTileHeight);
-	temp.x = tileX;
-	temp.y = tileY;*/
 	float x = (((2.0f * in.y) - _cameraY) - (in.x - _cameraX)) / 2.0f; 
 	float y = (((2.0f * in.y) - _cameraY) + (in.x - _cameraX)) / 2.0f;
 
@@ -195,39 +186,3 @@ VECTOR2D mTileMap::getTileCoordinates(VECTOR2D in){
 
 	return temp;
 }
-
-
-//BOOL mTileMap::isInISOTile(VECTOR2D cur, VECTOR2D tilepos){
-//	float x = tilepos.y * _RectTileWidth;
-//	float y = tilepos.x * _RectTileHeight;
-//	VECTOR2D pt = twoDtoISO(VECTOR2D(x, y));
-//	float m = 0.5f;
-//		
-//	::D2D1_RECT_F tileArea = {
-//		pt.x - _RectTileWidth,
-//		pt.y - (_RectTileHeight / 2),
-//		pt.x + _RectTileWidth,
-//		pt.y + (_RectTileHeight / 2) };
-//
-//	POINTFLOAT left = { tileArea.left, (tileArea.top + ((tileArea.bottom - tileArea.top) / 2)) };
-//	POINTFLOAT top = { (tileArea.left + ((tileArea.right - tileArea.left) / 2)), tileArea.top };
-//	POINTFLOAT right = { tileArea.right, (tileArea.top + ((tileArea.bottom - tileArea.top) / 2)) };
-//	POINTFLOAT bottom = { (tileArea.left + ((tileArea.right - tileArea.left) / 2)), tileArea.bottom };
-//
-//	float l1 = left.y + (m*left.x); // 왼쪽 위 구별용
-//	float l2 = top.y + (-m*top.x); // 오른쪽 위 구별용
-//	float l3 = right.y + (m*right.x); // 왼쪽 아래 구별용
-//	float l4 = bottom.y + (-m*bottom.x); // 오른쪽 아래 구별용
-//
-//	float r1 = -m * cur.x - cur.y + l1;
-//	float r2 = m * cur.x - cur.y + l2;
-//	float r3 = -m * cur.x - cur.y + l3;
-//	float r4 = m * cur.x - cur.y + l4;
-//
-//	if (r1 <= 0.0f && r2 <= 0.0f && r3 >= 0.0f && r4 >= 0.0f){
-//		return true;
-//	}
-//	else {
-//		return false;
-//	}
-//}

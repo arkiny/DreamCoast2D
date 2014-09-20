@@ -3,8 +3,6 @@
 #include "VECTOR2D.h"
 //#include <d2d1.h>
 
-
-
 uSprite::uSprite()
 {
 	m_frameWidth = 0.0f;
@@ -40,6 +38,8 @@ void uSprite::pickSpriteAtlas(float x, float y, float width, float height, int m
 	m_frameX = x;
 	m_frameY = y;
 	m_nmaxFrame = maxFrame;
+	m_offsetX = 0.0f;
+	m_offsetY = 0.0f;
 	//m_currentFrame = 0;
 	//m_accumtime = 0.0f;
 }
@@ -69,10 +69,10 @@ void uSprite::pickSpriteAtlas(float x, float y, float width, float height, float
 ::D2D1_RECT_F uSprite::getCoordinateFromPivotCenter(VECTOR2D& pos){
 	::D2D1_RECT_F ret
 		= ::D2D1::RectF(
-		pos.x - (m_frameWidth / 2.0f),
-		pos.y - (m_frameHeight / 2.0f),
-		(pos.x - (m_frameWidth / 2.0f)) + m_frameWidth,
-		(pos.y - (m_frameHeight / 2.0f)) + m_frameHeight);
+		pos.x - (m_frameWidth / 2.0f) + m_offsetX,
+		pos.y - (m_frameHeight / 2.0f) + m_offsetY,
+		(pos.x - (m_frameWidth / 2.0f)) + m_frameWidth + m_offsetX,
+		(pos.y - (m_frameHeight / 2.0f)) + m_frameHeight + m_offsetY);
 	return ret;
 }
 

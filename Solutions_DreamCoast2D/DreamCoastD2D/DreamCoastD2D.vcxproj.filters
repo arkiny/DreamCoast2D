@@ -28,6 +28,12 @@
     <Filter Include="Util">
       <UniqueIdentifier>{feebceb4-aaae-438d-944e-4f1519cb31e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{9c387f86-7168-4d32-953f-09b80c0dac1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screen">
+      <UniqueIdentifier>{a84b52a2-77f0-4494-a2f3-8f7281c58b06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -72,11 +78,20 @@
     <ClInclude Include="uSprite.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="mTileMap.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="uTile.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="sGameScreen.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="sIScreen.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="wWorld.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="wTileMap.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -116,11 +131,20 @@
     <ClCompile Include="uSprite.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="mTileMap.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
     <ClCompile Include="uTile.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="sGameScreen.cpp">
+      <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="sIScreen.cpp">
+      <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="wWorld.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="wTileMap.cpp">
+      <Filter>World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

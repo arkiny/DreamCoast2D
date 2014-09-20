@@ -1,4 +1,5 @@
 #pragma once
+#include <d2d1.h>
 
 class cD2DRenderer;
 class VECTOR2D;
@@ -18,10 +19,21 @@ public:
 	virtual void onRender(cD2DRenderer& renderer);
 	
 	VECTOR2D* getPos(){ return _posVector; }
+	void setPos(float x, float y);
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
 	// POINT를 쓸 경우 LONG 값에서 변환이 일어나기 때문에 가감연산에 문제가 생긴다.
 	VECTOR2D* _posVector;			// 위치
+
+	// player sprite처리를 담당하는 class
+	// 차후 object위로 승격할지 고민할것
+
+	// Player의 움직임을 가지고 있는 빗맵
+	// 차후 uSprite클래스내로 옮길지 고민
+	// 그렇게 되면 렌더에 관한 처리는
+	// 대부분 uSprite가 처리하게 되므로
+	// player클래스는 업데이트 관련 모듈에
+	// 집중가능
 	uSprite* m_spriteAtlas;			// 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 스프라이트 파일
 };

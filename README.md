@@ -3,6 +3,19 @@ DreamCoast2D
 Game DreamCoast2D Portfolio Project based on Direct2D
 ============
 
+09212014 새벽 작업 결산
+- World class 분리 (차후 GameScreen에서 투영)
+- TileOrdering Test
+
+해야할것
+- 이동불가 처리
+- 캐릭터 및 Object 타일링
+ -- 가설 : 현재 타일을 깔때 같이 렌더하는 방식은 스프라이트가 잘리는 현상이 일어나므로,
+            타일은 먼저 깔고, 캐릭터를 깐뒤에, 해당 타일에 Tree등의 오브젝트를 겹까는 형식으로 실시
+			(이렇게 하면 차후 옵션으로 나무삭제등의 옵션을 추가할수 있을 것으로 보인다)
+
+============
+
 09192014 오후 작업 시작
 - Sprite Pivot 조정 Clear
 - 첫 맵 생성시 설정에 맞게 크기 조절 및 데이터 로딩

@@ -191,3 +191,83 @@ m_spriteAtlas->getframeY() + m_spriteAtlas->getframeHeight());*/
 //		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 //	}
 //}
+
+/// Iso 좌표계산 실패작
+//BOOL wTileMap::isInISOTile(VECTOR2D cur, VECTOR2D tilepos){
+//	float x = tilepos.y * _RectTileWidth;
+//	float y = tilepos.x * _RectTileHeight;
+//	VECTOR2D pt = twoDtoISO(VECTOR2D(x, y));
+//	float m = 0.5f;
+//		
+//	::D2D1_RECT_F tileArea = {
+//		pt.x - _RectTileWidth,
+//		pt.y - (_RectTileHeight / 2),
+//		pt.x + _RectTileWidth,
+//		pt.y + (_RectTileHeight / 2) };
+//
+//	POINTFLOAT left = { tileArea.left, (tileArea.top + ((tileArea.bottom - tileArea.top) / 2)) };
+//	POINTFLOAT top = { (tileArea.left + ((tileArea.right - tileArea.left) / 2)), tileArea.top };
+//	POINTFLOAT right = { tileArea.right, (tileArea.top + ((tileArea.bottom - tileArea.top) / 2)) };
+//	POINTFLOAT bottom = { (tileArea.left + ((tileArea.right - tileArea.left) / 2)), tileArea.bottom };
+//
+//	float l1 = left.y + (m*left.x); // 왼쪽 위 구별용
+//	float l2 = top.y + (-m*top.x); // 오른쪽 위 구별용
+//	float l3 = right.y + (m*right.x); // 왼쪽 아래 구별용
+//	float l4 = bottom.y + (-m*bottom.x); // 오른쪽 아래 구별용
+//
+//	float r1 = -m * cur.x - cur.y + l1;
+//	float r2 = m * cur.x - cur.y + l2;
+//	float r3 = -m * cur.x - cur.y + l3;
+//	float r4 = m * cur.x - cur.y + l4;
+//
+//	if (r1 <= 0.0f && r2 <= 0.0f && r3 >= 0.0f && r4 >= 0.0f){
+//		return true;
+//	}
+//	else {
+//		return false;
+//	}
+//}
+
+
+/*float tileY = ((in.y * 2.0f) - (_RectTileWidth*_vertical) + in.x) / 2.0f;
+float tileX = in.x - tileY;
+tileY = roundf(tileY / _RectTileHeight);
+tileX = roundf(tileX / _RectTileHeight);
+temp.x = tileX;
+temp.y = tileY;*/
+
+/*var tileY = ((mouseY * 2) - ((gridSize*tileWidth) / 2) + mouseX) / 2;
+var tileX = mouseX - tileY;
+tileY = Math.round(tileY / tileHeight);
+tileX = Math.round(tileX / tileHeight);*/
+
+
+/// 텍스트 출력
+//wchar_t* wszText_ = L"Hello World using DirectWrite!";
+//UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+
+//D2D1_RECT_F layoutRect = D2D1::RectF(
+//	100,
+//	300,
+//	800,
+//	400
+//	);
+
+//renderer.GetRenderTarget()->DrawTextW(
+//	wszText_,
+//	cTextLength_,
+//	renderer.GetTextFormat(),
+//	layoutRect,
+//	renderer.GetBrush());
+
+/// background
+	//if (m_ipD2DBitmapBG != nullptr)
+	//{
+	//	D2D1_SIZE_U size = renderer.GetRenderTargetSize();
+	//	::D2D1_RECT_F dxArea = ::D2D1::RectF(0.0f, 0.0f, static_cast<float>(size.width), static_cast<float>(size.height));
+	//	::D2D1_RECT_F srcArea = ::D2D1::RectF(0.0f, 0.0f, 1024.0f, 768.0f);
+
+	//	renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmapBG, dxArea, 1.0f,
+	//		D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+	//		srcArea);
+//}

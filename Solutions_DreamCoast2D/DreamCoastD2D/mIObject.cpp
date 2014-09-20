@@ -36,3 +36,8 @@ void mIObject::onRender(cD2DRenderer& renderer){
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
 	}	
 }
+
+void mIObject::setPos(float x, float y){
+	_posVector->x = x;
+	_posVector->y = y;
+}

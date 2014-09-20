@@ -42,7 +42,6 @@ void mPlayer::onUpdate(float fdeltatime){
 		}
 		else {
 			m_State = ONATTACK;
-			// 본의아니게 이거 기모으기가 댐...
 			m_spriteAtlas->setCurrentFrame(0);
 			
 		}

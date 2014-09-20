@@ -4,9 +4,10 @@
 //class cD2DRenderer;
 //class mPlayer;
 
-class mPlayer;
+//class mPlayer;
 class coControl;
-class mTileMap;
+class wWorld;
+//class wTileMap;
 
 class cGameManager :
 	public cIGameMgr
@@ -19,22 +20,10 @@ public:
 	virtual void MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual void OnInit(cD2DRenderer&);
 private:
-	// 차후 매니저에서 asset관리하는 것 추가할수 있으면 좋겠음
-	// assets
-	/*ID2D1Bitmap* m_ipD2DBitmapBG;
-	ID2D1Bitmap* m_ipD2DBitmap;
-	ID2D1Bitmap* m_ipD2DBitmapFlip;*/
-
-	mPlayer* m_player;
-	mTileMap* m_map;
 	coControl* m_pControl;
-
-	//float x;
-	//float y;
-	//float m_fAngle;
-	//float m_fAlpha;
-
-	//float m_fframe;
-	//int m_nframe;
+	
+	//일단 게임월드를 바로 넣어놨지만
+	//차후 아래 포인터에는 각 스크린(메뉴스크린, 게임 스크린)이 들어가게 됩니다.
+	wWorld* m_pWorld;
 };
 

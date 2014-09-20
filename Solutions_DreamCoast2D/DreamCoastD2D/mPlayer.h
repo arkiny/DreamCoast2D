@@ -21,20 +21,7 @@ public:
 
 private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
-	OBJECTSTATE m_State;
-
-	// player sprite처리를 담당하는 class
-	// 차후 object위로 승격할지 고민할것
-	
-	// Player의 움직임을 가지고 있는 빗맵
-	// 차후 uSprite클래스내로 옮길지 고민
-	// 그렇게 되면 렌더에 관한 처리는
-	// 대부분 uSprite가 처리하게 되므로
-	// player클래스는 업데이트 관련 모듈에
-	// 집중가능
-	
-	
-	
+	OBJECTSTATE m_State;	
 	coControl *m_pControl;
 
 	// 키보드 입력에 따른 움직임
