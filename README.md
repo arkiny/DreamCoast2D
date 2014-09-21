@@ -3,6 +3,18 @@ DreamCoast2D
 Game DreamCoast2D Portfolio Project based on Direct2D
 ============
 
+09222014 새벽 작업 결산
+- 이동불가 처리 완료(차후 위치수정) -> 현재는 mplayer클래스 아래서 m_map 포인터를 받아서 통신
+- 캐릭터 타일링 order 수정 
+ (차후 좀더 부드럽게 할것...  일단 피봇 조정 및 실제 position과 draw포지션 이원화로 해결)
+
+해야할 것
+- mapTile 정보부분을 동적으로 바꾸기 (vector 이용)
+- 몬스터 추가, 체력추가, 일반 공방전 추가
+- 플레이를 따라 움직이는 카메라도구 추가
+
+============
+
 09212014 새벽 작업 결산
 - World class 분리 (차후 GameScreen에서 투영)
 - TileOrdering Test
