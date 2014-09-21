@@ -18,6 +18,10 @@ public:
 	// debug 카메라 및 플레이어 테스트용
 	void setPlayer(mIObject* p);
 
+
+	// 받은 벡터를 기반으로 isometric 타일의 위치를 잡는 함수
+	VECTOR2D getTileCoordinates(VECTOR2D in);
+	int getMapinfo(int x, int y){ return m_mapinfo[x][y]; }
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
 	// 전투, 충돌 처리 실시 혹은 맵(이 아니라 이제 자체적으로 월드인듯)
@@ -59,8 +63,7 @@ private:
 	
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
 	VECTOR2D twoDtoISO(VECTOR2D in);
-	// 받은 벡터를 기반으로 isometric 타일의 위치를 잡는 함수
-	VECTOR2D getTileCoordinates(VECTOR2D in);	
+	
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음 (sprite타일의 크기)

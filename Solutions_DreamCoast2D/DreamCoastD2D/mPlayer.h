@@ -3,6 +3,7 @@
 
 class coControl;
 class uSprite;
+class wTileMap;
 
 // up to first entering
 enum DIRECTION{LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP};
@@ -18,11 +19,15 @@ public:
 	//void onRender(cD2DRenderer& renderer);
 
 	void setKeyControl(coControl* in);
+	//
+	void setTileMap(wTileMap* in);
 
 private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;	
 	coControl *m_pControl;
+	//
+	wTileMap *m_pTileMap;
 
 	// 키보드 입력에 따른 움직임
 	void onMove(float deltaTime);

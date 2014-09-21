@@ -4,12 +4,13 @@
 #include "coControl.h"
 #include "VECTOR2D.h"
 #include "uSprite.h"
+#include "wTileMap.h"
 
 mPlayer::mPlayer()
 {	
 	m_ipD2DBitmap = nullptr;
 	
-	//임시로 중앙에 대기
+	//todo: 임시로 중앙에 대기, 차후 맵정보에 따라 시작점 정보 수정
 	_posVector = new VECTOR2D(514.0f, 384.0f);
 
 	m_spriteAtlas = new uSprite();
@@ -54,7 +55,7 @@ void mPlayer::onUpdate(float fdeltatime){
 	}
 }
 
-// 공속조정 변수가 필요함
+// todo: 공속조정 변수가 필요함
 void mPlayer::onAttack(float fdeltatime){
 	if (m_spriteAtlas->getCurrentFrame() == 7){
 		m_spriteAtlas->setCurrentFrame(0);
@@ -108,6 +109,7 @@ VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
 		vDir = vDown;
 		break;
 	case RIGHTDOWN:
+		// 1:2 isometric이므로 세로 이동속도는 절반으로 수정
 		vDir = vRight + (vDown/2.0f);
 		break;
 	case LEFTUP:
@@ -244,6 +246,18 @@ void mPlayer::onMove(float fdeltatime){
 	// frame update
 	m_spriteAtlas->nextFrame(fdeltatime);
 	
+	// 맵 포인터에서 맵 정보를 받아와서 이동 불가 컨트롤, 차후 동적할당식으로 전환
+	// 맵 포인터는 스테이지가 바뀔때마다 업데이트를 해줘야 한다.
+	// 컨트롤 클래스나, 월드클래스에서 조정해주면 더 나으려나?
+	float tx = m_pTileMap->getTileCoordinates(*_posVector + vMover).x;
+	float ty = m_pTileMap->getTileCoordinates(*_posVector + vMover).y;
 	// move update
-	*_posVector = *_posVector + vMover;
+	if (m_pTileMap->getMapinfo(tx, ty) == 0){
+		*_posVector = *_posVector + vMover;
+	}
+	//
+}
+
+void mPlayer::setTileMap(wTileMap* in){
+	m_pTileMap = in;
 }
