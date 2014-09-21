@@ -11,8 +11,9 @@ mPlayer::mPlayer()
 	m_ipD2DBitmap = nullptr;
 	
 	//todo: 임시로 중앙에 대기, 차후 맵정보에 따라 시작점 정보 수정
-	_posVector = new VECTOR2D(514.0f, 384.0f);
-
+	
+	_realVector = new VECTOR2D(514.0f, 384.0f);
+	_drawVector = new VECTOR2D(_realVector->x, _realVector->y + 15.0f);
 	m_spriteAtlas = new uSprite();
 	m_SeeDir = RIGHTDOWN;
 	m_State = ONMOVE;
@@ -23,8 +24,8 @@ mPlayer::~mPlayer()
 {
 	SafeRelease(m_ipD2DBitmap);
 
-	if (_posVector != NULL){
-		delete _posVector;
+	if (_drawVector != NULL){
+		delete _drawVector;
 	}
 	if (m_spriteAtlas != NULL){
 		delete m_spriteAtlas;
@@ -66,13 +67,13 @@ void mPlayer::onAttack(float fdeltatime){
 	// 데미지 처리는 일정 프레임에 트리거 되도록
 
 	if (m_SeeDir == LEFTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, -15.0f, 12.0f, 7);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, 19.5f, 0.0f, 7);
 	}
 	else if (m_SeeDir == LEFTUP){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 700.0f, 103.0f, 84.0f, 7);
 	}
 	else if (m_SeeDir == RIGHTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 800.0f, 121.0f, 98.0f, 15.0f, 12.0f, 7);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 800.0f, 121.0f, 98.0f, -19.5f, 0.0f, 7);
 	}
 	else if (m_SeeDir == RIGHTUP){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 900.0f, 103.0f, 84.0f, 7);
@@ -169,7 +170,7 @@ void mPlayer::onMove(float fdeltatime){
 		m_SeeDir = RIGHTDOWN;
 
 		vMover = mPlayer::vectorMove(fdeltatime, RIGHTDOWN);
-		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);		
+		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);
 	}
 
 	else if (m_pControl->getKeyControlInfo()[VK_RIGHT] &&
@@ -228,7 +229,7 @@ void mPlayer::onMove(float fdeltatime){
 
 		if (m_SeeDir == RIGHTDOWN){
 			// idle right down
-			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, 0.0f, 12.0f, 4);			
+			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, -19.5f, 0.0f, 4);			
 			//m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, 4);
 		}
 		else if (m_SeeDir == LEFTUP){
@@ -238,7 +239,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_spriteAtlas->pickSpriteAtlas(360.0f, 500.0f, 42.0f, 89.0f, 4);			
 		}
 		else if (m_SeeDir == LEFTDOWN){
-			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 0.0f, 12.0f, 4);
+			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 19.5f, 0.0f, 4);
 			//m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 4);
 		}
 	}
@@ -246,14 +247,23 @@ void mPlayer::onMove(float fdeltatime){
 	// frame update
 	m_spriteAtlas->nextFrame(fdeltatime);
 	
+	// Todo
 	// 맵 포인터에서 맵 정보를 받아와서 이동 불가 컨트롤, 차후 동적할당식으로 전환
 	// 맵 포인터는 스테이지가 바뀔때마다 업데이트를 해줘야 한다.
 	// 컨트롤 클래스나, 월드클래스에서 조정해주면 더 나으려나?
-	float tx = m_pTileMap->getTileCoordinates(*_posVector + vMover).x;
-	float ty = m_pTileMap->getTileCoordinates(*_posVector + vMover).y;
-	// move update
-	if (m_pTileMap->getMapinfo(tx, ty) == 0){
-		*_posVector = *_posVector + vMover;
+	// 일단 자연스러운 오더링을 위해 이동불가는 둘 모두를 통해 이동불가 처리
+	// 가장 좋은 건 사각형을 써서 오더링을 하는 걸까나?
+	float topX = m_pTileMap->getTileCoordinates(*_drawVector + vMover).x;
+	float topY = m_pTileMap->getTileCoordinates(*_drawVector + vMover).y;
+
+	float bottomX = m_pTileMap->getTileCoordinates(*_realVector + vMover).x;
+	float bottomY = m_pTileMap->getTileCoordinates(*_realVector + vMover).y;
+	
+	// move update, 여기서 float -> int 변환이 일어나 데이터 로스가 있을수도 있다.
+	if (m_pTileMap->getMapinfo(static_cast<int>(topX), static_cast<int>(topY)) == 0
+		&& m_pTileMap->getMapinfo(static_cast<int>(bottomX), static_cast<int>(bottomY)) == 0){
+		*_realVector = *_realVector + vMover;
+		*_drawVector = *_drawVector + vMover;		
 	}
 	//
 }

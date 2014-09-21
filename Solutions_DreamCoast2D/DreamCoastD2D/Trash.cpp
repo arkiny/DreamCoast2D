@@ -177,7 +177,7 @@ m_spriteAtlas->getframeY() + m_spriteAtlas->getframeHeight());*/
 //		
 //		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
 //		::D2D1_RECT_F dxArea
-//			= m_spriteAtlas->getCoordinateFromPivot(*_posVector);
+//			= m_spriteAtlas->getCoordinateFromPivot(*_drawVector);
 //
 //		//	
 //		::D2D1_RECT_F srcArea

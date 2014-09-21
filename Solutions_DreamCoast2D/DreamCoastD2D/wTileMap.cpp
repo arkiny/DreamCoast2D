@@ -49,6 +49,7 @@ wTileMap::wTileMap()
 	for (int i = 0; i < 14; i++){
 		m_mapinfo[i][13] = 2;
 	}
+	//
 	m_mapinfo[3][5] = 2;
 	m_mapinfo[4][8] = 2;
 	m_mapinfo[11][3] = 3;
@@ -79,7 +80,9 @@ void wTileMap::onRender(cD2DRenderer& renderer){
 	renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBrush());
 	//
 	renderMap(renderer);	
-	m_player->onRender(renderer);
+
+	// alpha값, 옵션에 따라 키고 끌수 있도록 나중에 조절
+	//m_player->onRender(renderer, true);
 }
 
 void wTileMap::setPlayer(mIObject* p){
@@ -136,7 +139,10 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 	int type = 0;
 	bool onTilecheck = false;
 
-	VECTOR2D test = getTileCoordinates(*m_player->getPos());
+	// get real pos
+	VECTOR2D test = getTileCoordinates(*m_player->getRealPos());
+	VECTOR2D test2 = getTileCoordinates(*m_player->getPos());
+
 
 	for (int j = 0; j < _vertical; j++){
 		for (int i = 0; i < _horizontal; i++){
@@ -148,23 +154,25 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 
 			// 플레이어가 타일위에 있을때 
 			if (test.x == i && test.y == j){
-				type = 1;
-				//
-				//onTilecheck = true;
-				//
+				type = 1;				
+				onTilecheck = true;				
 			}
 			else {
 				type = m_mapinfo[i][j];
+			}
+
+			if (test2.x == i && test2.y == j){
+				onTilecheck = true;
 			}
 
 			renderTile(pt.x, pt.y, type, renderer);
 			// 오더링 타일 뒤에 플레이어 숨기도록 해당 타일위에 있을때에 렌더하게 한다.
 			// Todo: 매번 업데이트 할 필요 없도록 미리 계산해놓도록?
 			// 이러면 타일을 넘어가게 될경우 캐릭터 렌더가 다음 타일에 가려버리게 되는데...
-			//if (onTilecheck) {
-			//	m_player->onRender(renderer);
-			//	onTilecheck = false;
-			//}
+			if (onTilecheck) {
+				m_player->onRender(renderer);
+				onTilecheck = false;
+			}
 			//
 		}
 	}

@@ -17,13 +17,17 @@ public:
 	// 적절한 관리가 이루어지면 굳이 상속받아 오버라이딩 할 필요 없이
 	// 가장 상위 클래스에서 실시 가능
 	virtual void onRender(cD2DRenderer& renderer);
+	virtual void onRender(cD2DRenderer& renderer, bool alpha);
 	
-	VECTOR2D* getPos(){ return _posVector; }
+	VECTOR2D* getPos(){ return _drawVector; }
+	VECTOR2D* getRealPos(){ return _realVector; }
 	void setPos(float x, float y);
+
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
 	// POINT를 쓸 경우 LONG 값에서 변환이 일어나기 때문에 가감연산에 문제가 생긴다.
-	VECTOR2D* _posVector;			// 위치
+	VECTOR2D* _drawVector;			// 그림 위치
+	VECTOR2D* _realVector;			// 실제 위치
 
 	// player sprite처리를 담당하는 class
 	// 차후 object위로 승격할지 고민할것
@@ -36,5 +40,7 @@ protected:
 	// 집중가능
 	uSprite* m_spriteAtlas;			// 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 스프라이트 파일
+
+	float m_hp;
 };
 
