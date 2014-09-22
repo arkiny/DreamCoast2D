@@ -3,11 +3,6 @@
 
 class coControl;
 class uSprite;
-class wTileMap;
-
-// up to first entering
-enum DIRECTION{LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP};
-enum OBJECTSTATE{ONMOVE, ONATTACK, ONHIT};
 
 class mPlayer : public mIObject
 {
@@ -18,23 +13,27 @@ public:
 	void onUpdate(float fdeltatime);
 	//void onRender(cD2DRenderer& renderer);
 
-	void setKeyControl(coControl* in);
-	//
-	void setTileMap(wTileMap* in);
+	// set Communication Pointer
+	void setKeyControl(coControl* in);	
 
 private:
-	DIRECTION m_SeeDir; // 보고 있는 방향
-	OBJECTSTATE m_State;	
-	coControl *m_pControl;
-	//
-	wTileMap *m_pTileMap;
-
 	// 키보드 입력에 따른 움직임
+	// Helper methods -> 몬스터에게도 필요할경우 object로 이동
 	void onMove(float deltaTime);
 	void onAttack(float deltaTime);
 	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
-	// 공속 변수
+	DIRECTION m_SeeDir; // 보고 있는 방향
+	OBJECTSTATE m_State;	
+
+	// Communicate Pointer with control and tileMap
+	coControl *m_pControl;	
+	
+	// 공속 변수, 차후 아이템 추가, 캐릭터 추가시 동적 변화
 	float m_attackSpeed = 2.0f;
+
+	// 체력 변수, 차후 아이템 추가, 캐릭터 추가시 동적 변화
+	float m_playerHP = 2100.0f;
+	float m_playerMP = 200.0f;
 };
 

@@ -10,8 +10,7 @@ mPlayer::mPlayer()
 {	
 	m_ipD2DBitmap = nullptr;
 	
-	//todo: 임시로 중앙에 대기, 차후 맵정보에 따라 시작점 정보 수정
-	
+	//todo: 임시로 중앙에 대기, 차후 맵정보에 따라 시작점 정보 수정	
 	_realVector = new VECTOR2D(514.0f, 384.0f);
 	_drawVector = new VECTOR2D(_realVector->x, _realVector->y + 15.0f);
 	m_spriteAtlas = new uSprite();
@@ -44,8 +43,7 @@ void mPlayer::onUpdate(float fdeltatime){
 		}
 		else {
 			m_State = ONATTACK;
-			m_spriteAtlas->setCurrentFrame(0);
-			
+			m_spriteAtlas->setCurrentFrame(0);			
 		}
 	}
 	else if (m_State == ONATTACK){
@@ -268,6 +266,3 @@ void mPlayer::onMove(float fdeltatime){
 	//
 }
 
-void mPlayer::setTileMap(wTileMap* in){
-	m_pTileMap = in;
-}

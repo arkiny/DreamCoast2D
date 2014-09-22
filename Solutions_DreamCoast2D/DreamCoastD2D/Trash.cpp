@@ -271,3 +271,6 @@ tileX = Math.round(tileX / tileHeight);*/
 	//		D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 	//		srcArea);
 //}
+
+/// static map info
+//int m_mapinfo[14][14];			// 차후 동적으로 데이타 저장

@@ -77,6 +77,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aiState.h" />
     <ClInclude Include="cD2DRenderer.h" />
     <ClInclude Include="cGameApplication.h" />
     <ClInclude Include="cGameManager.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="coControl.h" />
     <ClInclude Include="DreamCoastD2D.h" />
     <ClInclude Include="mIObject.h" />
+    <ClInclude Include="mMonster.h" />
     <ClInclude Include="mPlayer.h" />
     <ClInclude Include="wTileMap.h" />
     <ClInclude Include="Resource.h" />
@@ -97,6 +99,7 @@
     <ClInclude Include="wWorld.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="aiState.cpp" />
     <ClCompile Include="cD2DRenderer.cpp" />
     <ClCompile Include="cGameApplication.cpp" />
     <ClCompile Include="cGameManager.cpp" />
@@ -104,6 +107,7 @@
     <ClCompile Include="coControl.cpp" />
     <ClCompile Include="DreamCoastD2D.cpp" />
     <ClCompile Include="mIObject.cpp" />
+    <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
     <ClCompile Include="wTileMap.cpp" />
     <ClCompile Include="sGameScreen.cpp" />

@@ -79,3 +79,7 @@ void mIObject::setPos(float x, float y){
 	_drawVector->x = x;
 	_drawVector->y = y;
 }
+
+void mIObject::setTileMap(wTileMap* in){
+	m_pTileMap = in;
+}

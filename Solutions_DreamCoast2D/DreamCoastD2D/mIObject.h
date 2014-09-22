@@ -4,6 +4,11 @@
 class cD2DRenderer;
 class VECTOR2D;
 class uSprite;
+class wTileMap;
+
+// up to first entering
+enum DIRECTION{ LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP };
+enum OBJECTSTATE{ ONMOVE, ONATTACK, ONHIT, ONDEAD };
 
 class mIObject
 {
@@ -22,6 +27,7 @@ public:
 	VECTOR2D* getPos(){ return _drawVector; }
 	VECTOR2D* getRealPos(){ return _realVector; }
 	void setPos(float x, float y);
+	void setTileMap(wTileMap* in);
 
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
@@ -29,8 +35,8 @@ protected:
 	VECTOR2D* _drawVector;			// 그림 위치
 	VECTOR2D* _realVector;			// 실제 위치
 
-	// player sprite처리를 담당하는 class
-	// 차후 object위로 승격할지 고민할것
+	// Communicate Pointer with control and tileMap
+	wTileMap *m_pTileMap;
 
 	// Player의 움직임을 가지고 있는 빗맵
 	// 차후 uSprite클래스내로 옮길지 고민

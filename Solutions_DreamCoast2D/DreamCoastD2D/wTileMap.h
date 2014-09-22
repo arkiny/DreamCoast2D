@@ -15,13 +15,17 @@ public:
 	void onUpdate(float fdeltatime);
 	void onRender(cD2DRenderer& renderer);
 
-	// debug 카메라 및 플레이어 테스트용
+	// player와 커뮤니케이션 포인터 연결, init단계에서 설정해줘야한다.
 	void setPlayer(mIObject* p);
 
+	// setSize, wWorld init단계에 설정해줘야 한다.
+	void setSize(float horizontal, float vertical);
 
 	// 받은 벡터를 기반으로 isometric 타일의 위치를 잡는 함수
 	VECTOR2D getTileCoordinates(VECTOR2D in);
-	int getMapinfo(int x, int y){ return m_mapinfo[x][y]; }
+	void setTile(float x, float y, int type);
+	int getMapinfo(int x, int y){ return m_vMapinfo[x + y*static_cast<int>(_vertical)]; }
+
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
 	// 전투, 충돌 처리 실시 혹은 맵(이 아니라 이제 자체적으로 월드인듯)
@@ -33,10 +37,9 @@ private:
 	
 	uSprite* m_spriteAtlas;			// 맵 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 맵 스프라이트 파일
+	std::vector<int> m_vMapinfo;	// 동적으로 저장된 맵 데이타
 
-	// debug
-	std::vector<int> m_vMapinfo;	// 동적으로 저장할 데이타
-	int m_mapinfo[14][14];			// 차후 동적으로 데이타 저장
+	// debug	
 
 	// tile의 갯수
 	float _vertical;
@@ -50,20 +53,19 @@ private:
 	// 차후 스크린과 HUD에 따른 동적 변경
 	//(카메라는 맵의 첫 타일의 좌표를 변경하면서 조정하는 걸로... 실시)
 	// 차후에 offset을 통한 타일 좌표의 변화도 적용해야 할것 같다.
-	float _cameraX;
-	float _cameraY;
+	float _offsetX;
+	float _offsetY;
 	::D2D1_RECT_F mapSize; // 맵의 외곽선을 저장할 함수
 	
-	// 모든 타일을 렌더하는 함수
-	void renderMap(cD2DRenderer& renderer);
-	// 타일 개개를 렌더하는 함수, x축, y축, 타입을 받아서 타일 하나를 렌더한다.
-	void renderTile(float x, float y, int type, cD2DRenderer& renderer);
 	// 타일 위치를 받아서 피봇을 타일을 통해서 실시, 실질적으로 렌더링되는 헬퍼메소드
 	void hRender(cD2DRenderer& renderer, VECTOR2D tilePos);
+	// 타일 개개를 렌더하는 함수, x축, y축, 타입을 받아서 타일 하나를 렌더한다.
+	void renderTile(float x, float y, int type, cD2DRenderer& renderer);
+	// 모든 타일을 렌더하는 함수
+	void renderMap(cD2DRenderer& renderer);		
 	
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
-	VECTOR2D twoDtoISO(VECTOR2D in);
-	
+	VECTOR2D twoDtoISO(VECTOR2D in);	
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음 (sprite타일의 크기)

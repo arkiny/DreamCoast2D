@@ -34,6 +34,12 @@
     <Filter Include="Screen">
       <UniqueIdentifier>{a84b52a2-77f0-4494-a2f3-8f7281c58b06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Mob">
+      <UniqueIdentifier>{17f5a786-7431-49eb-814a-30974400c4d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Mob\StateAIFSM">
+      <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -93,6 +99,12 @@
     <ClInclude Include="wTileMap.h">
       <Filter>World</Filter>
     </ClInclude>
+    <ClInclude Include="mMonster.h">
+      <Filter>Model\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="aiState.h">
+      <Filter>Model\Mob\StateAIFSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -145,6 +157,12 @@
     </ClCompile>
     <ClCompile Include="wTileMap.cpp">
       <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="mMonster.cpp">
+      <Filter>Model\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="aiState.cpp">
+      <Filter>Model\Mob\StateAIFSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

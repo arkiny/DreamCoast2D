@@ -34,6 +34,8 @@ void wWorld::OnInit(cD2DRenderer& renderer, coControl* in){
 
 	//
 	m_Player->setKeyControl(in);
+
+	m_Map->setSize(14.0f, 14.0f);
 }
 
 void wWorld::Render(cD2DRenderer& renderer){

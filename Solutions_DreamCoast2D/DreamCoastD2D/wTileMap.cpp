@@ -14,48 +14,15 @@ wTileMap::wTileMap()
 	//임시로 타일맵 중앙에 배치
 	m_spriteAtlas = new uSprite();
 
-	_vertical = 14.0f;
-	_horizontal = 14.0f;
+	//_vertical = 14.0f;
+	//_horizontal = 14.0f;
 	_RectTileWidth = 45.0f;
 	_RectTileHeight = 45.0f;
 	
-	_cameraX = 514.0f;
-	_cameraY = _RectTileHeight;
-
-	mapSize.left = _cameraX - ((_RectTileWidth * _horizontal));
-	mapSize.right = _cameraX + ((_RectTileWidth * _horizontal));
-	mapSize.top = _cameraY - (_RectTileHeight / 2.0f);	
-	mapSize.bottom = _cameraY + ((_RectTileHeight * _vertical) - (_RectTileHeight/2.0f));
+	// offset 설정
+	_offsetX = 514.0f;
+	_offsetY = _RectTileHeight;
 	
-	//debug및 테스트용 코드
-	for (int i = 0; i < 14; i++){
-		for (int j = 0; j < 14; j++){
-			m_mapinfo[i][j] = 0;
-		}
-	}
-
-	for (int i = 0; i < 14; i++){
-		m_mapinfo[i][0] = 2;
-	}
-	
-	for (int i = 0; i < 14; i++){
-		m_mapinfo[0][i] = 2;
-	}
-
-	for (int i = 0; i < 14; i++){
-		m_mapinfo[13][i] = 2;
-	}
-	
-	for (int i = 0; i < 14; i++){
-		m_mapinfo[i][13] = 2;
-	}
-	//
-	m_mapinfo[3][5] = 2;
-	m_mapinfo[4][8] = 2;
-	m_mapinfo[11][3] = 3;
-	m_mapinfo[12][12] = 3;
-	m_mapinfo[6][1] = 2;
-	//
 }
 
 wTileMap::~wTileMap()
@@ -158,7 +125,7 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 				onTilecheck = true;				
 			}
 			else {
-				type = m_mapinfo[i][j];
+				type = m_vMapinfo[i+j*static_cast<int>(_vertical)];
 			}
 
 			if (test2.x == i && test2.y == j){
@@ -180,17 +147,63 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 
 VECTOR2D wTileMap::twoDtoISO(VECTOR2D in){
 	VECTOR2D ret = VECTOR2D(
-		((in.x - in.y) + _cameraX), ((in.x + in.y) / 2) + _cameraY);
+		((in.x - in.y) + _offsetX), ((in.x + in.y) / 2) + _offsetY);
 	return ret;
 }
 
 VECTOR2D wTileMap::getTileCoordinates(VECTOR2D in){
 	VECTOR2D temp(0.0f, 0.0f);
-	float x = (((2.0f * in.y) - _cameraY) - (in.x - _cameraX)) / 2.0f; 
-	float y = (((2.0f * in.y) - _cameraY) + (in.x - _cameraX)) / 2.0f;
+	float x = (((2.0f * in.y) - _offsetY) - (in.x - _offsetX)) / 2.0f; 
+	float y = (((2.0f * in.y) - _offsetY) + (in.x - _offsetX)) / 2.0f;
 
 	temp.x = floorf(x / _RectTileWidth);
 	temp.y = floorf(y / _RectTileHeight);
 
 	return temp;
+}
+
+void wTileMap::setTile(float x, float y, int type){
+	int nx = static_cast<int>(x);
+	int ny = static_cast<int>(y);
+	m_vMapinfo[(static_cast<int>(_vertical)*ny) + nx] = type;
+}
+
+void wTileMap::setSize(float horizontal, float vertical){
+	_horizontal = horizontal;
+	_vertical = vertical;
+
+	for (int i = 0; i < _horizontal * _vertical; i++){
+		m_vMapinfo.push_back(0);
+	}
+	
+	//debug및 테스트용 코드
+	for (int i = 0; i < 14; i++){
+		setTile(static_cast<float>(i), 0.0f, 2);
+	}
+
+	for (int i = 0; i < 14; i++){
+		setTile(0.0f, static_cast<float>(i), 2);
+	}
+
+	for (int i = 0; i < 14; i++){
+		setTile(13.0f, static_cast<float>(i), 2);
+	}
+
+	for (int i = 0; i < 14; i++){
+		setTile(static_cast<float>(i), 13.0f, 2);
+	}
+
+	//
+	setTile(3.0f, 5.0f, 2);
+	setTile(4.0f, 8.0f, 2);
+	setTile(11.0f, 3.0f, 3);
+	setTile(12.0f, 12.0f, 3);
+	setTile(6.0f, 1.0f, 2);	
+	//
+
+
+	mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));
+	mapSize.right = _offsetX + ((_RectTileWidth * _horizontal));
+	mapSize.top = _offsetY - (_RectTileHeight / 2.0f);
+	mapSize.bottom = _offsetY + ((_RectTileHeight * _vertical) - (_RectTileHeight / 2.0f));
 }
