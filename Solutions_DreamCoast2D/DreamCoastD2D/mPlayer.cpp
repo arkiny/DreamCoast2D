@@ -5,11 +5,12 @@
 #include "VECTOR2D.h"
 #include "uSprite.h"
 #include "wTileMap.h"
+#include "uCamera.h"
 
 mPlayer::mPlayer()
 {	
 	m_ipD2DBitmap = nullptr;
-	
+	m_Cam = nullptr;
 	//todo: 임시로 중앙에 대기, 차후 맵정보에 따라 시작점 정보 수정	
 	_realVector = new VECTOR2D(514.0f, 384.0f);
 	_drawVector = new VECTOR2D(_realVector->x, _realVector->y + 15.0f);
@@ -22,7 +23,9 @@ mPlayer::mPlayer()
 mPlayer::~mPlayer()
 {
 	SafeRelease(m_ipD2DBitmap);
-
+	if (m_Cam != NULL){
+		delete m_Cam;
+	}
 	if (_drawVector != NULL){
 		delete _drawVector;
 	}
@@ -34,6 +37,7 @@ mPlayer::~mPlayer()
 void mPlayer::onInit(cD2DRenderer& renderer){
 	HWND hWnd = renderer.GetHwnd();
 	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/sprites.png", NULL);
+	m_Cam = new uCamera(1028.0, 768.0f, this->getRealPos());
 }
 
 void mPlayer::onUpdate(float fdeltatime){	
@@ -266,3 +270,43 @@ void mPlayer::onMove(float fdeltatime){
 	//
 }
 
+void mPlayer::onRender(cD2DRenderer& renderer){
+	if (m_ipD2DBitmap != nullptr){
+		//
+		VECTOR2D cpos = m_Cam->translasteToScreen(_drawVector);
+		//
+		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
+		::D2D1_RECT_F dxArea
+			= m_spriteAtlas->getCoordinateFromPivot(cpos);
+
+		//	
+		::D2D1_RECT_F srcArea
+			= m_spriteAtlas->getSrcFrameFromSprite();
+
+		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+			srcArea);
+
+		//회전등에 필요한 부분
+		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+
+		//debug 용
+		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		
+		::D2D1_RECT_F pivotArea;
+		pivotArea.top = cpos.y - 2.0f;
+		pivotArea.bottom = cpos.y + 2.0f;
+		pivotArea.left = cpos.x - 2.0f;
+		pivotArea.right = cpos.x + 2.0f;
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		//pivotArea;
+		cpos = m_Cam->translasteToScreen(_realVector);
+		pivotArea.top = cpos.y - 2.0f;
+		pivotArea.bottom = cpos.y + 2.0f;
+		pivotArea.left = cpos.x - 2.0f;
+		pivotArea.right = cpos.x + 2.0f;
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+	}
+}

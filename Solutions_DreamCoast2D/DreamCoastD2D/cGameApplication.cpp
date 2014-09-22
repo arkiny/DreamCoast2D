@@ -193,6 +193,7 @@ void cGameApplication::Run()
 				swprintf(fpsString, L"FPS : %2.2f", _fps);
 				SetWindowText(_hwnd,fpsString);
 			}
+
 			Update(deltaTime / 1000.0f);
 			Render();
 		}
@@ -214,8 +215,6 @@ void cGameApplication::Render()
 	assert(hr == S_OK);
 
 	d2dRender.EndRender();
-
-
 }
 
 void cGameApplication::Update(float deltaTime)

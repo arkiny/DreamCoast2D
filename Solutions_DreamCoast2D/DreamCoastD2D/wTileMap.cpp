@@ -5,11 +5,14 @@
 #include "uSprite.h"
 #include "wTileMap.h"
 #include "mIObject.h"
+#include "uCamera.h"
+#include "mMonster.h"
 
 wTileMap::wTileMap()
 {	
 	m_player = nullptr;
 	m_ipD2DBitmap = nullptr;
+	m_Cam = nullptr;
 
 	//임시로 타일맵 중앙에 배치
 	m_spriteAtlas = new uSprite();
@@ -20,9 +23,11 @@ wTileMap::wTileMap()
 	_RectTileHeight = 45.0f;
 	
 	// offset 설정
+	//_offsetX = 514.0f;
+	//_offsetY = _RectTileHeight;
+	
 	_offsetX = 514.0f;
 	_offsetY = _RectTileHeight;
-	
 }
 
 wTileMap::~wTileMap()
@@ -31,25 +36,44 @@ wTileMap::~wTileMap()
 	if (m_spriteAtlas != NULL){
 		delete m_spriteAtlas;
 	}
+	if (m_Cam != NULL){
+		delete m_Cam;
+	}
 }
 
 void wTileMap::onInit(cD2DRenderer& renderer){
 	HWND hWnd = renderer.GetHwnd();
 	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/maptile.png", NULL);
+	m_Cam = new uCamera(1028.0, 768.0f, m_player->getRealPos());
+	
+	mIObject* ptr = new mMonster(400.0f, 400.0f);
+	m_mobs.push_back(ptr);
+	ptr = nullptr;
+
+	for (int i = 0; i < m_mobs.size(); i++){
+		m_mobs[i]->onInit(renderer);
+		m_mobs[i]->setCam(m_Cam);
+	}
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
 	m_player->onUpdate(fdeltatime);
+	for (int i = 0; i < m_mobs.size(); i++){
+		m_mobs[i]->onUpdate(fdeltatime);
+	}
 }
 
 void wTileMap::onRender(cD2DRenderer& renderer){
 	// debug
-	renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBrush());
+	//renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBrush());
 	//
 	renderMap(renderer);	
 
 	// alpha값, 옵션에 따라 키고 끌수 있도록 나중에 조절
 	//m_player->onRender(renderer, true);
+	for (int i = 0; i < m_mobs.size(); i++){
+		m_mobs[i]->onRender(renderer);
+	}
 }
 
 void wTileMap::setPlayer(mIObject* p){
@@ -97,7 +121,8 @@ void wTileMap::renderTile(float x, float y, int type, cD2DRenderer& renderer){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
 		break;
 	}
-	wTileMap::hRender(renderer, tilePos);	
+
+	wTileMap::hRender(renderer, m_Cam->translasteToScreen(&tilePos));
 }
 
 void wTileMap::renderMap(cD2DRenderer& renderer){
@@ -108,7 +133,7 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 
 	// get real pos
 	VECTOR2D test = getTileCoordinates(*m_player->getRealPos());
-	VECTOR2D test2 = getTileCoordinates(*m_player->getPos());
+	VECTOR2D test2 = getTileCoordinates(*m_player->getDrawPos());
 
 
 	for (int j = 0; j < _vertical; j++){
@@ -177,21 +202,21 @@ void wTileMap::setSize(float horizontal, float vertical){
 	}
 	
 	//debug및 테스트용 코드
-	for (int i = 0; i < 14; i++){
-		setTile(static_cast<float>(i), 0.0f, 2);
-	}
+	//for (int i = 0; i < 14; i++){
+	//	setTile(static_cast<float>(i), 0.0f, 2);
+	//}
 
-	for (int i = 0; i < 14; i++){
-		setTile(0.0f, static_cast<float>(i), 2);
-	}
+	//for (int i = 0; i < 14; i++){
+	//	setTile(0.0f, static_cast<float>(i), 2);
+	//}
 
-	for (int i = 0; i < 14; i++){
-		setTile(13.0f, static_cast<float>(i), 2);
-	}
+	//for (int i = 0; i < 14; i++){
+	//	setTile(13.0f, static_cast<float>(i), 2);
+	//}
 
-	for (int i = 0; i < 14; i++){
-		setTile(static_cast<float>(i), 13.0f, 2);
-	}
+	//for (int i = 0; i < 14; i++){
+	//	setTile(static_cast<float>(i), 13.0f, 2);
+	//}
 
 	//
 	setTile(3.0f, 5.0f, 2);
@@ -202,8 +227,8 @@ void wTileMap::setSize(float horizontal, float vertical){
 	//
 
 
-	mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));
+	/*mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));
 	mapSize.right = _offsetX + ((_RectTileWidth * _horizontal));
 	mapSize.top = _offsetY - (_RectTileHeight / 2.0f);
-	mapSize.bottom = _offsetY + ((_RectTileHeight * _vertical) - (_RectTileHeight / 2.0f));
+	mapSize.bottom = _offsetY + ((_RectTileHeight * _vertical) - (_RectTileHeight / 2.0f));*/
 }

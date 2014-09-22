@@ -4,6 +4,7 @@
 class coControl;
 class uSprite;
 
+
 class mPlayer : public mIObject
 {
 public:
@@ -11,7 +12,7 @@ public:
 	~mPlayer();
 	void onInit(cD2DRenderer& renderer);
 	void onUpdate(float fdeltatime);
-	//void onRender(cD2DRenderer& renderer);
+	void onRender(cD2DRenderer& renderer);
 
 	// set Communication Pointer
 	void setKeyControl(coControl* in);	
@@ -28,6 +29,7 @@ private:
 
 	// Communicate Pointer with control and tileMap
 	coControl *m_pControl;	
+	
 	
 	// 공속 변수, 차후 아이템 추가, 캐릭터 추가시 동적 변화
 	float m_attackSpeed = 2.0f;

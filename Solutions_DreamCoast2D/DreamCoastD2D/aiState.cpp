@@ -8,6 +8,7 @@ void aiStateIdle::enter(mMonster* pmon){
 }
 
 void aiStateIdle::execute(mMonster* pmon){
+	pmon->onIdle(pmon->getdeltaTime());
 	// 이동이 없으므로 nextFrame만 실시	
 	// 뭐 나중에 전투 추가되면 체력회복도 넣어보고
 }

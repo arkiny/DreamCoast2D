@@ -6,11 +6,14 @@ class mMonster;
 class aiState
 {
 public:
-	aiState();
-	virtual ~aiState();
+	aiState(){}
+	virtual ~aiState(){}
 public:
+	//상태진입
 	virtual void enter(mMonster* pmon) = 0;
+	//상태진행
 	virtual void execute(mMonster* pmon) = 0;
+	//상태 이탈
 	virtual void exit(mMonster* pmon) = 0;
 };
 

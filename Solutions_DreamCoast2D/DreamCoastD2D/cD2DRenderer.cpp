@@ -83,6 +83,12 @@ void cD2DRenderer::InitializeRT(HWND hWnd)
 	m_dxSize = ::D2D1::SizeU(rc.right - rc.left,
 		rc.bottom - rc.top);
 
+	/*m_dxSize = ::D2D1::SizeU(800,
+		600);*/
+
+	//::D2D1_PRESENT_OPTIONS_IMMEDIATELY를 쓰면 수직동기화를 끌수있다.
+	// 기본옵션은 수직동기화...
+	// 원하는 사이즈대로 렌더하려면, 창을 만들어서 렌더해야하나?
 	hr = m_ipD2DFactory->CreateHwndRenderTarget(dxRTProperties,
 		::D2D1::HwndRenderTargetProperties(hWnd, m_dxSize),
 		&m_ipRT);
@@ -93,7 +99,6 @@ void cD2DRenderer::InitializeRT(HWND hWnd)
 		D2D1::ColorF(D2D1::ColorF::Black),
 		&m_pBlackBrush
 		);
-
 }
 
 ID2D1Bitmap* cD2DRenderer::CreateD2DBitmapFromFile(

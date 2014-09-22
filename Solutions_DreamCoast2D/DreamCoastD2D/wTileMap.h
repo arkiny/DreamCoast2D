@@ -5,6 +5,7 @@ class cD2DRenderer;
 class VECTOR2D;
 class uSprite;
 class mIObject;
+class uCamera;
 
 class wTileMap
 {
@@ -39,6 +40,7 @@ private:
 	ID2D1Bitmap* m_ipD2DBitmap;		// 맵 스프라이트 파일
 	std::vector<int> m_vMapinfo;	// 동적으로 저장된 맵 데이타
 
+	uCamera* m_Cam;
 	// debug	
 
 	// tile의 갯수

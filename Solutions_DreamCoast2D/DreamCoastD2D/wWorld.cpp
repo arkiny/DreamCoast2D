@@ -22,20 +22,18 @@ void wWorld::OnInit(cD2DRenderer& renderer, coControl* in){
 	m_Player->onInit(renderer);
 	
 	m_Map = new wTileMap;
+	m_Map->setPlayer(m_Player);
 	m_Map->onInit(renderer);
 
+	m_Player->setTileMap(m_Map);
+	m_Player->setKeyControl(in);
+	
 	// 데이터 통신용 포인터 연결
 	// 컨트롤은 한번 정의해놓으면 고칠일이 없지만, 
 	// 새로운 맵이나 새로운 캐릭터 같은 경우에는
 	// 상호간 포인터 업데이트를 꼭 해줘야한다. 
-	// 물론 이전 포인터 메모리 삭제하는 것도 필수!
-	m_Map->setPlayer(m_Player);
-	m_Player->setTileMap(m_Map);
-
-	//
-	m_Player->setKeyControl(in);
-
-	m_Map->setSize(14.0f, 14.0f);
+	// 물론 이전 포인터 메모리 삭제하는 것도 필수
+	m_Map->setSize(50.0f, 50.0f);
 }
 
 void wWorld::Render(cD2DRenderer& renderer){

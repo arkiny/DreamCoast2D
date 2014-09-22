@@ -105,6 +105,9 @@
     <ClInclude Include="aiState.h">
       <Filter>Model\Mob\StateAIFSM</Filter>
     </ClInclude>
+    <ClInclude Include="uCamera.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="aiState.cpp">
       <Filter>Model\Mob\StateAIFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="uCamera.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

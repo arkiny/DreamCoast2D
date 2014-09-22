@@ -5,6 +5,7 @@ class cD2DRenderer;
 class VECTOR2D;
 class uSprite;
 class wTileMap;
+class uCamera;
 
 // up to first entering
 enum DIRECTION{ LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP };
@@ -24,10 +25,11 @@ public:
 	virtual void onRender(cD2DRenderer& renderer);
 	virtual void onRender(cD2DRenderer& renderer, bool alpha);
 	
-	VECTOR2D* getPos(){ return _drawVector; }
+	VECTOR2D* getDrawPos(){ return _drawVector; }
 	VECTOR2D* getRealPos(){ return _realVector; }
 	void setPos(float x, float y);
 	void setTileMap(wTileMap* in);
+	void setCam(uCamera* in){ m_Cam = in; }
 
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
@@ -37,6 +39,7 @@ protected:
 
 	// Communicate Pointer with control and tileMap
 	wTileMap *m_pTileMap;
+	uCamera *m_Cam;
 
 	// Player의 움직임을 가지고 있는 빗맵
 	// 차후 uSprite클래스내로 옮길지 고민
