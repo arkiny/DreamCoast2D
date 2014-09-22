@@ -35,7 +35,7 @@ void mIObject::onRender(cD2DRenderer& renderer){
 		pivotArea.right = _drawVector->x + 2.0f;
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
 
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
 		pivotArea;
 		pivotArea.top = _realVector->y - 2.0f;
 		pivotArea.bottom = _realVector->y + 2.0f;
