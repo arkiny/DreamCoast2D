@@ -51,7 +51,7 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 	m_mobs.push_back(ptr);
 	ptr = nullptr;
 
-	for (unsigned int i = 0; i < m_mobs.size(); i++){
+	for (int i = 0; i < m_mobs.size(); i++){
 		m_mobs[i]->onInit(renderer);
 		m_mobs[i]->setCam(m_Cam);
 	}
@@ -59,10 +59,8 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 
 void wTileMap::onUpdate(float fdeltatime){	
 	m_player->onUpdate(fdeltatime);
-	for (unsigned int i = 0; i < m_mobs.size(); i++){
-		m_mobs[i]->onUpdate(fdeltatime);		
-		// todo:
-		// 업데이트와 동시에 포지션별로 각 타일랜더핸들러에 자기 좌표에 포인터를 먹여준다.
+	for (int i = 0; i < m_mobs.size(); i++){
+		m_mobs[i]->onUpdate(fdeltatime);
 	}
 }
 
@@ -74,13 +72,58 @@ void wTileMap::onRender(cD2DRenderer& renderer){
 
 	// alpha값, 옵션에 따라 키고 끌수 있도록 나중에 조절
 	//m_player->onRender(renderer, true);
-	for (unsigned int i = 0; i < m_mobs.size(); i++){
+	for (int i = 0; i < m_mobs.size(); i++){
 		m_mobs[i]->onRender(renderer);
 	}
 }
 
 void wTileMap::setPlayer(mIObject* p){
 	m_player = p;
+}
+
+void wTileMap::hRender(cD2DRenderer& renderer, VECTOR2D tilePos){
+	if (m_ipD2DBitmap != nullptr){
+
+		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
+		::D2D1_RECT_F dxArea
+			= m_spriteAtlas->getCoordinateFromPivotCenter(tilePos);
+
+		//	
+		::D2D1_RECT_F srcArea
+			= m_spriteAtlas->getSrcFrameFromSprite();
+
+		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+			srcArea);
+		
+		//회전등에 필요한 부분
+		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());	
+	}	
+}
+
+void wTileMap::renderTile(float x, float y, int type, cD2DRenderer& renderer){
+	VECTOR2D tilePos(x, y);
+	// debug
+	switch (type){
+	case 0:
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);		
+		break;
+	case 1:
+		m_spriteAtlas->pickSpriteAtlas(100.0f, 0.0f, 90.0f, 45.0f, 0);		
+		break;
+	case 2:
+		m_spriteAtlas->pickSpriteAtlas(200.0f, 0.0f, 90.0f, 62.0f, 0);
+		break;
+	case 3:
+		// offsetY = -((높이 - 원래타일높이) / 2)
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.5f, 0);
+		break;
+	default:
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
+		break;
+	}
+
+	wTileMap::hRender(renderer, m_Cam->translasteToScreen(&tilePos));
 }
 
 void wTileMap::renderMap(cD2DRenderer& renderer){
@@ -107,20 +150,17 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 				type = 1;				
 				onTilecheck = true;				
 			}
-			//else {
-			//	//type = m_vMapRenderHandler[i + j*static_cast<int>(_vertical)]->getType();
-			//	//type = m_vMapinfo[i+j*static_cast<int>(_vertical)];
-			//}
+			else {
+				//type = m_vMapRenderHandler[i + j*static_cast<int>(_vertical)]->getType();
+				//type = m_vMapinfo[i+j*static_cast<int>(_vertical)];
+			}
 
 			if (test2.x == i && test2.y == j){
 				onTilecheck = true;
 			}
 
-			// 동시에 애드된 오브젝트들도 렌더
-			m_vMapRenderHandler[i + j*static_cast<int>(_vertical)]->
-				renderTile(pt.x, pt.y, renderer, m_spriteAtlas, m_ipD2DBitmap);
-
-			//renderTile(pt.x, pt.y, type, renderer);
+			
+			renderTile(pt.x, pt.y, type, renderer);
 			// 오더링 타일 뒤에 플레이어 숨기도록 해당 타일위에 있을때에 렌더하게 한다.
 			// Todo: 매번 업데이트 할 필요 없도록 미리 계산해놓도록?
 			// 이러면 타일을 넘어가게 될경우 캐릭터 렌더가 다음 타일에 가려버리게 되는데...
@@ -128,6 +168,7 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 				m_player->onRender(renderer);
 				onTilecheck = false;
 			}
+			//
 		}
 	}
 }
@@ -152,16 +193,16 @@ VECTOR2D wTileMap::getTileCoordinates(VECTOR2D in){
 void wTileMap::setTile(float x, float y, int type){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
-	m_vMapRenderHandler[(static_cast<int>(_vertical)*ny) + nx]->setType(type);
+	m_vMapinfo[(static_cast<int>(_vertical)*ny) + nx] = type;
 }
 
 void wTileMap::setSize(float horizontal, float vertical){
 	_horizontal = horizontal;
 	_vertical = vertical;
 
-	/*for (int i = 0; i < _horizontal * _vertical; i++){
+	for (int i = 0; i < _horizontal * _vertical; i++){
 		m_vMapinfo.push_back(0);
-	}*/
+	}
 
 	uTile* ptr = nullptr;
 	for (int i = 0; i < _horizontal * _vertical; i++){
@@ -189,7 +230,6 @@ void wTileMap::setSize(float horizontal, float vertical){
 	//}
 
 	//
-	
 	setTile(3.0f, 5.0f, 2);
 	setTile(4.0f, 8.0f, 2);
 	setTile(11.0f, 3.0f, 3);
@@ -197,13 +237,9 @@ void wTileMap::setSize(float horizontal, float vertical){
 	setTile(6.0f, 1.0f, 2);	
 	//
 
-	
+
 	/*mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));
 	mapSize.right = _offsetX + ((_RectTileWidth * _horizontal));
 	mapSize.top = _offsetY - (_RectTileHeight / 2.0f);
 	mapSize.bottom = _offsetY + ((_RectTileHeight * _vertical) - (_RectTileHeight / 2.0f));*/
-}
-
-int wTileMap::getMapinfo(int x, int y) { 	
-	return m_vMapRenderHandler[(static_cast<int>(_vertical)*y) + x]->getType();
 }

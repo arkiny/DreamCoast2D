@@ -33,7 +33,7 @@ void wWorld::OnInit(cD2DRenderer& renderer, coControl* in){
 	// 새로운 맵이나 새로운 캐릭터 같은 경우에는
 	// 상호간 포인터 업데이트를 꼭 해줘야한다. 
 	// 물론 이전 포인터 메모리 삭제하는 것도 필수
-	m_Map->setSize(50.0f, 50.0f);
+	m_Map->setSize(25.0f, 25.0f);
 }
 
 void wWorld::Render(cD2DRenderer& renderer){

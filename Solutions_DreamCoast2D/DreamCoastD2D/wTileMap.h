@@ -6,6 +6,7 @@ class VECTOR2D;
 class uSprite;
 class mIObject;
 class uCamera;
+class uTile;
 
 class wTileMap
 {
@@ -25,7 +26,7 @@ public:
 	// 받은 벡터를 기반으로 isometric 타일의 위치를 잡는 함수
 	VECTOR2D getTileCoordinates(VECTOR2D in);
 	void setTile(float x, float y, int type);
-	int getMapinfo(int x, int y){ return m_vMapinfo[x + y*static_cast<int>(_vertical)]; }
+	int getMapinfo(int x, int y);
 
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
@@ -38,7 +39,9 @@ private:
 	
 	uSprite* m_spriteAtlas;			// 맵 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 맵 스프라이트 파일
+	
 	std::vector<int> m_vMapinfo;	// 동적으로 저장된 맵 데이타
+	std::vector<uTile*> m_vMapRenderHandler; // uTile형식으로 핸들러
 
 	uCamera* m_Cam;
 	// debug	
@@ -59,10 +62,10 @@ private:
 	float _offsetY;
 	::D2D1_RECT_F mapSize; // 맵의 외곽선을 저장할 함수
 	
-	// 타일 위치를 받아서 피봇을 타일을 통해서 실시, 실질적으로 렌더링되는 헬퍼메소드
-	void hRender(cD2DRenderer& renderer, VECTOR2D tilePos);
-	// 타일 개개를 렌더하는 함수, x축, y축, 타입을 받아서 타일 하나를 렌더한다.
-	void renderTile(float x, float y, int type, cD2DRenderer& renderer);
+	//// 타일 위치를 받아서 피봇을 타일을 통해서 실시, 실질적으로 렌더링되는 헬퍼메소드
+	//void hRender(cD2DRenderer& renderer, VECTOR2D tilePos);
+	//// 타일 개개를 렌더하는 함수, x축, y축, 타입을 받아서 타일 하나를 렌더한다.
+	//void renderTile(float x, float y, int type, cD2DRenderer& renderer);
 	// 모든 타일을 렌더하는 함수
 	void renderMap(cD2DRenderer& renderer);		
 	
