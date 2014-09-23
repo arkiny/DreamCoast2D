@@ -27,6 +27,11 @@ public:
 	VECTOR2D getTileCoordinates(VECTOR2D in);
 	void setTile(float x, float y, int type);
 	int getMapinfo(int x, int y);
+	
+
+	VECTOR2D getMapLimit();
+	void addObjectToTile(float x, float y, mIObject* in);
+	uTile* getTile(float x, float y);
 
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
@@ -71,6 +76,8 @@ private:
 	
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
 	VECTOR2D twoDtoISO(VECTOR2D in);	
+
+	void drawHealthBar(cD2DRenderer& renderer, mIObject* obj);
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음 (sprite타일의 크기)

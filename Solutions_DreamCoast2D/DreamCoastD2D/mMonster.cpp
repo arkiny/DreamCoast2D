@@ -12,10 +12,14 @@ mMonster::mMonster()
 	_realVector = new VECTOR2D(200.0f, 300.0f);
 	_drawVector = new VECTOR2D(_realVector->x, _realVector->y + 15.0f);
 	m_spriteAtlas = new uSprite();
-	m_pState = nullptr; // 현재 상태는 nullptr로 시작
+
+	m_pState = nullptr; // 현재 상태는 nullptr로 init
 
 	m_SeeDir = RIGHTDOWN;
 	m_State = ONMOVE;
+
+	m_MAXHP = 1000.0f;
+	m_HP = 1000.0f;
 }
 
 mMonster::mMonster(float x, float y){
@@ -23,7 +27,7 @@ mMonster::mMonster(float x, float y){
 	_realVector = new VECTOR2D(x, y);
 	_drawVector = new VECTOR2D(_realVector->x, _realVector->y + 15.0f);
 	m_spriteAtlas = new uSprite();
-	m_pState = nullptr; // 현재 상태는 nullptr로 시작
+	m_pState = nullptr; // 현재 상태는 nullptr로 init
 
 	m_SeeDir = RIGHTDOWN;
 	m_State = ONMOVE;
@@ -44,7 +48,9 @@ void mMonster::onInit(cD2DRenderer& renderer){
 	// 현재는 기본으로 포링이지만, 상속받아서 바꿀수 있다.
 	HWND hWnd = renderer.GetHwnd();
 	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/poring.png", NULL);
+	// idle에서 시작
 	m_pState = new aiStateIdle();
+	m_pState->enter(this);	
 }
 
 //void mMonster::onInit(cD2DRenderer& renderer){
@@ -67,20 +73,28 @@ void mMonster::changeState(aiState* pnew){
 }
 
 // 164, 39, 4frame
-void mMonster::onIdle(float deltatime){
-	m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 3);	
-	m_spriteAtlas->nextFrame(deltatime);
+void mMonster::onIdle(){
+	if (m_SeeDir == LEFTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 3);
+	} 
+	else if (m_SeeDir == LEFTUP){
+		m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 3);
+	}
+	else if (m_SeeDir == RIGHTUP){
+		m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 3);
+	}
+	else if (m_SeeDir == RIGHTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 3);
+	}
 }
 
-void mMonster::onAttack(float deltatime){
-
+void mMonster::onAttack(){
 }
 
-void mMonster::onHit(float deltatime){
-
+void mMonster::onHit(){
 }
 
-void mMonster::onDeath(float deltatime){
+void mMonster::onDeath(){
 
 }
 
@@ -92,14 +106,30 @@ void mMonster::onRender(cD2DRenderer& renderer){
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
 		::D2D1_RECT_F dxArea
 			= m_spriteAtlas->getCoordinateFromPivot(cpos);
+			
+			//= m_spriteAtlas->getCoordinateFromPivot(cpos);
 
 		//	
 		::D2D1_RECT_F srcArea
 			= m_spriteAtlas->getSrcFrameFromSprite();
+				
+		if (m_SeeDir == LEFTDOWN || m_SeeDir == LEFTUP){
+			renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+		}
+		else if (m_SeeDir == RIGHTDOWN || m_SeeDir == RIGHTUP) {
+			renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Scale(
+				D2D1::Size(-1.0f, 1.0f),
+				D2D1::Point2F(cpos.x, cpos.y)));
+			
+			renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
 
-		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
-			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-			srcArea);
+			renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+		}
+
 
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());

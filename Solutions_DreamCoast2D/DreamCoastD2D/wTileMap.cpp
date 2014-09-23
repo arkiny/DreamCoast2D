@@ -58,25 +58,50 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
-	m_player->onUpdate(fdeltatime);
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
 		m_mobs[i]->onUpdate(fdeltatime);		
-		// todo:
-		// 업데이트와 동시에 포지션별로 각 타일랜더핸들러에 자기 좌표에 포인터를 먹여준다.
+		
+		// 업데이트와 동시에 포지션별로 각 타일랜더핸들러 자기 좌표에 포인터를 먹여준다.
+		VECTOR2D pos = getTileCoordinates(*m_mobs[i]->getRealPos());
+		::wTileMap::addObjectToTile(pos.x, pos.y, m_mobs[i]);
 	}
+	
+	// player는 고정되어 있는 메모리이므로
+	// 일단 mob들이 타일에 뿌려진 뒤에 처리를 해야한다.
+	// 킄... 선공은 몬스터가 먼저인가 킄....
+	m_player->onUpdate(fdeltatime);
 }
 
 void wTileMap::onRender(cD2DRenderer& renderer){
 	// debug
 	//renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBrush());
 	//
-	renderMap(renderer);	
-
-	// alpha값, 옵션에 따라 키고 끌수 있도록 나중에 조절
-	//m_player->onRender(renderer, true);
+	::wTileMap::renderMap(renderer);
+	// Todo: 차후 healthbar option 넣을 것
+	::wTileMap::drawHealthBar(renderer, m_player);
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
-		m_mobs[i]->onRender(renderer);
+		::wTileMap::drawHealthBar(renderer, m_mobs[i]);
 	}
+}
+
+void wTileMap::drawHealthBar(cD2DRenderer& renderer, mIObject* obj){
+	VECTOR2D cpos = m_Cam->translasteToScreen(obj->getDrawPos());
+
+	::D2D1_RECT_F healthBar;
+	healthBar.top = cpos.y + 2.0f;
+	healthBar.bottom = cpos.y + 7.0f;
+	healthBar.left = cpos.x - 30.0f;
+	healthBar.right = cpos.x + 30.0f;
+
+	::D2D1_RECT_F currentHealthbar;
+	currentHealthbar.top = cpos.y + 2.0f;
+	currentHealthbar.bottom = cpos.y + 7.0f;
+	currentHealthbar.left = cpos.x - 30.0f;
+	currentHealthbar.right = (cpos.x - 30.0f) + (obj->getHealth() / obj->getMAXHealth() * 60.0f);
+
+	renderer.GetRenderTarget()->FillRectangle(healthBar, renderer.GetRedBrush());
+	renderer.GetRenderTarget()->FillRectangle(currentHealthbar, renderer.GetGreenBrush());
+	renderer.GetRenderTarget()->DrawRectangle(healthBar, renderer.GetBrush());
 }
 
 void wTileMap::setPlayer(mIObject* p){
@@ -116,7 +141,8 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 				onTilecheck = true;
 			}
 
-			// 동시에 애드된 오브젝트들도 렌더
+			// 타일 렌더 후 동시에 애드된 오브젝트들도 렌더
+			// 렌더 이후에 오브젝트 포인터들은 팝되면서 사라진다.
 			m_vMapRenderHandler[i + j*static_cast<int>(_vertical)]->
 				renderTile(pt.x, pt.y, renderer, m_spriteAtlas, m_ipD2DBitmap);
 
@@ -206,4 +232,21 @@ void wTileMap::setSize(float horizontal, float vertical){
 
 int wTileMap::getMapinfo(int x, int y) { 	
 	return m_vMapRenderHandler[(static_cast<int>(_vertical)*y) + x]->getType();
+}
+
+void wTileMap::addObjectToTile(float x, float y, mIObject* in){
+	int nx = static_cast<int>(x);
+	int ny = static_cast<int>(y);
+	m_vMapRenderHandler[(static_cast<int>(_vertical)*ny) + nx]->addObject(in);
+}
+
+VECTOR2D wTileMap::getMapLimit(){ 
+	return VECTOR2D(_horizontal, _vertical); 
+}
+
+ 
+uTile* wTileMap::getTile(float x, float y){
+	int nx = static_cast<int>(x);
+	int ny = static_cast<int>(y);
+	return m_vMapRenderHandler[(static_cast<int>(_vertical)*ny) + nx];
 }

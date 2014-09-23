@@ -25,23 +25,36 @@ public:
 	virtual void onRender(cD2DRenderer& renderer);
 	virtual void onRender(cD2DRenderer& renderer, bool alpha);
 	
+	// position control
 	VECTOR2D* getDrawPos(){ return _drawVector; }
 	VECTOR2D* getRealPos(){ return _realVector; }
-	void setPos(float x, float y);
+	void setRealPos(float x, float y);
+	void setDrawPos(float x, float y);
+
+	// Set point connection with other class
 	void setTileMap(wTileMap* in);
 	void setCam(uCamera* in){ m_Cam = in; }
+
+	// health control
+	float getHealth(){ return m_HP; }
+	float getMAXHealth() { return m_MAXHP; }
+	void setHealth(float in){ m_HP = in; }
+	void setMAXHealth(float in) { m_MAXHP = in; }
+
+	//
+	uSprite* getSprite() { return m_spriteAtlas; }
 
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
 	// POINT를 쓸 경우 LONG 값에서 변환이 일어나기 때문에 가감연산에 문제가 생긴다.
-	VECTOR2D* _drawVector;			// 그림 위치
-	VECTOR2D* _realVector;			// 실제 위치
+	VECTOR2D* _drawVector;			// 그림 위치(pivot)
+	VECTOR2D* _realVector;			// 실제 위치(position)
 
 	// Communicate Pointer with control and tileMap
 	wTileMap *m_pTileMap;
 	uCamera *m_Cam;
 
-	// Player의 움직임을 가지고 있는 빗맵
+	// object의 sprites을 가지고 있는 빗맵
 	// 차후 uSprite클래스내로 옮길지 고민
 	// 그렇게 되면 렌더에 관한 처리는
 	// 대부분 uSprite가 처리하게 되므로
@@ -50,6 +63,10 @@ protected:
 	uSprite* m_spriteAtlas;			// 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 스프라이트 파일
 
-	float m_hp;
+	// 체력 변수, 차후 아이템 추가, 캐릭터 추가시 동적 변화
+	float m_MAXHP = 100.0f;
+	float m_MAXMP = 100.0f;
+	float m_HP = 100.0f;
+	float m_MP = 100.0f;
 };
 

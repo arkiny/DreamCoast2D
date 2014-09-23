@@ -99,6 +99,22 @@ void cD2DRenderer::InitializeRT(HWND hWnd)
 		D2D1::ColorF(D2D1::ColorF::Black),
 		&m_pBlackBrush
 		);
+
+	assert(hr == S_OK);
+
+	hr = m_ipRT->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF::GreenYellow),
+		&m_pGreenBrush
+		);
+
+	assert(hr == S_OK);
+
+	hr = m_ipRT->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF::DarkRed),
+		&m_pRedBrush
+		);
+	assert(hr == S_OK);
+	
 }
 
 ID2D1Bitmap* cD2DRenderer::CreateD2DBitmapFromFile(

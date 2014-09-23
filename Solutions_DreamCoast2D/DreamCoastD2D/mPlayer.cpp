@@ -6,6 +6,7 @@
 #include "uSprite.h"
 #include "wTileMap.h"
 #include "uCamera.h"
+#include "uTile.h"
 
 mPlayer::mPlayer()
 {	
@@ -17,6 +18,11 @@ mPlayer::mPlayer()
 	m_spriteAtlas = new uSprite();
 	m_SeeDir = RIGHTDOWN;
 	m_State = ONMOVE;
+
+	m_MAXHP = 2100.0f;
+	m_MAXMP = 200.0f;
+	m_HP = 2100.0f;
+	m_MP = 200.0f;
 }
 
 
@@ -47,6 +53,7 @@ void mPlayer::onUpdate(float fdeltatime){
 		}
 		else {
 			m_State = ONATTACK;
+			m_attackaccumtime = 0.0f;
 			m_spriteAtlas->setCurrentFrame(0);			
 		}
 	}
@@ -54,12 +61,46 @@ void mPlayer::onUpdate(float fdeltatime){
 		mPlayer::onAttack(fdeltatime);
 	}
 	else if (m_State == ONMOVE){
+		m_attackaccumtime = 0.0f;
 		mPlayer::onMove(fdeltatime);
 	}
 }
 
 // todo: 공속조정 변수가 필요함
 void mPlayer::onAttack(float fdeltatime){
+	// fdeltatime을 받아서 일정 시간에 도달하였을 경우 attack처리
+	m_attackaccumtime += fdeltatime;
+
+	//bool attacktrigger = false;
+	VECTOR2D currentTile = m_pTileMap->getTileCoordinates(*_realVector);
+	float fx, fy;
+
+	if (m_attackaccumtime > FRAMERATE * 2.0f){
+		//attacktrigger = true;
+		m_attackaccumtime = 0.0f;
+		if (m_SeeDir == LEFTDOWN){
+			fx = currentTile.x + 1.0f;
+			fy = currentTile.y;
+		}
+		else if (m_SeeDir == LEFTUP){
+			fx = currentTile.x;
+			fy = currentTile.y - 1.0f;
+		}
+		else if (m_SeeDir == RIGHTDOWN){
+			fx = currentTile.x;
+			fy = currentTile.y + 1.0f;
+		}
+		else if (m_SeeDir == RIGHTUP){
+			fx = currentTile.x - 1.0f;;
+			fy = currentTile.y;
+		}
+		else {}
+		// 같은 타일내에 겹쳐 있을수도 있으므로...
+		// 차후 이 자리에는 타일 onHIT계열이 들어간다. 
+		m_pTileMap->getTile(currentTile.x, currentTile.y)->onHit(10.0f);
+		m_pTileMap->getTile(fx, fy)->onHit(10.0f);
+	}
+
 	if (m_spriteAtlas->getCurrentFrame() == 7){
 		m_spriteAtlas->setCurrentFrame(0);
 		m_State = ONMOVE;
@@ -67,7 +108,6 @@ void mPlayer::onAttack(float fdeltatime){
 	}
 
 	// 데미지 처리는 일정 프레임에 트리거 되도록
-
 	if (m_SeeDir == LEFTDOWN){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, 19.5f, 0.0f, 7);
 	}
@@ -244,8 +284,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 19.5f, 0.0f, 4);
 			//m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 4);
 		}
-	}
-	
+	}	
 	// frame update
 	m_spriteAtlas->nextFrame(fdeltatime);
 	
@@ -260,8 +299,17 @@ void mPlayer::onMove(float fdeltatime){
 
 	float bottomX = m_pTileMap->getTileCoordinates(*_realVector + vMover).x;
 	float bottomY = m_pTileMap->getTileCoordinates(*_realVector + vMover).y;
-	
+
+	// 외곽 충돌 처리
+	if (topX >= m_pTileMap->getMapLimit().x || topY >= m_pTileMap->getMapLimit().y||
+		bottomX >= m_pTileMap->getMapLimit().x || bottomY >= m_pTileMap->getMapLimit().y||
+		topX < 0 || topY < 0 ||bottomX < 0 || bottomY < 0){
+		return;
+	}
+
+	// 이동불가시 이동불가 처리
 	// move update, 여기서 float -> int 변환이 일어나 데이터 로스가 있을수도 있다.
+	// 게임 특성상 몬스터와의 충돌처리는 아직 없음(만약 보스형이라면 충돌 처리가 있어야할지도)
 	if (m_pTileMap->getMapinfo(static_cast<int>(topX), static_cast<int>(topY)) == 0
 		&& m_pTileMap->getMapinfo(static_cast<int>(bottomX), static_cast<int>(bottomY)) == 0){
 		*_realVector = *_realVector + vMover;
@@ -287,6 +335,8 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 
+		
+
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
@@ -299,6 +349,7 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		
 
 		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
 		//pivotArea;

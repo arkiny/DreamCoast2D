@@ -75,7 +75,12 @@ void mIObject::onRender(cD2DRenderer& renderer, bool alpha){
 	}
 }
 
-void mIObject::setPos(float x, float y){
+void mIObject::setRealPos(float x, float y){
+	_realVector->x = x;
+	_realVector->y = y;
+}
+
+void mIObject::setDrawPos(float x, float y){
 	_drawVector->x = x;
 	_drawVector->y = y;
 }

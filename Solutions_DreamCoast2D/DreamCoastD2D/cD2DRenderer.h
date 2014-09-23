@@ -30,6 +30,9 @@ private:
 	IWICFormatConverter*		m_ipConvertedSrcBmp;
 
 	ID2D1SolidColorBrush* m_pBlackBrush;
+	ID2D1SolidColorBrush* m_pGreenBrush;
+	ID2D1SolidColorBrush* m_pRedBrush;
+
 	IDWriteFactory* m_pDWriteFactory;
 	IDWriteTextFormat* m_pTextFormat;
 
@@ -61,6 +64,15 @@ public:
 	ID2D1SolidColorBrush* GetBrush()
 	{
 		return m_pBlackBrush;
+	}
+
+	ID2D1SolidColorBrush* GetGreenBrush()
+	{
+		return m_pGreenBrush;
+	}
+
+	ID2D1SolidColorBrush* GetRedBrush(){
+		return m_pRedBrush;
 	}
 
 	IDWriteTextFormat* GetTextFormat()

@@ -27,14 +27,16 @@ public:
 	void deleteAllObject();
 	void setType(int in){ _type = in; }
 	int getType(){ return _type; }
+	std::vector<mIObject*> getTileObjects(){ return m_vObjects; }
 
 	void renderTile(float x, float y, cD2DRenderer& renderer, 
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);
 	
+	void onHit(float dmg);
 private:
 	int _type;	
 	uCamera* m_Cam;
-	std::vector<mIObject*> objects;
+	std::vector<mIObject*> m_vObjects;
 
 	void hRender(cD2DRenderer& renderer, VECTOR2D tilePos,
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);

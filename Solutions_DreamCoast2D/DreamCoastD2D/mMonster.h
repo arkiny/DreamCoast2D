@@ -17,22 +17,25 @@ public:
 	void onRender(cD2DRenderer& renderer);
 	//
 	void changeState(aiState* pnew);
-	void onIdle(float);
-	void onAttack(float);
-	void onHit(float);
-	void onDeath(float);
+	void onIdle();
+	void onAttack();
+	void onHit();
+	void onDeath();
 	//	
 
 	float getdeltaTime(){ return m_fdeltatime; }
+
+	void setDir(DIRECTION dir) { m_SeeDir = dir; }
+	DIRECTION getDir() { return m_SeeDir; }
 private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;
 	
 	aiState* m_pState;
+
 	float m_fdeltatime = 0.0f;
 
 	// 기본 스탯
-	float m_health = 100.0f;
 	bool m_aggro = false;
 };
 

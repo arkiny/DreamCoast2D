@@ -1,6 +1,7 @@
 #pragma once
 
 class mMonster;
+class uSprite;
 
 // aiState가 괜찮게 설정되면, 플레이어 오브젝트도 스테이트 머신으로 치환
 class aiState
@@ -22,4 +23,6 @@ private:
 	void enter(mMonster* pmon);
 	void execute(mMonster* pmon);
 	void exit(mMonster* pmon);
+
+	uSprite* m_sprite;
 };

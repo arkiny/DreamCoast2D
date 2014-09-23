@@ -4,6 +4,7 @@
 #include "VECTOR2D.h"
 #include "uSprite.h"
 #include "cD2DRenderer.h"
+#include "miObject.h"
 
 uTile::uTile()
 {
@@ -43,7 +44,14 @@ void uTile::renderTile(float x, float y, cD2DRenderer& renderer,
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
 		break;
 	}
+
 	hRender(renderer, m_Cam->translasteToScreen(&tilePos), m_spriteAtlas, m_ipD2DBitmap);
+	mIObject* ptr = nullptr;
+	while (!m_vObjects.empty()){
+		ptr = m_vObjects.back();
+		m_vObjects.pop_back();
+		ptr->onRender(renderer);
+	}
 }
 
 void uTile::hRender(cD2DRenderer& renderer, VECTOR2D tilePos, 
@@ -64,5 +72,15 @@ void uTile::hRender(cD2DRenderer& renderer, VECTOR2D tilePos,
 
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());	
+	}
+}
+
+void uTile::addObject(mIObject* in){
+	m_vObjects.push_back(in);
+}
+
+void uTile::onHit(float dmg){
+	for (mIObject* obj : m_vObjects){
+		obj->setHealth(obj->getHealth() - dmg);
 	}
 }
