@@ -8,12 +8,20 @@ public:
 
 	VECTOR2D();
 	VECTOR2D(float _x, float _y);
-	VECTOR2D operator+(const VECTOR2D& vec) const;
-	VECTOR2D operator-(const VECTOR2D& vec) const;
+	
+	
 	float Length();
 	void Normalize();
+
+	// operator overriding
 	VECTOR2D operator*(float scalar) const;
 	VECTOR2D operator/(float scalar) const;
+	VECTOR2D operator+(const VECTOR2D& vec) const;
+	VECTOR2D operator-(const VECTOR2D& vec) const;
+	bool operator==(const VECTOR2D& vec) const;
+	bool operator!=(const VECTOR2D& vec) const;
+	
+	// for debugging
 	void DrawVector(HDC hdc, int x, int y, COLORREF color);
 
 }*LPVECTOR2D;

@@ -21,6 +21,14 @@ VECTOR2D VECTOR2D::operator-(const VECTOR2D& vec) const{
 	return VECTOR2D(x - vec.x, y - vec.y);
 }
 
+bool VECTOR2D::operator==(const VECTOR2D& vec) const{
+	return (x == vec.x) && (y == vec.y);
+}
+
+bool VECTOR2D::operator!=(const VECTOR2D& vec) const{
+	return (x != vec.x) || (y != vec.y);
+}
+
 float VECTOR2D::Length()
 {
 	return sqrt(x * x + y * y);

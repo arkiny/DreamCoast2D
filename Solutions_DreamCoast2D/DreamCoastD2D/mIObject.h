@@ -69,5 +69,8 @@ protected:
 	float m_MAXMP = 100.0f;
 	float m_HP = 100.0f;
 	float m_MP = 100.0f;
+	float m_moveSpeed = 100.0f;
+
+	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 };
 

@@ -30,8 +30,11 @@ public:
 	
 
 	VECTOR2D getMapLimit();
-	void addObjectToTile(float x, float y, mIObject* in);
+	// 타일에 오브젝트를 주입
+	void addRenderObjectToTile(float x, float y, mIObject* in);
 	uTile* getTile(float x, float y);
+	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
+	VECTOR2D twoDtoISO(VECTOR2D in);
 
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
@@ -74,8 +77,7 @@ private:
 	// 모든 타일을 렌더하는 함수
 	void renderMap(cD2DRenderer& renderer);		
 	
-	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
-	VECTOR2D twoDtoISO(VECTOR2D in);	
+		
 
 	void drawHealthBar(cD2DRenderer& renderer, mIObject* obj);
 };

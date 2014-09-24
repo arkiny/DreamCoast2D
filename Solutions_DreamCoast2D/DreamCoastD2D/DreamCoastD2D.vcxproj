@@ -51,11 +51,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -80,6 +84,7 @@
     <ClInclude Include="aiState.h" />
     <ClInclude Include="aiStateDead.h" />
     <ClInclude Include="aiStateIdle.h" />
+    <ClInclude Include="aiStateMoveto.h" />
     <ClInclude Include="aiStateOnHit.h" />
     <ClInclude Include="cD2DRenderer.h" />
     <ClInclude Include="cGameApplication.h" />
@@ -106,6 +111,7 @@
     <ClCompile Include="aiState.cpp" />
     <ClCompile Include="aiStateDead.cpp" />
     <ClCompile Include="aiStateIdle.cpp" />
+    <ClCompile Include="aiStateMoveto.cpp" />
     <ClCompile Include="aiStateOnHit.cpp" />
     <ClCompile Include="cD2DRenderer.cpp" />
     <ClCompile Include="cGameApplication.cpp" />

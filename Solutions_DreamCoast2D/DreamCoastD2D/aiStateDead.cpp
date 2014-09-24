@@ -13,10 +13,18 @@ void aiStateDead::enter(mMonster* pmon){
 }
 
 void aiStateDead::execute(mMonster* pmon){
-	m_sprite->nextFrame(pmon->getdeltaTime());
 	accumtime += pmon->getdeltaTime();
+	if (accumtime < FRAMERATE * 1.0f){
+		m_sprite->nextFrame(pmon->getdeltaTime());
+	}
 
-	if (accumtime > FRAMERATE*2.0f){
+	// 사망시 페이드아웃 효과
+	pmon->setAlpha(pmon->getAlpha() - 0.025f);
+
+	// 차후 delete 보다는 setVisible을 이용해서
+	// 다시 이용하는 방법도 있을 듯 하뎌이다
+	// 일정 시간이 지난 뒤 삭제 trigger on
+	if (accumtime > FRAMERATE*8.0f){
 		pmon->setState(ONDEAD);		
 	}
 }

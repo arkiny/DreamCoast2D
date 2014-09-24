@@ -9,6 +9,7 @@
 #include "mMonster.h"
 #include "uTile.h"
 
+
 wTileMap::wTileMap()
 {	
 	m_player = nullptr;
@@ -53,25 +54,37 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 	mIObject* ptr = new mMonster(pt.x, pt.y);
 	mMonster* ptr2 = (mMonster*)ptr;
 	ptr2->setDir(LEFTDOWN);
+	ptr2->setTileMap(this);
 	m_mobs.push_back(ptr);
+	//
 
+	//
 	in.x = 7.0f*_RectTileWidth;
 	in.y = 8.0f*_RectTileHeight;
 	pt = twoDtoISO(in);
 	ptr = new mMonster(pt.x, pt.y);
 	ptr2 = (mMonster*)ptr;
 	ptr2->setDir(RIGHTDOWN);
-	m_mobs.push_back(ptr);
-	
+	ptr2->setTileMap(this);
+	// 이동 목표 설정 debug용
+	in.x = 10.0f*_RectTileWidth;
+	in.y = 10.0f*_RectTileHeight;
+	pt = twoDtoISO(in);
+	ptr2->setDest(pt.x, pt.y);
+	m_mobs.push_back(ptr);	
+
+	//
 	in.x = 6.0f*_RectTileWidth;
 	in.y = 7.0f*_RectTileHeight;
 	pt = twoDtoISO(in);
 	ptr = new mMonster(pt.x, pt.y);
-	
 	ptr2 = (mMonster*)ptr;
 	ptr2->setDir(LEFTUP);	
+	ptr2->setTileMap(this);
 	m_mobs.push_back(ptr);
+	//
 	
+	//
 	in.x = 7.0f*_RectTileWidth;
 	in.y = 7.0f*_RectTileHeight;
 	pt = twoDtoISO(in);
@@ -79,6 +92,7 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 	ptr = new mMonster(pt.x, pt.y);
 	ptr2 = (mMonster*)ptr;
 	ptr2->setDir(RIGHTUP);
+	ptr2->setTileMap(this);
 	m_mobs.push_back(ptr);
 	// Debug---------------------------------------------------
 	
@@ -91,20 +105,21 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
-	mMonster* ptr;
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
 		m_mobs[i]->onUpdate(fdeltatime);			
-		//ptr = (mMonster*)m_mobs[i];
-
-		//if (ptr->getState() == ONDEAD){
-		//	delete ptr;
-		//	m_mobs.erase(m_mobs.begin() + i);
-		//	m_mobs.shrink_to_fit();
-		//}
-
-		// 업데이트와 동시에 포지션별로 각 타일랜더핸들러 자기 좌표에 포인터를 먹여준다.
-		VECTOR2D pos = getTileCoordinates(*m_mobs[i]->getRealPos());
-		::wTileMap::addObjectToTile(pos.x, pos.y, m_mobs[i]);
+		
+		// 죽은 상태면 오브젝트 데이터 목록에서 삭제
+		// 혹은 차후 재사용 queue를 이용하게 되면 재활용 queue에 추가	
+		if (((mMonster*)m_mobs[i])->getState() == ONDEAD){
+			delete m_mobs[i];
+			m_mobs.erase(m_mobs.begin() + i);
+			m_mobs.shrink_to_fit();			
+		}
+		else {
+			// 업데이트와 동시에 포지션별로 각 타일랜더핸들러 자기 좌표에 포인터를 먹여준다.
+			VECTOR2D pos = getTileCoordinates(*m_mobs[i]->getRealPos());
+			::wTileMap::addRenderObjectToTile(pos.x, pos.y, m_mobs[i]);
+		}
 	}
 	
 	// player는 고정되어 있는 메모리이므로
@@ -275,7 +290,7 @@ int wTileMap::getMapinfo(int x, int y) {
 	return m_vMapRenderHandler[(static_cast<int>(_vertical)*y) + x]->getType();
 }
 
-void wTileMap::addObjectToTile(float x, float y, mIObject* in){
+void wTileMap::addRenderObjectToTile(float x, float y, mIObject* in){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
 	m_vMapRenderHandler[(static_cast<int>(_vertical)*ny) + nx]->addObject(in);

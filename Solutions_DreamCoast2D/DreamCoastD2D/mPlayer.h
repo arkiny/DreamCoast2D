@@ -22,7 +22,7 @@ private:
 	// Helper methods -> 몬스터에게도 필요할경우 object로 이동
 	void onMove(float deltaTime);
 	void onAttack(float deltaTime);
-	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
+	//VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;	

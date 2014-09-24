@@ -18,6 +18,7 @@ public:
 	virtual void exit(mMonster* pmon) = 0;
 protected:
 	uSprite* m_sprite;
+	float accumtime = 0.0f;
 };
 
 

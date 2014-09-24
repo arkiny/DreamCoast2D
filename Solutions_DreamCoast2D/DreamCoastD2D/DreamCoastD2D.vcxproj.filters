@@ -37,7 +37,7 @@
     <Filter Include="Model\Mob">
       <UniqueIdentifier>{17f5a786-7431-49eb-814a-30974400c4d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Model\Mob\StateAIFSM">
+    <Filter Include="StateAIFSM">
       <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -103,19 +103,22 @@
       <Filter>Model\Mob</Filter>
     </ClInclude>
     <ClInclude Include="aiState.h">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
     </ClInclude>
     <ClInclude Include="uCamera.h">
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="aiStateOnHit.h">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
     </ClInclude>
     <ClInclude Include="aiStateIdle.h">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
     </ClInclude>
     <ClInclude Include="aiStateDead.h">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="aiStateMoveto.h">
+      <Filter>StateAIFSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -174,19 +177,22 @@
       <Filter>Model\Mob</Filter>
     </ClCompile>
     <ClCompile Include="aiState.cpp">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
     </ClCompile>
     <ClCompile Include="uCamera.cpp">
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="aiStateOnHit.cpp">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
     </ClCompile>
     <ClCompile Include="aiStateIdle.cpp">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
     </ClCompile>
     <ClCompile Include="aiStateDead.cpp">
-      <Filter>Model\Mob\StateAIFSM</Filter>
+      <Filter>StateAIFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="aiStateMoveto.cpp">
+      <Filter>StateAIFSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

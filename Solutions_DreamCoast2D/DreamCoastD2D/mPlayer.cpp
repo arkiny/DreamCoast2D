@@ -107,7 +107,7 @@ void mPlayer::onAttack(float fdeltatime){
 		return;
 	}
 
-	// 데미지 처리는 일정 프레임에 트리거 되도록
+	// 데미지 처리는 일정 프레임에 트리거 되도록 -> 일정 시간에 트리거되도록함
 	if (m_SeeDir == LEFTDOWN){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, 19.5f, 0.0f, 7);
 	}
@@ -128,51 +128,51 @@ void mPlayer::onAttack(float fdeltatime){
 	m_spriteAtlas->nextFrame(fdeltatime*m_attackSpeed);
 }
 
-// 키를 받아와서 업데이트
+// 키를 받아와서 업데이트(connector)-> todo: 인자를 const로 바꿔서 항상성 유지
 void mPlayer::setKeyControl(coControl* in){
 	m_pControl = in;
 }
 
 
-VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
-	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
-	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);
-	switch (dir)
-	{
-	case LEFT:
-		vDir = vLeft;
-		break;
-	case RIGHT:
-		vDir = vRight;
-		break;
-	case UP:
-		vDir = vUp;
-		break;
-	case DOWN:
-		vDir = vDown;
-		break;
-	case RIGHTDOWN:
-		// 1:2 isometric이므로 세로 이동속도는 절반으로 수정
-		vDir = vRight + (vDown/2.0f);
-		break;
-	case LEFTUP:
-		vDir = vLeft + (vUp/2.0f);
-		break;
-	case LEFTDOWN:
-		vDir = vLeft + (vDown/2.0f);
-		break;
-	case RIGHTUP:
-		vDir = vRight + (vUp/2.0f);
-		break;
-	default:
-		break;
-	}
-	
-	vDir.Normalize();
-	vMover = vDir*(100.0f * fdeltatime);
-
-	return vMover;
-}
+//VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
+//	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
+//	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);
+//	switch (dir)
+//	{
+//	case LEFT:
+//		vDir = vLeft;
+//		break;
+//	case RIGHT:
+//		vDir = vRight;
+//		break;
+//	case UP:
+//		vDir = vUp;
+//		break;
+//	case DOWN:
+//		vDir = vDown;
+//		break;
+//	case RIGHTDOWN:
+//		// 1:2 isometric이므로 세로 이동속도는 절반으로 수정
+//		vDir = vRight + (vDown/2.0f);
+//		break;
+//	case LEFTUP:
+//		vDir = vLeft + (vUp/2.0f);
+//		break;
+//	case LEFTDOWN:
+//		vDir = vLeft + (vDown/2.0f);
+//		break;
+//	case RIGHTUP:
+//		vDir = vRight + (vUp/2.0f);
+//		break;
+//	default:
+//		break;
+//	}
+//	
+//	vDir.Normalize();
+//	vMover = vDir*(100.0f * fdeltatime);
+//
+//	return vMover;
+//}
 
 // 이동간에 따른 무브무브
 // 아마 onMove 보단 onControl
@@ -195,7 +195,7 @@ void mPlayer::onMove(float fdeltatime){
 		m_pControl->getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = LEFTDOWN;
 
-		vMover = mPlayer::vectorMove(fdeltatime, LEFTDOWN);
+		vMover = mIObject::vectorMove(fdeltatime, LEFTDOWN);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);		
 	}
 
@@ -203,7 +203,7 @@ void mPlayer::onMove(float fdeltatime){
 		m_pControl->getKeyControlInfo()[VK_UP]){
 		m_SeeDir = LEFTUP;
 
-		vMover = mPlayer::vectorMove(fdeltatime, LEFTUP);
+		vMover = mIObject::vectorMove(fdeltatime, LEFTUP);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);		
 	}
 
@@ -211,7 +211,7 @@ void mPlayer::onMove(float fdeltatime){
 		m_pControl->getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = RIGHTDOWN;
 
-		vMover = mPlayer::vectorMove(fdeltatime, RIGHTDOWN);
+		vMover = mIObject::vectorMove(fdeltatime, RIGHTDOWN);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);
 	}
 
@@ -219,7 +219,7 @@ void mPlayer::onMove(float fdeltatime){
 		m_pControl->getKeyControlInfo()[VK_UP]){
 		m_SeeDir = RIGHTUP;		
 		
-		vMover = mPlayer::vectorMove(fdeltatime, RIGHTUP);
+		vMover = mIObject::vectorMove(fdeltatime, RIGHTUP);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);		
 	}
 
@@ -231,7 +231,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_SeeDir = RIGHTDOWN;
 		}
 
-		vMover = mPlayer::vectorMove(fdeltatime, RIGHT);
+		vMover = mIObject::vectorMove(fdeltatime, RIGHT);
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f, 6);		
 	}
 	else if (m_pControl->getKeyControlInfo()[VK_LEFT]){
@@ -242,7 +242,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_SeeDir = LEFTDOWN;
 		}
 
-		vMover = mPlayer::vectorMove(fdeltatime, LEFT);
+		vMover = mIObject::vectorMove(fdeltatime, LEFT);
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f, 6);		
 	}
 	else if (m_pControl->getKeyControlInfo()[VK_DOWN]){
@@ -253,7 +253,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_SeeDir = RIGHTDOWN;
 		}
 
-		vMover = mPlayer::vectorMove(fdeltatime, DOWN);
+		vMover = mIObject::vectorMove(fdeltatime, DOWN);
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f, 6);		
 	}
 	else if (m_pControl->getKeyControlInfo()[VK_UP]){
@@ -264,7 +264,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_SeeDir = RIGHTUP;
 		}
 
-		vMover = mPlayer::vectorMove(fdeltatime, UP);
+		vMover = mIObject::vectorMove(fdeltatime, UP);
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f, 6);		
 	}
 	else { // Idling
