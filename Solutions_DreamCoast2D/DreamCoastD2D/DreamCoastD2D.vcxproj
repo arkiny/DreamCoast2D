@@ -78,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aiState.h" />
+    <ClInclude Include="aiStateDead.h" />
+    <ClInclude Include="aiStateIdle.h" />
+    <ClInclude Include="aiStateOnHit.h" />
     <ClInclude Include="cD2DRenderer.h" />
     <ClInclude Include="cGameApplication.h" />
     <ClInclude Include="cGameManager.h" />
@@ -101,6 +104,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aiState.cpp" />
+    <ClCompile Include="aiStateDead.cpp" />
+    <ClCompile Include="aiStateIdle.cpp" />
+    <ClCompile Include="aiStateOnHit.cpp" />
     <ClCompile Include="cD2DRenderer.cpp" />
     <ClCompile Include="cGameApplication.cpp" />
     <ClCompile Include="cGameManager.cpp" />

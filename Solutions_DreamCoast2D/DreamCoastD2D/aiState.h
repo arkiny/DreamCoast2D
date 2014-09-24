@@ -16,13 +16,8 @@ public:
 	virtual void execute(mMonster* pmon) = 0;
 	//╩Себ юле╩
 	virtual void exit(mMonster* pmon) = 0;
-};
-
-class aiStateIdle : public aiState{
-private:
-	void enter(mMonster* pmon);
-	void execute(mMonster* pmon);
-	void exit(mMonster* pmon);
-
+protected:
 	uSprite* m_sprite;
 };
+
+

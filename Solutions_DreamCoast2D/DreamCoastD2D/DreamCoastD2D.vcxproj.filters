@@ -108,6 +108,15 @@
     <ClInclude Include="uCamera.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="aiStateOnHit.h">
+      <Filter>Model\Mob\StateAIFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="aiStateIdle.h">
+      <Filter>Model\Mob\StateAIFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="aiStateDead.h">
+      <Filter>Model\Mob\StateAIFSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -169,6 +178,15 @@
     </ClCompile>
     <ClCompile Include="uCamera.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="aiStateOnHit.cpp">
+      <Filter>Model\Mob\StateAIFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="aiStateIdle.cpp">
+      <Filter>Model\Mob\StateAIFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="aiStateDead.cpp">
+      <Filter>Model\Mob\StateAIFSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

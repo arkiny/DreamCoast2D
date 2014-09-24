@@ -9,7 +9,7 @@ class uCamera;
 
 // up to first entering
 enum DIRECTION{ LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP };
-enum OBJECTSTATE{ ONMOVE, ONATTACK, ONHIT, ONDEAD };
+enum OBJECTSTATE{ ONIDLE, ONMOVE, ONATTACK, ONHIT, ONDEAD };
 
 class mIObject
 {
@@ -38,8 +38,9 @@ public:
 	// health control
 	float getHealth(){ return m_HP; }
 	float getMAXHealth() { return m_MAXHP; }
-	void setHealth(float in){ m_HP = in; }
 	void setMAXHealth(float in) { m_MAXHP = in; }
+	
+	virtual void setHealth(float in){ m_HP = in; }	
 
 	//
 	uSprite* getSprite() { return m_spriteAtlas; }

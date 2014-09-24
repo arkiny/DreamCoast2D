@@ -27,6 +27,12 @@ public:
 
 	void setDir(DIRECTION dir) { m_SeeDir = dir; }
 	DIRECTION getDir() { return m_SeeDir; }
+
+	void setHealth(float in); 
+	OBJECTSTATE getState() { return m_State; }
+	void setState(OBJECTSTATE in) { m_State = in; }
+
+		
 private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;
@@ -36,6 +42,6 @@ private:
 	float m_fdeltatime = 0.0f;
 
 	// 기본 스탯
-	bool m_aggro = false;
+	bool m_aggro = false;	
 };
 

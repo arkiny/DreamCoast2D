@@ -47,10 +47,43 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/maptile.png", NULL);
 	m_Cam = new uCamera(1028.0, 768.0f, m_player->getRealPos());
 	
-	mIObject* ptr = new mMonster(400.0f, 400.0f);
+	// Debug---------------------------------------------------
+	VECTOR2D in(6.0f*_RectTileWidth, 8.0f*_RectTileHeight);
+	VECTOR2D pt = twoDtoISO(in);
+	mIObject* ptr = new mMonster(pt.x, pt.y);
+	mMonster* ptr2 = (mMonster*)ptr;
+	ptr2->setDir(LEFTDOWN);
 	m_mobs.push_back(ptr);
-	ptr = nullptr;
 
+	in.x = 7.0f*_RectTileWidth;
+	in.y = 8.0f*_RectTileHeight;
+	pt = twoDtoISO(in);
+	ptr = new mMonster(pt.x, pt.y);
+	ptr2 = (mMonster*)ptr;
+	ptr2->setDir(RIGHTDOWN);
+	m_mobs.push_back(ptr);
+	
+	in.x = 6.0f*_RectTileWidth;
+	in.y = 7.0f*_RectTileHeight;
+	pt = twoDtoISO(in);
+	ptr = new mMonster(pt.x, pt.y);
+	
+	ptr2 = (mMonster*)ptr;
+	ptr2->setDir(LEFTUP);	
+	m_mobs.push_back(ptr);
+	
+	in.x = 7.0f*_RectTileWidth;
+	in.y = 7.0f*_RectTileHeight;
+	pt = twoDtoISO(in);
+	pt = twoDtoISO(in);
+	ptr = new mMonster(pt.x, pt.y);
+	ptr2 = (mMonster*)ptr;
+	ptr2->setDir(RIGHTUP);
+	m_mobs.push_back(ptr);
+	// Debug---------------------------------------------------
+	
+	ptr2 = nullptr;
+	ptr = nullptr;
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
 		m_mobs[i]->onInit(renderer);
 		m_mobs[i]->setCam(m_Cam);
@@ -58,9 +91,17 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
+	mMonster* ptr;
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
-		m_mobs[i]->onUpdate(fdeltatime);		
-		
+		m_mobs[i]->onUpdate(fdeltatime);			
+		//ptr = (mMonster*)m_mobs[i];
+
+		//if (ptr->getState() == ONDEAD){
+		//	delete ptr;
+		//	m_mobs.erase(m_mobs.begin() + i);
+		//	m_mobs.shrink_to_fit();
+		//}
+
 		// 업데이트와 동시에 포지션별로 각 타일랜더핸들러 자기 좌표에 포인터를 먹여준다.
 		VECTOR2D pos = getTileCoordinates(*m_mobs[i]->getRealPos());
 		::wTileMap::addObjectToTile(pos.x, pos.y, m_mobs[i]);

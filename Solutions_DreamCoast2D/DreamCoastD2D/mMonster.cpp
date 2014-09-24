@@ -3,8 +3,9 @@
 #include "VECTOR2D.h"
 #include "uSprite.h"
 #include "cD2DRenderer.h"
-#include "aiState.h"
 #include "uCamera.h"
+#include "aiStateIdle.h"
+#include "aiStateOnHit.h"
 
 mMonster::mMonster()
 {
@@ -16,7 +17,7 @@ mMonster::mMonster()
 	m_pState = nullptr; // 현재 상태는 nullptr로 init
 
 	m_SeeDir = RIGHTDOWN;
-	m_State = ONMOVE;
+	m_State = ONIDLE;
 
 	m_MAXHP = 1000.0f;
 	m_HP = 1000.0f;
@@ -30,7 +31,7 @@ mMonster::mMonster(float x, float y){
 	m_pState = nullptr; // 현재 상태는 nullptr로 init
 
 	m_SeeDir = RIGHTDOWN;
-	m_State = ONMOVE;
+	m_State = ONIDLE;
 }
 
 mMonster::~mMonster()
@@ -76,6 +77,7 @@ void mMonster::changeState(aiState* pnew){
 void mMonster::onIdle(){
 	if (m_SeeDir == LEFTDOWN){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 3);
+		//m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
 	} 
 	else if (m_SeeDir == LEFTUP){
 		m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 3);
@@ -86,16 +88,48 @@ void mMonster::onIdle(){
 	else if (m_SeeDir == RIGHTDOWN){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 3);
 	}
+	//mMonster::onHit();
 }
 
 void mMonster::onAttack(){
 }
 
 void mMonster::onHit(){
+	if (m_SeeDir == LEFTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 210.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(10.0f, 210.0f, 40.0f, 40.0f, 1);
+	}
+	else if (m_SeeDir == LEFTUP){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 1);
+	}
+	else if (m_SeeDir == RIGHTUP){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 1);
+	}
+	else if (m_SeeDir == RIGHTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 210.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 1);
+	}
 }
 
 void mMonster::onDeath(){
-
+	if (m_SeeDir == LEFTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 210.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(10.0f, 210.0f, 40.0f, 40.0f, 1);
+	}
+	else if (m_SeeDir == LEFTUP){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 1);
+	}
+	else if (m_SeeDir == RIGHTUP){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 1);
+	}
+	else if (m_SeeDir == RIGHTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 210.0f, 50.0f, 40.0f, 1);
+		//m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 1);
+	}
 }
 
 void mMonster::onRender(cD2DRenderer& renderer){
@@ -152,5 +186,12 @@ void mMonster::onRender(cD2DRenderer& renderer){
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+	}
+}
+
+void mMonster::setHealth(float in){
+	mIObject::setHealth(in);
+	if (in >= 0.0f){
+		m_State = ONHIT;
 	}
 }
