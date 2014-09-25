@@ -41,10 +41,11 @@ public:
 	void setMAXHealth(float in) { m_MAXHP = in; }
 	
 	virtual void setHealth(float in){ m_HP = in; }	
+	virtual void getHit(float dmg);
 
 	//
 	uSprite* getSprite() { return m_spriteAtlas; }
-
+	wTileMap* getTileMap(){ return m_pTileMap; }
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
 	// POINT를 쓸 경우 LONG 값에서 변환이 일어나기 때문에 가감연산에 문제가 생긴다.

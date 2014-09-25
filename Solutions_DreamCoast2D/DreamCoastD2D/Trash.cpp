@@ -320,3 +320,45 @@ tileX = Math.round(tileX / tileHeight);*/
 //
 //	wTileMap::hRender(renderer, m_Cam->translasteToScreen(&tilePos));
 //}
+
+
+///mplayer->miobject
+//VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
+//	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
+//	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);
+//	switch (dir)
+//	{
+//	case LEFT:
+//		vDir = vLeft;
+//		break;
+//	case RIGHT:
+//		vDir = vRight;
+//		break;
+//	case UP:
+//		vDir = vUp;
+//		break;
+//	case DOWN:
+//		vDir = vDown;
+//		break;
+//	case RIGHTDOWN:
+//		// 1:2 isometric이므로 세로 이동속도는 절반으로 수정
+//		vDir = vRight + (vDown/2.0f);
+//		break;
+//	case LEFTUP:
+//		vDir = vLeft + (vUp/2.0f);
+//		break;
+//	case LEFTDOWN:
+//		vDir = vLeft + (vDown/2.0f);
+//		break;
+//	case RIGHTUP:
+//		vDir = vRight + (vUp/2.0f);
+//		break;
+//	default:
+//		break;
+//	}
+//	
+//	vDir.Normalize();
+//	vMover = vDir*(100.0f * fdeltatime);
+//
+//	return vMover;
+//}

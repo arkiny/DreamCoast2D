@@ -47,7 +47,19 @@ void mPlayer::onInit(cD2DRenderer& renderer){
 }
 
 void mPlayer::onUpdate(float fdeltatime){	
-	if (m_pControl->getKeyControlInfo()[0x5A]){
+	// 대단히 primitive한 컨디션 스테잇을 이용한 statecontroller, 
+	// 차후 시간이 남으면 statemachine으로 교체
+	if (m_State == ONHIT){
+		// 가장 우선순위가 높은 건 피격 판정 액션, 경직 타임도 있어야하고...
+		// 피격 경직시에는 모든 컨트롤 불가...
+		// 차후 아이템이나 스킬에 따라 피격 판정시 경직 제거
+		// TODO : 일단은 아무처리를 안한다.
+		//(피격시 wTileMap에서 callback으로 getHit() 함수 콜)
+		// 후에 IDLE로 상태 변경... 일단 여기서 움직임이 없을 경우
+		// ONMOVE에서 처리했으므로 ONMOVE로 처리
+		m_State = ONMOVE;
+	}
+	else if (m_pControl->getKeyControlInfo()[0x5A]){
 		if (m_State == ONATTACK){
 			mPlayer::onAttack(fdeltatime);
 		}
@@ -63,6 +75,14 @@ void mPlayer::onUpdate(float fdeltatime){
 	else if (m_State == ONMOVE){
 		m_attackaccumtime = 0.0f;
 		mPlayer::onMove(fdeltatime);
+	}
+}
+
+// 피격 시 처리 (체력감소)
+void mPlayer::getHit(float dmg){
+	mIObject::getHit(dmg);
+	if (this->getHealth() >= 0.0f){
+		m_State = ONHIT;
 	}
 }
 
@@ -133,46 +153,6 @@ void mPlayer::setKeyControl(coControl* in){
 	m_pControl = in;
 }
 
-
-//VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
-//	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
-//	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);
-//	switch (dir)
-//	{
-//	case LEFT:
-//		vDir = vLeft;
-//		break;
-//	case RIGHT:
-//		vDir = vRight;
-//		break;
-//	case UP:
-//		vDir = vUp;
-//		break;
-//	case DOWN:
-//		vDir = vDown;
-//		break;
-//	case RIGHTDOWN:
-//		// 1:2 isometric이므로 세로 이동속도는 절반으로 수정
-//		vDir = vRight + (vDown/2.0f);
-//		break;
-//	case LEFTUP:
-//		vDir = vLeft + (vUp/2.0f);
-//		break;
-//	case LEFTDOWN:
-//		vDir = vLeft + (vDown/2.0f);
-//		break;
-//	case RIGHTUP:
-//		vDir = vRight + (vUp/2.0f);
-//		break;
-//	default:
-//		break;
-//	}
-//	
-//	vDir.Normalize();
-//	vMover = vDir*(100.0f * fdeltatime);
-//
-//	return vMover;
-//}
 
 // 이동간에 따른 무브무브
 // 아마 onMove 보단 onControl

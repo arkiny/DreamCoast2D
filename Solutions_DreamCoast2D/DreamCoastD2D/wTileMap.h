@@ -27,6 +27,7 @@ public:
 	VECTOR2D getTileCoordinates(VECTOR2D in);
 	void setTile(float x, float y, int type);
 	int getMapinfo(int x, int y);
+	bool sightScan(float sight, VECTOR2D monsterpos);
 	
 
 	VECTOR2D getMapLimit();
@@ -35,6 +36,11 @@ public:
 	uTile* getTile(float x, float y);
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
 	VECTOR2D twoDtoISO(VECTOR2D in);
+	VECTOR2D getPlayerTilePos();
+	void playerGetHit(float dmg);
+
+	float getRectTileWidth(){ return _RectTileWidth; }
+	float getRectTileHeight(){	return _RectTileHeight;	}
 
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
@@ -49,7 +55,7 @@ private:
 	ID2D1Bitmap* m_ipD2DBitmap;		// 맵 스프라이트 파일
 	
 	std::vector<int> m_vMapinfo;	// 동적으로 저장된 맵 데이타
-	std::vector<uTile*> m_vMapRenderHandler; // uTile형식으로 핸들러
+	std::vector<uTile*> m_vMapObjectHandler; // uTile형식으로 핸들러
 
 	uCamera* m_Cam;
 	// debug	
@@ -77,9 +83,11 @@ private:
 	// 모든 타일을 렌더하는 함수
 	void renderMap(cD2DRenderer& renderer);		
 	
-		
-
+	// 나중에 옵션에 따라서 헬스바 키고 끄고 결정 -> UI
 	void drawHealthBar(cD2DRenderer& renderer, mIObject* obj);
+
+	// monster의 시야 스캐닝
+	void scanVision(float sight, VECTOR2D monsterpos, VECTOR2D playerPos, bool* ret);
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음 (sprite타일의 크기)

@@ -67,10 +67,11 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 	ptr2->setDir(RIGHTDOWN);
 	ptr2->setTileMap(this);
 	// 이동 목표 설정 debug용
-	in.x = 10.0f*_RectTileWidth;
-	in.y = 10.0f*_RectTileHeight;
-	pt = twoDtoISO(in);
-	ptr2->setDest(pt.x, pt.y);
+	//in.x = 10.0f*_RectTileWidth;
+	//in.y = 10.0f*_RectTileHeight;
+	//pt = twoDtoISO(in);
+	//ptr2->setDest(pt.x, pt.y);
+	ptr2->setCurrentAggroLevel(ptr2->getMaxAggroLevel());
 	m_mobs.push_back(ptr);	
 
 	//
@@ -150,11 +151,18 @@ void wTileMap::drawHealthBar(cD2DRenderer& renderer, mIObject* obj){
 	healthBar.right = cpos.x + 30.0f;
 
 	::D2D1_RECT_F currentHealthbar;
-	currentHealthbar.top = cpos.y + 2.0f;
-	currentHealthbar.bottom = cpos.y + 7.0f;
-	currentHealthbar.left = cpos.x - 30.0f;
-	currentHealthbar.right = (cpos.x - 30.0f) + (obj->getHealth() / obj->getMAXHealth() * 60.0f);
+	currentHealthbar.top = healthBar.top;
+	currentHealthbar.bottom = healthBar.bottom;
+	currentHealthbar.left = healthBar.left;
+	float healthRate = (cpos.x - 30.0f) + (obj->getHealth() / obj->getMAXHealth() * (healthBar.right - healthBar.left));
+	if (healthRate <= healthBar.left){
+		currentHealthbar.right = currentHealthbar.left;
+	}
+	else {
+		currentHealthbar.right = healthRate;
 
+	}
+		
 	renderer.GetRenderTarget()->FillRectangle(healthBar, renderer.GetRedBrush());
 	renderer.GetRenderTarget()->FillRectangle(currentHealthbar, renderer.GetGreenBrush());
 	renderer.GetRenderTarget()->DrawRectangle(healthBar, renderer.GetBrush());
@@ -189,7 +197,7 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 				onTilecheck = true;				
 			}
 			//else {
-			//	//type = m_vMapRenderHandler[i + j*static_cast<int>(_vertical)]->getType();
+			//	//type = m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->getType();
 			//	//type = m_vMapinfo[i+j*static_cast<int>(_vertical)];
 			//}
 
@@ -199,7 +207,7 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 
 			// 타일 렌더 후 동시에 애드된 오브젝트들도 렌더
 			// 렌더 이후에 오브젝트 포인터들은 팝되면서 사라진다.
-			m_vMapRenderHandler[i + j*static_cast<int>(_vertical)]->
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->
 				renderTile(pt.x, pt.y, renderer, m_spriteAtlas, m_ipD2DBitmap);
 
 			//renderTile(pt.x, pt.y, type, renderer);
@@ -234,7 +242,7 @@ VECTOR2D wTileMap::getTileCoordinates(VECTOR2D in){
 void wTileMap::setTile(float x, float y, int type){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
-	m_vMapRenderHandler[(static_cast<int>(_vertical)*ny) + nx]->setType(type);
+	m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->setType(type);
 }
 
 void wTileMap::setSize(float horizontal, float vertical){
@@ -248,7 +256,7 @@ void wTileMap::setSize(float horizontal, float vertical){
 	uTile* ptr = nullptr;
 	for (int i = 0; i < _horizontal * _vertical; i++){
 		ptr = new uTile(0, m_Cam);
-		m_vMapRenderHandler.push_back(ptr);
+		m_vMapObjectHandler.push_back(ptr);
 		//m_vMapinfo.push_back(0);
 	}
 	ptr = nullptr;
@@ -287,13 +295,13 @@ void wTileMap::setSize(float horizontal, float vertical){
 }
 
 int wTileMap::getMapinfo(int x, int y) { 	
-	return m_vMapRenderHandler[(static_cast<int>(_vertical)*y) + x]->getType();
+	return m_vMapObjectHandler[(static_cast<int>(_vertical)*y) + x]->getType();
 }
 
 void wTileMap::addRenderObjectToTile(float x, float y, mIObject* in){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
-	m_vMapRenderHandler[(static_cast<int>(_vertical)*ny) + nx]->addObject(in);
+	m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addObject(in);
 }
 
 VECTOR2D wTileMap::getMapLimit(){ 
@@ -304,5 +312,48 @@ VECTOR2D wTileMap::getMapLimit(){
 uTile* wTileMap::getTile(float x, float y){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
-	return m_vMapRenderHandler[(static_cast<int>(_vertical)*ny) + nx];
+	return m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx];
+}
+
+
+bool wTileMap::sightScan(float sight, VECTOR2D monsterpos){
+	VECTOR2D ppos = getTileCoordinates(*m_player->getRealPos());
+	VECTOR2D mpos = getTileCoordinates(monsterpos);
+	bool ret = false;
+	scanVision(sight, mpos, ppos, &ret);
+	return ret;
+}
+
+void wTileMap::scanVision(float sight, VECTOR2D monsterpos, VECTOR2D playerPos, bool* ret){
+	float x = monsterpos.x;
+	float y = monsterpos.y;
+
+	if (x == playerPos.x && y == playerPos.y){
+		*ret = true;
+		return;
+	}
+
+	if (sight <= 0) return;
+
+	VECTOR2D up = VECTOR2D(x, y - 1.0f);
+	VECTOR2D down = VECTOR2D(x, y + 1.0f);
+	VECTOR2D left = VECTOR2D(x-1.0f, y);
+	VECTOR2D right = VECTOR2D(x+1.0f, y);
+	
+	if (up.y >= 0 && up.y < _vertical)
+		scanVision(sight - 1.0f, up, playerPos, ret);
+	if (down.y >= 0 && down.y < _vertical)
+		scanVision(sight - 1.0f, down, playerPos, ret);
+	if (left.x >= 0 && left.x < _horizontal)
+		scanVision(sight - 1.0f, left, playerPos, ret);
+	if (right.x >= 0 && right.x < _horizontal)
+		scanVision(sight - 1.0f, right, playerPos, ret);
+}
+
+VECTOR2D wTileMap::getPlayerTilePos(){
+	return getTileCoordinates(*m_player->getRealPos());
+}
+
+void wTileMap::playerGetHit(float dmg){
+	m_player->getHit(dmg);
 }

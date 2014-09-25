@@ -81,6 +81,6 @@ void uTile::addObject(mIObject* in){
 
 void uTile::onHit(float dmg){
 	for (mIObject* obj : m_vObjects){
-		obj->setHealth(obj->getHealth() - dmg);
+		obj->getHit(dmg);
 	}
 }

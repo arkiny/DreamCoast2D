@@ -16,6 +16,9 @@ public:
 
 	// set Communication Pointer
 	void setKeyControl(coControl* in);	
+
+	// StatController
+	void getHit(float dmg);
 	
 private:
 	// 키보드 입력에 따른 움직임

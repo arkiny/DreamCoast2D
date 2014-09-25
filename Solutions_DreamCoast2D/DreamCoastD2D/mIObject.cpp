@@ -129,3 +129,7 @@ VECTOR2D mIObject::vectorMove(float fdeltatime, DIRECTION dir){
 
 	return vMover;
 }
+
+void mIObject::getHit(float dmg){
+	mIObject::setHealth(this->getHealth() - dmg);
+}

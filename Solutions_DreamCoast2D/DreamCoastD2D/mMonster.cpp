@@ -190,18 +190,23 @@ void mMonster::onRender(cD2DRenderer& renderer){
 	}
 }
 
-void mMonster::setHealth(float in){
-	mIObject::setHealth(in);
-	if (in >= 0.0f){
+void mMonster::getHit(float dmg){	
+	mIObject::getHit(dmg);
+	if (this->getHealth() >= 0.0f){
 		m_State = ONHIT;
 	}
 }
-
+void mMonster::setDestinTile(float x, float y){
+	VECTOR2D in;
+	in.x = x*m_pTileMap->getRectTileWidth();
+	in.y = y*m_pTileMap->getRectTileHeight();
+	in = m_pTileMap->twoDtoISO(in);
+	setDest(in.x, in.y);
+}
 void mMonster::setDest(float x, float y){
 	m_dest->x = x;
 	m_dest->y = y;
 }
-
 // todo: 상하좌우 움직임 없앨것 (알고리즘을 그렇게 처리)
 void mMonster::moveToDest(float deltaTime){
 	VECTOR2D vMover;
