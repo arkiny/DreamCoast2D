@@ -117,7 +117,7 @@ void wTileMap::onUpdate(float fdeltatime){
 		}
 		else {
 			// 업데이트와 동시에 포지션별로 각 타일랜더핸들러 자기 좌표에 포인터를 먹여준다.
-			VECTOR2D pos = getTileCoordinates(*m_mobs[i]->getRealPos());
+			VECTOR2D pos = getTileCoordinates(*m_mobs[i]->getDrawPos());
 			::wTileMap::addRenderObjectToTile(pos.x, pos.y, m_mobs[i]);
 		}
 	}
