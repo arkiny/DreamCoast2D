@@ -8,11 +8,14 @@
 #include "VECTOR2D.h"
 #include "wTileMap.h"
 #include "aiStateAttack.h"
+#include "uSprite.h"
 
 void aiStateScan::enter(mMonster* pmon){
+	m_sprite = pmon->getSprite();
 }
 
 void aiStateScan::execute(mMonster* pmon){
+	m_sprite->nextFrame(pmon->getdeltaTime());
 	accumtime += pmon->getdeltaTime();
 
 	// 하지만 스캔중에 쳐맞으면 

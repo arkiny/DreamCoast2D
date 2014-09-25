@@ -341,3 +341,44 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
 	}
 }
+
+void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
+	if (m_ipD2DBitmap != nullptr){
+		VECTOR2D cpos = m_Cam->translasteToScreen(_drawVector);
+		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
+		::D2D1_RECT_F dxArea
+			= m_spriteAtlas->getCoordinateFromPivot(cpos);
+
+		//	
+		::D2D1_RECT_F srcArea
+			= m_spriteAtlas->getSrcFrameFromSprite();
+
+		if (alpha){
+			renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 0.4f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+		}
+		//회전등에 필요한 부분
+		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+
+		//debug 용
+		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+
+		::D2D1_RECT_F pivotArea;
+		pivotArea.top = cpos.y - 2.0f;
+		pivotArea.bottom = cpos.y + 2.0f;
+		pivotArea.left = cpos.x - 2.0f;
+		pivotArea.right = cpos.x + 2.0f;
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+
+
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		//pivotArea;
+		cpos = m_Cam->translasteToScreen(_realVector);
+		pivotArea.top = cpos.y - 2.0f;
+		pivotArea.bottom = cpos.y + 2.0f;
+		pivotArea.left = cpos.x - 2.0f;
+		pivotArea.right = cpos.x + 2.0f;
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+	}
+}

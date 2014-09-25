@@ -13,6 +13,7 @@ public:
 	void onInit(cD2DRenderer& renderer);
 	void onUpdate(float fdeltatime);
 	void onRender(cD2DRenderer& renderer);
+	void onRender(cD2DRenderer&, bool);
 
 	// set Communication Pointer
 	void setKeyControl(coControl* in);	

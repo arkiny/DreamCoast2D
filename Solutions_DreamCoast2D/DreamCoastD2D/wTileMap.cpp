@@ -220,6 +220,8 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 			}
 		}
 	}
+	// 반투명처리해서 장애물 뒤에서도 보이게
+	m_player->onRender(renderer, true);
 }
 
 VECTOR2D wTileMap::twoDtoISO(VECTOR2D in){
