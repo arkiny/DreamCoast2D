@@ -268,6 +268,7 @@ void mMonster::moveToDest(float deltaTime){
 	
 	// 플롯 벡터 움직임 오차범위
 	// 플롯이고, 또한 벡터 무빙으로 움직이기 때문에 어느정도의 오차는 발생한다.
+	// 오차범위내에 들어가면 도착한걸로 결정
 	float tolerance = 0.5f;
 	if (abs(_realVector->x - m_dest->x) < tolerance){
 		m_dest->x = _realVector->x;
@@ -290,18 +291,21 @@ void mMonster::moveRandom(){
 		adder.y *= -1;
 	}
 
+	destTilePos.x = currentPosinTile.x + adder.x;
+	destTilePos.y = currentPosinTile.y + adder.y;
+
 	// 외곽 충돌 처리, 만약 랜덤 무브가 외곽으로 벗어나려고 할시
 	// 아예 해당 프로세스 자체를 취소한다.
 	if (destTilePos.x >= m_pTileMap->getMapLimit().x || 
 		destTilePos.y >= m_pTileMap->getMapLimit().y ||
-		destTilePos.x < 0 || destTilePos.y < 0){
+		destTilePos.x <= 0 || destTilePos.y <= 0){
 		return;
 	}
 
 	// todo: 이동 불가타일 이동 불가하게 만들기
 
-	destTilePos.x = (currentPosinTile.x + adder.x) * 45.0f;
-	destTilePos.y = (currentPosinTile.y + adder.y) * 45.0f;
+	destTilePos.x = destTilePos.x * 45.0f;
+	destTilePos.y = destTilePos.y * 45.0f;
 
 	destTilePos = m_pTileMap->twoDtoISO(destTilePos);
 	m_dest->x = destTilePos.x;

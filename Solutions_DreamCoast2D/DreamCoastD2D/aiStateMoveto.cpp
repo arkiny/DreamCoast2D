@@ -16,8 +16,6 @@ void aiStateMoveto::enter(mMonster* pmon)
 
 void aiStateMoveto::execute(mMonster* pmon)
 {
-	// if (target == currentpos){ setState(new Idle()) }
-	// else move to target
 	accumtime += pmon->getdeltaTime();
 	m_sprite->nextFrame(pmon->getdeltaTime());
 	pmon->moveToDest(pmon->getdeltaTime());
