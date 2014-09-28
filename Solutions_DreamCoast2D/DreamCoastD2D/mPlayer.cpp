@@ -53,6 +53,7 @@ void mPlayer::onUpdate(float fdeltatime){
 	
 	if (m_State == ONDEAD){
 		// 플레이어 사망 처리, 가장 기본적인 DeadEnd State
+		// 가장 1순위 처리는 사망시 처리,
 		mPlayer::onDead(fdeltatime);
 	}
 	else if (m_State == ONHIT){
@@ -190,6 +191,9 @@ void mPlayer::setKeyControl(coControl* in){
 	m_pControl = in;
 }
 
+//void mPlayer::onIdle(){
+//
+//}
 
 // 이동간에 따른 무브무브
 // 아마 onMove 보단 onControl
@@ -340,9 +344,7 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
-
 		
-
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
@@ -356,7 +358,6 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		pivotArea.right = cpos.x + 2.0f;
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
 		
-
 		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
 		//pivotArea;
 		cpos = m_Cam->translasteToScreen(_realVector);

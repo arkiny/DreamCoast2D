@@ -26,6 +26,9 @@ public:
 	// graphic control
 	void setAlpha(float in){ m_alpha = in; }
 	float getAlpha(){ return m_alpha; }
+
+	// StateInitializer
+	// void onIdle();
 	
 private:
 	// 키보드 입력에 따른 움직임
@@ -34,6 +37,8 @@ private:
 	void onAttack(float deltaTime);
 	void onHit(float fdeltatime);
 	void onDead(float);
+	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
+	void onSkill(float);
 	//VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
 	DIRECTION m_SeeDir; // 보고 있는 방향

@@ -35,6 +35,9 @@
     <Filter Include="aMain">
       <UniqueIdentifier>{7a0dfb9b-faa0-4617-8b99-03e601e6416f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Player State">
+      <UniqueIdentifier>{267531aa-aa14-41ef-b6a3-feedb128522a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -121,6 +124,12 @@
     <ClInclude Include="targetver.h">
       <Filter>aMain</Filter>
     </ClInclude>
+    <ClInclude Include="piState.h">
+      <Filter>Model\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="pStateIdle.h">
+      <Filter>Model\Player State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -200,6 +209,12 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>aMain</Filter>
+    </ClCompile>
+    <ClCompile Include="piState.cpp">
+      <Filter>Model\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="pStateIdle.cpp">
+      <Filter>Model\Player State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

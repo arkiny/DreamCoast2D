@@ -97,6 +97,8 @@
     <ClInclude Include="mIObject.h" />
     <ClInclude Include="mMonster.h" />
     <ClInclude Include="mPlayer.h" />
+    <ClInclude Include="piState.h" />
+    <ClInclude Include="pStateIdle.h" />
     <ClInclude Include="uCamera.h" />
     <ClInclude Include="wTileMap.h" />
     <ClInclude Include="Resource.h" />
@@ -126,6 +128,8 @@
     <ClCompile Include="mIObject.cpp" />
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
+    <ClCompile Include="piState.cpp" />
+    <ClCompile Include="pStateIdle.cpp" />
     <ClCompile Include="uCamera.cpp" />
     <ClCompile Include="wTileMap.cpp" />
     <ClCompile Include="sGameScreen.cpp" />
