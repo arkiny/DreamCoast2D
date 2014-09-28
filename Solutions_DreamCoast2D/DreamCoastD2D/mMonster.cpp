@@ -90,11 +90,11 @@ void mMonster::changeState(aiState* pnew){
 // 164, 39, 4frame
 void mMonster::onIdle(){
 	if (m_SeeDir == LEFTDOWN || m_SeeDir == RIGHTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 3);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 60.0f, 60.0f, 0.0f, 5.0f, 3);
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
 	} 
 	else if (m_SeeDir == LEFTUP || m_SeeDir == RIGHTUP){
-		m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 3);
+		m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 0.0f, 5.0f, 3);
 	}
 	//mMonster::onHit();	
 }

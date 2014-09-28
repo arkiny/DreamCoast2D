@@ -12,6 +12,7 @@ mPlayer::mPlayer()
 {	
 	m_ipD2DBitmap = nullptr;
 	m_Cam = nullptr;
+	
 	//todo: 임시로 중앙에 대기, 차후 맵정보에 따라 시작점 정보 수정	
 	_realVector = new VECTOR2D(514.0f, 384.0f);
 	_drawVector = new VECTOR2D(_realVector->x, _realVector->y + 15.0f);
@@ -49,15 +50,19 @@ void mPlayer::onInit(cD2DRenderer& renderer){
 void mPlayer::onUpdate(float fdeltatime){	
 	// 대단히 primitive한 컨디션 스테잇을 이용한 statecontroller, 
 	// 차후 시간이 남으면 statemachine으로 교체
-	if (m_State == ONHIT){
+	
+	if (m_State == ONDEAD){
+		// 플레이어 사망 처리, 가장 기본적인 DeadEnd State
+		mPlayer::onDead(fdeltatime);
+	}
+	else if (m_State == ONHIT){
 		// 가장 우선순위가 높은 건 피격 판정 액션, 경직 타임도 있어야하고...
 		// 피격 경직시에는 모든 컨트롤 불가...
 		// 차후 아이템이나 스킬에 따라 피격 판정시 경직 제거
-		// TODO : 일단은 아무처리를 안한다.
-		//(피격시 wTileMap에서 callback으로 getHit() 함수 콜)
+		//(피격시 wTileMap에서 callback으로 getHit() 함수 콜이 되고 state가 변경됨)
 		// 후에 IDLE로 상태 변경... 일단 여기서 움직임이 없을 경우
 		// ONMOVE에서 처리했으므로 ONMOVE로 처리
-		m_State = ONMOVE;
+		mPlayer::onHit(fdeltatime);
 	}
 	else if (m_pControl->getKeyControlInfo()[0x5A]){
 		if (m_State == ONATTACK){
@@ -78,11 +83,43 @@ void mPlayer::onUpdate(float fdeltatime){
 	}
 }
 
+void mPlayer::onHit(float fdeltatime){
+	// 경직 시간은 FRAMERATE의 딱 두배
+	if (m_onhitAccumtime < FRAMERATE * 2.0f){
+		m_onhitAccumtime += fdeltatime;
+	}
+	else {
+		// 맞은 이후 일정 시간이 지났을 경우
+		// Idle상태로 돌아감
+		m_onhitAccumtime = 0.0f;
+		m_State = ONMOVE;
+	}
+
+	//
+	if (m_SeeDir == LEFTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(700.0f, 0.0f, 49.0f, 73.0f,  1);
+	}
+	else if (m_SeeDir == LEFTUP){
+		m_spriteAtlas->pickSpriteAtlas(850.0f, 0.0f, 48.0f, 74.0f, 1);
+	}
+	else if (m_SeeDir == RIGHTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(700.0f, 100.0f, 49.0f, 73.0f, 1);
+	}
+	else if (m_SeeDir == RIGHTUP){
+		m_spriteAtlas->pickSpriteAtlas(850.0f, 100.0f, 48.0f, 74.0f, 1);
+	}
+
+	m_spriteAtlas->nextFrame(fdeltatime);
+}
+
 // 피격 시 처리 (체력감소)
 void mPlayer::getHit(float dmg){
 	mIObject::getHit(dmg);
 	if (this->getHealth() >= 0.0f){
 		m_State = ONHIT;
+	}
+	else {
+		m_State = ONDEAD;
 	}
 }
 
@@ -159,18 +196,7 @@ void mPlayer::setKeyControl(coControl* in){
 void mPlayer::onMove(float fdeltatime){
 	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
 
-	// sprite data
-	//leftdown (360.0f, 0.0f,39.0f, 94.0f, 6)
-	//leftup (360.0f, 100.0f, 44.0f, 95.0f, 6)
-	//rightdown (360.0f, 200.0f, 39.0f, 94.0f, 6)
-	//rightup (360.0f, 300.0f, 44.0f, 95.0f, 6)
-	// idle left up
-	//(360.0f, 400.0f, 42.0f, 89.0f, 4)
-	// idle right up
-	//(360.0f, 500.0f, 42.0f, 89.0f, 4)
-	// idle left down
-	//(0.0f, 500.0f, 64.0f, 92.0f, 4)
-
+	// Animation Part
 	if (m_pControl->getKeyControlInfo()[VK_LEFT] &&
 		m_pControl->getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = LEFTDOWN;
@@ -311,7 +337,7 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		::D2D1_RECT_F srcArea
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
-		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 
@@ -380,5 +406,48 @@ void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+	}
+}
+
+void mPlayer::onDead(float delta){
+	//on dead
+	//	ld 700, 200, 69, 55, 0
+	//	lu 850, 200, 62, 43, 0
+	//	rd 700, 250, 69, 44, 0
+	//	rd 850, 250, 62, 43, 0
+
+	//accumtime += pmon->getdeltaTime();
+	//if (accumtime < FRAMERATE * 1.0f){
+	//	m_sprite->nextFrame(pmon->getdeltaTime());
+	//}
+
+	//// 사망시 페이드아웃 효과
+	//pmon->setAlpha(pmon->getAlpha() - 0.025f);
+
+	//// 차후 delete 보다는 setVisible을 이용해서
+	//// 다시 이용하는 방법도 있을 듯 하뎌이다
+	//// 일정 시간이 지난 뒤 삭제 trigger on
+	//if (accumtime > FRAMERATE*8.0f){
+	//	pmon->setState(ONDEAD);
+	//}
+	if (m_SeeDir == RIGHTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(700.0f, 250.0f, 69.0f, 55.0f, 0);
+	}
+	else if (m_SeeDir == LEFTUP){
+		m_spriteAtlas->pickSpriteAtlas(850.0f, 200.0f, 62.0f, 43.0f, 0);
+	}
+	else if (m_SeeDir == RIGHTUP){
+		m_spriteAtlas->pickSpriteAtlas(850.0f, 250.0f, 69.0f, 55.0f, 0);		
+	}
+	else if (m_SeeDir == LEFTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(700.0f, 200.0f, 62.0f, 43.0f, 0);
+	}
+
+	m_deadFadeOutTime += delta;
+	m_alpha -= 0.025f;
+	if (m_deadFadeOutTime > FRAMERATE*8.0f){
+		// todo: 페이드아웃 종료후 게임 오버 처리
+		// 일단 창 종료로 설정
+		::PostQuitMessage(NULL);
 	}
 }

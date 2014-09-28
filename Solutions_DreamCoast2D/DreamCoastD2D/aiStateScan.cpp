@@ -24,7 +24,9 @@ void aiStateScan::execute(mMonster* pmon){
 		pmon->changeState(new aiStateOnHit);
 	}
 	// 어그로 레벨이 떨어졌을시 아이들 상태로 돌아감
+	// 마지막 이동 처리 취소
 	if (pmon->getCurrentAggroLevel() < pmon->getMaxAggroLevel()){
+		pmon->setDest(pmon->getRealPos()->x, pmon->getRealPos()->x);
 		pmon->changeState(new aiStateIdle);
 	}
 	// StateAttack으로 이행
@@ -46,8 +48,10 @@ void aiStateScan::execute(mMonster* pmon){
 	}	
 	// 3. 스캔시 플레이어가 일정 시간동안 시야내에 없다면 
 	// 어그로레벨 감소	
+	// 마지막 이동 처리 취소
 	if (!inSight){
 		if (accumtime >= 3.0f){
+			pmon->setDest(pmon->getRealPos()->x, pmon->getRealPos()->x);
 			pmon->setCurrentAggroLevel(pmon->getCurrentAggroLevel() - 10.0f);
 			accumtime = 0;			
 		}
