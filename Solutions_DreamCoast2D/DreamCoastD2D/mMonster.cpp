@@ -228,21 +228,23 @@ void mMonster::moveToDest(float deltaTime){
 	}
 	else if (m_dest->x < _realVector->x){
 		vMover = mIObject::vectorMove(deltaTime, LEFT);
-		if (m_SeeDir == RIGHTUP){
+		/*if (m_SeeDir == RIGHTUP){
 			m_SeeDir = LEFTUP;
 		}
 		else if (m_SeeDir == RIGHTDOWN){
 			m_SeeDir = LEFTDOWN;
-		}			
+		}*/		
+		m_SeeDir = LEFTDOWN;
 	}
 	else if (m_dest->x > _realVector->x){
 		vMover = mIObject::vectorMove(deltaTime, RIGHT);
-		if (m_SeeDir == LEFTUP){
+		/*if (m_SeeDir == LEFTUP){
 			m_SeeDir = RIGHTUP;
 		}
 		else if (m_SeeDir == LEFTDOWN){
 			m_SeeDir = RIGHTDOWN;
-		}
+		}*/
+		m_SeeDir = RIGHTDOWN;
 	}
 	else if (m_dest->y < _realVector->y){
 		vMover= mIObject::vectorMove(deltaTime, UP);

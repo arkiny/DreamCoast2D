@@ -37,11 +37,13 @@ public:
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
 	VECTOR2D twoDtoISO(VECTOR2D in);
 	VECTOR2D getPlayerTilePos();
+	
 	void playerGetHit(float dmg);
 
 	float getRectTileWidth(){ return _RectTileWidth; }
 	float getRectTileHeight(){	return _RectTileHeight;	}
 
+	std::vector<mIObject*> getMobList() { return m_mobs; }
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
 	// 전투, 충돌 처리 실시 혹은 맵(이 아니라 이제 자체적으로 월드인듯)

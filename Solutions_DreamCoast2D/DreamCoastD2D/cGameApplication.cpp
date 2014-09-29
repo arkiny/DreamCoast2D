@@ -67,8 +67,6 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 	return RegisterClass(&wc);
 }
 
-
-
 //
 //   ÇÔ¼ö: InitInstance(HINSTANCE, int)
 //
@@ -190,7 +188,7 @@ void cGameApplication::Run()
 				accumTime -= 1000;
 				accumFrame = 0;
 
-				swprintf(fpsString, L"FPS : %2.2f", _fps);
+				swprintf(fpsString, 20, L"FPS : %2.2f", _fps);
 				SetWindowText(_hwnd,fpsString);
 			}
 

@@ -32,6 +32,7 @@ private:
 	ID2D1SolidColorBrush* m_pBlackBrush;
 	ID2D1SolidColorBrush* m_pGreenBrush;
 	ID2D1SolidColorBrush* m_pRedBrush;
+	ID2D1SolidColorBrush* m_pWhiteBrush;
 
 	IDWriteFactory* m_pDWriteFactory;
 	IDWriteTextFormat* m_pTextFormat;
@@ -73,6 +74,10 @@ public:
 
 	ID2D1SolidColorBrush* GetRedBrush(){
 		return m_pRedBrush;
+	}
+
+	ID2D1SolidColorBrush* GetWhiteBrush(){
+		return m_pWhiteBrush;
 	}
 
 	IDWriteTextFormat* GetTextFormat()
