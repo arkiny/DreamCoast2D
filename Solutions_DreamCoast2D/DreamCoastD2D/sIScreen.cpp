@@ -1,9 +1,13 @@
 #include "stdafx.h"
 #include "sIScreen.h"
 
+sIScreen::sIScreen(){
+	m_pGameManager = nullptr;
+}
 
-sIScreen::sIScreen()
-{
+sIScreen::sIScreen(cGameManager* in)
+{	
+	m_pGameManager = in;
 }
 
 

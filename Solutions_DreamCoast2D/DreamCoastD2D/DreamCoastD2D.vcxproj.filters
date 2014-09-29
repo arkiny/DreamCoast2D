@@ -29,14 +29,17 @@
     <Filter Include="Model\Mob">
       <UniqueIdentifier>{17f5a786-7431-49eb-814a-30974400c4d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StateAIFSM">
-      <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
-    </Filter>
     <Filter Include="aMain">
       <UniqueIdentifier>{7a0dfb9b-faa0-4617-8b99-03e601e6416f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Model\Player State">
       <UniqueIdentifier>{267531aa-aa14-41ef-b6a3-feedb128522a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screen\UI">
+      <UniqueIdentifier>{19e322b1-99c5-475d-beb5-848ba08118c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AIStateFSM">
+      <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -89,28 +92,28 @@
       <Filter>Model\Mob</Filter>
     </ClInclude>
     <ClInclude Include="aiState.h">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClInclude>
     <ClInclude Include="uCamera.h">
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="aiStateOnHit.h">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClInclude>
     <ClInclude Include="aiStateIdle.h">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClInclude>
     <ClInclude Include="aiStateDead.h">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClInclude>
     <ClInclude Include="aiStateMoveto.h">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClInclude>
     <ClInclude Include="aiStateScan.h">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClInclude>
     <ClInclude Include="aiStateAttack.h">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClInclude>
     <ClInclude Include="DreamCoastD2D.h">
       <Filter>aMain</Filter>
@@ -129,6 +132,12 @@
     </ClInclude>
     <ClInclude Include="pStateIdle.h">
       <Filter>Model\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="uiInterface.h">
+      <Filter>Screen\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameUI.h">
+      <Filter>Screen\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -181,28 +190,28 @@
       <Filter>Model\Mob</Filter>
     </ClCompile>
     <ClCompile Include="aiState.cpp">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
     <ClCompile Include="uCamera.cpp">
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="aiStateOnHit.cpp">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
     <ClCompile Include="aiStateIdle.cpp">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
     <ClCompile Include="aiStateDead.cpp">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
     <ClCompile Include="aiStateMoveto.cpp">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
     <ClCompile Include="aiStateScan.cpp">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
     <ClCompile Include="aiStateAttack.cpp">
-      <Filter>StateAIFSM</Filter>
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
     <ClCompile Include="DreamCoastD2D.cpp">
       <Filter>aMain</Filter>
@@ -215,6 +224,12 @@
     </ClCompile>
     <ClCompile Include="pStateIdle.cpp">
       <Filter>Model\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="uiInterface.cpp">
+      <Filter>Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameUI.cpp">
+      <Filter>Screen\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

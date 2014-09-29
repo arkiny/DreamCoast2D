@@ -8,7 +8,6 @@
 cGameManager::cGameManager(void)
 {
 	m_pControl = nullptr;
-	m_pCurrentScreen = nullptr;
 }
 
 
@@ -16,41 +15,24 @@ cGameManager::~cGameManager(void)
 {
 	if (m_pControl != NULL)
 		delete m_pControl;
-	if (m_pCurrentScreen != NULL)
-		delete m_pCurrentScreen;
 }
 
 
 void cGameManager::OnInit(cD2DRenderer& renderer)
 {
 	m_pControl = new coControl;
-
-	// screen
-	// 일단은 sGameScreen으로 게임을 시작한다.
-	m_pCurrentScreen = new sGameScreen;
-	m_pCurrentScreen->setControl(m_pControl);
-	m_pCurrentScreen->OnInit(renderer);
+	m_pWorld = new wWorld();
+	m_pWorld->OnInit(renderer, m_pControl);
 }
 
 void cGameManager::Render(cD2DRenderer& renderer)
 {
-
-	m_pCurrentScreen->Render(renderer);
+	m_pWorld->Render(renderer);
 }
 
 void cGameManager::Update(float deltaTime)
 {
-	m_pCurrentScreen->Update(deltaTime);
-}
-
-void cGameManager::changeScreen(sIScreen* pnew){
-	// exception
-	if (m_pCurrentScreen == nullptr || pnew == nullptr) return;
-
-	//m_pCurrentScreen->exit() 퇴장 과정 실시
-	m_pCurrentScreen = pnew;
-
-	//m_pCurrentScreen->OnInit() 시작 처리(rendering 처리)
+	m_pWorld->Update(deltaTime);
 }
 
 void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

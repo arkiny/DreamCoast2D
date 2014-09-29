@@ -1,13 +1,10 @@
 #pragma once
 #include "cD2DRenderer.h"
 #include "cIGameMgr.h"
-//class cD2DRenderer;
-//class mPlayer;
 
-//class mPlayer;
 class coControl;
 class wWorld;
-//class wTileMap;
+class sIScreen;
 
 class cGameManager :
 	public cIGameMgr
@@ -19,11 +16,13 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual void OnInit(cD2DRenderer&);
+
+	// 스크린 관리, 각 스크린이 콜백으로 받아와서, 씬관리를 한다?
+	void changeScreen(sIScreen* in);
 private:
 	coControl* m_pControl;
 	
-	//일단 게임월드를 바로 넣어놨지만
-	//차후 아래 포인터에는 각 스크린(메뉴스크린, 게임 스크린)이 들어가게 됩니다.
-	wWorld* m_pWorld;
+	// 스크린 포인터, 스크린 관리
+	sIScreen* m_pCurrentScreen;
 };
 
