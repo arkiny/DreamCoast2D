@@ -19,6 +19,10 @@ cD2DRenderer::~cD2DRenderer()
 	SafeRelease(m_ipD2DFactory);
 
 	SafeRelease(m_pBlackBrush);
+	SafeRelease(m_pRedBrush);
+	SafeRelease(m_pGreenBrush);
+	SafeRelease(m_pWhiteBrush);
+
 	SafeRelease(m_pDWriteFactory);
 	SafeRelease(m_pTextFormat);
 
@@ -51,10 +55,21 @@ void cD2DRenderer::InitializeD2D(void)
 		DWRITE_FONT_WEIGHT_REGULAR,
 		DWRITE_FONT_STYLE_NORMAL,
 		DWRITE_FONT_STRETCH_NORMAL,
-		72.0f,
+		20.0f,
 		L"en-us",
 		&m_pTextFormat
 		);
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT_LEADING);
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+	}
+
 
 	CoInitialize(0);
 
@@ -112,6 +127,12 @@ void cD2DRenderer::InitializeRT(HWND hWnd)
 	hr = m_ipRT->CreateSolidColorBrush(
 		D2D1::ColorF(D2D1::ColorF::DarkRed),
 		&m_pRedBrush
+		);
+	assert(hr == S_OK);
+
+	hr = m_ipRT->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF::White),
+		&m_pWhiteBrush
 		);
 	assert(hr == S_OK);
 	

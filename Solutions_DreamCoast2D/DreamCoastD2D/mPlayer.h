@@ -29,6 +29,8 @@ public:
 
 	// StateInitializer
 	// void onIdle();
+
+	bool isDeadComplete() { return m_deadcomp; }
 	
 private:
 	// 키보드 입력에 따른 움직임
@@ -60,5 +62,7 @@ private:
 
 	// fade out time
 	float m_deadFadeOutTime = 0.0f;
+
+	bool m_deadcomp = false;
 };
 

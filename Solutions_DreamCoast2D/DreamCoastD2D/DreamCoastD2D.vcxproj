@@ -100,8 +100,11 @@
     <ClInclude Include="mPlayer.h" />
     <ClInclude Include="piState.h" />
     <ClInclude Include="pStateIdle.h" />
+    <ClInclude Include="sGameOverScreen.h" />
     <ClInclude Include="uCamera.h" />
+    <ClInclude Include="uiGameMiniMap.h" />
     <ClInclude Include="uiInterface.h" />
+    <ClInclude Include="uiPlayerStatBar.h" />
     <ClInclude Include="wTileMap.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sGameScreen.h" />
@@ -133,8 +136,11 @@
     <ClCompile Include="mPlayer.cpp" />
     <ClCompile Include="piState.cpp" />
     <ClCompile Include="pStateIdle.cpp" />
+    <ClCompile Include="sGameOverScreen.cpp" />
     <ClCompile Include="uCamera.cpp" />
+    <ClCompile Include="uiGameMiniMap.cpp" />
     <ClCompile Include="uiInterface.cpp" />
+    <ClCompile Include="uiPlayerStatBar.cpp" />
     <ClCompile Include="wTileMap.cpp" />
     <ClCompile Include="sGameScreen.cpp" />
     <ClCompile Include="sIScreen.cpp" />

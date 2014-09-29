@@ -3,6 +3,8 @@
 
 class uiInterface;
 class cD2DRenderer;
+class mIObject;
+class wTileMap;
 
 // UI Screen has UI interface classes.
 // Using as a layer of the game screen
@@ -12,6 +14,7 @@ class InGameUI
 {
 public:
 	InGameUI();
+	InGameUI(mIObject*, wTileMap*);
 	~InGameUI();
 	void Render(cD2DRenderer&);
 	void Update(float);

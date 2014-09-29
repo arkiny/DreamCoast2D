@@ -27,7 +27,7 @@ void cGameManager::OnInit(cD2DRenderer& renderer)
 
 	// screen
 	// 일단은 sGameScreen으로 게임을 시작한다.
-	m_pCurrentScreen = new sGameScreen;
+	m_pCurrentScreen = new sGameScreen(this);
 	m_pCurrentScreen->setControl(m_pControl);
 	m_pCurrentScreen->OnInit(renderer);
 }

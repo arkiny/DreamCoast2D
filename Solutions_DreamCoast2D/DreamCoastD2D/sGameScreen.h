@@ -2,12 +2,13 @@
 #include "sIScreen.h"
 
 class wWorld;
-//class InGameUI;
+class InGameUI;
 
 class sGameScreen : public sIScreen
 {	
 public:
 	sGameScreen();
+	sGameScreen(cGameManager*);
 	~sGameScreen();
 private:
 	void Render(cD2DRenderer&);
@@ -19,7 +20,7 @@ private:
 
 private:
 	wWorld* m_pWorld;	
-	//InGameUI* m_pGameUI;
+	InGameUI* m_pGameUI;
 	//차후 UI렌더가 될때, world가 렌더 된 이후, 그 위에 UI레이어를 뿌린다
 };
 

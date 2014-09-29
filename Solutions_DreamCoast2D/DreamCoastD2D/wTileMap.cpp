@@ -134,8 +134,10 @@ void wTileMap::onRender(cD2DRenderer& renderer){
 	//renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBrush());
 	//
 	::wTileMap::renderMap(renderer);
-	// Todo: 차후 healthbar option 넣을 것
-	::wTileMap::drawHealthBar(renderer, m_player);
+	
+	//::wTileMap::drawHealthBar(renderer, m_player);
+
+	// Todo: 차후 Mob healthbar option 넣을 것, 혹은 UI Screen에서 관리
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
 		::wTileMap::drawHealthBar(renderer, m_mobs[i]);
 	}

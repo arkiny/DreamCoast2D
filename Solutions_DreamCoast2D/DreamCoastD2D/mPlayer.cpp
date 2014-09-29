@@ -20,9 +20,9 @@ mPlayer::mPlayer()
 	m_SeeDir = RIGHTDOWN;
 	m_State = ONMOVE;
 
-	m_MAXHP = 2100.0f;
+	m_MAXHP = 2000.0f;
 	m_MAXMP = 200.0f;
-	m_HP = 2100.0f;
+	m_HP = 2000.0f;
 	m_MP = 200.0f;
 }
 
@@ -294,6 +294,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 19.5f, 0.0f, 4);
 			//m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 4);
 		}
+
 	}	
 	// frame update
 	m_spriteAtlas->nextFrame(fdeltatime);
@@ -432,23 +433,24 @@ void mPlayer::onDead(float delta){
 	//	pmon->setState(ONDEAD);
 	//}
 	if (m_SeeDir == RIGHTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(700.0f, 250.0f, 69.0f, 55.0f, 0);
+		m_spriteAtlas->pickSpriteAtlas(700.0f, 250.0f, 69.0f, 44.0f, -19.5f, 0.0f, 0);
 	}
 	else if (m_SeeDir == LEFTUP){
-		m_spriteAtlas->pickSpriteAtlas(850.0f, 200.0f, 62.0f, 43.0f, 0);
+		m_spriteAtlas->pickSpriteAtlas(850.0f, 200.0f, 62.0f, 50.0f, 0);
 	}
 	else if (m_SeeDir == RIGHTUP){
-		m_spriteAtlas->pickSpriteAtlas(850.0f, 250.0f, 69.0f, 55.0f, 0);		
+		m_spriteAtlas->pickSpriteAtlas(850.0f, 250.0f, 62.0f, 50.0f, 0);
 	}
 	else if (m_SeeDir == LEFTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(700.0f, 200.0f, 62.0f, 43.0f, 0);
+		m_spriteAtlas->pickSpriteAtlas(700.0f, 200.0f, 69.0f, 44.0f, 19.5f, 0.0f, 0);
 	}
+	m_spriteAtlas->nextFrame(delta);
 
 	m_deadFadeOutTime += delta;
 	m_alpha -= 0.025f;
-	if (m_deadFadeOutTime > FRAMERATE*8.0f){
+	if (m_deadFadeOutTime > FRAMERATE*20.0f){
+	//if (m_alpha <= 0.0f){
 		// todo: 페이드아웃 종료후 게임 오버 처리
-		// 일단 창 종료로 설정
-		::PostQuitMessage(NULL);
+		m_deadcomp = true;
 	}
 }

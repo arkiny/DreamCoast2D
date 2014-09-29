@@ -139,6 +139,15 @@
     <ClInclude Include="InGameUI.h">
       <Filter>Screen\UI</Filter>
     </ClInclude>
+    <ClInclude Include="uiPlayerStatBar.h">
+      <Filter>Screen\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="sGameOverScreen.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="uiGameMiniMap.h">
+      <Filter>Screen\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -229,6 +238,15 @@
       <Filter>Screen\UI</Filter>
     </ClCompile>
     <ClCompile Include="InGameUI.cpp">
+      <Filter>Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="uiPlayerStatBar.cpp">
+      <Filter>Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="sGameOverScreen.cpp">
+      <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="uiGameMiniMap.cpp">
       <Filter>Screen\UI</Filter>
     </ClCompile>
   </ItemGroup>

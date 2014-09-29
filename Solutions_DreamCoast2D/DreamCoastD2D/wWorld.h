@@ -15,6 +15,9 @@ public:
 	void Update(float deltaTime);
 	void OnInit(cD2DRenderer&, coControl*);
 
+	mPlayer* getPlayer(){ return m_Player; }
+	wTileMap* getMap() { return m_Map; }
+	bool isGameOver(); 
 private:
 	// player init은 world에서 하지만, 그 관리는 m_Map에서 포인터를 받아서 실시
 	mPlayer* m_Player;
