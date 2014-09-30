@@ -7,8 +7,9 @@
 #include "mIObject.h"
 
 uiGameMiniMap::uiGameMiniMap()
-{
+{	
 	m_pTileMap = nullptr;
+	this->setPos(new VECTOR2D(20.0f, 20.0f));
 }
 
 
@@ -18,6 +19,7 @@ uiGameMiniMap::~uiGameMiniMap()
 
 uiGameMiniMap::uiGameMiniMap(wTileMap* ptileMap){
 	m_pTileMap = ptileMap;
+	this->setPos(new VECTOR2D(20.0f, 20.0f));
 }
 
 void uiGameMiniMap::OnInit(cD2DRenderer& renderer){
@@ -35,10 +37,12 @@ void uiGameMiniMap::Render(cD2DRenderer& renderer){
 	::D2D1_RECT_F MiniMapOutline;
 	::RECT winRect;
 	GetClientRect(renderer.GetHwnd(), &winRect);
+
 	MiniMapOutline.top = winRect.top + 20.0f;
 	MiniMapOutline.bottom = winRect.top + 220.0f;
 	MiniMapOutline.left = winRect.right - 220.0f;
 	MiniMapOutline.right = winRect.right - 20.0f;
+	this->setPos(MiniMapOutline.left, MiniMapOutline.top);
 
 	renderer.GetRenderTarget()->FillRectangle(MiniMapOutline,
 		renderer.GetWhiteBrush());

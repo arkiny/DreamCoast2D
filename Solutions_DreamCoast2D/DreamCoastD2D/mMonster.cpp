@@ -8,6 +8,7 @@
 #include "aiStateIdle.h"
 #include "aiStateOnHit.h"
 #include "wTileMap.h"
+#include "cResourceManager.h"
 
 mMonster::mMonster()
 {
@@ -61,7 +62,8 @@ mMonster::~mMonster()
 
 void mMonster::onInit(ID2D1Bitmap* resource){
 	// 현재는 기본으로 포링이지만, 상속받아서 바꿀수 있다.
-	m_ipD2DBitmap = resource;
+	m_ipD2DBitmap = ::cResourceManager::GetInstance().getPoringBitMap();
+	//resource;
 	// idle에서 시작
 	m_pState = new aiStateIdle();
 	m_pState->enter(this);	

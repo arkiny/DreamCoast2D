@@ -4,9 +4,11 @@
 #include "wWorld.h"
 #include "sIScreen.h"
 #include "sGameScreen.h"
+#include "sMainMenuScreen.h"
 
 cGameManager::cGameManager(void)
 {
+	m_rRenderer = nullptr;
 	m_pControl = nullptr;
 	m_pCurrentScreen = nullptr;
 }
@@ -22,12 +24,13 @@ cGameManager::~cGameManager(void)
 void cGameManager::OnInit(cD2DRenderer& renderer)
 {
 	m_pControl = new coControl;
+	m_rRenderer = &renderer;
 
 	// screen
 	// 일단은 sGameScreen으로 게임을 시작한다.
-	m_pCurrentScreen = new sGameScreen(this);
+	m_pCurrentScreen = new sMainMenuScreen(this);
 	m_pCurrentScreen->setControl(m_pControl);
-	m_pCurrentScreen->OnInit(renderer);
+	m_pCurrentScreen->OnInit(*m_rRenderer);
 }
 
 void cGameManager::Render(cD2DRenderer& renderer)
@@ -44,11 +47,15 @@ void cGameManager::changeScreen(sIScreen* pnew){
 	// exception
 	if (m_pCurrentScreen == nullptr || pnew == nullptr) return;
 
+	// 삭제처리
 	m_pCurrentScreen->OnExit();
-	m_pCurrentScreen = pnew;
+	delete m_pCurrentScreen;	// 혹시 모르니 현재 스크린 포인터내의 내용도 삭제
+								// 스크린 역시 포인터를 가지고 있으므로!
+	m_pCurrentScreen = pnew;	// 옮경
 	// render를 통한 시작 초기화가 아닌, 리소스 매니저를 이용한 
 	// 리소스 초기화로 이니셜라이징 시작
-	// m_pCurrentScreen->OnInit(); 
+	// renderer가 필요하면 저장해서 옮기면 되지 ㅡㅡ
+	m_pCurrentScreen->OnInit(*m_rRenderer);
 }
 
 void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cResourceManager.h"
 
+template<> cResourceManager* Singleton<cResourceManager>::_instance = 0;
 
 cResourceManager::cResourceManager()
 {

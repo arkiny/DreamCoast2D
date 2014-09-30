@@ -102,7 +102,10 @@
     <ClInclude Include="piState.h" />
     <ClInclude Include="pStateIdle.h" />
     <ClInclude Include="sGameOverScreen.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="sMainMenuScreen.h" />
     <ClInclude Include="uCamera.h" />
+    <ClInclude Include="uiButton.h" />
     <ClInclude Include="uiGameMiniMap.h" />
     <ClInclude Include="uiInterface.h" />
     <ClInclude Include="uiPlayerStatBar.h" />
@@ -139,7 +142,9 @@
     <ClCompile Include="piState.cpp" />
     <ClCompile Include="pStateIdle.cpp" />
     <ClCompile Include="sGameOverScreen.cpp" />
+    <ClCompile Include="sMainMenuScreen.cpp" />
     <ClCompile Include="uCamera.cpp" />
+    <ClCompile Include="uiButton.cpp" />
     <ClCompile Include="uiGameMiniMap.cpp" />
     <ClCompile Include="uiInterface.cpp" />
     <ClCompile Include="uiPlayerStatBar.cpp" />

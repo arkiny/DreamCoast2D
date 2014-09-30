@@ -1,7 +1,9 @@
 #pragma once
 #include "cD2DRenderer.h"
+#include "Singleton.h"
 
-class cResourceManager
+
+class cResourceManager : public Singleton<cResourceManager>
 {
 public:
 	cResourceManager();

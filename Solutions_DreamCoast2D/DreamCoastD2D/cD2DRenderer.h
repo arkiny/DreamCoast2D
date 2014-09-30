@@ -19,7 +19,8 @@
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib,"Windowscodecs.lib")
 
-class cD2DRenderer
+
+class cD2DRenderer 
 {
 private:
 

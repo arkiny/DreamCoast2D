@@ -41,6 +41,9 @@
     <Filter Include="AIStateFSM">
       <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Screen\InScreenUI">
+      <UniqueIdentifier>{d14fdf2a-7829-468d-bc31-4553745aec4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -136,9 +139,6 @@
     <ClInclude Include="uiInterface.h">
       <Filter>Screen\UI</Filter>
     </ClInclude>
-    <ClInclude Include="InGameUI.h">
-      <Filter>Screen\UI</Filter>
-    </ClInclude>
     <ClInclude Include="uiPlayerStatBar.h">
       <Filter>Screen\UI</Filter>
     </ClInclude>
@@ -150,6 +150,18 @@
     </ClInclude>
     <ClInclude Include="cResourceManager.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>aMain</Filter>
+    </ClInclude>
+    <ClInclude Include="uiButton.h">
+      <Filter>Screen\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="sMainMenuScreen.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameUI.h">
+      <Filter>Screen\InScreenUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -240,9 +252,6 @@
     <ClCompile Include="uiInterface.cpp">
       <Filter>Screen\UI</Filter>
     </ClCompile>
-    <ClCompile Include="InGameUI.cpp">
-      <Filter>Screen\UI</Filter>
-    </ClCompile>
     <ClCompile Include="uiPlayerStatBar.cpp">
       <Filter>Screen\UI</Filter>
     </ClCompile>
@@ -254,6 +263,15 @@
     </ClCompile>
     <ClCompile Include="cResourceManager.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="uiButton.cpp">
+      <Filter>Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="sMainMenuScreen.cpp">
+      <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameUI.cpp">
+      <Filter>Screen\InScreenUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
