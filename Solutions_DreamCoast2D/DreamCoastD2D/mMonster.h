@@ -12,7 +12,7 @@ public:
 	mMonster(float, float);
 	~mMonster();
 	//
-	void onInit(cD2DRenderer& renderer);
+	void onInit(ID2D1Bitmap* resource);
 	void onUpdate(float fdeltatime);
 	void onRender(cD2DRenderer& renderer);
 	

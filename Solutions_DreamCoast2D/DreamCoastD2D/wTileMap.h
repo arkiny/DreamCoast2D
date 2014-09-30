@@ -7,13 +7,14 @@ class uSprite;
 class mIObject;
 class uCamera;
 class uTile;
+class cResourceManager;
 
 class wTileMap
 {
 public:
 	wTileMap();
 	~wTileMap();
-	void onInit(cD2DRenderer& renderer);
+	void onInit(cResourceManager* resource);
 	void onUpdate(float fdeltatime);
 	void onRender(cD2DRenderer& renderer);
 

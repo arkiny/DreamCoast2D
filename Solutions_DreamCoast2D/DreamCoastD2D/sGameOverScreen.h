@@ -13,6 +13,8 @@ public:
 	void Render(cD2DRenderer&);
 	void Update(float);
 	void OnInit(cD2DRenderer&);
+	void OnExit();
+
 private:
 	float m_accumtime = 0.0f;
 };

@@ -59,10 +59,9 @@ mMonster::~mMonster()
 	}
 }
 
-void mMonster::onInit(cD2DRenderer& renderer){
+void mMonster::onInit(ID2D1Bitmap* resource){
 	// 현재는 기본으로 포링이지만, 상속받아서 바꿀수 있다.
-	HWND hWnd = renderer.GetHwnd();
-	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/poring.png", NULL);
+	m_ipD2DBitmap = resource;
 	// idle에서 시작
 	m_pState = new aiStateIdle();
 	m_pState->enter(this);	

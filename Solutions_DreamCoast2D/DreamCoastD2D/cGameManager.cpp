@@ -11,7 +11,6 @@ cGameManager::cGameManager(void)
 	m_pCurrentScreen = nullptr;
 }
 
-
 cGameManager::~cGameManager(void)
 {
 	if (m_pControl != NULL)
@@ -19,7 +18,6 @@ cGameManager::~cGameManager(void)
 	if (m_pCurrentScreen != NULL)
 		delete m_pCurrentScreen;
 }
-
 
 void cGameManager::OnInit(cD2DRenderer& renderer)
 {
@@ -34,7 +32,6 @@ void cGameManager::OnInit(cD2DRenderer& renderer)
 
 void cGameManager::Render(cD2DRenderer& renderer)
 {
-
 	m_pCurrentScreen->Render(renderer);
 }
 
@@ -47,10 +44,11 @@ void cGameManager::changeScreen(sIScreen* pnew){
 	// exception
 	if (m_pCurrentScreen == nullptr || pnew == nullptr) return;
 
-	//m_pCurrentScreen->exit() 퇴장 과정 실시
+	m_pCurrentScreen->OnExit();
 	m_pCurrentScreen = pnew;
-
-	//m_pCurrentScreen->OnInit() 시작 처리(rendering 처리)
+	// render를 통한 시작 초기화가 아닌, 리소스 매니저를 이용한 
+	// 리소스 초기화로 이니셜라이징 시작
+	// m_pCurrentScreen->OnInit(); 
 }
 
 void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

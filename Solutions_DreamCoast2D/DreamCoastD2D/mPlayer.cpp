@@ -41,9 +41,9 @@ mPlayer::~mPlayer()
 	}
 }
 
-void mPlayer::onInit(cD2DRenderer& renderer){
-	HWND hWnd = renderer.GetHwnd();
-	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/sprites.png", NULL);
+void mPlayer::onInit(ID2D1Bitmap* resource){
+	//HWND hWnd = renderer.GetHwnd();
+	m_ipD2DBitmap = resource;
 	m_Cam = new uCamera(1028.0, 768.0f, this->getRealPos());
 }
 

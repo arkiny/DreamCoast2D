@@ -46,3 +46,7 @@ void sGameOverScreen::Update(float delta){
 void sGameOverScreen::OnInit(cD2DRenderer& renderer){
 
 }
+
+void sGameOverScreen::OnExit(){
+
+}

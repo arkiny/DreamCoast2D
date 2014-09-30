@@ -148,6 +148,9 @@
     <ClInclude Include="uiGameMiniMap.h">
       <Filter>Screen\UI</Filter>
     </ClInclude>
+    <ClInclude Include="cResourceManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -248,6 +251,9 @@
     </ClCompile>
     <ClCompile Include="uiGameMiniMap.cpp">
       <Filter>Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="cResourceManager.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

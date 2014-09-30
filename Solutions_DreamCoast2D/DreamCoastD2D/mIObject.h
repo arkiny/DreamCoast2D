@@ -16,7 +16,7 @@ class mIObject
 public:
 	virtual ~mIObject();
 
-	virtual void onInit(cD2DRenderer& renderer) = 0;
+	virtual void onInit(ID2D1Bitmap* resource) = 0;
 	virtual void onUpdate(float fdeltatime) = 0;
 
 	// object는 기본적으로 렌더링을 할것을 가지고 있기 때문에
@@ -46,6 +46,8 @@ public:
 	//
 	uSprite* getSprite() { return m_spriteAtlas; }
 	wTileMap* getTileMap(){ return m_pTileMap; }
+	void setBitMap(ID2D1Bitmap* input) { m_ipD2DBitmap = input; }
+
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
 	// POINT를 쓸 경우 LONG 값에서 변환이 일어나기 때문에 가감연산에 문제가 생긴다.
@@ -63,7 +65,7 @@ protected:
 	// player클래스는 업데이트 관련 모듈에
 	// 집중가능
 	uSprite* m_spriteAtlas;			// 스프라이트 정보
-	ID2D1Bitmap* m_ipD2DBitmap;		// 스프라이트 파일
+	ID2D1Bitmap* m_ipD2DBitmap;		// 스프라이트 메모리 주소
 
 	// 체력 변수, 차후 아이템 추가, 캐릭터 추가시 동적 변화
 	float m_MAXHP = 100.0f;

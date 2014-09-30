@@ -14,6 +14,9 @@ sGameScreen::~sGameScreen(){
 	if (m_pWorld != NULL){
 		delete m_pWorld;
 	}
+	if (m_pGameUI != NULL){
+		delete m_pGameUI;
+	}
 }
 
 sGameScreen::sGameScreen(cGameManager* cg){
@@ -37,6 +40,11 @@ void sGameScreen::Update(float deltaTime){
 	if (m_pWorld->isGameOver()){
 		m_pGameManager->changeScreen(new sGameOverScreen(m_pGameManager));
 	}
-	m_pWorld->Update(deltaTime);
+	else {
+		m_pWorld->Update(deltaTime);
+	}
 }
 
+void sGameScreen::OnExit(){
+	sGameScreen::~sGameScreen();
+}

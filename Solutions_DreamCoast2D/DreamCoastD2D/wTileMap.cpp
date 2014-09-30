@@ -8,7 +8,7 @@
 #include "uCamera.h"
 #include "mMonster.h"
 #include "uTile.h"
-
+#include "cResourceManager.h"
 
 wTileMap::wTileMap()
 {	
@@ -43,9 +43,8 @@ wTileMap::~wTileMap()
 	}
 }
 
-void wTileMap::onInit(cD2DRenderer& renderer){
-	HWND hWnd = renderer.GetHwnd();
-	m_ipD2DBitmap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/maptile.png", NULL);
+void wTileMap::onInit(cResourceManager* resource){
+	m_ipD2DBitmap = resource->getTileMapBitMap();
 	m_Cam = new uCamera(1028.0, 768.0f, m_player->getRealPos());
 	
 	// Debug---------------------------------------------------
@@ -100,7 +99,7 @@ void wTileMap::onInit(cD2DRenderer& renderer){
 	ptr2 = nullptr;
 	ptr = nullptr;
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
-		m_mobs[i]->onInit(renderer);
+		m_mobs[i]->onInit(resource->getPoringBitMap());
 		m_mobs[i]->setCam(m_Cam);
 	}
 }

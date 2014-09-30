@@ -2,11 +2,13 @@
 #include "wWorld.h"
 #include "mPlayer.h"
 #include "wTileMap.h"
+#include "cResourceManager.h"
 
 wWorld::wWorld()
 {
 	m_Player = nullptr;
 	m_Map = nullptr;
+	m_resource = nullptr;
 }
 
 wWorld::~wWorld()
@@ -18,12 +20,15 @@ wWorld::~wWorld()
 }
 
 void wWorld::OnInit(cD2DRenderer& renderer, coControl* in){
+	m_resource = new cResourceManager;
+	m_resource->load(renderer);
+
 	m_Player = new mPlayer;
-	m_Player->onInit(renderer);
+	m_Player->onInit(m_resource->getPlayerBitMap());
 	
 	m_Map = new wTileMap;
 	m_Map->setPlayer(m_Player);
-	m_Map->onInit(renderer);
+	m_Map->onInit(m_resource);
 
 	// 데이터 통신용 포인터 연결
 	// 컨트롤은 한번 정의해놓으면 고칠일이 없지만, 

@@ -4,6 +4,7 @@
 class coControl;
 class mPlayer;
 class wTileMap;
+class cResourceManager;
 
 class wWorld
 {
@@ -23,6 +24,8 @@ private:
 	mPlayer* m_Player;
 	wTileMap* m_Map;
 	
+	cResourceManager* m_resource;
+
 	// getter와 setter설정을 하면 player class와 map의 상호작용을 여기서 끝낼수 있을 것 같은데..
 	// 지금은 좀 꼬여있는 상태, 몬스터 상호 작용을 어떻게 해야할지 의문
 	// 몬스터와 플레이어 위치를 받아와서 여기서 처리를 할수 있는게 좋은거 같은데
