@@ -19,8 +19,8 @@ wWorld::~wWorld()
 		delete m_Map;
 }
 
-void wWorld::OnInit(cD2DRenderer& renderer, coControl* in){
-	m_resource = new cResourceManager;
+void wWorld::OnInit(cD2DRenderer& renderer, coControl* in, cResourceManager* resource){
+	m_resource = resource;
 	m_resource->load(renderer);
 
 	m_Player = new mPlayer;

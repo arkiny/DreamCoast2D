@@ -4,6 +4,7 @@
 #include "wWorld.h"
 #include "InGameUI.h"
 #include "sGameOverScreen.h"
+#include "cResourceManager.h"
 
 sGameScreen::sGameScreen(){
 	m_pWorld = nullptr;
@@ -23,9 +24,12 @@ sGameScreen::sGameScreen(cGameManager* cg){
 	m_pGameManager = cg;
 }
 
-void sGameScreen::OnInit(cD2DRenderer& renderer){
+void sGameScreen::OnInit(cD2DRenderer& renderer, cResourceManager* resource){
 	m_pWorld = new wWorld();
-	m_pWorld->OnInit(renderer, sIScreen::getControl());
+
+	m_pResource = resource;
+	m_pResource->load(renderer);
+	m_pWorld->OnInit(renderer, sIScreen::getControl(), sIScreen::m_pResource);
 
 	m_pGameUI = new InGameUI((mIObject*)m_pWorld->getPlayer(), m_pWorld->getMap());
 }

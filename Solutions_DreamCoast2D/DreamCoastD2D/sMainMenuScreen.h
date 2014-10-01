@@ -11,7 +11,7 @@ public:
 	~sMainMenuScreen();
 	sMainMenuScreen(cGameManager* cg);
 
-	void OnInit(cD2DRenderer&);
+	void OnInit(cD2DRenderer&, cResourceManager*);
 	void Update(float);
 	void Render(cD2DRenderer&);
 	void OnExit();

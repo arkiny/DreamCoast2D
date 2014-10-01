@@ -4,6 +4,7 @@
 #include "cGameManager.h"
 #include "sGameScreen.h"
 #include "cD2DRenderer.h"
+#include "cResourceManager.h"
 
 
 sMainMenuScreen::sMainMenuScreen()
@@ -23,8 +24,8 @@ sMainMenuScreen::sMainMenuScreen(cGameManager* cg){
 	m_pGameManager = cg;
 }
 
-void sMainMenuScreen::OnInit(cD2DRenderer& renderer){
-
+void sMainMenuScreen::OnInit(cD2DRenderer& renderer, cResourceManager* in){
+	sIScreen::m_pResource = in;
 }
 
 void sMainMenuScreen::Update(float delta){

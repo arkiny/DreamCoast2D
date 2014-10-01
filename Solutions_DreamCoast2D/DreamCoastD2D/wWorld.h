@@ -14,7 +14,7 @@ public:
 
 	void Render(cD2DRenderer&);
 	void Update(float deltaTime);
-	void OnInit(cD2DRenderer&, coControl*);
+	void OnInit(cD2DRenderer&, coControl*, cResourceManager*);
 
 	mPlayer* getPlayer(){ return m_Player; }
 	wTileMap* getMap() { return m_Map; }

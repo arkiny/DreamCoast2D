@@ -1,6 +1,7 @@
 #pragma once
 #include "sIScreen.h"
 
+class cResourceManager;
 //todo: 체크포인트부터 시작, 메인메뉴로 돌아가기 추가
 class sGameOverScreen :
 	public sIScreen
@@ -12,7 +13,7 @@ public:
 
 	void Render(cD2DRenderer&);
 	void Update(float);
-	void OnInit(cD2DRenderer&);
+	void OnInit(cD2DRenderer&, cResourceManager*);
 	void OnExit();
 
 private:

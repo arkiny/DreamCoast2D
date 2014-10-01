@@ -13,7 +13,7 @@ public:
 private:
 	void Render(cD2DRenderer&);
 	void Update(float deltaTime);
-	void OnInit(cD2DRenderer&);
+	void OnInit(cD2DRenderer&, cResourceManager*);
 	void OnExit();
 
 	void setWorld(wWorld* in){ m_pWorld = in; }
