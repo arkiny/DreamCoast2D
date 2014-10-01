@@ -33,8 +33,7 @@ wTileMap::wTileMap()
 }
 
 wTileMap::~wTileMap()
-{
-	SafeRelease(m_ipD2DBitmap);
+{	
 	if (m_spriteAtlas != NULL){
 		delete m_spriteAtlas;
 	}
@@ -43,8 +42,8 @@ wTileMap::~wTileMap()
 	}
 }
 
-void wTileMap::onInit(cResourceManager* resource){
-	m_ipD2DBitmap = resource->getTileMapBitMap();
+void wTileMap::onInit(){
+	m_ipD2DBitmap = ::cResourceManager::GetInstance().getTileMapBitMap();
 	m_Cam = new uCamera(1028.0, 768.0f, m_player->getRealPos());
 	
 	// Debug---------------------------------------------------
@@ -99,7 +98,7 @@ void wTileMap::onInit(cResourceManager* resource){
 	ptr2 = nullptr;
 	ptr = nullptr;
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
-		m_mobs[i]->onInit(resource->getPoringBitMap());
+		m_mobs[i]->onInit(::cResourceManager::GetInstance().getPoringBitMap());
 		m_mobs[i]->setCam(m_Cam);
 	}
 }
@@ -265,30 +264,29 @@ void wTileMap::setSize(float horizontal, float vertical){
 	ptr = nullptr;
 	
 	//debug및 테스트용 코드
-	//for (int i = 0; i < 14; i++){
-	//	setTile(static_cast<float>(i), 0.0f, 2);
-	//}
+	for (int i = 0; i < 25; i++){
+		setTile(static_cast<float>(i), 0.0f, 2);
+	}
 
-	//for (int i = 0; i < 14; i++){
-	//	setTile(0.0f, static_cast<float>(i), 2);
-	//}
+	for (int i = 0; i < 25; i++){
+		setTile(0.0f, static_cast<float>(i), 2);
+	}
 
-	//for (int i = 0; i < 14; i++){
-	//	setTile(13.0f, static_cast<float>(i), 2);
-	//}
+	for (int i = 0; i < 25; i++){
+		setTile(24.0f, static_cast<float>(i), 2);
+	}
 
-	//for (int i = 0; i < 14; i++){
-	//	setTile(static_cast<float>(i), 13.0f, 2);
-	//}
+	for (int i = 0; i < 25; i++){
+		setTile(static_cast<float>(i), 24.0f, 2);
+	}
 
 	//
 	
-	setTile(3.0f, 5.0f, 2);
-	setTile(4.0f, 8.0f, 2);
-	setTile(11.0f, 3.0f, 3);
+	
+	setTile(11.0f, 12.0f, 3);
 	setTile(12.0f, 12.0f, 3);
-	setTile(6.0f, 1.0f, 2);	
-	//
+	setTile(11.0f, 11.0f, 3);
+	setTile(12.0f, 11.0f, 3);
 
 	
 	/*mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));

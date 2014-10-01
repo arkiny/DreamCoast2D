@@ -1,5 +1,7 @@
 #pragma once
-class coControl
+#include "Singleton.h"
+
+class coControl : public Singleton<coControl>
 {
 public:
 	coControl();

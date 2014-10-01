@@ -14,7 +14,7 @@ public:
 
 	void Render(cD2DRenderer&);
 	void Update(float deltaTime);
-	void OnInit(cD2DRenderer&, coControl*, cResourceManager*);
+	void OnInit(cD2DRenderer&);
 
 	mPlayer* getPlayer(){ return m_Player; }
 	wTileMap* getMap() { return m_Map; }
@@ -23,8 +23,6 @@ private:
 	// player init은 world에서 하지만, 그 관리는 m_Map에서 포인터를 받아서 실시
 	mPlayer* m_Player;
 	wTileMap* m_Map;
-	
-	cResourceManager* m_resource;
 
 	// getter와 setter설정을 하면 player class와 map의 상호작용을 여기서 끝낼수 있을 것 같은데..
 	// 지금은 좀 꼬여있는 상태, 몬스터 상호 작용을 어떻게 해야할지 의문

@@ -95,7 +95,9 @@
     <ClInclude Include="coControl.h" />
     <ClInclude Include="cResourceManager.h" />
     <ClInclude Include="DreamCoastD2D.h" />
+    <ClInclude Include="iInScreenUI.h" />
     <ClInclude Include="InGameUI.h" />
+    <ClInclude Include="InMainUI.h" />
     <ClInclude Include="mIObject.h" />
     <ClInclude Include="mMonster.h" />
     <ClInclude Include="mPlayer.h" />
@@ -135,7 +137,9 @@
     <ClCompile Include="coControl.cpp" />
     <ClCompile Include="cResourceManager.cpp" />
     <ClCompile Include="DreamCoastD2D.cpp" />
+    <ClCompile Include="iInScreenUI.cpp" />
     <ClCompile Include="InGameUI.cpp" />
+    <ClCompile Include="InMainUI.cpp" />
     <ClCompile Include="mIObject.cpp" />
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />

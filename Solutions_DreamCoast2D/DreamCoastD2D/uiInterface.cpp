@@ -8,6 +8,11 @@ uiInterface::uiInterface()
 	m_vpos = nullptr;
 }
 
+uiInterface::uiInterface(float x, float y)
+{
+	m_vpos = new VECTOR2D(x, y);
+}
+
 
 uiInterface::~uiInterface()
 {

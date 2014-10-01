@@ -21,21 +21,26 @@ cGameManager::~cGameManager(void)
 		delete m_pControl;
 	if (m_pCurrentScreen != NULL)
 		delete m_pCurrentScreen;
-	if (m_pResourceMng != NULL)
-		delete m_pResourceMng;
+
+	// 문제는 이 두줄이요
+	// 리소스는 싱글톤으로 전역화했기때문에 지우면 큰일남 ㅡㅡ
+	// if (m_pResourceMng != NULL)
+	//	delete m_pResourceMng;
 }
 
 void cGameManager::OnInit(cD2DRenderer& renderer)
 {
-	m_pControl = new coControl;
 	m_rRenderer = &renderer;
+
+	// singleton 클래스 시작
+	// 아래 두개는 딱 1개씩만 필요한 클래스다.
+	m_pControl = new coControl;
 	m_pResourceMng = new cResourceManager;
 
 	// screen
 	// 일단은 sGameScreen으로 게임을 시작한다.
 	m_pCurrentScreen = new sMainMenuScreen(this);
-	m_pCurrentScreen->setControl(m_pControl);
-	m_pCurrentScreen->OnInit(*m_rRenderer, m_pResourceMng);
+	m_pCurrentScreen->OnInit(*m_rRenderer);
 }
 
 void cGameManager::Render(cD2DRenderer& renderer)
@@ -54,13 +59,14 @@ void cGameManager::changeScreen(sIScreen* pnew){
 
 	// 삭제처리
 	m_pCurrentScreen->OnExit();
-	delete m_pCurrentScreen;	// 혹시 모르니 현재 스크린 포인터내의 내용도 삭제
+	if (m_pCurrentScreen!= NULL)
+		delete m_pCurrentScreen;	// 혹시 모르니 현재 스크린 포인터내의 내용도 삭제
 								// 스크린 역시 포인터를 가지고 있으므로!
 	m_pCurrentScreen = pnew;	// 옮경
 	// render를 통한 시작 초기화가 아닌, 리소스 매니저를 이용한 
 	// 리소스 초기화로 이니셜라이징 시작
 	// renderer가 필요하면 저장해서 옮기면 되지 ㅡㅡ
-	m_pCurrentScreen->OnInit(*m_rRenderer, m_pResourceMng);
+	m_pCurrentScreen->OnInit(*m_rRenderer);
 }
 
 void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

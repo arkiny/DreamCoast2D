@@ -1,7 +1,6 @@
 #pragma once
 #include "mIObject.h"
 
-class coControl;
 class uSprite;
 
 // Statemachine을 이용하지 않은 채로 실행하는
@@ -16,10 +15,7 @@ public:
 	void onUpdate(float fdeltatime);
 	void onRender(cD2DRenderer& renderer);
 	void onRender(cD2DRenderer&, bool);
-
-	// set Communication Pointer
-	void setKeyControl(coControl* in);	
-
+	
 	// StatController
 	void getHit(float dmg);
 
@@ -45,9 +41,6 @@ private:
 
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;	
-
-	// Communicate Pointer with control and tileMap
-	coControl *m_pControl;
 
 	// rendering alpha parameter control
 	float m_alpha = 1.0f;

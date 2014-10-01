@@ -51,7 +51,6 @@ mMonster::mMonster(float x, float y){
 
 mMonster::~mMonster()
 {
-	SafeRelease(m_ipD2DBitmap);
 	if (_drawVector != NULL){
 		delete _drawVector;
 	}

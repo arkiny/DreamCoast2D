@@ -15,13 +15,6 @@ InGameUI::InGameUI(mIObject* player, wTileMap* tileMap){
 
 InGameUI::~InGameUI()
 {
-	uiInterface* ptr = nullptr;;
-	while (!m_pInterface.empty()){
-		ptr = m_pInterface.back();
-		delete ptr;
-		m_pInterface.pop_back();
-	}
-	ptr = nullptr;
 }
 
 void InGameUI::Render(cD2DRenderer& renderer){

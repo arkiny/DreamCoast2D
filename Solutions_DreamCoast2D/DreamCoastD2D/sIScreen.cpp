@@ -5,11 +5,10 @@ sIScreen::sIScreen(){
 	m_pGameManager = nullptr;
 }
 
-sIScreen::sIScreen(cGameManager* in, cResourceManager* inr)
+sIScreen::sIScreen(cGameManager* in)
 {	
 	//communication init
 	m_pGameManager = in;
-	m_pResource = inr;
 }
 
 

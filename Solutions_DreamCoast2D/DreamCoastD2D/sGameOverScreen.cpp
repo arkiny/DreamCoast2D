@@ -43,8 +43,7 @@ void sGameOverScreen::Update(float delta){
 	}
 }
 
-void sGameOverScreen::OnInit(cD2DRenderer& renderer, cResourceManager* in){
-	sIScreen::m_pResource = in;
+void sGameOverScreen::OnInit(cD2DRenderer& renderer){
 }
 
 void sGameOverScreen::OnExit(){

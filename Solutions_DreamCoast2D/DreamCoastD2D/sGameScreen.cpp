@@ -11,26 +11,26 @@ sGameScreen::sGameScreen(){
 	m_pGameUI = nullptr;
 }
 
-sGameScreen::~sGameScreen(){
+sGameScreen::~sGameScreen(){	
 	if (m_pWorld != NULL){
 		delete m_pWorld;
 	}
 	if (m_pGameUI != NULL){
 		delete m_pGameUI;
 	}
+	
 }
 
 sGameScreen::sGameScreen(cGameManager* cg){
 	m_pGameManager = cg;
 }
 
-void sGameScreen::OnInit(cD2DRenderer& renderer, cResourceManager* resource){
+void sGameScreen::OnInit(cD2DRenderer& renderer){
 	m_pWorld = new wWorld();
 
-	m_pResource = resource;
-	m_pResource->load(renderer);
-	m_pWorld->OnInit(renderer, sIScreen::getControl(), sIScreen::m_pResource);
+	::cResourceManager::GetInstance().load(renderer);
 
+	m_pWorld->OnInit(renderer);
 	m_pGameUI = new InGameUI((mIObject*)m_pWorld->getPlayer(), m_pWorld->getMap());
 }
 
@@ -49,6 +49,7 @@ void sGameScreen::Update(float deltaTime){
 	}
 }
 
-void sGameScreen::OnExit(){
-	sGameScreen::~sGameScreen();
+void sGameScreen::OnExit(){	
+	::cResourceManager::GetInstance().releaseGameResource();
+	this->~sGameScreen();
 }

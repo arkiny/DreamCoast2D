@@ -29,7 +29,6 @@ mPlayer::mPlayer()
 
 mPlayer::~mPlayer()
 {
-	SafeRelease(m_ipD2DBitmap);
 	if (m_Cam != NULL){
 		delete m_Cam;
 	}
@@ -65,7 +64,7 @@ void mPlayer::onUpdate(float fdeltatime){
 		// ONMOVE에서 처리했으므로 ONMOVE로 처리
 		mPlayer::onHit(fdeltatime);
 	}
-	else if (m_pControl->getKeyControlInfo()[0x5A]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[0x5A]){
 		if (m_State == ONATTACK){
 			mPlayer::onAttack(fdeltatime);
 		}
@@ -186,10 +185,6 @@ void mPlayer::onAttack(float fdeltatime){
 	m_spriteAtlas->nextFrame(fdeltatime*m_attackSpeed);
 }
 
-// 키를 받아와서 업데이트(connector)-> todo: 인자를 const로 바꿔서 항상성 유지
-void mPlayer::setKeyControl(coControl* in){
-	m_pControl = in;
-}
 
 //void mPlayer::onIdle(){
 //
@@ -201,39 +196,39 @@ void mPlayer::onMove(float fdeltatime){
 	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
 
 	// Animation Part
-	if (m_pControl->getKeyControlInfo()[VK_LEFT] &&
-		m_pControl->getKeyControlInfo()[VK_DOWN]){
+	if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = LEFTDOWN;
 
 		vMover = mIObject::vectorMove(fdeltatime, LEFTDOWN);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);		
 	}
 
-	else if (m_pControl->getKeyControlInfo()[VK_LEFT] &&
-		m_pControl->getKeyControlInfo()[VK_UP]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 		m_SeeDir = LEFTUP;
 
 		vMover = mIObject::vectorMove(fdeltatime, LEFTUP);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);		
 	}
 
-	else if (m_pControl->getKeyControlInfo()[VK_RIGHT] &&
-		m_pControl->getKeyControlInfo()[VK_DOWN]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = RIGHTDOWN;
 
 		vMover = mIObject::vectorMove(fdeltatime, RIGHTDOWN);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);
 	}
 
-	else if (m_pControl->getKeyControlInfo()[VK_RIGHT] &&
-		m_pControl->getKeyControlInfo()[VK_UP]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 		m_SeeDir = RIGHTUP;		
 		
 		vMover = mIObject::vectorMove(fdeltatime, RIGHTUP);
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);		
 	}
 
-	else if (m_pControl->getKeyControlInfo()[VK_RIGHT]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
 		if (m_SeeDir == LEFTUP){
 			m_SeeDir = RIGHTUP;
 		}
@@ -244,7 +239,7 @@ void mPlayer::onMove(float fdeltatime){
 		vMover = mIObject::vectorMove(fdeltatime, RIGHT);
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f, 6);		
 	}
-	else if (m_pControl->getKeyControlInfo()[VK_LEFT]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
 		if (m_SeeDir == RIGHTUP){
 			m_SeeDir = LEFTUP;
 		}
@@ -255,7 +250,7 @@ void mPlayer::onMove(float fdeltatime){
 		vMover = mIObject::vectorMove(fdeltatime, LEFT);
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f, 6);		
 	}
-	else if (m_pControl->getKeyControlInfo()[VK_DOWN]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
 		if (m_SeeDir == LEFTUP){
 			m_SeeDir = LEFTDOWN;
 		}
@@ -266,7 +261,7 @@ void mPlayer::onMove(float fdeltatime){
 		vMover = mIObject::vectorMove(fdeltatime, DOWN);
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f, 6);		
 	}
-	else if (m_pControl->getKeyControlInfo()[VK_UP]){
+	else if (::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 		if (m_SeeDir == LEFTDOWN){
 			m_SeeDir = LEFTUP;
 		}

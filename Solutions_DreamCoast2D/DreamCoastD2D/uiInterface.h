@@ -8,6 +8,7 @@ class uiInterface
 {
 public:
 	uiInterface();
+	uiInterface(float x, float y);
 	virtual ~uiInterface();
 public:
 	virtual void OnInit(cD2DRenderer&) = 0;

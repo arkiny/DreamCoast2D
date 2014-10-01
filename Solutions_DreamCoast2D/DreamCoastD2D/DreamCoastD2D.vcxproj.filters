@@ -163,6 +163,12 @@
     <ClInclude Include="InGameUI.h">
       <Filter>Screen\InScreenUI</Filter>
     </ClInclude>
+    <ClInclude Include="InMainUI.h">
+      <Filter>Screen\InScreenUI</Filter>
+    </ClInclude>
+    <ClInclude Include="iInScreenUI.h">
+      <Filter>Screen\InScreenUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -271,6 +277,12 @@
       <Filter>Screen</Filter>
     </ClCompile>
     <ClCompile Include="InGameUI.cpp">
+      <Filter>Screen\InScreenUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InMainUI.cpp">
+      <Filter>Screen\InScreenUI</Filter>
+    </ClCompile>
+    <ClCompile Include="iInScreenUI.cpp">
       <Filter>Screen\InScreenUI</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,7 +14,7 @@ class wTileMap
 public:
 	wTileMap();
 	~wTileMap();
-	void onInit(cResourceManager* resource);
+	void onInit();
 	void onUpdate(float fdeltatime);
 	void onRender(cD2DRenderer& renderer);
 

@@ -8,19 +8,30 @@ class uiButton :
 {
 public:
 	uiButton();
-	virtual ~uiButton();
+	uiButton(float x, float y, int type);
+	~uiButton();
 public:
-	virtual void OnInit(cD2DRenderer&) = 0;
-	virtual void Update(float) = 0;
-	virtual void Render(cD2DRenderer&) = 0;
+	void OnInit(cD2DRenderer&);
+	void Update(float);
+	void Render(cD2DRenderer&);
 	void setSize(float width, float height){
-		m_nWidth = width;
-		m_nHeight = height;
+		m_fWidth = width;
+		m_fHeight = height;
 	}
-	float getWidth() { return m_nWidth; }
-	float getHeight() { return m_nHeight; }
+	float getWidth() { return m_fWidth; }
+	float getHeight() { return m_fHeight; }
+	bool isSelected() { return m_bSelected; }
+	bool isActivated() { return m_bActivated; }
+	void setSelected(bool in){ m_bSelected = in; }
+	void setActivated(bool in) { m_bActivated = in; }
 private:
-	float m_nWidth;
-	float m_nHeight;
+	float m_fWidth = 0.0f;
+	float m_fHeight = 0.0f;
+	int m_nButtonType = 0;
+	bool m_bSelected = false;
+	bool m_bActivated = false;
+	float m_fAccumtimeBreath = 0.0f;
+	float m_alpha = 1.0f;
+	float m_falphaAdd = 0.025f;
 };
 

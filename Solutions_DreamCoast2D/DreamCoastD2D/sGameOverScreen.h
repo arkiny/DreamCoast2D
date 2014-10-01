@@ -13,7 +13,7 @@ public:
 
 	void Render(cD2DRenderer&);
 	void Update(float);
-	void OnInit(cD2DRenderer&, cResourceManager*);
+	void OnInit(cD2DRenderer&);
 	void OnExit();
 
 private:

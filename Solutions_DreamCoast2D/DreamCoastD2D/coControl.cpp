@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "coControl.h"
 
+template<> coControl* Singleton<coControl>::_instance = 0;
 
 coControl::coControl()
 {

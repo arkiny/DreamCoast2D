@@ -8,7 +8,6 @@ wWorld::wWorld()
 {
 	m_Player = nullptr;
 	m_Map = nullptr;
-	m_resource = nullptr;
 }
 
 wWorld::~wWorld()
@@ -19,16 +18,14 @@ wWorld::~wWorld()
 		delete m_Map;
 }
 
-void wWorld::OnInit(cD2DRenderer& renderer, coControl* in, cResourceManager* resource){
-	m_resource = resource;
-	m_resource->load(renderer);
+void wWorld::OnInit(cD2DRenderer& renderer){
 
 	m_Player = new mPlayer;
-	m_Player->onInit(m_resource->getPlayerBitMap());
+	m_Player->onInit(::cResourceManager::GetInstance().getPlayerBitMap());
 	
 	m_Map = new wTileMap;
 	m_Map->setPlayer(m_Player);
-	m_Map->onInit(m_resource);
+	m_Map->onInit();
 
 	// 데이터 통신용 포인터 연결
 	// 컨트롤은 한번 정의해놓으면 고칠일이 없지만, 
@@ -36,8 +33,8 @@ void wWorld::OnInit(cD2DRenderer& renderer, coControl* in, cResourceManager* res
 	// 상호간 포인터 업데이트를 꼭 해줘야한다. 
 	// 물론 이전 포인터 메모리 삭제하는 것도 필수
 	m_Player->setTileMap(m_Map);
-	m_Player->setKeyControl(in);	
 	
+	// 50*50 이상의 크기에서 심각하게 느려짐...
 	m_Map->setSize(25.0f, 25.0f);
 }
 
