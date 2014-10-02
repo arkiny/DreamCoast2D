@@ -45,7 +45,9 @@ void cResourceManager::loadMainMenuResource(cD2DRenderer& renderer){
 	m_ButtonSize[SPACETOPLAY] = { 310.0f, 30.0f };
 	m_ButtonSize[NEWGAME] = { 130.0f, 30.0f };
 	m_ButtonSize[LOAD] = {60.0f, 22.0f};
-	m_ButtonSize[CONFIG] = { 80.0f, 30.0f }; // 차후 플레이어 이미지도 이와 같이 관리
+	m_ButtonSize[CONFIG] = { 80.0f, 30.0f }; 
+
+	// 차후 플레이어 이미지 및 스프라이트 좌표 정보도 이와 같이 관리
 }
 
 void cResourceManager::exitMainMenu(){

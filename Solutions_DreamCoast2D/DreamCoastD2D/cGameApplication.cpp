@@ -161,6 +161,7 @@ void cGameApplication::Run()
 	MSG msg;
 
 	// 기본 메시지 루프입니다.
+	/// todo : 가변FPS에 비의존적인 일정한 게임속도 구현
 	while (true)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
