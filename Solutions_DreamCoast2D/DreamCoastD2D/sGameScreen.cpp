@@ -35,6 +35,27 @@ void sGameScreen::OnInit(cD2DRenderer& renderer){
 }
 
 void sGameScreen::Render(cD2DRenderer& renderer){
+	// background
+	RECT winRect;
+	GetClientRect(renderer.GetHwnd(), &winRect);
+	if (::cResourceManager::GetInstance().getBackGround()){
+		::D2D1_RECT_F dxArea
+			= { static_cast<float>(winRect.left), 
+			static_cast<float>(winRect.top),
+			static_cast<float>(winRect.right),
+			static_cast<float>(winRect.bottom) };
+		// todo 나중에 플레이어움직임에 반응하도록
+		::D2D1_RECT_F srcArea
+			= { 0, 0, 
+			static_cast<float>(winRect.right),
+			static_cast<float>(winRect.bottom) };
+
+		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getBackGround(),
+			dxArea, 1.0f,
+			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+			srcArea);
+	}
+
 	m_pWorld->Render(renderer);
 	// UI는 게임 화면보다 위에 깔리게
 	m_pGameUI->Render(renderer);

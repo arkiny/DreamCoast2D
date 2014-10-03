@@ -345,23 +345,23 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug ¿ë
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 		
-		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		//pivotArea;
 		cpos = m_Cam->translasteToScreen(_realVector);
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 	}
 }
 
@@ -385,24 +385,24 @@ void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug ¿ë
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 
 
-		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		//pivotArea;
 		cpos = m_Cam->translasteToScreen(_realVector);
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 	}
 }
 

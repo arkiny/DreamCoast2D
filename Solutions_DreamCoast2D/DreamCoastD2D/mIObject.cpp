@@ -27,21 +27,21 @@ void mIObject::onRender(cD2DRenderer& renderer){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug ¿ë
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = _drawVector->y - 2.0f;
 		pivotArea.bottom = _drawVector->y + 2.0f;
 		pivotArea.left = _drawVector->x - 2.0f;
 		pivotArea.right = _drawVector->x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 
-		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		pivotArea;
 		pivotArea.top = _realVector->y - 2.0f;
 		pivotArea.bottom = _realVector->y + 2.0f;
 		pivotArea.left = _realVector->x - 2.0f;
 		pivotArea.right = _realVector->x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 	}	
 }
 
@@ -65,13 +65,13 @@ void mIObject::onRender(cD2DRenderer& renderer, bool alpha){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug ¿ë
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = _drawVector->y - 2.0f;
 		pivotArea.bottom = _drawVector->y + 2.0f;
 		pivotArea.left = _drawVector->x - 2.0f;
 		pivotArea.right = _drawVector->x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 	}
 }
 

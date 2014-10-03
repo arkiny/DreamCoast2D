@@ -9,9 +9,17 @@ cResourceManager::cResourceManager()
 	m_Bitmap_TileMap = nullptr;
 	m_Bitmap_Poring = nullptr;
 	m_Bitmap_MainBG = nullptr;
-	for (int i = 0; i < 20; i++){
-		m_Bitmap_Button[i] = nullptr;
+	for (ID2D1Bitmap* x : m_Bitmap_Button){
+		x = nullptr;
 	}
+	for (ID2D1Bitmap* x : m_Bitmap_UI){
+		x = nullptr;
+	}
+	//for (D2D_POINT_2F x : m_ButtonSize){
+	//	x = { 0.0f, 0.0f };
+	//}
+	memset(m_ButtonSize, NULL, BUTTONTYPEMAX);
+	memset(m_UI_SIZE, NULL, UIID::UI_ID_MAX);
 }
 
 // 이제 모든 리소스는 여기서 관리하므로
@@ -23,16 +31,36 @@ cResourceManager::~cResourceManager()
 	SafeRelease(m_Bitmap_TileMap);
 	SafeRelease(m_Bitmap_Poring);
 	SafeRelease(m_Bitmap_MainBG);
-	for (int i = 0; i < 20; i++){
-		SafeRelease(m_Bitmap_Button[i]);
+	for (ID2D1Bitmap* x : m_Bitmap_Button){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
+	}
+	for (ID2D1Bitmap* x : m_Bitmap_UI){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
 	}
 }
 
 void cResourceManager::load(cD2DRenderer& renderer){	
 	HWND hWnd = renderer.GetHwnd();
+	m_Bitmap_MainBG = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/bg/bg_river.jpg", NULL);
 	m_Bitmap_Player = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/sprites.png", NULL);		// 플레이어
 	m_Bitmap_TileMap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/maptile.png", NULL);		// 타일맵
 	m_Bitmap_Poring = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/poring.png", NULL);		// 몬스터 포링 주소	
+	m_Bitmap_UI[UIID::STATBAR] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/UI/statbar.png", NULL);
+	m_Bitmap_UI[UIID::BLUEBAR] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/UI/bar_bluebar.png", NULL);
+	m_Bitmap_UI[UIID::REDBAR] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/UI/bar_redbar.png", NULL);
+	
+	m_Bitmap_UI[UIID::MAP_L_BORDER] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_bigminimap.png", NULL);
+	m_Bitmap_UI[UIID::MAP_TAG] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_minimaptag.png", NULL);
+
+	m_UI_SIZE[UIID::STATBAR] = { 352.0f, 44.0f };
+	m_UI_SIZE[UIID::BLUEBAR] = { 279.0f, 12.0f };
+	m_UI_SIZE[UIID::REDBAR] = { 343.0f, 19.0f };
+	m_UI_SIZE[UIID::MAP_L_BORDER] = { 210.0f, 210.0f };
+	m_UI_SIZE[UIID::MAP_TAG] = { 210.0f, 20.0f };
 }
 
 void cResourceManager::loadMainMenuResource(cD2DRenderer& renderer){
@@ -52,8 +80,8 @@ void cResourceManager::loadMainMenuResource(cD2DRenderer& renderer){
 
 void cResourceManager::exitMainMenu(){
 	SafeRelease(m_Bitmap_MainBG);
-	for (int i = 0; i < 20; i++){
-		SafeRelease(m_Bitmap_Button[i]);
+	for (ID2D1Bitmap* x : m_Bitmap_Button){
+			SafeRelease(x);
 	}
 }
 

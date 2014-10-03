@@ -32,7 +32,7 @@ void sGameOverScreen::Render(cD2DRenderer& renderer){
 		cTextLength_,
 		renderer.GetTextFormat(),
 		layoutRect,
-		renderer.GetBrush());
+		renderer.GetBlackBrush());
 }
 void sGameOverScreen::Update(float delta){
 	m_accumtime += delta;

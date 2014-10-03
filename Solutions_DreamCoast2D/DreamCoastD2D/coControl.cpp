@@ -15,8 +15,23 @@ coControl::~coControl()
 }
 
 // Key Control
+// todo : 반대방향 키를 눌렀을때, 반대방향이 true가 되며
+// 다른방향이 false가 되게 수정
+// 위와 같이 고치게 되면
 void coControl::onKeyDown(WPARAM wParam){
 	m_bKeyCodeArray[wParam] = true;
+	//if (wParam == VK_RIGHT){
+	//	m_bKeyCodeArray[VK_LEFT] = false;
+	//}
+	//if (wParam == VK_LEFT){
+	//	m_bKeyCodeArray[VK_RIGHT] = false;
+	//}
+	//if (wParam == VK_UP){
+	//	m_bKeyCodeArray[VK_DOWN] = false;
+	//}
+	//if (wParam == VK_DOWN){
+	//	m_bKeyCodeArray[VK_UP] = false;
+	//}
 }
 void coControl::onKeyUp(WPARAM wParam){
 	m_bKeyCodeArray[wParam] = false;

@@ -18,7 +18,7 @@ public:
 	//setter
 	void setPlayer(mIObject* in){ m_pplayer = in; }
 private:
-	void drawHealthbar(cD2DRenderer& renderer);
+	void drawStatbar(cD2DRenderer& renderer);
 	mIObject* m_pplayer;
 };
 

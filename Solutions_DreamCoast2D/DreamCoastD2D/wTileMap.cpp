@@ -129,7 +129,7 @@ void wTileMap::onUpdate(float fdeltatime){
 
 void wTileMap::onRender(cD2DRenderer& renderer){
 	// debug
-	//renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBrush());
+	//renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBlackBrush());
 	//
 	::wTileMap::renderMap(renderer);
 	
@@ -165,7 +165,7 @@ void wTileMap::drawHealthBar(cD2DRenderer& renderer, mIObject* obj){
 		
 	renderer.GetRenderTarget()->FillRectangle(healthBar, renderer.GetRedBrush());
 	renderer.GetRenderTarget()->FillRectangle(currentHealthbar, renderer.GetGreenBrush());
-	renderer.GetRenderTarget()->DrawRectangle(healthBar, renderer.GetBrush());
+	renderer.GetRenderTarget()->DrawRectangle(healthBar, renderer.GetBlackBrush());
 }
 
 void wTileMap::setPlayer(mIObject* p){
@@ -280,14 +280,11 @@ void wTileMap::setSize(float horizontal, float vertical){
 		setTile(static_cast<float>(i), 24.0f, 2);
 	}
 
-	//
-	
-	
 	setTile(11.0f, 12.0f, 3);
 	setTile(12.0f, 12.0f, 3);
 	setTile(11.0f, 11.0f, 3);
 	setTile(12.0f, 11.0f, 3);
-
+	//
 	
 	/*mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));
 	mapSize.right = _offsetX + ((_RectTileWidth * _horizontal));

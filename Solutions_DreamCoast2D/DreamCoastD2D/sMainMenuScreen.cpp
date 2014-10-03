@@ -82,7 +82,7 @@ void sMainMenuScreen::Render(cD2DRenderer& renderer){
 	//	cTextLength2_,
 	//	renderer.GetTextFormat(),
 	//	layoutRect,
-	//	renderer.GetBrush());
+	//	renderer.GetBlackBrush());
 }
 
 void sMainMenuScreen::OnExit(){

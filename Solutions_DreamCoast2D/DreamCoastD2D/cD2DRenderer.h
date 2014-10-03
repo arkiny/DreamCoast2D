@@ -30,6 +30,7 @@ private:
 	IWICImagingFactory*			m_ipWICFactory;
 	IWICFormatConverter*		m_ipConvertedSrcBmp;
 
+	ID2D1SolidColorBrush* m_pBrush;
 	ID2D1SolidColorBrush* m_pBlackBrush;
 	ID2D1SolidColorBrush* m_pGreenBrush;
 	ID2D1SolidColorBrush* m_pRedBrush;
@@ -50,9 +51,11 @@ public:
 	void InitializeD2D(void);
 	void Setup(HWND hWnd);
 	void InitializeRT(HWND hWnd);
+	void ChangeBrush(D2D1::ColorF in);
 	ID2D1Bitmap* CreateD2DBitmapFromFile(HWND hWnd, TCHAR* pImageFullPath, int option);
 	void BeginRender(HWND hWnd);
 	void EndRender();
+	
 
 	ID2D1HwndRenderTarget* GetRenderTarget(){
 		return  m_ipRT;
@@ -64,6 +67,11 @@ public:
 	}
 
 	ID2D1SolidColorBrush* GetBrush()
+	{
+		return m_pBrush;
+	}
+
+	ID2D1SolidColorBrush* GetBlackBrush()
 	{
 		return m_pBlackBrush;
 	}

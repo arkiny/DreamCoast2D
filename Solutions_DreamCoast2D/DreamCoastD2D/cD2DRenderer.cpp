@@ -62,7 +62,7 @@ void cD2DRenderer::InitializeD2D(void)
 
 	if (SUCCEEDED(hr))
 	{
-		hr = m_pTextFormat->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT_LEADING);
+		hr = m_pTextFormat->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT_CENTER);
 	}
 
 	if (SUCCEEDED(hr))
@@ -135,7 +135,22 @@ void cD2DRenderer::InitializeRT(HWND hWnd)
 		&m_pWhiteBrush
 		);
 	assert(hr == S_OK);
+
+	//default
+	hr = m_ipRT->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF::White),
+		&m_pBrush
+		);
+	assert(hr == S_OK);
 	
+}
+
+void cD2DRenderer::ChangeBrush(D2D1::ColorF in){
+	HRESULT hr = m_ipRT->CreateSolidColorBrush(
+		D2D1::ColorF(in),
+		&m_pBrush
+		);
+	assert(hr == S_OK);
 }
 
 ID2D1Bitmap* cD2DRenderer::CreateD2DBitmapFromFile(
