@@ -93,6 +93,7 @@
     <ClInclude Include="cGameManager.h" />
     <ClInclude Include="cIGameMgr.h" />
     <ClInclude Include="coControl.h" />
+    <ClInclude Include="cResourceID.h" />
     <ClInclude Include="cResourceManager.h" />
     <ClInclude Include="DreamCoastD2D.h" />
     <ClInclude Include="iInScreenUI.h" />

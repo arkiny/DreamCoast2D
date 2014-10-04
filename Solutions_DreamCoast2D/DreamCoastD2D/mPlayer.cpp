@@ -64,6 +64,35 @@ void mPlayer::onUpdate(float fdeltatime){
 		// ONMOVE에서 처리했으므로 ONMOVE로 처리
 		mPlayer::onHit(fdeltatime);
 	}
+	// skill
+	// x키를 누른뒤 뗄때까지 스킬 커맨드를 입력하고
+	// x키를 뗄때 스킬 커맨드를 발현시킨다.
+	// 물론 입력중에 타격을 받으면 취소되므로, 우선순위는 onhit보다는 아래
+	// 하지만 이동은 멈추고 키를 입력받아야 하므로 이동/대기 보다는 빠르게
+	else if (::coControl::GetInstance().getKeyControlInfo()[0x58]){
+		if (m_State == ONCASTING){
+			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력
+		}
+		else {
+			m_State = ONCASTING;
+			m_attackaccumtime = 0.0f;
+			m_spriteAtlas->setCurrentFrame(0);
+		}
+	}
+	else if (m_State == ONCASTING){
+		// 캐스팅을 실시하고 x키를 떼었을때
+		if (!::coControl::GetInstance().getKeyControlInfo()[0x58]){
+			// 입력 된 키를 기술표와 비교하여 기술표에 존재할 경우 해당 스킬을,
+			// 아닐경우에는 패널티를 부여한다. (자기에게 데미지)
+			// 스킬 발사시, 공격모션과 동일안 모션을 취하는 대신,
+			// 자기주변으로 스킬에 관련된 이펙트를 표현해야한다.
+		}
+		else {
+			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력한다.
+		}
+	}
+
+	// skill
 	else if (::coControl::GetInstance().getKeyControlInfo()[0x5A]){
 		if (m_State == ONATTACK){
 			mPlayer::onAttack(fdeltatime);
@@ -273,7 +302,6 @@ void mPlayer::onMove(float fdeltatime){
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f, 6);		
 	}
 	else { // Idling
-
 		if (m_SeeDir == RIGHTDOWN){
 			// idle right down
 			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, -19.5f, 0.0f, 4);			
@@ -395,14 +423,14 @@ void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
 		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 
 
-		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
 		//pivotArea;
 		cpos = m_Cam->translasteToScreen(_realVector);
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
 	}
 }
 

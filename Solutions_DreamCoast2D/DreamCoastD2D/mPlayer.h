@@ -57,5 +57,8 @@ private:
 	float m_deadFadeOutTime = 0.0f;
 
 	bool m_deadcomp = false;
+
+	// 스킬 캐스팅 변수
+	float m_attackaccumtime = 0.0f
 };
 

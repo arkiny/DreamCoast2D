@@ -17,7 +17,16 @@ public:
 	void Render(cD2DRenderer&);
 	void OnExit();
 
+	void setActivate(int nextScreenID, bool in){
+		m_bNextScreenBtn[nextScreenID] = in;
+	}
+
+	bool isScreenActivated(int screenNum){
+		return m_bNextScreenBtn[screenNum];
+	}
+
 private:
 	iInScreenUI* m_pUI;
+	bool m_bNextScreenBtn[BUTTONID::BUTTONTYPEMAX];
 };
 

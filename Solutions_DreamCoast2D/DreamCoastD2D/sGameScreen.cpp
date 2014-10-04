@@ -47,10 +47,11 @@ void sGameScreen::Render(cD2DRenderer& renderer){
 		// todo 나중에 플레이어움직임에 반응하도록
 		::D2D1_RECT_F srcArea
 			= { 0, 0, 
-			static_cast<float>(winRect.right),
-			static_cast<float>(winRect.bottom) };
+			::cResourceManager::GetInstance().getBackGroundSize().x,
+			::cResourceManager::GetInstance().getBackGroundSize().y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getBackGround(),
+		renderer.GetRenderTarget()
+			->DrawBitmap(::cResourceManager::GetInstance().getBackGround(),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);

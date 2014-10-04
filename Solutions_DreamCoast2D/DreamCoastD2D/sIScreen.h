@@ -1,4 +1,6 @@
 #pragma once
+#include "cResourceID.h"
+// resource에 있는 enum과 통일할것
 
 class coControl;
 class cD2DRenderer;

@@ -24,6 +24,7 @@ public:
 	bool isActivated() { return m_bActivated; }
 	void setSelected(bool in){ m_bSelected = in; }
 	void setActivated(bool in) { m_bActivated = in; }
+	int getButtonType(){ return m_nButtonType; }
 private:
 	float m_fWidth = 0.0f;
 	float m_fHeight = 0.0f;

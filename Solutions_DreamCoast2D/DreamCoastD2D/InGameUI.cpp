@@ -30,9 +30,10 @@ void InGameUI::Update(float delta){
 	}
 }
 
-void InGameUI::OnInit(cD2DRenderer& renderer){
+void InGameUI::OnInit(cD2DRenderer& renderer, sIScreen* in){
 	// ºñÆ®¸Ê ÀÌ¿ë½Ã ÀÌ´Ï¼È ¶óÀÌÂ¡
 	for (uiInterface* x : m_pInterface){
 		x->OnInit(renderer);
 	}
+	m_callbackScreen = in;
 }
