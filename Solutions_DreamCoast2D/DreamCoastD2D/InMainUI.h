@@ -17,9 +17,11 @@ public:
 
 private:
 	uiButton* m_btnSelect;
-	bool m_bNextSelect;
-	//const float m_fKeydelay = 0.1f;
-	//float m_fdelaytime = 0.0f;
-	//bool m_bisMoved = false;
+	
+	const float m_fKeydelay = 0.2f;
+	float m_fdelaytime = m_fKeydelay;
+	
+	bool m_bExecute = false;
+	int m_nSelectedMenu = 0;
 };
 

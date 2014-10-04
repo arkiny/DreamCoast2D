@@ -59,6 +59,6 @@ private:
 	bool m_deadcomp = false;
 
 	// 스킬 캐스팅 변수
-	float m_attackaccumtime = 0.0f
+	float m_castaccumtime = 0.0f;
 };
 

@@ -38,63 +38,63 @@ void InMainUI::Render(cD2DRenderer& renderer){
 	m_btnSelect->Render(renderer);
 }
 
-void InMainUI::Update(float delta){
+void InMainUI::Update(float delta){	
 	uiButton* ptr = nullptr;
-	//m_fdelaytime += delta;
 
-	for (uiInterface* x : m_pInterface){
-		// 업데이트 먼저하고
-		x->Update(delta);
-		ptr = (uiButton*)x;
+	for (unsigned int i = 0; i < m_pInterface.size(); i++){
+		m_pInterface[i]->Update(delta);
 
-		// 키보드 이동으로 메뉴이동 시키려다가 실패..
-		/*if (!m_bisMoved){
-			if (!m_bNextSelect
-				&& coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-				m_bNextSelect = true;
-			}
-			else if (m_bNextSelect){
-				if (ptr->isSelected()){
-					ptr->setSelected(false);
-				}
-				else {
-					ptr->setSelected(true);
-					m_bNextSelect = false;
-					m_bisMoved = true;
-				}
-			}			
-		}
-		else {
-			if (m_fdelaytime >= m_fKeydelay){
-				m_bisMoved = false;
-				m_fdelaytime = 0;
-			}
-			else if (!coControl::GetInstance().getKeyControlInfo()[VK_DOWN]) {
-				m_bisMoved = false;
-				m_fdelaytime = 0;
-			}
-			else {
+		ptr = (uiButton*)m_pInterface[i];
 
-			}
-		}*/
-
-		// 마우스 위치 확인하여 선택됬는지 안됬는지 확인
-		// activate되었을 경우 메인스크린에서 해당변수를
-		// 확인해서 update시에 실행되도록
-		// down casting
-		
-		if (ptr->isSelected()){
-			m_btnSelect->setPos(m_btnSelect->getPos()->x, ptr->getPos()->y);
+		if (ptr->isSelected()){			
+			m_nSelectedMenu = i;
 			if (ptr->isActivated()){
 				dynamic_cast<sMainMenuScreen*>(m_callbackScreen)
 					->setActivate(ptr->getButtonType(), true);
-			}
-			else {
-				dynamic_cast<sMainMenuScreen*>(m_callbackScreen)
-					->setActivate(ptr->getButtonType(), false);
-			}
+			} 
 		}
 	}
+
+	// keyboard execute
+	if (coControl::GetInstance().getKeyControlInfo()[VK_RETURN] ||
+		coControl::GetInstance().getKeyControlInfo()[VK_SPACE] ||
+		coControl::GetInstance().getKeyControlInfo()[0x5A]){
+		ptr = (uiButton*)m_pInterface[m_nSelectedMenu];
+		dynamic_cast<sMainMenuScreen*>(m_callbackScreen)
+			->setActivate(ptr->getButtonType(), true);
+	}
+	
+	// keyboard move
+	if (coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){		
+		if (m_fdelaytime >= m_fKeydelay){
+			m_nSelectedMenu++;
+			if (m_nSelectedMenu >= static_cast<int>(m_pInterface.size())){
+				m_nSelectedMenu = 0;
+			}
+		}
+		m_fdelaytime -= delta;
+		if (m_fdelaytime <= 0){
+			m_fdelaytime = m_fKeydelay;
+		}
+	}
+	else if (coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+		if (m_fdelaytime >= m_fKeydelay){
+			m_nSelectedMenu--;
+			if (m_nSelectedMenu < 0 ){
+				m_nSelectedMenu = m_pInterface.size()-1;
+			}
+		}
+		m_fdelaytime -= delta;
+		if (m_fdelaytime <= 0){
+			m_fdelaytime = m_fKeydelay;
+		}
+	}
+	else {
+		m_fdelaytime = m_fKeydelay;
+	}
+	//
+
+	m_btnSelect->setPos(m_btnSelect->getPos()->x, m_pInterface[m_nSelectedMenu]->getPos()->y);
 	ptr = nullptr;
 }
 

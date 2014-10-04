@@ -430,7 +430,7 @@ void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBrush());
+		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
 	}
 }
 
