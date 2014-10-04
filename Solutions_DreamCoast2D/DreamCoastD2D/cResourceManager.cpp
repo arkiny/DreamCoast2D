@@ -46,6 +46,8 @@ cResourceManager::~cResourceManager()
 void cResourceManager::load(cD2DRenderer& renderer){	
 	HWND hWnd = renderer.GetHwnd();
 	m_Bitmap_MainBG = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/bg/bg_river.jpg", NULL);
+	m_MainBG_Size = {1920.0f, 1200.0f};
+
 	m_Bitmap_Player = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/sprites.png", NULL);		// 플레이어
 	m_Bitmap_TileMap = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/maptile.png", NULL);		// 타일맵
 	m_Bitmap_Poring = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/poring.png", NULL);		// 몬스터 포링 주소	
@@ -66,14 +68,19 @@ void cResourceManager::load(cD2DRenderer& renderer){
 void cResourceManager::loadMainMenuResource(cD2DRenderer& renderer){
 	HWND hWnd = renderer.GetHwnd();
 	m_Bitmap_MainBG = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/MainMenu/knight1.png", NULL);
+	m_MainBG_Size = { 1028.0f, 768.0f };
+	
 	m_Bitmap_Button[SPACETOPLAY] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/MainMenu/knight-space-start.png", NULL);
 	m_Bitmap_Button[NEWGAME] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/MainMenu/button_newGame.png", NULL);
 	m_Bitmap_Button[LOAD] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/MainMenu/button_load.png", NULL);
 	m_Bitmap_Button[CONFIG] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/MainMenu/button_config.png", NULL);
+	m_Bitmap_Button[REDARROW] = renderer.CreateD2DBitmapFromFile(hWnd, L"Images/MainMenu/ui_select_arrow.png", NULL);
+	
 	m_ButtonSize[SPACETOPLAY] = { 310.0f, 30.0f };
 	m_ButtonSize[NEWGAME] = { 130.0f, 30.0f };
 	m_ButtonSize[LOAD] = {60.0f, 22.0f};
 	m_ButtonSize[CONFIG] = { 80.0f, 30.0f }; 
+	m_ButtonSize[REDARROW] = { 21.0f, 25.0f };
 
 	// 차후 플레이어 이미지 및 스프라이트 좌표 정보도 이와 같이 관리
 }

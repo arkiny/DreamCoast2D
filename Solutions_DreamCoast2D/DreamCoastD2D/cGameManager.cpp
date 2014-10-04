@@ -86,5 +86,19 @@ void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	case WM_KEYUP:
 		m_pControl->onKeyUp(wParam);
 		break;
+
+	case WM_LBUTTONDOWN:
+		m_pControl->onKeyDown(wParam);
+		break;
+
+	case WM_LBUTTONUP: 
+		// 이상하게 wParam에서 마우스 뗄때는 감지를 못한다.
+		// 0으로 wParam값이 나옴
+		m_pControl->onKeyUp(VK_LBUTTON);
+		break;
+
+	case WM_MOUSEMOVE:
+		m_pControl->onMouseMove(lParam);
+		break;
 	}
 }

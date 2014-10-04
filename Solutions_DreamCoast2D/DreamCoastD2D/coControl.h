@@ -10,16 +10,17 @@ public:
 	void onKeyDown(WPARAM wParam);
 	void onKeyUp(WPARAM wParam);
 
-	// Mouse Control
-	void onLMBDown(LPARAM lParam); 
-	void onLMBUp(LPARAM lParam);
+	//// Mouse Control
+	//void onLMBDown(LPARAM lParam); 
+	//void onLMBUp(LPARAM lParam);
+	void onMouseMove(LPARAM lParam);
 
 	// Getter
 	bool* getKeyControlInfo();
-	POINT getMousePosition();
+	POINTFLOAT getMousePosition();
 
 private:
 	bool m_bKeyCodeArray[256];
-	POINT m_MousePos;
+	POINTFLOAT m_MousePos;
 };
 

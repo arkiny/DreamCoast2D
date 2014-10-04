@@ -38,19 +38,24 @@ void coControl::onKeyUp(WPARAM wParam){
 }
 
 // Mouse Control
-void coControl::onLMBDown(LPARAM lParam){
+//void coControl::onLMBDown(WPARAM wParam){
+//	m_bKeyCodeArray[wParam] = true;
+//}
+//void coControl::onLMBUp(WPARAM wParam){
+//	m_bKeyCodeArray[wParam] = false;
+//}
+
+void coControl::onMouseMove(LPARAM lParam){
 	m_MousePos.x = LOWORD(lParam);
 	m_MousePos.y = HIWORD(lParam);
 }
-void coControl::onLMBUp(LPARAM lParam){
-	m_MousePos.x = LOWORD(lParam);
-	m_MousePos.y = HIWORD(lParam);
-}
+
 
 // Getter
 bool* coControl::getKeyControlInfo(){
 	return m_bKeyCodeArray;
 }
-POINT coControl::getMousePosition(){
+
+POINTFLOAT coControl::getMousePosition(){
 	return m_MousePos;
 }

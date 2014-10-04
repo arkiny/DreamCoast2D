@@ -2,6 +2,7 @@
 #include "uiButton.h"
 #include "VECTOR2D.h"
 #include "cResourceManager.h"
+#include "coControl.h"
 
 uiButton::uiButton()
 {
@@ -26,14 +27,33 @@ void uiButton::OnInit(cD2DRenderer& renderer){
 void uiButton::Update(float delta){
 	m_fAccumtimeBreath += delta;
 	//if (m_fAccumtimeBreath >= 0.0125f){
+	/*if (m_bSelected){
 		m_alpha -= m_falphaAdd;
+	}*/
 		//m_fAccumtimeBreath = 0.0f;
 	//}
-	if (m_alpha >= 1.0f){
-		m_falphaAdd = -1 * m_falphaAdd;
-	}	
-	else if (m_alpha <= 0.5f){
-		m_falphaAdd = -1 * m_falphaAdd;
+	//if (m_alpha >= 1.0f){
+	//	m_falphaAdd = -1 * m_falphaAdd;
+	//}	
+	//else if (m_alpha <= 0.5f){
+	//	m_falphaAdd = -1 * m_falphaAdd;
+	//}
+	POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
+	if (mousepoint.x >= this->getPos()->x &&
+		mousepoint.y >= this->getPos()->y &&
+		mousepoint.x <= (this->getPos()->x + this->getWidth()) &&
+		mousepoint.y <= (this->getPos()->y + this->getHeight())){
+		this->setSelected(true);
+		if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON]){
+			this->setActivated(true);
+		}
+		else {
+			this->setActivated(false);
+		}
+	}
+	else
+	{
+		this->setSelected(false);
 	}
 }
 
