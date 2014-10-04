@@ -72,6 +72,7 @@ void mPlayer::onUpdate(float fdeltatime){
 	else if (::coControl::GetInstance().getKeyControlInfo()[0x58]){
 		if (m_State == ONCASTING){
 			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력
+			// 애니메이션은 캐스팅애니메이션으로
 		}
 		else {
 			m_State = ONCASTING;
@@ -86,9 +87,10 @@ void mPlayer::onUpdate(float fdeltatime){
 			// 아닐경우에는 패널티를 부여한다. (자기에게 데미지)
 			// 스킬 발사시, 공격모션과 동일안 모션을 취하는 대신,
 			// 자기주변으로 스킬에 관련된 이펙트를 표현해야한다.
+			m_State = ONMOVE;
 		}
 		else {
-			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력한다.
+			// do nothing
 		}
 	}
 
