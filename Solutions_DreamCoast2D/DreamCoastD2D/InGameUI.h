@@ -20,6 +20,5 @@ public:
 	void Render(cD2DRenderer&);
 	void Update(float);
 	void OnInit(cD2DRenderer&, sIScreen*);
-
 };
 

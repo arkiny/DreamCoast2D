@@ -3,6 +3,7 @@
 #include "uiInterface.h"
 #include "uiPlayerStatBar.h"
 #include "uiGameMiniMap.h"
+#include "uiMenu.h"
 
 InGameUI::InGameUI()
 {
@@ -31,9 +32,10 @@ void InGameUI::Update(float delta){
 }
 
 void InGameUI::OnInit(cD2DRenderer& renderer, sIScreen* in){
-	// ºñÆ®¸Ê ÀÌ¿ë½Ã ÀÌ´Ï¼È ¶óÀÌÂ¡
+	// ºñÆ®¸Ê ÀÌ¿ë½Ã ÀÌ´Ï¼È ¶óÀÌÂ¡	
+	m_callbackScreen = in;
+	m_pInterface.push_back(new uiMenu(5, m_callbackScreen));
 	for (uiInterface* x : m_pInterface){
 		x->OnInit(renderer);
 	}
-	m_callbackScreen = in;
 }

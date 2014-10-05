@@ -142,9 +142,6 @@
     <ClInclude Include="uiPlayerStatBar.h">
       <Filter>Screen\UI</Filter>
     </ClInclude>
-    <ClInclude Include="sGameOverScreen.h">
-      <Filter>Screen</Filter>
-    </ClInclude>
     <ClInclude Include="uiGameMiniMap.h">
       <Filter>Screen\UI</Filter>
     </ClInclude>
@@ -171,6 +168,9 @@
     </ClInclude>
     <ClInclude Include="cResourceID.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="uiMenu.h">
+      <Filter>Screen\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,9 +264,6 @@
     <ClCompile Include="uiPlayerStatBar.cpp">
       <Filter>Screen\UI</Filter>
     </ClCompile>
-    <ClCompile Include="sGameOverScreen.cpp">
-      <Filter>Screen</Filter>
-    </ClCompile>
     <ClCompile Include="uiGameMiniMap.cpp">
       <Filter>Screen\UI</Filter>
     </ClCompile>
@@ -287,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="iInScreenUI.cpp">
       <Filter>Screen\InScreenUI</Filter>
+    </ClCompile>
+    <ClCompile Include="uiMenu.cpp">
+      <Filter>Screen\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -75,11 +75,11 @@ void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	switch (message)
 	{
 	case WM_KEYDOWN:
-		if (wParam == VK_ESCAPE)
-		{
-			PostQuitMessage(0);
-			return;
-		}
+		//if (wParam == VK_ESCAPE)
+		//{
+		//	PostQuitMessage(0);
+		//	return;
+		//}
 		m_pControl->onKeyDown(wParam);
 		break;
 

@@ -34,7 +34,7 @@ void sMainMenuScreen::OnInit(cD2DRenderer& renderer){
 
 void sMainMenuScreen::Update(float delta){
 	// 뉴게임 스크린 버튼을 눌렀을 경우
-	if (m_bNextScreenBtn[NEWGAME]){
+	if (m_bNextScreenBtn[BTN_NEWGAME]){
 		sGameScreen* input = new sGameScreen(m_pGameManager);
 		m_pGameManager->changeScreen(input);
 	}

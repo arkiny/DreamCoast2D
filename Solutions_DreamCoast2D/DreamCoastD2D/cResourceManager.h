@@ -39,7 +39,7 @@ private:
 	ID2D1Bitmap* m_Bitmap_UI[UI_ID_MAX];
 	::D2D_POINT_2F m_UI_SIZE[UI_ID_MAX];
 
-	ID2D1Bitmap* m_Bitmap_Button[BUTTONTYPEMAX];
-	::D2D_POINT_2F m_ButtonSize[BUTTONTYPEMAX];
+	ID2D1Bitmap* m_Bitmap_Button[BTN_BUTTONTYPEMAX];
+	::D2D_POINT_2F m_ButtonSize[BTN_BUTTONTYPEMAX];
 };
 

@@ -27,6 +27,6 @@ public:
 
 private:
 	iInScreenUI* m_pUI;
-	bool m_bNextScreenBtn[BUTTONID::BUTTONTYPEMAX];
+	bool m_bNextScreenBtn[BUTTONID::BTN_BUTTONTYPEMAX];
 };
 

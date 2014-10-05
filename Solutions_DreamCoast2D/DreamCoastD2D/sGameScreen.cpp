@@ -3,12 +3,14 @@
 #include "cGameManager.h"
 #include "wWorld.h"
 #include "InGameUI.h"
-#include "sGameOverScreen.h"
 #include "cResourceManager.h"
+#include "coControl.h"
+#include "sMainMenuScreen.h"
 
 sGameScreen::sGameScreen(){
 	m_pWorld = nullptr;
 	m_pGameUI = nullptr;
+	memset(m_bNextScreenBtn, false, sizeof(m_bNextScreenBtn));
 }
 
 sGameScreen::~sGameScreen(){	
@@ -23,6 +25,7 @@ sGameScreen::~sGameScreen(){
 
 sGameScreen::sGameScreen(cGameManager* cg){
 	m_pGameManager = cg;
+	memset(m_bNextScreenBtn, false, sizeof(m_bNextScreenBtn));
 }
 
 void sGameScreen::OnInit(cD2DRenderer& renderer){
@@ -32,6 +35,7 @@ void sGameScreen::OnInit(cD2DRenderer& renderer){
 
 	m_pWorld->OnInit(renderer);
 	m_pGameUI = new InGameUI((mIObject*)m_pWorld->getPlayer(), m_pWorld->getMap());
+	m_pGameUI->OnInit(renderer, this);
 }
 
 void sGameScreen::Render(cD2DRenderer& renderer){
@@ -63,12 +67,50 @@ void sGameScreen::Render(cD2DRenderer& renderer){
 }
 
 void sGameScreen::Update(float deltaTime){
+
+	if (m_bNextScreenBtn[BTN_MAINMENU]){
+		sMainMenuScreen* input = new sMainMenuScreen(m_pGameManager);
+		m_pGameManager->changeScreen(input);
+		return;
+	}
+	else if (m_bNextScreenBtn[BTN_EXITGAME]){
+		::PostQuitMessage(NULL);
+		return;
+	}
+	else if (m_bNextScreenBtn[BTN_RESTART]){
+		sGameScreen* input = new sGameScreen(m_pGameManager);
+		m_pGameManager->changeScreen(input);
+		return;
+	}
+
 	if (m_pWorld->isGameOver()){
-		m_pGameManager->changeScreen(new sGameOverScreen(m_pGameManager));
+		m_bisGameOver = true;
+		/*m_pGameManager->changeScreen(new sGameOverScreen(m_pGameManager));
+		return;*/
+		m_pGameUI->Update(deltaTime);
 	}
 	else {
-		m_pWorld->Update(deltaTime);
+		if (m_bWorldActivated){
+			m_pWorld->Update(deltaTime);
+		}
+		m_pGameUI->Update(deltaTime);
 	}
+
+	if (coControl::GetInstance().getKeyControlInfo()[0x50]){
+		if (m_fdelaytime >= m_fKeydelay){
+			if (m_bWorldActivated == false){
+				m_bWorldActivated = true;
+			}
+			else{
+				m_bWorldActivated = false;
+			}
+		}
+		m_fdelaytime -= deltaTime;
+		if (m_fdelaytime <= 0){
+			m_fdelaytime = m_fKeydelay;
+		}
+	}
+
 }
 
 void sGameScreen::OnExit(){	
