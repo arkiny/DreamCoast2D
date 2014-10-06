@@ -175,14 +175,8 @@
     <ClInclude Include="sResourceLoad.h">
       <Filter>Screen</Filter>
     </ClInclude>
-    <ClInclude Include="cXAplayer.h">
+    <ClInclude Include="cSoundManager.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MediaStreamer.h">
-      <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -303,11 +297,8 @@
     <ClCompile Include="sResourceLoad.cpp">
       <Filter>Screen</Filter>
     </ClCompile>
-    <ClCompile Include="cXAplayer.cpp">
+    <ClCompile Include="cSoundManager.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MediaStreamer.cpp">
-      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -322,5 +313,13 @@
     <Image Include="DreamCoastD2D.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="irrKlang.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ikpFlac.dll" />
+    <None Include="ikpMP3.dll" />
+    <None Include="irrKlang.dll" />
   </ItemGroup>
 </Project>

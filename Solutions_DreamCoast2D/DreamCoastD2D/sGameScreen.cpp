@@ -7,6 +7,7 @@
 #include "coControl.h"
 #include "sMainMenuScreen.h"
 #include "sResourceLoad.h"
+#include "cSoundManager.h"
 
 sGameScreen::sGameScreen(){
 	m_pWorld = nullptr;
@@ -37,6 +38,7 @@ void sGameScreen::OnInit(){
 	m_pWorld->OnInit();
 	m_pGameUI = new InGameUI((mIObject*)m_pWorld->getPlayer(), m_pWorld->getMap());
 	m_pGameUI->OnInit(this);
+	::cSoundManager::GetInstance().executeBGMinGame();
 }
 
 void sGameScreen::Render(){
@@ -117,5 +119,6 @@ void sGameScreen::Update(float deltaTime){
 
 void sGameScreen::OnExit(){	
 	::cResourceManager::GetInstance().releaseGameResource();
+	::cSoundManager::GetInstance().stopBGM();
 	this->~sGameScreen();
 }

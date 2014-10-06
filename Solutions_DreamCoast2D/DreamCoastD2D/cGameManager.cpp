@@ -6,12 +6,14 @@
 #include "sGameScreen.h"
 #include "sMainMenuScreen.h"
 #include "cResourceManager.h"
+#include "cSoundManager.h"
 
 cGameManager::cGameManager(void)
 {
 	m_pControl = nullptr;
 	m_pCurrentScreen = nullptr;
 	m_pResourceMng = nullptr;
+	m_pSoundMng = nullptr;
 }
 
 cGameManager::~cGameManager(void)
@@ -34,7 +36,8 @@ void cGameManager::OnInit()
 	// 아래 두개는 딱 1개씩만 필요한 클래스다.
 	m_pControl = new coControl;
 	m_pResourceMng = new cResourceManager;
-
+	m_pSoundMng = new cSoundManager;
+	m_pSoundMng->init();
 	// screen
 	// 일단은 sGameScreen으로 게임을 시작한다.
 	m_pCurrentScreen = new sMainMenuScreen(this);
@@ -48,7 +51,7 @@ void cGameManager::Render()
 
 void cGameManager::Update(float deltaTime)
 {
-	m_pCurrentScreen->Update(deltaTime);
+	m_pCurrentScreen->Update(deltaTime);	
 }
 
 void cGameManager::changeScreen(sIScreen* pnew){

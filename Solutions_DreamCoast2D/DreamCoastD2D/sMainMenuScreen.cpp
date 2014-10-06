@@ -7,6 +7,7 @@
 #include "cResourceManager.h"
 #include "InMainUI.h"
 #include "sResourceLoad.h"
+#include "cSoundManager.h"
 
 sMainMenuScreen::sMainMenuScreen()
 {
@@ -31,6 +32,7 @@ void sMainMenuScreen::OnInit(){
 	::cResourceManager::GetInstance().loadMainMenuResource();
 	m_pUI = new InMainUI();
 	m_pUI->OnInit(this);
+	::cSoundManager::GetInstance().executeBGM();
 }
 
 void sMainMenuScreen::Update(float delta){
@@ -90,4 +92,5 @@ void sMainMenuScreen::Render(){
 void sMainMenuScreen::OnExit(){
 	// main menu resource release
 	::cResourceManager::GetInstance().exitMainMenu();
+	::cSoundManager::GetInstance().stopBGM();
 }

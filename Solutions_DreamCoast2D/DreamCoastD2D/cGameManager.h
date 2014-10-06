@@ -6,6 +6,7 @@ class coControl;
 class wWorld;
 class sIScreen;
 class cResourceManager;
+class cSoundManager;
 
 class cGameManager :
 	public cIGameMgr
@@ -27,5 +28,6 @@ private:
 	// 같은 렌더러를 스크린 이니셜라이징할때 쓸수 있도록 받아놓은 포인터
 	// 앞으로 구조 변경하면서 없앨수 있도록 노력은 해본다.
 	cResourceManager* m_pResourceMng;
+	cSoundManager* m_pSoundMng;
 };
 

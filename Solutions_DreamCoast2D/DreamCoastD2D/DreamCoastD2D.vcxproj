@@ -52,6 +52,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>.\irr\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -69,6 +70,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\irr\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -95,16 +97,14 @@
     <ClInclude Include="coControl.h" />
     <ClInclude Include="cResourceID.h" />
     <ClInclude Include="cResourceManager.h" />
-    <ClInclude Include="cXAplayer.h" />
+    <ClInclude Include="cSoundManager.h" />
     <ClInclude Include="DreamCoastD2D.h" />
     <ClInclude Include="iInScreenUI.h" />
     <ClInclude Include="InGameUI.h" />
     <ClInclude Include="InMainUI.h" />
-    <ClInclude Include="MediaStreamer.h" />
     <ClInclude Include="mIObject.h" />
     <ClInclude Include="mMonster.h" />
     <ClInclude Include="mPlayer.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="piState.h" />
     <ClInclude Include="pStateIdle.h" />
     <ClInclude Include="Singleton.h" />
@@ -141,12 +141,14 @@
     <ClCompile Include="cIGameMgr.cpp" />
     <ClCompile Include="coControl.cpp" />
     <ClCompile Include="cResourceManager.cpp" />
-    <ClCompile Include="cXAplayer.cpp" />
-    <ClCompile Include="DreamCoastD2D.cpp" />
+    <ClCompile Include="cSoundManager.cpp" />
+    <ClCompile Include="DreamCoastD2D.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Heedong\Documents\GitHub\DreamCoast2D\Solutions_DreamCoast2D\DreamCoastD2D\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Heedong\Documents\GitHub\DreamCoast2D\Solutions_DreamCoast2D\DreamCoastD2D\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="iInScreenUI.cpp" />
     <ClCompile Include="InGameUI.cpp" />
     <ClCompile Include="InMainUI.cpp" />
-    <ClCompile Include="MediaStreamer.cpp" />
     <ClCompile Include="mIObject.cpp" />
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
@@ -179,6 +181,14 @@
   <ItemGroup>
     <Image Include="DreamCoastD2D.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="irrKlang.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ikpFlac.dll" />
+    <None Include="ikpMP3.dll" />
+    <None Include="irrKlang.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
