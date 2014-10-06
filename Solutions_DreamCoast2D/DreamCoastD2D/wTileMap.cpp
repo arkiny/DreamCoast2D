@@ -182,6 +182,19 @@ void wTileMap::renderMap(cD2DRenderer& renderer){
 	VECTOR2D test = getTileCoordinates(*m_player->getRealPos());
 	VECTOR2D test2 = getTileCoordinates(*m_player->getDrawPos());
 
+	//VECTOR2D _camtile = m_Cam->translasteToScreen(&tilePos);
+	//if (_camtile.x < (0 - 45.0f) || _camtile.y < (0 - 45.0f) ||
+	//	_camtile.x >(m_Cam->getScreenW() + 45.0f) ||
+	//	_camtile.y >(m_Cam->getScreenH()) + 45.0f){
+	//	//do nothing
+	//}
+	//else {
+	//}
+
+	// startx = 카메라가 위치한 cellinext
+	// endx = start + cellwidth*(windowwith/cellwith)
+	// starty
+	// endy
 
 	for (int j = 0; j < _vertical; j++){
 		for (int i = 0; i < _horizontal; i++){
@@ -264,20 +277,20 @@ void wTileMap::setSize(float horizontal, float vertical){
 	ptr = nullptr;
 	
 	//debug및 테스트용 코드
-	for (int i = 0; i < 25; i++){
+	for (int i = 0; i < 60; i++){
 		setTile(static_cast<float>(i), 0.0f, 2);
 	}
 
-	for (int i = 0; i < 25; i++){
+	for (int i = 0; i < 60; i++){
 		setTile(0.0f, static_cast<float>(i), 2);
 	}
 
-	for (int i = 0; i < 25; i++){
-		setTile(24.0f, static_cast<float>(i), 2);
+	for (int i = 0; i < 60; i++){
+		setTile(59.0f, static_cast<float>(i), 2);
 	}
 
-	for (int i = 0; i < 25; i++){
-		setTile(static_cast<float>(i), 24.0f, 2);
+	for (int i = 0; i < 60; i++){
+		setTile(static_cast<float>(i), 59.0f, 2);
 	}
 
 	setTile(11.0f, 12.0f, 3);

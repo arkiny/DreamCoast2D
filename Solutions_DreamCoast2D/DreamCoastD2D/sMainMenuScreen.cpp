@@ -6,6 +6,7 @@
 #include "cD2DRenderer.h"
 #include "cResourceManager.h"
 #include "InMainUI.h"
+#include "sResourceLoad.h"
 
 sMainMenuScreen::sMainMenuScreen()
 {
@@ -35,7 +36,7 @@ void sMainMenuScreen::OnInit(cD2DRenderer& renderer){
 void sMainMenuScreen::Update(float delta){
 	// 뉴게임 스크린 버튼을 눌렀을 경우
 	if (m_bNextScreenBtn[BTN_NEWGAME]){
-		sGameScreen* input = new sGameScreen(m_pGameManager);
+		sResourceLoad* input = new sResourceLoad(m_pGameManager, BTN_NEWGAME);
 		m_pGameManager->changeScreen(input);
 	}
 	else {

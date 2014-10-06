@@ -172,6 +172,9 @@
     <ClInclude Include="uiMenu.h">
       <Filter>Screen\UI</Filter>
     </ClInclude>
+    <ClInclude Include="sResourceLoad.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -287,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="uiMenu.cpp">
       <Filter>Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="sResourceLoad.cpp">
+      <Filter>Screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

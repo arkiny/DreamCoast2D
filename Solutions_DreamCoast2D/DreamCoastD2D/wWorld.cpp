@@ -35,7 +35,7 @@ void wWorld::OnInit(cD2DRenderer& renderer){
 	m_Player->setTileMap(m_Map);
 	
 	// 50*50 이상의 크기에서 심각하게 느려짐...
-	m_Map->setSize(25.0f, 25.0f);
+	m_Map->setSize(60.0f, 60.0f);
 }
 
 void wWorld::Render(cD2DRenderer& renderer){

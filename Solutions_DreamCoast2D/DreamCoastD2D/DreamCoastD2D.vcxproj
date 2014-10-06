@@ -106,6 +106,7 @@
     <ClInclude Include="pStateIdle.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="sMainMenuScreen.h" />
+    <ClInclude Include="sResourceLoad.h" />
     <ClInclude Include="uCamera.h" />
     <ClInclude Include="uiButton.h" />
     <ClInclude Include="uiGameMiniMap.h" />
@@ -147,6 +148,7 @@
     <ClCompile Include="piState.cpp" />
     <ClCompile Include="pStateIdle.cpp" />
     <ClCompile Include="sMainMenuScreen.cpp" />
+    <ClCompile Include="sResourceLoad.cpp" />
     <ClCompile Include="uCamera.cpp" />
     <ClCompile Include="uiButton.cpp" />
     <ClCompile Include="uiGameMiniMap.cpp" />
