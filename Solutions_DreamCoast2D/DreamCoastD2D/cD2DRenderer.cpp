@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "cD2DRenderer.h"
 
+template<> cD2DRenderer* Singleton<cD2DRenderer>::_instance = 0;
+
 cD2DRenderer::cD2DRenderer()
 {
 

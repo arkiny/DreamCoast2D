@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 
-class cD2DRenderer;
 class VECTOR2D;
 class uSprite;
 class mIObject;
@@ -16,7 +15,7 @@ public:
 	~wTileMap();
 	void onInit();
 	void onUpdate(float fdeltatime);
-	void onRender(cD2DRenderer& renderer);
+	void onRender();
 
 	// player와 커뮤니케이션 포인터 연결, init단계에서 설정해줘야한다.
 	void setPlayer(mIObject* p);
@@ -84,10 +83,10 @@ private:
 	//// 타일 개개를 렌더하는 함수, x축, y축, 타입을 받아서 타일 하나를 렌더한다.
 	//void renderTile(float x, float y, int type, cD2DRenderer& renderer);
 	// 모든 타일을 렌더하는 함수
-	void renderMap(cD2DRenderer& renderer);		
+	void renderMap();		
 	
 	// 나중에 옵션에 따라서 헬스바 키고 끄고 결정 -> UI
-	void drawHealthBar(cD2DRenderer& renderer, mIObject* obj);
+	void drawHealthBar(mIObject* obj);
 
 	// monster의 시야 스캐닝
 	void scanVision(float sight, VECTOR2D monsterpos, VECTOR2D playerPos, bool* ret);

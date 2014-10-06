@@ -12,9 +12,9 @@ public:
 	mMonster(float, float);
 	~mMonster();
 	//
-	void onInit(ID2D1Bitmap* resource);
+	void onInit();
 	void onUpdate(float fdeltatime);
-	void onRender(cD2DRenderer& renderer);
+	void onRender();
 	
 	// state control
 	OBJECTSTATE getState() { return m_State; }

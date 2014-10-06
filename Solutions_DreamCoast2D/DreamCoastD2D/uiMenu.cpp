@@ -29,10 +29,9 @@ uiMenu::~uiMenu()
 	ptr = nullptr;
 }
 
-void uiMenu::OnInit(cD2DRenderer& renderer){
-	m_renderer = &renderer;
+void uiMenu::OnInit(){
 	RECT winRect;
-	GetClientRect(renderer.GetHwnd(), &winRect);
+	GetClientRect(::cD2DRenderer::GetInstance().GetHwnd(), &winRect);
 	if (m_type == MN_NORMAL){
 		// 여기서 좌표는 박스 안에서의 위치
 		// todo:차후 기능 추가시 사용
@@ -47,7 +46,7 @@ void uiMenu::OnInit(cD2DRenderer& renderer){
 			(winRect.right / 2.0f) + (::cResourceManager::GetInstance().getUISize(UIID::MN_NORMAL).x / 2.0f),
 			(winRect.bottom / 2.0f) + (::cResourceManager::GetInstance().getUISize(UIID::MN_NORMAL).y / 2.0f) };
 		for (uiInterface* x : m_vButtons){
-			x->OnInit(renderer);
+			x->OnInit();
 			x->setPos(dxArea.left + x->getPos()->x, dxArea.top + x->getPos()->y);
 		}
 		m_btnSelect = new uiButton(dxArea.left + 5.0f, m_vButtons[0]->getPos()->y, BTN_REDARROW2);
@@ -66,12 +65,12 @@ void uiMenu::OnInit(cD2DRenderer& renderer){
 			(winRect.right / 2.0f) + (::cResourceManager::GetInstance().getUISize(UIID::MN_GAMEOVER).x / 2.0f),
 			(winRect.bottom / 2.0f) + (::cResourceManager::GetInstance().getUISize(UIID::MN_GAMEOVER).y / 2.0f) };
 		for (uiInterface* x : m_vButtons){
-			x->OnInit(renderer);
+			x->OnInit();
 			x->setPos(dxArea.left + x->getPos()->x, dxArea.top + x->getPos()->y);
 		}
 		m_btnSelect = new uiButton(dxArea.left + 5.0f, m_vButtons[0]->getPos()->y, BTN_REDARROW2);
 	}
-	m_btnSelect->OnInit(renderer);
+	m_btnSelect->OnInit();
 }
 
 void uiMenu::changeMenuType(){
@@ -91,11 +90,11 @@ void uiMenu::changeMenuType(){
 	ptr = nullptr;
 	if (m_type == MN_NORMAL){
 		m_type = MN_GAMEOVER;
-		OnInit(*m_renderer);
+		OnInit();
 	}
 	else if (m_type == MN_GAMEOVER){
 		m_type = MN_NORMAL;
-		OnInit(*m_renderer);
+		OnInit();
 	}
 }
 
@@ -218,24 +217,24 @@ void uiMenu::Update(float delta){
 	}// end action when menu activated
 }
 
-void uiMenu::Render(cD2DRenderer& renderer){
+void uiMenu::Render(){
 	if (m_bMenuActivated){
 		if (m_type == MN_NORMAL){
-			draw(renderer, MN_NORMAL);
+			draw(MN_NORMAL);
 		}
 		else if (m_type == MN_GAMEOVER){
-			draw(renderer, MN_GAMEOVER);
+			draw(MN_GAMEOVER);
 		}
 		for (uiInterface* x : m_vButtons){
-			x->Render(renderer);
+			x->Render();
 		}
-		m_btnSelect->Render(renderer);
+		m_btnSelect->Render();
 	}
 }
 
-void uiMenu::draw(cD2DRenderer& renderer, int type){
+void uiMenu::draw(int type){
 	RECT winRect;
-	GetClientRect(renderer.GetHwnd(), &winRect);
+	GetClientRect(::cD2DRenderer::GetInstance().GetHwnd(), &winRect);
 	if (::cResourceManager::GetInstance().getUIBitMap(type) != nullptr){
 		::D2D1_RECT_F dxArea
 			= { (winRect.right / 2.0f) - (::cResourceManager::GetInstance().getUISize(type).x / 2.0f),
@@ -247,7 +246,7 @@ void uiMenu::draw(cD2DRenderer& renderer, int type){
 			= { 0, 0, ::cResourceManager::GetInstance().getUISize(type).x,
 			::cResourceManager::GetInstance().getUISize(type).y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(type),
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(type),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);

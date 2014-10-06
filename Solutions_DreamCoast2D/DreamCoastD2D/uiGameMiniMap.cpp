@@ -23,7 +23,7 @@ uiGameMiniMap::uiGameMiniMap(wTileMap* ptileMap){
 	this->setPos(new VECTOR2D(20.0f, 40.0f));
 }
 
-void uiGameMiniMap::OnInit(cD2DRenderer& renderer){
+void uiGameMiniMap::OnInit(){
 
 }
 
@@ -31,13 +31,13 @@ void uiGameMiniMap::Update(float delta){
 
 }
 
-void uiGameMiniMap::Render(cD2DRenderer& renderer){
+void uiGameMiniMap::Render(){
 
 	// todo: 함수화 해서 나누는건 나중에... 비트맵으로 그리게 될때...
 	// todo: option에 따라서 크기 세분화
 	::D2D1_RECT_F MiniMapOutline;
 	::RECT winRect;
-	GetClientRect(renderer.GetHwnd(), &winRect);
+	GetClientRect(::cD2DRenderer::GetInstance().GetHwnd(), &winRect);
 
 	MiniMapOutline.top = winRect.top + 30.0f;
 	MiniMapOutline.bottom = MiniMapOutline.top + 210.0f;
@@ -52,8 +52,8 @@ void uiGameMiniMap::Render(cD2DRenderer& renderer){
 	MiniMapinline.left = MiniMapOutline.left + (11.0f/2.0f);
 	MiniMapinline.right = MiniMapOutline.right - (11.0f/2.0f);
 	
-	renderer.GetRenderTarget()->FillRectangle(MiniMapinline,
-		renderer.GetWhiteBrush());
+	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(MiniMapinline,
+		::cD2DRenderer::GetInstance().GetWhiteBrush());
 
 	
 
@@ -78,11 +78,11 @@ void uiGameMiniMap::Render(cD2DRenderer& renderer){
 					renderer.GetWhiteBrush());*/
 			}
 			else {
-				renderer.GetRenderTarget()->FillRectangle(MiniRectangle,
-					renderer.GetBlackBrush());
+				::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(MiniRectangle,
+					::cD2DRenderer::GetInstance().GetBlackBrush());
 			}
-			renderer.GetRenderTarget()->DrawRectangle(MiniRectangle,
-				renderer.GetBlackBrush());
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(MiniRectangle,
+				::cD2DRenderer::GetInstance().GetBlackBrush());
 		}
 	}
 
@@ -92,9 +92,9 @@ void uiGameMiniMap::Render(cD2DRenderer& renderer){
 	MiniRectangle.top = MiniMapinline.top + (height* m_pTileMap->getPlayerTilePos().x) + 1.0f;
 	MiniRectangle.bottom = MiniRectangle.top + height - 2.0f;
 	
-	renderer.ChangeBrush(D2D1::ColorF::ForestGreen);
-	renderer.GetRenderTarget()->FillRectangle(MiniRectangle,
-		renderer.GetBrush());
+	::cD2DRenderer::GetInstance().ChangeBrush(D2D1::ColorF::ForestGreen);
+	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(MiniRectangle,
+		::cD2DRenderer::GetInstance().GetBrush());
 
 	// 몹들 위치 출력
 	VECTOR2D pt(0.0f, 0.0f);
@@ -105,8 +105,8 @@ void uiGameMiniMap::Render(cD2DRenderer& renderer){
 		MiniRectangle.right = MiniRectangle.left + width - 2.0f;
 		MiniRectangle.top = MiniMapinline.top + (height* pt.x) + 1.0f;
 		MiniRectangle.bottom = MiniRectangle.top + height - 2.0f;
-		renderer.GetRenderTarget()->FillRectangle(MiniRectangle,
-			renderer.GetRedBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(MiniRectangle,
+			::cD2DRenderer::GetInstance().GetRedBrush());
 	}
 
 	/// 텍스트 타이틀 출력
@@ -125,7 +125,7 @@ void uiGameMiniMap::Render(cD2DRenderer& renderer){
 			= { 0, 0, ::cResourceManager::GetInstance().getUISize(UIID::MAP_TAG).x - 10.0f,
 			::cResourceManager::GetInstance().getUISize(UIID::MAP_TAG).y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::MAP_TAG),
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::MAP_TAG),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
@@ -140,7 +140,7 @@ void uiGameMiniMap::Render(cD2DRenderer& renderer){
 			= { 0, 0, ::cResourceManager::GetInstance().getUISize(UIID::MAP_L_BORDER).x,
 			::cResourceManager::GetInstance().getUISize(UIID::MAP_L_BORDER).y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::MAP_L_BORDER),
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::MAP_L_BORDER),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);

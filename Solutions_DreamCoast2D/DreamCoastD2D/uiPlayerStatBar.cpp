@@ -21,7 +21,7 @@ uiPlayerStatBar::~uiPlayerStatBar()
 {
 }
 
-void uiPlayerStatBar::OnInit(cD2DRenderer& renderer){
+void uiPlayerStatBar::OnInit(){
 
 }
 
@@ -29,11 +29,11 @@ void uiPlayerStatBar::Update(float delta){
 	// 애니메이션 처리를 넣지 않는한 딱히 업데이트는 필요 없을듯...
 }
 
-void uiPlayerStatBar::Render(cD2DRenderer& renderer){
-	uiPlayerStatBar::drawStatbar(renderer);
+void uiPlayerStatBar::Render(){
+	uiPlayerStatBar::drawStatbar();
 }
 
-void uiPlayerStatBar::drawStatbar(cD2DRenderer& renderer){
+void uiPlayerStatBar::drawStatbar(){
 	// 차후 이미지 재처리를 위한 position select
 	
 	::D2D1_RECT_F healthBar;
@@ -109,8 +109,8 @@ void uiPlayerStatBar::drawStatbar(cD2DRenderer& renderer){
 */
 	
 
-	renderer.ChangeBrush(D2D1::ColorF::Gray);
-	renderer.GetRenderTarget()->FillRectangle(healthBar, renderer.GetBrush());
+	::cD2DRenderer::GetInstance().ChangeBrush(D2D1::ColorF::Gray);
+	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(healthBar, ::cD2DRenderer::GetInstance().GetBrush());
 	
 	if (::cResourceManager::GetInstance().getUIBitMap(UIID::REDBAR) != nullptr){
 		::D2D1_RECT_F dxArea
@@ -121,7 +121,7 @@ void uiPlayerStatBar::drawStatbar(cD2DRenderer& renderer){
 			= { 0, 0, ::cResourceManager::GetInstance().getUISize(UIID::REDBAR).x,
 			::cResourceManager::GetInstance().getUISize(UIID::REDBAR).y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::REDBAR),
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::REDBAR),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
@@ -165,7 +165,7 @@ void uiPlayerStatBar::drawStatbar(cD2DRenderer& renderer){
 			= { 0, 0, ::cResourceManager::GetInstance().getUISize(UIID::BLUEBAR).x,
 			::cResourceManager::GetInstance().getUISize(UIID::BLUEBAR).y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::BLUEBAR),
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::BLUEBAR),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
@@ -173,12 +173,12 @@ void uiPlayerStatBar::drawStatbar(cD2DRenderer& renderer){
 	///
 	
 	// draw text
-	renderer.GetRenderTarget()->DrawTextW(
+	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
 		wszText_,
 		cTextLength_,
-		renderer.GetTextFormat(),
+		::cD2DRenderer::GetInstance().GetTextFormat(),
 		layoutRect,
-		renderer.GetWhiteBrush());
+		::cD2DRenderer::GetInstance().GetWhiteBrush());
 
 	
 	if (::cResourceManager::GetInstance().getUIBitMap(UIID::STATBAR) != nullptr){
@@ -190,7 +190,7 @@ void uiPlayerStatBar::drawStatbar(cD2DRenderer& renderer){
 			= { 0, 0, ::cResourceManager::GetInstance().getUISize(UIID::STATBAR).x, 
 			::cResourceManager::GetInstance().getUISize(UIID::STATBAR).y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::STATBAR), 
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getUIBitMap(UIID::STATBAR),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);

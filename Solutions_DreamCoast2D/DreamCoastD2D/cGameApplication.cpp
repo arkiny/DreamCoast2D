@@ -104,7 +104,7 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	d2dRender.InitializeD2D();
 	d2dRender.Setup(hWnd);
-	g_pGameMgr->OnInit(d2dRender);
+	g_pGameMgr->OnInit();
 
 
 	ShowWindow(hWnd, nCmdShow);
@@ -208,7 +208,7 @@ void cGameApplication::Render()
 	d2dRender.GetRenderTarget()->Clear(::D2D1::ColorF(::D2D1::ColorF::White));
 
 	if (g_pGameMgr != nullptr)
-		g_pGameMgr->Render(d2dRender);
+		g_pGameMgr->Render();
 
 	hr = d2dRender.GetRenderTarget()->EndDraw();
 	assert(hr == S_OK);

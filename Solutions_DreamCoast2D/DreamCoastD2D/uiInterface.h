@@ -1,6 +1,5 @@
 #pragma once
 
-class cD2DRenderer;
 
 class VECTOR2D;
 
@@ -11,9 +10,9 @@ public:
 	uiInterface(float x, float y);
 	virtual ~uiInterface();
 public:
-	virtual void OnInit(cD2DRenderer&) = 0;
+	virtual void OnInit() = 0;
 	virtual void Update(float) = 0;
-	virtual void Render(cD2DRenderer&) = 0;	
+	virtual void Render() = 0;	
 
 	VECTOR2D* getPos(){ return m_vpos; }
 	void setPos(VECTOR2D* in);

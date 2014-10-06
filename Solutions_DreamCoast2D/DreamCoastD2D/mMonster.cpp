@@ -59,7 +59,7 @@ mMonster::~mMonster()
 	}
 }
 
-void mMonster::onInit(ID2D1Bitmap* resource){
+void mMonster::onInit(){
 	// 현재는 기본으로 포링이지만, 상속받아서 바꿀수 있다.
 	m_ipD2DBitmap = ::cResourceManager::GetInstance().getPoringBitMap();
 	//resource;
@@ -97,6 +97,7 @@ void mMonster::onIdle(){
 		m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 0.0f, 5.0f, 3);
 	}
 	//mMonster::onHit();	
+	
 }
 
 void mMonster::onAttack(){
@@ -133,7 +134,7 @@ void mMonster::onMove(){
 	}
 }
 
-void mMonster::onRender(cD2DRenderer& renderer){
+void mMonster::onRender(){
 	if (m_ipD2DBitmap != nullptr){
 		//
 		VECTOR2D cpos = m_Cam->translasteToScreen(_drawVector);
@@ -149,20 +150,20 @@ void mMonster::onRender(cD2DRenderer& renderer){
 			= m_spriteAtlas->getSrcFrameFromSprite();
 				
 		if (m_SeeDir == LEFTDOWN || m_SeeDir == LEFTUP){
-			renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 				srcArea);
 		}
 		else if (m_SeeDir == RIGHTDOWN || m_SeeDir == RIGHTUP) {
-			renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Scale(
+			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Scale(
 				D2D1::Size(-1.0f, 1.0f),
 				D2D1::Point2F(cpos.x, cpos.y)));
 			
-			renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 				srcArea);
 
-			renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
 
 
@@ -170,14 +171,14 @@ void mMonster::onRender(cD2DRenderer& renderer){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug 용
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		//pivotArea;
@@ -186,7 +187,7 @@ void mMonster::onRender(cD2DRenderer& renderer){
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
 

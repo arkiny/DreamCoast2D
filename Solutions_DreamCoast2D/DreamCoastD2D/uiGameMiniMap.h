@@ -10,14 +10,14 @@ public:
 	uiGameMiniMap(wTileMap*);
 	~uiGameMiniMap();
 public:
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 	void Update(float);
-	void Render(cD2DRenderer&);
+	void Render();
 
 	void setTileMap(wTileMap* in){ m_pTileMap = in; }
 private:
 	wTileMap* m_pTileMap;
 
-	void drawMiniMap(cD2DRenderer&);
+	void drawMiniMap();
 };
 

@@ -11,14 +11,14 @@ public:
 	uiPlayerStatBar(mIObject*);
 	~uiPlayerStatBar();
 public:
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 	void Update(float);
-	void Render(cD2DRenderer&);
+	void Render();
 
 	//setter
 	void setPlayer(mIObject* in){ m_pplayer = in; }
 private:
-	void drawStatbar(cD2DRenderer& renderer);
+	void drawStatbar();
 	mIObject* m_pplayer;
 };
 

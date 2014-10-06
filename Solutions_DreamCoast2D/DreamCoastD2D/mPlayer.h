@@ -1,5 +1,6 @@
 #pragma once
 #include "mIObject.h"
+#include <queue>
 
 class uSprite;
 
@@ -11,10 +12,10 @@ class mPlayer : public mIObject
 public:
 	mPlayer();
 	~mPlayer();
-	void onInit(ID2D1Bitmap* resource);
+	void onInit();
 	void onUpdate(float fdeltatime);
-	void onRender(cD2DRenderer& renderer);
-	void onRender(cD2DRenderer&, bool);
+	void onRender();
+	void onRender(bool);
 	
 	// StatController
 	void getHit(float dmg);
@@ -36,10 +37,13 @@ private:
 	void onHit(float fdeltatime);
 	void onDead(float);
 	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
-	void onSkill(float);
+	void onCasting(float);
 	//VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
+	std::queue<int> m_qKeyInput;
+
 	DIRECTION m_SeeDir; // 보고 있는 방향
+	DIRECTION m_MoveDir;
 	OBJECTSTATE m_State;	
 
 	// rendering alpha parameter control

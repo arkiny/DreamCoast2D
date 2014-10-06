@@ -31,11 +31,11 @@ InMainUI::~InMainUI()
 	}
 }
 
-void InMainUI::Render(cD2DRenderer& renderer){
+void InMainUI::Render(){
 	for (uiInterface* x : m_pInterface){
-		x->Render(renderer);
+		x->Render();
 	}
-	m_btnSelect->Render(renderer);
+	m_btnSelect->Render();
 }
 
 void InMainUI::Update(float delta){	
@@ -98,10 +98,10 @@ void InMainUI::Update(float delta){
 	ptr = nullptr;
 }
 
-void InMainUI::OnInit(cD2DRenderer& renderer, sIScreen* in){
+void InMainUI::OnInit(sIScreen* in){
 	for (uiInterface* x : m_pInterface){
-		x->OnInit(renderer);
+		x->OnInit();
 	}
-	m_btnSelect->OnInit(renderer);
+	m_btnSelect->OnInit();
 	m_callbackScreen = in;
 }

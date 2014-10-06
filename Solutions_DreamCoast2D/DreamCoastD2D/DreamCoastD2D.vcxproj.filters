@@ -175,6 +175,15 @@
     <ClInclude Include="sResourceLoad.h">
       <Filter>Screen</Filter>
     </ClInclude>
+    <ClInclude Include="cXAplayer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MediaStreamer.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -293,6 +302,12 @@
     </ClCompile>
     <ClCompile Include="sResourceLoad.cpp">
       <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="cXAplayer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaStreamer.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

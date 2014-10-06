@@ -11,9 +11,9 @@ public:
 	~InMainUI();
 
 public:
-	void Render(cD2DRenderer&);
+	void Render();
 	void Update(float);
-	void OnInit(cD2DRenderer&, sIScreen*);
+	void OnInit(sIScreen*);
 
 private:
 	uiButton* m_btnSelect;

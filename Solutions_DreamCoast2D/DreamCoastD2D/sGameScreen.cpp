@@ -6,6 +6,7 @@
 #include "cResourceManager.h"
 #include "coControl.h"
 #include "sMainMenuScreen.h"
+#include "sResourceLoad.h"
 
 sGameScreen::sGameScreen(){
 	m_pWorld = nullptr;
@@ -28,20 +29,20 @@ sGameScreen::sGameScreen(cGameManager* cg){
 	memset(m_bNextScreenBtn, false, sizeof(m_bNextScreenBtn));
 }
 
-void sGameScreen::OnInit(cD2DRenderer& renderer){
+void sGameScreen::OnInit(){
 	m_pWorld = new wWorld();
 
-	::cResourceManager::GetInstance().load(renderer);
+	::cResourceManager::GetInstance().load();
 
-	m_pWorld->OnInit(renderer);
+	m_pWorld->OnInit();
 	m_pGameUI = new InGameUI((mIObject*)m_pWorld->getPlayer(), m_pWorld->getMap());
-	m_pGameUI->OnInit(renderer, this);
+	m_pGameUI->OnInit(this);
 }
 
-void sGameScreen::Render(cD2DRenderer& renderer){
+void sGameScreen::Render(){
 	// background
 	RECT winRect;
-	GetClientRect(renderer.GetHwnd(), &winRect);
+	GetClientRect(::cD2DRenderer::GetInstance().GetHwnd(), &winRect);
 	if (::cResourceManager::GetInstance().getBackGround()){
 		::D2D1_RECT_F dxArea
 			= { static_cast<float>(winRect.left), 
@@ -54,22 +55,22 @@ void sGameScreen::Render(cD2DRenderer& renderer){
 			::cResourceManager::GetInstance().getBackGroundSize().x,
 			::cResourceManager::GetInstance().getBackGroundSize().y };
 
-		renderer.GetRenderTarget()
+		::cD2DRenderer::GetInstance().GetRenderTarget()
 			->DrawBitmap(::cResourceManager::GetInstance().getBackGround(),
 			dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 	}
 
-	m_pWorld->Render(renderer);
+	m_pWorld->Render();
 	// UI는 게임 화면보다 위에 깔리게
-	m_pGameUI->Render(renderer);
+	m_pGameUI->Render();
 }
 
 void sGameScreen::Update(float deltaTime){
 
 	if (m_bNextScreenBtn[BTN_MAINMENU]){
-		sMainMenuScreen* input = new sMainMenuScreen(m_pGameManager);
+		sResourceLoad* input = new sResourceLoad(m_pGameManager, BTN_MAINMENU);
 		m_pGameManager->changeScreen(input);
 		return;
 	}
@@ -78,6 +79,7 @@ void sGameScreen::Update(float deltaTime){
 		return;
 	}
 	else if (m_bNextScreenBtn[BTN_RESTART]){
+		// 이미지 재로딩 할 필요 없으므로.
 		sGameScreen* input = new sGameScreen(m_pGameManager);
 		m_pGameManager->changeScreen(input);
 		return;

@@ -11,9 +11,9 @@ public:
 	uiButton(float x, float y, int type);
 	~uiButton();
 public:
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 	void Update(float);
-	void Render(cD2DRenderer&);
+	void Render();
 	void setSize(float width, float height){
 		m_fWidth = width;
 		m_fHeight = height;

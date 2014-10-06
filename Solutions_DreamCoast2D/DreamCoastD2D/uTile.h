@@ -8,7 +8,6 @@
 // 이 클래스는 일종의 렌더 도우미 겸 컨테이너
 
 class mIObject;
-class cD2DRenderer;
 class uCamera;
 class VECTOR2D;
 class uSprite;
@@ -29,7 +28,7 @@ public:
 	int getType(){ return _type; }
 	std::vector<mIObject*> getTileObjects(){ return m_vObjects; }
 
-	void renderTile(float x, float y, cD2DRenderer& renderer, 
+	void renderTile(float x, float y, 
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);
 	
 	void onHit(float dmg);
@@ -38,6 +37,6 @@ private:
 	uCamera* m_Cam;
 	std::vector<mIObject*> m_vObjects;
 
-	void hRender(cD2DRenderer& renderer, VECTOR2D tilePos,
+	void hRender(VECTOR2D tilePos,
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);
 };

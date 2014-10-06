@@ -1,14 +1,13 @@
 #pragma once
 #include <d2d1.h>
 
-class cD2DRenderer;
 class VECTOR2D;
 class uSprite;
 class wTileMap;
 class uCamera;
 
 // up to first entering
-enum DIRECTION{ LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP };
+enum DIRECTION{ LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP, NOMOVE };
 enum OBJECTSTATE{ ONIDLE, ONMOVE, ONATTACK, ONHIT, ONDEAD, ONCASTING };
 
 class mIObject
@@ -16,14 +15,14 @@ class mIObject
 public:
 	virtual ~mIObject();
 
-	virtual void onInit(ID2D1Bitmap* resource) = 0;
+	virtual void onInit() = 0;
 	virtual void onUpdate(float fdeltatime) = 0;
 
 	// object는 기본적으로 렌더링을 할것을 가지고 있기 때문에
 	// 적절한 관리가 이루어지면 굳이 상속받아 오버라이딩 할 필요 없이
 	// 가장 상위 클래스에서 실시 가능
-	virtual void onRender(cD2DRenderer& renderer);
-	virtual void onRender(cD2DRenderer& renderer, bool alpha);
+	virtual void onRender();
+	virtual void onRender(bool alpha);
 	
 	// position control
 	VECTOR2D* getDrawPos(){ return _drawVector; }

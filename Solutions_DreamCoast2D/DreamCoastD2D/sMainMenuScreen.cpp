@@ -27,10 +27,10 @@ sMainMenuScreen::sMainMenuScreen(cGameManager* cg){
 	m_pGameManager = cg;
 }
 
-void sMainMenuScreen::OnInit(cD2DRenderer& renderer){
-	::cResourceManager::GetInstance().loadMainMenuResource(renderer);
+void sMainMenuScreen::OnInit(){
+	::cResourceManager::GetInstance().loadMainMenuResource();
 	m_pUI = new InMainUI();
-	m_pUI->OnInit(renderer, this);
+	m_pUI->OnInit(this);
 }
 
 void sMainMenuScreen::Update(float delta){
@@ -44,11 +44,11 @@ void sMainMenuScreen::Update(float delta){
 	}
 }
 
-void sMainMenuScreen::Render(cD2DRenderer& renderer){
+void sMainMenuScreen::Render(){
 	// background rendering
 	if (::cResourceManager::GetInstance().getBackGround()!= nullptr){
 		::RECT winRect;
-		GetClientRect(renderer.GetHwnd(), &winRect);
+		GetClientRect(::cD2DRenderer::GetInstance().GetHwnd(), &winRect);
 		
 		::D2D1_RECT_F dxArea
 			= { static_cast<float>(winRect.left), 
@@ -61,12 +61,12 @@ void sMainMenuScreen::Render(cD2DRenderer& renderer){
 			::cResourceManager::GetInstance().getBackGroundSize().x,
 			::cResourceManager::GetInstance().getBackGroundSize().y };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getBackGround(), dxArea, 1.0,
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getBackGround(), dxArea, 1.0,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);	
 	}
 
-	m_pUI->Render(renderer);
+	m_pUI->Render();
 
 	//wchar_t* wszText2_ = L"Press Space to Start This Game";
 	//UINT32 cTextLength2_ = (UINT32)wcslen(wszText2_);

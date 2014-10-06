@@ -18,9 +18,9 @@ InGameUI::~InGameUI()
 {
 }
 
-void InGameUI::Render(cD2DRenderer& renderer){
+void InGameUI::Render(){
 	for (uiInterface* x : m_pInterface){
-		x->Render(renderer);
+		x->Render();
 	}
 }
 
@@ -31,11 +31,11 @@ void InGameUI::Update(float delta){
 	}
 }
 
-void InGameUI::OnInit(cD2DRenderer& renderer, sIScreen* in){
+void InGameUI::OnInit(sIScreen* in){
 	// ºñÆ®¸Ê ÀÌ¿ë½Ã ÀÌ´Ï¼È ¶óÀÌÂ¡	
 	m_callbackScreen = in;
 	m_pInterface.push_back(new uiMenu(5, m_callbackScreen));
 	for (uiInterface* x : m_pInterface){
-		x->OnInit(renderer);
+		x->OnInit();
 	}
 }

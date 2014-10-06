@@ -7,6 +7,7 @@
 #include "wTileMap.h"
 #include "uCamera.h"
 #include "uTile.h"
+#include "cResourceManager.h"
 
 mPlayer::mPlayer()
 {	
@@ -40,9 +41,9 @@ mPlayer::~mPlayer()
 	}
 }
 
-void mPlayer::onInit(ID2D1Bitmap* resource){
+void mPlayer::onInit(){
 	//HWND hWnd = renderer.GetHwnd();
-	m_ipD2DBitmap = resource;
+	m_ipD2DBitmap = ::cResourceManager::GetInstance().getPlayerBitMap();
 	m_Cam = new uCamera(1028.0, 768.0f, this->getRealPos());
 }
 
@@ -75,9 +76,11 @@ void mPlayer::onUpdate(float fdeltatime){
 			// 애니메이션은 캐스팅애니메이션으로
 		}
 		else {
+			// 상태를 온캐스팅으로 변경
+			// 혹시나 들어오게 되는 첫키를 입력받음
 			m_State = ONCASTING;
-			m_attackaccumtime = 0.0f;
-			m_spriteAtlas->setCurrentFrame(0);
+			//m_attackaccumtime = 0.0f;
+			//m_spriteAtlas->setCurrentFrame(0);
 		}
 	}
 	else if (m_State == ONCASTING){
@@ -154,6 +157,13 @@ void mPlayer::getHit(float dmg){
 	}
 }
 
+void mPlayer::onCasting(float delta){
+	if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+	} 
+	//else if (){}
+}
+
 // todo: 공속조정 변수가 필요함
 void mPlayer::onAttack(float fdeltatime){
 	// fdeltatime을 받아서 일정 시간에 도달하였을 경우 attack처리
@@ -227,35 +237,33 @@ void mPlayer::onMove(float fdeltatime){
 	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
 
 	// Animation Part
+	// TODO:: 키처리좀 제대로 하고 싶다..
 	if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
 		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = LEFTDOWN;
-
-		vMover = mIObject::vectorMove(fdeltatime, LEFTDOWN);
+		m_MoveDir = LEFTDOWN;
+		
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);		
 	}
 
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
 		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 		m_SeeDir = LEFTUP;
-
-		vMover = mIObject::vectorMove(fdeltatime, LEFTUP);
+		m_MoveDir = LEFTUP;
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);		
 	}
 
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
 		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
 		m_SeeDir = RIGHTDOWN;
-
-		vMover = mIObject::vectorMove(fdeltatime, RIGHTDOWN);
+		m_MoveDir = RIGHTDOWN;
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);
 	}
 
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
 		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 		m_SeeDir = RIGHTUP;		
-		
-		vMover = mIObject::vectorMove(fdeltatime, RIGHTUP);
+		m_MoveDir = RIGHTUP;
 		m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);		
 	}
 
@@ -266,8 +274,7 @@ void mPlayer::onMove(float fdeltatime){
 		else if (m_SeeDir == LEFTDOWN){
 			m_SeeDir = RIGHTDOWN;
 		}
-
-		vMover = mIObject::vectorMove(fdeltatime, RIGHT);
+		m_MoveDir = RIGHT;
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f, 6);		
 	}
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
@@ -278,7 +285,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_SeeDir = LEFTDOWN;
 		}
 
-		vMover = mIObject::vectorMove(fdeltatime, LEFT);
+		m_MoveDir = LEFT;
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f, 6);		
 	}
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
@@ -289,7 +296,7 @@ void mPlayer::onMove(float fdeltatime){
 			m_SeeDir = RIGHTDOWN;
 		}
 
-		vMover = mIObject::vectorMove(fdeltatime, DOWN);
+		m_MoveDir = DOWN;
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f, 6);		
 	}
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
@@ -300,14 +307,13 @@ void mPlayer::onMove(float fdeltatime){
 			m_SeeDir = RIGHTUP;
 		}
 
-		vMover = mIObject::vectorMove(fdeltatime, UP);
+		m_MoveDir = UP;
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f, 6);		
 	}
 	else { // Idling
 		if (m_SeeDir == RIGHTDOWN){
 			// idle right down
-			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, -19.5f, 0.0f, 4);			
-			//m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, 4);
+			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, -19.5f, 0.0f, 4);		
 		}
 		else if (m_SeeDir == LEFTUP){
 			m_spriteAtlas->pickSpriteAtlas(360.0f, 400.0f, 42.0f, 89.0f, 4);			
@@ -317,13 +323,13 @@ void mPlayer::onMove(float fdeltatime){
 		}
 		else if (m_SeeDir == LEFTDOWN){
 			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 19.5f, 0.0f, 4);
-			//m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 4);
 		}
-
+		m_MoveDir = NOMOVE;
 	}	
 	// frame update
 	m_spriteAtlas->nextFrame(fdeltatime);
-	
+	vMover = mIObject::vectorMove(fdeltatime, m_MoveDir);
+
 	// Todo
 	// 맵 포인터에서 맵 정보를 받아와서 이동 불가 컨트롤, 차후 동적할당식으로 전환
 	// 맵 포인터는 스테이지가 바뀔때마다 업데이트를 해줘야 한다.
@@ -343,6 +349,7 @@ void mPlayer::onMove(float fdeltatime){
 		return;
 	}
 
+
 	// 이동불가시 이동불가 처리
 	// move update, 여기서 float -> int 변환이 일어나 데이터 로스가 있을수도 있다.
 	// 게임 특성상 몬스터와의 충돌처리는 아직 없음(만약 보스형이라면 충돌 처리가 있어야할지도)
@@ -354,7 +361,7 @@ void mPlayer::onMove(float fdeltatime){
 	//
 }
 
-void mPlayer::onRender(cD2DRenderer& renderer){
+void mPlayer::onRender(){
 	if (m_ipD2DBitmap != nullptr){
 		//
 		VECTOR2D cpos = m_Cam->translasteToScreen(_drawVector);
@@ -367,7 +374,7 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		::D2D1_RECT_F srcArea
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
-		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 		
@@ -375,14 +382,14 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug 용
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 		
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 		
 		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		//pivotArea;
@@ -391,11 +398,11 @@ void mPlayer::onRender(cD2DRenderer& renderer){
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
 
-void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
+void mPlayer::onRender(bool alpha){
 	if (m_ipD2DBitmap != nullptr){
 		VECTOR2D cpos = m_Cam->translasteToScreen(_drawVector);
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
@@ -407,7 +414,7 @@ void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
 		if (alpha){
-			renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 0.4f,
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 0.4f,
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 				srcArea);
 		}
@@ -415,14 +422,14 @@ void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug 용
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = cpos.y - 2.0f;
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 
 		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
@@ -432,7 +439,7 @@ void mPlayer::onRender(cD2DRenderer& renderer, bool alpha){
 		pivotArea.bottom = cpos.y + 2.0f;
 		pivotArea.left = cpos.x - 2.0f;
 		pivotArea.right = cpos.x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
 

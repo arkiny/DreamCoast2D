@@ -8,14 +8,15 @@ public:
 	sResourceLoad(cGameManager* cg, int type);
 	~sResourceLoad();
 
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 	void Update(float);
-	void Render(cD2DRenderer&);
+	void Render();
 	void OnExit();
 
 private:
 	//sIScreen* m_pNextScreen;
 	int m_nNextScreenType;
-	cD2DRenderer* m_pRenderer;
+	bool m_bLoadingRendered = false;
+	int m_nLoadingphase = 0;
 };
 

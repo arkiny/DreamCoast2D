@@ -12,9 +12,9 @@ public:
 	~sMainMenuScreen();
 	sMainMenuScreen(cGameManager* cg);
 
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 	void Update(float);
-	void Render(cD2DRenderer&);
+	void Render();
 	void OnExit();
 
 	void setActivate(int nextScreenID, bool in){

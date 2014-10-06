@@ -20,7 +20,9 @@
 #pragma comment(lib,"Windowscodecs.lib")
 
 
-class cD2DRenderer 
+#include "Singleton.h"
+
+class cD2DRenderer : public Singleton<cD2DRenderer>
 {
 private:
 

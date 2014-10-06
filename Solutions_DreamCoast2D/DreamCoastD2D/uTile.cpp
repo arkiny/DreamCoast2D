@@ -22,7 +22,7 @@ uTile::~uTile()
 {
 }
 
-void uTile::renderTile(float x, float y, cD2DRenderer& renderer, 
+void uTile::renderTile(float x, float y, 
 	uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap){
 	VECTOR2D tilePos(x, y);
 	// debug
@@ -58,7 +58,7 @@ void uTile::renderTile(float x, float y, cD2DRenderer& renderer,
 		//do nothing
 	}
 	else {
-		hRender(renderer, m_Cam->translasteToScreen(&tilePos), m_spriteAtlas, m_ipD2DBitmap);
+		hRender(m_Cam->translasteToScreen(&tilePos), m_spriteAtlas, m_ipD2DBitmap);
 	}
 
 	mIObject* ptr = nullptr;
@@ -72,12 +72,12 @@ void uTile::renderTile(float x, float y, cD2DRenderer& renderer,
 			// do nothing
 		}
 		else {
-			ptr->onRender(renderer);
+			ptr->onRender();
 		}
 	}
 }
 
-void uTile::hRender(cD2DRenderer& renderer, VECTOR2D tilePos, 
+void uTile::hRender(VECTOR2D tilePos, 
 	uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap){
 	if (m_ipD2DBitmap != nullptr){
 
@@ -89,7 +89,7 @@ void uTile::hRender(cD2DRenderer& renderer, VECTOR2D tilePos,
 		::D2D1_RECT_F srcArea
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
-		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 

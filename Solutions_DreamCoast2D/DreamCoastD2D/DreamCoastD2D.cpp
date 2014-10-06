@@ -3,6 +3,9 @@
 #include "cGameApplication.h"
 #include "cGameManager.h"
 
+
+#include <xaudio2.h>
+
 cGameApplication* app;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -10,6 +13,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	LPTSTR    lpCmdLine,
 	int       nCmdShow)
 {
+	
+
 
 	app = new cGameApplication(new cGameManager);
 	app->Init(hInstance, L"DreamCoast2D", L"DreamCoast2DClass", nCmdShow);

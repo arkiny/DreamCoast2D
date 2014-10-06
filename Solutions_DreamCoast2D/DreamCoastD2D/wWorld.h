@@ -12,9 +12,9 @@ public:
 	wWorld();
 	~wWorld();
 
-	void Render(cD2DRenderer&);
+	void Render();
 	void Update(float deltaTime);
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 
 	mPlayer* getPlayer(){ return m_Player; }
 	wTileMap* getMap() { return m_Map; }

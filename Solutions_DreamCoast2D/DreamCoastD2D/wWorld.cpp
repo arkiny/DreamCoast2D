@@ -18,10 +18,10 @@ wWorld::~wWorld()
 		delete m_Map;
 }
 
-void wWorld::OnInit(cD2DRenderer& renderer){
+void wWorld::OnInit(){
 
 	m_Player = new mPlayer;
-	m_Player->onInit(::cResourceManager::GetInstance().getPlayerBitMap());
+	m_Player->onInit();
 	
 	m_Map = new wTileMap;
 	m_Map->setPlayer(m_Player);
@@ -35,13 +35,13 @@ void wWorld::OnInit(cD2DRenderer& renderer){
 	m_Player->setTileMap(m_Map);
 	
 	// 50*50 이상의 크기에서 심각하게 느려짐...
-	m_Map->setSize(60.0f, 60.0f);
+	m_Map->setSize(50.0f, 50.0f);
 }
 
-void wWorld::Render(cD2DRenderer& renderer){
+void wWorld::Render(){
 	// 맵에서 Player렌더까지 처리
 	// 렌더 순서는 타일 -> 플레이어 -> 오브젝트 순으로 실시
-	m_Map->onRender(renderer);
+	m_Map->onRender();
 }
 
 void wWorld::Update(float deltaTime){

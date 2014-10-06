@@ -8,7 +8,7 @@ mIObject::~mIObject()
 {
 }
 
-void mIObject::onRender(cD2DRenderer& renderer){
+void mIObject::onRender(){
 	if (m_ipD2DBitmap != nullptr){
 
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
@@ -19,7 +19,7 @@ void mIObject::onRender(cD2DRenderer& renderer){
 		::D2D1_RECT_F srcArea
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
-		renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 
@@ -27,13 +27,13 @@ void mIObject::onRender(cD2DRenderer& renderer){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug 용
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = _drawVector->y - 2.0f;
 		pivotArea.bottom = _drawVector->y + 2.0f;
 		pivotArea.left = _drawVector->x - 2.0f;
 		pivotArea.right = _drawVector->x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
 		pivotArea;
@@ -41,11 +41,11 @@ void mIObject::onRender(cD2DRenderer& renderer){
 		pivotArea.bottom = _realVector->y + 2.0f;
 		pivotArea.left = _realVector->x - 2.0f;
 		pivotArea.right = _realVector->x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}	
 }
 
-void mIObject::onRender(cD2DRenderer& renderer, bool alpha){
+void mIObject::onRender(bool alpha){
 	if (m_ipD2DBitmap != nullptr){
 
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
@@ -57,7 +57,7 @@ void mIObject::onRender(cD2DRenderer& renderer, bool alpha){
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
 		if (alpha){
-			renderer.GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 0.4f,
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 0.4f,
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 				srcArea);
 		}
@@ -65,13 +65,13 @@ void mIObject::onRender(cD2DRenderer& renderer, bool alpha){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		//debug 용
-		renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 		::D2D1_RECT_F pivotArea;
 		pivotArea.top = _drawVector->y - 2.0f;
 		pivotArea.bottom = _drawVector->y + 2.0f;
 		pivotArea.left = _drawVector->x - 2.0f;
 		pivotArea.right = _drawVector->x + 2.0f;
-		renderer.GetRenderTarget()->DrawRectangle(pivotArea, renderer.GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
 
@@ -119,12 +119,16 @@ VECTOR2D mIObject::vectorMove(float fdeltatime, DIRECTION dir){
 	case RIGHTUP:
 		vDir = vRight + (vUp / 2.0f);
 		break;
+	case NOMOVE:
+		break;
 	default:
 		break;
 	}
 
 	// todo: 차후 100.0f각 각 object별 이속으로 변경
-	vDir.Normalize();
+	if (dir != NOMOVE){
+		vDir.Normalize();
+	}
 	vMover = vDir*(m_moveSpeed * fdeltatime);
 
 	return vMover;

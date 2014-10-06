@@ -28,9 +28,9 @@ public:
 	}
 
 private:
-	void Render(cD2DRenderer&);
+	void Render();
 	void Update(float deltaTime);
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 	void OnExit();
 
 

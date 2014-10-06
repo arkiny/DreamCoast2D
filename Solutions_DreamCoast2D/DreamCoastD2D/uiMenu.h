@@ -7,7 +7,6 @@
 // 병신같지만 머 갠찮아.. 했잖아...
 // 오늘 컨디션은 좀 별로다...
 class sIScreen;
-class cD2DRenderer;
 class uiButton;
 
 class uiMenu :
@@ -17,21 +16,20 @@ public:
 	uiMenu();
 	uiMenu(int type, sIScreen* callback);
 	~uiMenu();
-	void OnInit(cD2DRenderer&);
+	void OnInit();
 	void Update(float);
-	void Render(cD2DRenderer&);
+	void Render();
 
 	void setType(int type) { m_type = type; }
 	int getType() { return m_type; }
 
 private:
-	void draw(cD2DRenderer&, int);
+	void draw(int);
 	void changeMenuType();
 
 	int m_nSelectedMenu = 0;
 	uiButton* m_btnSelect;
 
-	cD2DRenderer* m_renderer;
 	sIScreen* m_pCallbackScreen;
 	std::vector<uiInterface*> m_vButtons;
 		

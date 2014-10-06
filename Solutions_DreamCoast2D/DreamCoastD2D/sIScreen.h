@@ -3,7 +3,6 @@
 // resource에 있는 enum과 통일할것
 
 class coControl;
-class cD2DRenderer;
 class cGameManager;
 class cResourceManager;
 
@@ -14,9 +13,9 @@ public:
 	sIScreen(cGameManager*);
 	virtual ~sIScreen();
 	
-	virtual void OnInit(cD2DRenderer&) = 0;
+	virtual void OnInit() = 0;
 	virtual void Update(float) = 0;
-	virtual void Render(cD2DRenderer&) = 0;
+	virtual void Render() = 0;
 	virtual void OnExit() = 0;
 
 protected:

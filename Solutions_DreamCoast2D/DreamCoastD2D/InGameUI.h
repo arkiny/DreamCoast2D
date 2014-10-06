@@ -3,7 +3,6 @@
 #include "iInScreenUI.h"
 
 class uiInterface;
-class cD2DRenderer;
 class mIObject;
 class wTileMap;
 
@@ -17,8 +16,8 @@ public:
 	InGameUI();
 	InGameUI(mIObject*, wTileMap*);
 	~InGameUI();
-	void Render(cD2DRenderer&);
+	void Render();
 	void Update(float);
-	void OnInit(cD2DRenderer&, sIScreen*);
+	void OnInit(sIScreen*);
 };
 

@@ -19,7 +19,7 @@ uiButton::~uiButton()
 {
 }
 
-void uiButton::OnInit(cD2DRenderer& renderer){
+void uiButton::OnInit(){
 	m_fWidth = ::cResourceManager::GetInstance().getButtonSize(m_nButtonType).x;
 	m_fHeight = ::cResourceManager::GetInstance().getButtonSize(m_nButtonType).y;
 }
@@ -57,14 +57,15 @@ void uiButton::Update(float delta){
 	}
 }
 
-void uiButton::Render(cD2DRenderer& renderer){
+void uiButton::Render(){
 	if (::cResourceManager::GetInstance().getButton(m_nButtonType) != nullptr){		
 		::D2D1_RECT_F dxArea
 			= { this->getPos()->x, this->getPos()->y, this->getPos()->x + m_fWidth, this->getPos()->y + m_fHeight };
 		::D2D1_RECT_F srcArea
 			= { 0, 0, m_fWidth, m_fHeight };
 
-		renderer.GetRenderTarget()->DrawBitmap(::cResourceManager::GetInstance().getButton(m_nButtonType), dxArea, m_alpha,
+		::cD2DRenderer::GetInstance().GetRenderTarget()
+			->DrawBitmap(::cResourceManager::GetInstance().getButton(m_nButtonType), dxArea, m_alpha,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 	}

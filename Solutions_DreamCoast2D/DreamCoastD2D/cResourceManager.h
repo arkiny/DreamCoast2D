@@ -9,8 +9,8 @@ public:
 	cResourceManager();
 	~cResourceManager();
 
-	void load(cD2DRenderer&);
-	void loadMainMenuResource(cD2DRenderer&);
+	void load();
+	void loadMainMenuResource();
 	void exitMainMenu();
 	void releaseGameResource();
 

@@ -9,7 +9,6 @@
 
 cGameManager::cGameManager(void)
 {
-	m_rRenderer = nullptr;
 	m_pControl = nullptr;
 	m_pCurrentScreen = nullptr;
 	m_pResourceMng = nullptr;
@@ -28,9 +27,8 @@ cGameManager::~cGameManager(void)
 	//	delete m_pResourceMng;
 }
 
-void cGameManager::OnInit(cD2DRenderer& renderer)
+void cGameManager::OnInit()
 {
-	m_rRenderer = &renderer;
 
 	// singleton 클래스 시작
 	// 아래 두개는 딱 1개씩만 필요한 클래스다.
@@ -40,12 +38,12 @@ void cGameManager::OnInit(cD2DRenderer& renderer)
 	// screen
 	// 일단은 sGameScreen으로 게임을 시작한다.
 	m_pCurrentScreen = new sMainMenuScreen(this);
-	m_pCurrentScreen->OnInit(*m_rRenderer);
+	m_pCurrentScreen->OnInit();
 }
 
-void cGameManager::Render(cD2DRenderer& renderer)
+void cGameManager::Render()
 {
-	m_pCurrentScreen->Render(renderer);
+	m_pCurrentScreen->Render();
 }
 
 void cGameManager::Update(float deltaTime)
@@ -66,7 +64,7 @@ void cGameManager::changeScreen(sIScreen* pnew){
 	// render를 통한 시작 초기화가 아닌, 리소스 매니저를 이용한 
 	// 리소스 초기화로 이니셜라이징 시작
 	// renderer가 필요하면 저장해서 옮기면 되지 ㅡㅡ
-	m_pCurrentScreen->OnInit(*m_rRenderer);
+	m_pCurrentScreen->OnInit();
 }
 
 void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
