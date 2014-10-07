@@ -48,9 +48,9 @@ void cResourceManager::load(){
 	HWND hWnd = ::cD2DRenderer::GetInstance().GetHwnd();
 	m_Bitmap_MainBG = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/bg/bg_river.jpg", NULL);
 	m_MainBG_Size = { 1920.0f, 1200.0f };
-	m_Bitmap_Player = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/sprites.png", NULL);		// 플레이어
-	m_Bitmap_TileMap = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/maptile.png", NULL);		// 타일맵
-	m_Bitmap_Poring = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/poring.png", NULL);		// 몬스터 포링 주소	
+	m_Bitmap_Player = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/object/player/char_00_fknight.png", NULL);		// 플레이어
+	m_Bitmap_TileMap = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/maptile/maptile.png", NULL);		// 타일맵
+	m_Bitmap_Poring = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/object/monster/mon_00_poring.png", NULL);		// 몬스터 포링 주소	
 	m_Bitmap_UI[UIID::STATBAR] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/statbar.png", NULL);
 	m_Bitmap_UI[UIID::BLUEBAR] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/bar_bluebar.png", NULL);
 	m_Bitmap_UI[UIID::REDBAR] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/bar_redbar.png", NULL);

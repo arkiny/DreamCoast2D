@@ -8,6 +8,7 @@
 #include "uCamera.h"
 #include "uTile.h"
 #include "cResourceManager.h"
+#include "cSoundManager.h"
 
 mPlayer::mPlayer()
 {	
@@ -77,54 +78,7 @@ void mPlayer::onUpdate(float fdeltatime){
 	// x키를 뗄때 스킬 커맨드를 발현시킨다.
 	// 물론 입력중에 타격을 받으면 취소되므로, 우선순위는 onhit보다는 아래
 	// 하지만 이동은 멈추고 키를 입력받아야 하므로 이동/대기 보다는 빠르게
-	else if (::coControl::GetInstance().getKeyControlInfo()[0x58]){
-		if (m_State == ONCASTING){
-			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력
-			// 애니메이션은 캐스팅애니메이션으로
-			putKeyIntoQueue();			
-		}
-		else {
-			// 상태를 온캐스팅으로 변경
-			m_State = ONCASTING;
-			putKeyIntoQueue();
-			// 혹시나 들어오게 되는 첫키를 입력받음
-			//m_attackaccumtime = 0.0f;
-			//m_spriteAtlas->setCurrentFrame(0);
-		}
-	}
-	else if (m_State == ONCASTING){
-		// 캐스팅을 실시하고 x키를 떼었을때
-		if (!::coControl::GetInstance().getKeyControlInfo()[0x58]){
-			// 입력 된 키를 기술표와 비교하여 기술표에 존재할 경우 해당 스킬을,
-			// 아닐경우에는 패널티를 부여한다. (자기에게 데미지)
-			// 스킬 발사시, 공격모션과 동일안 모션을 취하는 대신,
-			// 자기주변으로 스킬에 관련된 이펙트를 표현해야한다.
-			
-			// 업데이트 시마다 체크하게 되므로 문제가 된다.
-			// TODO 업데이트 타임 체크
-			if (!m_qKeyInput.empty()){
-				if (skillCompare(m_qKeyInput, m_naSkill, 0)){
-					// 스킬 목록에 있는 스킬과 같을 경우
-					// 어택
-					m_State = ONATTACK;
-					m_attackaccumtime = 0.0f;
-					m_spriteAtlas->setCurrentFrame(0);					
-					
-					/*while (!m_qKeyInput.empty()){
-						m_qKeyInput.pop();
-					}*/
-
-				}
-				else {
-					// 아니면 페널티를 주는 걸로
-					m_State = ONMOVE;
-				}				
-			}			
-		}
-		else {
-			// do nothing
-		}
-	}
+	
 
 	// skill
 	else if (::coControl::GetInstance().getKeyControlInfo()[0x5A]){
@@ -133,14 +87,81 @@ void mPlayer::onUpdate(float fdeltatime){
 		}
 		else {
 			m_State = ONATTACK;
+			cSoundManager::GetInstance().executeAttack();
 			m_attackaccumtime = 0.0f;
 			m_spriteAtlas->setCurrentFrame(0);			
 		}
 	}
 	else if (m_State == ONATTACK){
+		// skill casted
+		m_castingSkill = 99;
 		mPlayer::onAttack(fdeltatime);
 	}
+
+	else if (::coControl::GetInstance().getKeyControlInfo()[0x58]){
+		if (m_State == ONCASTING){
+			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력
+			// 애니메이션은 캐스팅애니메이션으로
+			putKeyIntoQueue();
+		}
+		else {
+			// 상태를 온캐스팅으로 변경
+			m_State = ONCASTING;
+			// 최초 스킬 캐스팅 시전
+			cSoundManager::GetInstance().executeBeginSpell();
+			// 혹시나 들어오게 되는 첫키를 입력받음
+			putKeyIntoQueue();			
+			//m_attackaccumtime = 0.0f;
+			//m_spriteAtlas->setCurrentFrame(0);
+		}
+	}
+
+	else if (m_State == ONCASTING){
+		// 캐스팅을 실시하고 x키를 떼었을때
+		if (!::coControl::GetInstance().getKeyControlInfo()[0x58]){
+			// TODO: 키를 떼었을때 캐스팅 사운드 멈추기
+			cSoundManager::GetInstance().stopBeginSpell();
+			
+			// 입력 된 키를 기술표와 비교하여 기술표에 존재할 경우 해당 스킬을,
+			// 아닐경우에는 패널티를 부여한다. (자기에게 데미지)
+			// 스킬 발사시, 공격모션과 동일안 모션을 취하는 대신,
+			// 자기주변으로 스킬에 관련된 이펙트를 표현해야한다.
+
+			// 업데이트 시마다 체크하게 되므로 문제가 된다.
+			// TODO 업데이트 타임 체크
+			if (!m_qKeyInput.empty()){
+				if (skillCompare(m_qKeyInput, m_naSkill, 0)){
+					m_castingSkill = 0;
+				}
+				else {
+					// 아니면 페널티를 주는 걸로
+					getHit(10.0f);
+				}
+				while (!m_qKeyInput.empty()){
+					m_qKeyInput.pop();
+				}
+			}
+			else {
+				if (m_castingSkill == 0){
+					// skill에따른 상황 정리
+					m_State = ONATTACK;
+					cSoundManager::GetInstance().executeSkill(m_castingSkill);
+					m_attackaccumtime = 0.0f;
+					m_spriteAtlas->setCurrentFrame(0);
+				}
+				else {
+					m_State = ONMOVE;
+				}
+			}
+		}
+		else {
+			// do nothing
+		}
+	}
+
 	else if (m_State == ONMOVE){
+		// casting skill reseting to idle
+		m_castingSkill = 99;
 		m_attackaccumtime = 0.0f;
 		mPlayer::onMove(fdeltatime);
 	}
@@ -323,7 +344,7 @@ void mPlayer::putKeyIntoQueue(){
 	}
 }
 
-bool mPlayer::skillCompare(std::queue<int> keyinput, int* skillArray, int index){
+bool mPlayer::skillCompare(std::queue<int> &keyinput, int* skillArray, int index){
 	if (index >= SKILLCOMMAND_MAX){
 		return true;
 	}

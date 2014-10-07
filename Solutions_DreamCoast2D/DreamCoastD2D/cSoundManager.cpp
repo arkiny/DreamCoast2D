@@ -28,6 +28,24 @@ void cSoundManager::executeBGMinGame(){
 	m_bgmplayinglist = 1;
 }
 
+void cSoundManager::executeBeginSpell(){
+	engine->play2D("Sounds/Effect/ef_beginspell.wav");
+}
+
+void cSoundManager::stopBeginSpell(){
+	engine->removeSoundSource("Sounds/Effect/ef_beginspell.wav");
+}
+
+void cSoundManager::executeAttack(){
+	engine->play2D("Sounds/Effect/_attack_sword.wav");
+}
+
+void cSoundManager::executeSkill(int in){
+	if (in == 0){
+		engine->play2D("Sounds/Effect/ef_magnumbreak.wav");
+	}
+}
+
 void cSoundManager::stopBGM(){
 	if (m_bgmplayinglist == 0){
 		engine->removeSoundSource("Sounds/BGM/title_01.wav");

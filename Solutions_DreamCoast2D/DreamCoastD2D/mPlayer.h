@@ -73,6 +73,9 @@ private:
 
 	int m_naSkill[SKILLCOMMAND_MAX];
 
-	bool skillCompare(std::queue<int> keyinput, int* skillArray, int index);
+	int m_castingSkill = 99;
+	bool skillCompare(std::queue<int> &keyinput, int* skillArray, int index);
+
+	void skillEffect(int skilltype);
 };
 
