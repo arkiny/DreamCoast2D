@@ -300,6 +300,9 @@
     <ClCompile Include="cSoundManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="mPlayerState.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoastD2D.rc">

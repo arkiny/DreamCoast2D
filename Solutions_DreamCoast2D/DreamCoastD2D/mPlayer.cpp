@@ -45,6 +45,13 @@ void mPlayer::onInit(){
 	//HWND hWnd = renderer.GetHwnd();
 	m_ipD2DBitmap = ::cResourceManager::GetInstance().getPlayerBitMap();
 	m_Cam = new uCamera(1028.0, 768.0f, this->getRealPos());
+	
+	for (int i = 0; i < SKILLCOMMAND_MAX; i++){
+		m_naSkill[i] = 99;
+	}
+	m_naSkill[0] = DIRECTION::LEFT;
+	m_naSkill[1] = DIRECTION::DOWN;
+	m_naSkill[2] = DIRECTION::RIGHT;
 }
 
 void mPlayer::onUpdate(float fdeltatime){	
@@ -74,11 +81,13 @@ void mPlayer::onUpdate(float fdeltatime){
 		if (m_State == ONCASTING){
 			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력
 			// 애니메이션은 캐스팅애니메이션으로
+			putKeyIntoQueue();			
 		}
 		else {
 			// 상태를 온캐스팅으로 변경
-			// 혹시나 들어오게 되는 첫키를 입력받음
 			m_State = ONCASTING;
+			putKeyIntoQueue();
+			// 혹시나 들어오게 되는 첫키를 입력받음
 			//m_attackaccumtime = 0.0f;
 			//m_spriteAtlas->setCurrentFrame(0);
 		}
@@ -90,7 +99,27 @@ void mPlayer::onUpdate(float fdeltatime){
 			// 아닐경우에는 패널티를 부여한다. (자기에게 데미지)
 			// 스킬 발사시, 공격모션과 동일안 모션을 취하는 대신,
 			// 자기주변으로 스킬에 관련된 이펙트를 표현해야한다.
-			m_State = ONMOVE;
+			
+			// 업데이트 시마다 체크하게 되므로 문제가 된다.
+			// TODO 업데이트 타임 체크
+			if (!m_qKeyInput.empty()){
+				if (skillCompare(m_qKeyInput, m_naSkill, 0)){
+					// 스킬 목록에 있는 스킬과 같을 경우
+					// 어택
+					m_State = ONATTACK;
+					m_attackaccumtime = 0.0f;
+					m_spriteAtlas->setCurrentFrame(0);					
+					
+					/*while (!m_qKeyInput.empty()){
+						m_qKeyInput.pop();
+					}*/
+
+				}
+				else {
+					// 아니면 페널티를 주는 걸로
+					m_State = ONMOVE;
+				}				
+			}			
 		}
 		else {
 			// do nothing
@@ -117,34 +146,6 @@ void mPlayer::onUpdate(float fdeltatime){
 	}
 }
 
-void mPlayer::onHit(float fdeltatime){
-	// 경직 시간은 FRAMERATE의 딱 두배
-	if (m_onhitAccumtime < FRAMERATE * 2.0f){
-		m_onhitAccumtime += fdeltatime;
-	}
-	else {
-		// 맞은 이후 일정 시간이 지났을 경우
-		// Idle상태로 돌아감
-		m_onhitAccumtime = 0.0f;
-		m_State = ONMOVE;
-	}
-
-	//
-	if (m_SeeDir == LEFTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(700.0f, 0.0f, 49.0f, 73.0f,  1);
-	}
-	else if (m_SeeDir == LEFTUP){
-		m_spriteAtlas->pickSpriteAtlas(850.0f, 0.0f, 48.0f, 74.0f, 1);
-	}
-	else if (m_SeeDir == RIGHTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(700.0f, 100.0f, 49.0f, 73.0f, 1);
-	}
-	else if (m_SeeDir == RIGHTUP){
-		m_spriteAtlas->pickSpriteAtlas(850.0f, 100.0f, 48.0f, 74.0f, 1);
-	}
-
-	m_spriteAtlas->nextFrame(fdeltatime);
-}
 
 // 피격 시 처리 (체력감소)
 void mPlayer::getHit(float dmg){
@@ -157,209 +158,7 @@ void mPlayer::getHit(float dmg){
 	}
 }
 
-void mPlayer::onCasting(float delta){
-	if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-	} 
-	//else if (){}
-}
 
-// todo: 공속조정 변수가 필요함
-void mPlayer::onAttack(float fdeltatime){
-	// fdeltatime을 받아서 일정 시간에 도달하였을 경우 attack처리
-	m_attackaccumtime += fdeltatime;
-
-	//bool attacktrigger = false;
-	VECTOR2D currentTile = m_pTileMap->getTileCoordinates(*_realVector);
-	float fx, fy;
-
-	if (m_attackaccumtime > FRAMERATE * 2.0f){
-		//attacktrigger = true;
-		m_attackaccumtime = 0.0f;
-		if (m_SeeDir == LEFTDOWN){
-			fx = currentTile.x + 1.0f;
-			fy = currentTile.y;
-		}
-		else if (m_SeeDir == LEFTUP){
-			fx = currentTile.x;
-			fy = currentTile.y - 1.0f;
-		}
-		else if (m_SeeDir == RIGHTDOWN){
-			fx = currentTile.x;
-			fy = currentTile.y + 1.0f;
-		}
-		else if (m_SeeDir == RIGHTUP){
-			fx = currentTile.x - 1.0f;;
-			fy = currentTile.y;
-		}
-		else {}
-		// 같은 타일내에 겹쳐 있을수도 있으므로...
-		// 차후 이 자리에는 타일 onHIT계열이 들어간다. 
-		m_pTileMap->getTile(currentTile.x, currentTile.y)->onHit(10.0f);
-		m_pTileMap->getTile(fx, fy)->onHit(10.0f);
-	}
-
-	if (m_spriteAtlas->getCurrentFrame() == 7){
-		m_spriteAtlas->setCurrentFrame(0);
-		m_State = ONMOVE;
-		return;
-	}
-
-	// 데미지 처리는 일정 프레임에 트리거 되도록 -> 일정 시간에 트리거되도록함
-	if (m_SeeDir == LEFTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 600.0f, 121.0f, 98.0f, 19.5f, 0.0f, 7);
-	}
-	else if (m_SeeDir == LEFTUP){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 700.0f, 103.0f, 84.0f, 7);
-	}
-	else if (m_SeeDir == RIGHTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 800.0f, 121.0f, 98.0f, -19.5f, 0.0f, 7);
-	}
-	else if (m_SeeDir == RIGHTUP){
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 900.0f, 103.0f, 84.0f, 7);
-	}
-	//leftdown (0.0f, 600.0f, 121.0f, 98.0f, 7)
-	//leftup (0.0f, 700.0f, 103.0f, 84.0f, 7)
-	//rightdown (0.0f, 800.0f, 121.0f, 98.0f, 7)
-	//rightup (0.0f, 900.0f, 103.0f, 84.0f, 7)
-
-	m_spriteAtlas->nextFrame(fdeltatime*m_attackSpeed);
-}
-
-
-//void mPlayer::onIdle(){
-//
-//}
-
-// 이동간에 따른 무브무브
-// 아마 onMove 보단 onControl
-void mPlayer::onMove(float fdeltatime){
-	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
-
-	// Animation Part
-	// TODO:: 키처리좀 제대로 하고 싶다..
-	if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-		m_SeeDir = LEFTDOWN;
-		m_MoveDir = LEFTDOWN;
-		
-		m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);		
-	}
-
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-		m_SeeDir = LEFTUP;
-		m_MoveDir = LEFTUP;
-		m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);		
-	}
-
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-		m_SeeDir = RIGHTDOWN;
-		m_MoveDir = RIGHTDOWN;
-		m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);
-	}
-
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-		m_SeeDir = RIGHTUP;		
-		m_MoveDir = RIGHTUP;
-		m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);		
-	}
-
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
-		if (m_SeeDir == LEFTUP){
-			m_SeeDir = RIGHTUP;
-		}
-		else if (m_SeeDir == LEFTDOWN){
-			m_SeeDir = RIGHTDOWN;
-		}
-		m_MoveDir = RIGHT;
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f, 6);		
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
-		if (m_SeeDir == RIGHTUP){
-			m_SeeDir = LEFTUP;
-		}
-		else if (m_SeeDir == RIGHTDOWN){
-			m_SeeDir = LEFTDOWN;
-		}
-
-		m_MoveDir = LEFT;
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f, 6);		
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-		if (m_SeeDir == LEFTUP){
-			m_SeeDir = LEFTDOWN;
-		}
-		else if (m_SeeDir == RIGHTUP){
-			m_SeeDir = RIGHTDOWN;
-		}
-
-		m_MoveDir = DOWN;
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f, 6);		
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-		if (m_SeeDir == LEFTDOWN){
-			m_SeeDir = LEFTUP;
-		}
-		else if (m_SeeDir == RIGHTDOWN){
-			m_SeeDir = RIGHTUP;
-		}
-
-		m_MoveDir = UP;
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f, 6);		
-	}
-	else { // Idling
-		if (m_SeeDir == RIGHTDOWN){
-			// idle right down
-			m_spriteAtlas->pickSpriteAtlas(0.0f, 92.0f, 64.0f, 92.0f, -19.5f, 0.0f, 4);		
-		}
-		else if (m_SeeDir == LEFTUP){
-			m_spriteAtlas->pickSpriteAtlas(360.0f, 400.0f, 42.0f, 89.0f, 4);			
-		}
-		else if (m_SeeDir == RIGHTUP){
-			m_spriteAtlas->pickSpriteAtlas(360.0f, 500.0f, 42.0f, 89.0f, 4);			
-		}
-		else if (m_SeeDir == LEFTDOWN){
-			m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 19.5f, 0.0f, 4);
-		}
-		m_MoveDir = NOMOVE;
-	}	
-	// frame update
-	m_spriteAtlas->nextFrame(fdeltatime);
-	vMover = mIObject::vectorMove(fdeltatime, m_MoveDir);
-
-	// Todo
-	// 맵 포인터에서 맵 정보를 받아와서 이동 불가 컨트롤, 차후 동적할당식으로 전환
-	// 맵 포인터는 스테이지가 바뀔때마다 업데이트를 해줘야 한다.
-	// 컨트롤 클래스나, 월드클래스에서 조정해주면 더 나으려나?
-	// 일단 자연스러운 오더링을 위해 이동불가는 둘 모두를 통해 이동불가 처리
-	// 가장 좋은 건 사각형을 써서 오더링을 하는 걸까나?
-	float topX = m_pTileMap->getTileCoordinates(*_drawVector + vMover).x;
-	float topY = m_pTileMap->getTileCoordinates(*_drawVector + vMover).y;
-
-	float bottomX = m_pTileMap->getTileCoordinates(*_realVector + vMover).x;
-	float bottomY = m_pTileMap->getTileCoordinates(*_realVector + vMover).y;
-
-	// 외곽 충돌 처리
-	if (topX >= m_pTileMap->getMapLimit().x || topY >= m_pTileMap->getMapLimit().y||
-		bottomX >= m_pTileMap->getMapLimit().x || bottomY >= m_pTileMap->getMapLimit().y||
-		topX < 0 || topY < 0 ||bottomX < 0 || bottomY < 0){
-		return;
-	}
-
-
-	// 이동불가시 이동불가 처리
-	// move update, 여기서 float -> int 변환이 일어나 데이터 로스가 있을수도 있다.
-	// 게임 특성상 몬스터와의 충돌처리는 아직 없음(만약 보스형이라면 충돌 처리가 있어야할지도)
-	if (m_pTileMap->getMapinfo(static_cast<int>(topX), static_cast<int>(topY)) == 0
-		&& m_pTileMap->getMapinfo(static_cast<int>(bottomX), static_cast<int>(bottomY)) == 0){
-		*_realVector = *_realVector + vMover;
-		*_drawVector = *_drawVector + vMover;		
-	}
-	//
-}
 
 void mPlayer::onRender(){
 	if (m_ipD2DBitmap != nullptr){
@@ -443,46 +242,107 @@ void mPlayer::onRender(bool alpha){
 	}
 }
 
-void mPlayer::onDead(float delta){
-	//on dead
-	//	ld 700, 200, 69, 55, 0
-	//	lu 850, 200, 62, 43, 0
-	//	rd 700, 250, 69, 44, 0
-	//	rd 850, 250, 62, 43, 0
 
-	//accumtime += pmon->getdeltaTime();
-	//if (accumtime < FRAMERATE * 1.0f){
-	//	m_sprite->nextFrame(pmon->getdeltaTime());
-	//}
 
-	//// 사망시 페이드아웃 효과
-	//pmon->setAlpha(pmon->getAlpha() - 0.025f);
+void mPlayer::putKeyIntoQueue(){
+	// 아무래도 키 우선순위는 존재하기 마련이다. 동시 입력이나 잘못 된 입력이 있을때 체킹은 일단 나중으로 미루고
+	// 가장 간단한 커맨드와 액션으로 처리하는 걸 처리...
+	if (m_qKeyInput.size() < SKILLCOMMAND_MAX){
+		if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::LEFTDOWN){
+				m_qKeyInput.push(DIRECTION::LEFTDOWN);
+			}
+			else if (m_qKeyInput.empty()) {
+				m_qKeyInput.push(DIRECTION::LEFTDOWN);
+			}
+		}
 
-	//// 차후 delete 보다는 setVisible을 이용해서
-	//// 다시 이용하는 방법도 있을 듯 하뎌이다
-	//// 일정 시간이 지난 뒤 삭제 trigger on
-	//if (accumtime > FRAMERATE*8.0f){
-	//	pmon->setState(ONDEAD);
-	//}
-	if (m_SeeDir == RIGHTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(700.0f, 250.0f, 69.0f, 44.0f, -19.5f, 0.0f, 0);
-	}
-	else if (m_SeeDir == LEFTUP){
-		m_spriteAtlas->pickSpriteAtlas(850.0f, 200.0f, 62.0f, 50.0f, 0);
-	}
-	else if (m_SeeDir == RIGHTUP){
-		m_spriteAtlas->pickSpriteAtlas(850.0f, 250.0f, 62.0f, 50.0f, 0);
-	}
-	else if (m_SeeDir == LEFTDOWN){
-		m_spriteAtlas->pickSpriteAtlas(700.0f, 200.0f, 69.0f, 44.0f, 19.5f, 0.0f, 0);
-	}
-	m_spriteAtlas->nextFrame(delta);
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::LEFTUP){
+				m_qKeyInput.push(DIRECTION::LEFTUP);
+			}
+			else if (m_qKeyInput.empty()) {
+				m_qKeyInput.push(DIRECTION::LEFTUP);
+			}
+		}
 
-	m_deadFadeOutTime += delta;
-	m_alpha -= 0.025f;
-	if (m_deadFadeOutTime > FRAMERATE*20.0f){
-	//if (m_alpha <= 0.0f){
-		// todo: 페이드아웃 종료후 게임 오버 처리
-		m_deadcomp = true;
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::RIGHTDOWN){
+				m_qKeyInput.push(DIRECTION::RIGHTDOWN);
+			}
+			else if (m_qKeyInput.empty()) {
+				m_qKeyInput.push(DIRECTION::RIGHTDOWN);
+			}
+		}
+
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::RIGHTUP){
+				m_qKeyInput.push(DIRECTION::RIGHTUP);
+			}
+			else if (m_qKeyInput.empty()) {
+				m_qKeyInput.push(DIRECTION::RIGHTUP);
+			}
+		}
+
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::RIGHT){
+				m_qKeyInput.push(DIRECTION::RIGHT);
+			}
+			else if (m_qKeyInput.empty()) {
+				m_qKeyInput.push(DIRECTION::RIGHT);
+			}
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::LEFT){
+				m_qKeyInput.push(DIRECTION::LEFT);
+			}
+			else if (m_qKeyInput.empty()){
+				m_qKeyInput.push(DIRECTION::LEFT);
+			}
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::DOWN){
+				m_qKeyInput.push(DIRECTION::DOWN);
+			}
+			else if (m_qKeyInput.empty()) {
+				m_qKeyInput.push(DIRECTION::DOWN);
+			}
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::UP){
+				m_qKeyInput.push(DIRECTION::UP);
+			}
+			else if (m_qKeyInput.empty()) {
+				m_qKeyInput.push(DIRECTION::UP);
+			}
+		}
 	}
+}
+
+bool mPlayer::skillCompare(std::queue<int> keyinput, int* skillArray, int index){
+	if (index >= SKILLCOMMAND_MAX){
+		return true;
+	}
+
+	if (skillArray[index] == 99){
+		return true;
+	}
+
+	if (keyinput.empty()){
+		return false;
+	}
+
+	if (keyinput.front() != skillArray[index]){
+		return false;
+	}
+	
+
+	keyinput.pop();
+	
+	bool ret = skillCompare(keyinput, skillArray, index + 1);
+	return ret;
 }

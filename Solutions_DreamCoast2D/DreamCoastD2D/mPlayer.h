@@ -2,6 +2,8 @@
 #include "mIObject.h"
 #include <queue>
 
+#define SKILLCOMMAND_MAX 16
+
 class uSprite;
 
 // Statemachine을 이용하지 않은 채로 실행하는
@@ -36,11 +38,10 @@ private:
 	void onAttack(float deltaTime);
 	void onHit(float fdeltatime);
 	void onDead(float);
-	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
-	void onCasting(float);
+	
 	//VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
-	std::queue<int> m_qKeyInput;
+	
 
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	DIRECTION m_MoveDir;
@@ -64,5 +65,14 @@ private:
 
 	// 스킬 캐스팅 변수
 	float m_castaccumtime = 0.0f;
+	
+	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
+	void onCasting(float);
+	std::queue<int> m_qKeyInput;
+	void putKeyIntoQueue();
+
+	int m_naSkill[SKILLCOMMAND_MAX];
+
+	bool skillCompare(std::queue<int> keyinput, int* skillArray, int index);
 };
 

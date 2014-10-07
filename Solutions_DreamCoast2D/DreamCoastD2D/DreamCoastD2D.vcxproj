@@ -57,6 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Arkiny\Documents\GitHub\DreamCoast2D\Solutions_DreamCoast2D\DreamCoastD2D\irr;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -152,6 +153,7 @@
     <ClCompile Include="mIObject.cpp" />
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
+    <ClCompile Include="mPlayerState.cpp" />
     <ClCompile Include="piState.cpp" />
     <ClCompile Include="pStateIdle.cpp" />
     <ClCompile Include="sMainMenuScreen.cpp" />
