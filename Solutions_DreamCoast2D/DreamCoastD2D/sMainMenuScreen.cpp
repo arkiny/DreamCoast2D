@@ -2,12 +2,13 @@
 #include "sMainMenuScreen.h"
 #include "coControl.h"
 #include "cGameManager.h"
+#include "cSoundManager.h"
 #include "sGameScreen.h"
+#include "sResourceLoad.h"
 #include "cD2DRenderer.h"
 #include "cResourceManager.h"
 #include "InMainUI.h"
-#include "sResourceLoad.h"
-#include "cSoundManager.h"
+
 
 sMainMenuScreen::sMainMenuScreen()
 {
@@ -69,24 +70,6 @@ void sMainMenuScreen::Render(){
 	}
 
 	m_pUI->Render();
-
-	//wchar_t* wszText2_ = L"Press Space to Start This Game";
-	//UINT32 cTextLength2_ = (UINT32)wcslen(wszText2_);
-
-
-	//D2D1_RECT_F layoutRect = D2D1::RectF(
-	//	514.0,
-	//	384.0,
-	//	614.0,
-	//	484.0
-	//	);
-
-	//renderer.GetRenderTarget()->DrawTextW(
-	//	wszText2_,
-	//	cTextLength2_,
-	//	renderer.GetTextFormat(),
-	//	layoutRect,
-	//	renderer.GetBlackBrush());
 }
 
 void sMainMenuScreen::OnExit(){

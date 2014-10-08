@@ -23,5 +23,6 @@ public:
 private:
 	irrklang::ISoundEngine* engine;
 	int m_bgmplayinglist;
+	bool m_init = true;
 };
 

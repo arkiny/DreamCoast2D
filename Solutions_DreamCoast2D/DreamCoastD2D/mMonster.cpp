@@ -6,7 +6,6 @@
 #include "cD2DRenderer.h"
 #include "uCamera.h"
 #include "aiStateIdle.h"
-#include "aiStateOnHit.h"
 #include "wTileMap.h"
 #include "cResourceManager.h"
 
