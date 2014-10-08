@@ -271,75 +271,47 @@ void mPlayer::putKeyIntoQueue(){
 	if (m_qKeyInput.size() < SKILLCOMMAND_MAX){
 		if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
 			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::LEFTDOWN){
-				m_qKeyInput.push(DIRECTION::LEFTDOWN);
-			}
-			else if (m_qKeyInput.empty()) {
-				m_qKeyInput.push(DIRECTION::LEFTDOWN);
-			}
+			::coControl::GetInstance().onKeyUp(VK_LEFT);
+			::coControl::GetInstance().onKeyUp(VK_DOWN);
+			m_qKeyInput.push(DIRECTION::LEFTDOWN);
 		}
 
 		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
 			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::LEFTUP){
-				m_qKeyInput.push(DIRECTION::LEFTUP);
-			}
-			else if (m_qKeyInput.empty()) {
-				m_qKeyInput.push(DIRECTION::LEFTUP);
-			}
+			::coControl::GetInstance().onKeyUp(VK_LEFT);
+			::coControl::GetInstance().onKeyUp(VK_UP);
+			m_qKeyInput.push(DIRECTION::LEFTUP);			
 		}
 
 		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
 			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::RIGHTDOWN){
-				m_qKeyInput.push(DIRECTION::RIGHTDOWN);
-			}
-			else if (m_qKeyInput.empty()) {
-				m_qKeyInput.push(DIRECTION::RIGHTDOWN);
-			}
+			::coControl::GetInstance().onKeyUp(VK_RIGHT);
+			::coControl::GetInstance().onKeyUp(VK_DOWN);
+			m_qKeyInput.push(DIRECTION::RIGHTDOWN);
 		}
 
 		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
 			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::RIGHTUP){
-				m_qKeyInput.push(DIRECTION::RIGHTUP);
-			}
-			else if (m_qKeyInput.empty()) {
-				m_qKeyInput.push(DIRECTION::RIGHTUP);
-			}
+			::coControl::GetInstance().onKeyUp(VK_RIGHT);
+			::coControl::GetInstance().onKeyUp(VK_UP);
+			m_qKeyInput.push(DIRECTION::RIGHTUP);			
 		}
 
 		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::RIGHT){
-				m_qKeyInput.push(DIRECTION::RIGHT);
-			}
-			else if (m_qKeyInput.empty()) {
-				m_qKeyInput.push(DIRECTION::RIGHT);
-			}
+			::coControl::GetInstance().onKeyUp(VK_RIGHT);
+			m_qKeyInput.push(DIRECTION::RIGHT);
 		}
 		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::LEFT){
-				m_qKeyInput.push(DIRECTION::LEFT);
-			}
-			else if (m_qKeyInput.empty()){
-				m_qKeyInput.push(DIRECTION::LEFT);
-			}
+			::coControl::GetInstance().onKeyUp(VK_LEFT);
+			m_qKeyInput.push(DIRECTION::LEFT);
 		}
 		else if (::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::DOWN){
-				m_qKeyInput.push(DIRECTION::DOWN);
-			}
-			else if (m_qKeyInput.empty()) {
-				m_qKeyInput.push(DIRECTION::DOWN);
-			}
+			::coControl::GetInstance().onKeyUp(VK_DOWN);
+			m_qKeyInput.push(DIRECTION::DOWN);
 		}
 		else if (::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-			if (!m_qKeyInput.empty() && m_qKeyInput.back() != DIRECTION::UP){
-				m_qKeyInput.push(DIRECTION::UP);
-			}
-			else if (m_qKeyInput.empty()) {
-				m_qKeyInput.push(DIRECTION::UP);
-			}
+			::coControl::GetInstance().onKeyUp(VK_UP);
+			m_qKeyInput.push(DIRECTION::UP);
 		}
 	}
 }
