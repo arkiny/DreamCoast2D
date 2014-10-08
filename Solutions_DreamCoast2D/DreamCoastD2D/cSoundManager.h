@@ -15,11 +15,9 @@ public:
 	void executeBGM();
 	void executeBGMinGame();
 	void executeBeginSpell();
-	void stopBeginSpell();
-
 	void executeAttack();
 	void executeSkill(int);
-	
+	void stopBeginSpell();
 	void stopBGM();
 
 private:
