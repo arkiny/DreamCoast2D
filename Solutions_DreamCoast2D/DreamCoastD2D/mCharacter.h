@@ -10,10 +10,10 @@ class uCamera;
 enum DIRECTION{ LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP, NOMOVE };
 enum OBJECTSTATE{ ONIDLE, ONMOVE, ONATTACK, ONHIT, ONDEAD, ONCASTING };
 
-class mIObject
+class mCharacter
 {
 public:
-	virtual ~mIObject();
+	virtual ~mCharacter();
 
 	virtual void onInit() = 0;
 	virtual void onUpdate(float fdeltatime) = 0;
@@ -72,6 +72,7 @@ protected:
 	float m_HP = 100.0f;
 	float m_MP = 100.0f;
 	float m_moveSpeed = 100.0f;
+	float m_defense = 0.0f;
 
 	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 };

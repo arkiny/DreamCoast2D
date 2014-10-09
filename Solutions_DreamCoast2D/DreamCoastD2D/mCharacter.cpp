@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "cD2DRenderer.h"
-#include "mIObject.h"
+#include "mCharacter.h"
 #include "VECTOR2D.h"
 #include "uSprite.h"
 
-mIObject::~mIObject()
+mCharacter::~mCharacter()
 {
 }
 
-void mIObject::onRender(){
+void mCharacter::onRender(){
 	if (m_ipD2DBitmap != nullptr){
 
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
@@ -45,7 +45,7 @@ void mIObject::onRender(){
 	}	
 }
 
-void mIObject::onRender(bool alpha){
+void mCharacter::onRender(bool alpha){
 	if (m_ipD2DBitmap != nullptr){
 
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
@@ -75,21 +75,21 @@ void mIObject::onRender(bool alpha){
 	}
 }
 
-void mIObject::setRealPos(float x, float y){
+void mCharacter::setRealPos(float x, float y){
 	_realVector->x = x;
 	_realVector->y = y;
 }
 
-void mIObject::setDrawPos(float x, float y){
+void mCharacter::setDrawPos(float x, float y){
 	_drawVector->x = x;
 	_drawVector->y = y;
 }
 
-void mIObject::setTileMap(wTileMap* in){
+void mCharacter::setTileMap(wTileMap* in){
 	m_pTileMap = in;
 }
 
-VECTOR2D mIObject::vectorMove(float fdeltatime, DIRECTION dir){
+VECTOR2D mCharacter::vectorMove(float fdeltatime, DIRECTION dir){
 	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
 	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);
 	switch (dir)
@@ -134,6 +134,6 @@ VECTOR2D mIObject::vectorMove(float fdeltatime, DIRECTION dir){
 	return vMover;
 }
 
-void mIObject::getHit(float dmg){
-	mIObject::setHealth(this->getHealth() - dmg);
+void mCharacter::getHit(float dmg){
+	mCharacter::setHealth(this->getHealth() - dmg);
 }
