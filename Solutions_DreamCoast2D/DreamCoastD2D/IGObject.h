@@ -69,8 +69,18 @@ __interface IPlayable{
 	// void onIdle();
 
 	virtual bool isDeadComplete();
+
+	//virtual void addToInventory();
+	//virtual void removeFromInventory(int ID);
+	//virtual void useItem(int index);
 };
 
+//
+//__interface IInventory{
+//	virtual void addToInventory();
+//	virtual void removeFromInventory(int index);
+//	virtual void useItem(int index);
+//};
 
 __interface IMonster{
 	// state control

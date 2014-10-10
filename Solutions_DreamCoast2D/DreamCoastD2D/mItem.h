@@ -1,7 +1,5 @@
 #pragma once
-
 #include "IInventoryHandler.h"
-#include "IGObject.h"
 
 // 일단 일반 포션류를 상정하고 짜되
 // 차후 확장해서 장비류까지 확장
@@ -25,8 +23,11 @@ public:
 	// 사용시
 	virtual void itemOnEffect(ICharacter*);
 
+	virtual void setAmount(int in) { m_nAmount = in; }
+	virtual int getAmount(){ return m_nAmount; }
 private:
 	int m_nType;
 	EFFECT m_sEffect;
+	int m_nAmount;
 };
 

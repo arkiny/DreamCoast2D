@@ -5,6 +5,7 @@ mItem::mItem()
 {
 	m_nType = 0;
 	m_sEffect = { 0, };
+	m_nAmount = 0;
 }
 
 

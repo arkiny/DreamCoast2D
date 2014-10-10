@@ -1,15 +1,15 @@
 #pragma once
 #include "IGObject.h"
-// 
+
 enum ITEM_TYPE
-{ 
+{
 	ITEM_EQUIPMENT,		// effect to static stat
 	ITEM_CONSUME,		// effect to current stat
 	ITEM_TYPE_MAX
 };
 
 enum ITEM_CONSUME_ID
-{ 
+{
 	ITEM_POTION_HEALTH_SMALL,	// potion effect
 	ITEM_POTION_HEALTH_BIG,		// potion effect
 	ITEM_CONSUME_MAX
@@ -17,8 +17,8 @@ enum ITEM_CONSUME_ID
 
 enum ITEM_EQUIP_ID
 {
-	ITEM_SWORD_ARMINGSWORD,			
-	ITEM_SWORD_BASTARDSWORD,		
+	ITEM_SWORD_ARMINGSWORD,
+	ITEM_SWORD_BASTARDSWORD,
 	ITEM_EQUIP_MAX
 };
 
@@ -32,15 +32,15 @@ typedef struct Effect
 	float MoveSpeed;
 }EFFECT, *LPEFFECT;
 
-EFFECT Item_Equip_DB[ITEM_EQUIP_MAX] = {
-		{0, 0, 100.0f, 0, 0, 0},
-		{0, 0, 200.0f, 0, 0, 0}
+static EFFECT Item_Equip_DB[ITEM_EQUIP_MAX] = {
+		{ 0, 0, 100.0f, 0, 0, 0 },
+		{ 0, 0, 200.0f, 0, 0, 0 }
 };
 
-EFFECT Item_Consume_DB[ITEM_CONSUME_MAX] = 
+static EFFECT Item_Consume_DB[ITEM_CONSUME_MAX] =
 {
-		{100, 0, 0, 0, 0, 0},	//ITEM_POTION_HEALTH_SMALL
-		{200, 0, 0, 0, 0, 0}	//ITEM_POTION_HEALTH_BIG
+	{ 100, 0, 0, 0, 0, 0 },	//ITEM_POTION_HEALTH_SMALL
+	{ 200, 0, 0, 0, 0, 0 }	//ITEM_POTION_HEALTH_BIG
 };
 
 // 아이템 하나하나가 버튼
@@ -59,6 +59,9 @@ __interface IItem {
 	virtual void itemOnEffect(ICharacter*);
 	virtual void setEffect(EFFECT);
 	virtual void setEffect(float, float, float, float, float, float);
+
+	virtual void setAmount(int);
+	virtual int getAmount();
 };
 
 

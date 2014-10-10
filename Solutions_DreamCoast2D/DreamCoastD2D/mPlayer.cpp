@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include <algorithm>
+
 #include "cD2DRenderer.h"
 #include "mPlayer.h"
 #include "coControl.h"
@@ -9,6 +11,8 @@
 #include "uTile.h"
 #include "cResourceManager.h"
 #include "cSoundManager.h"
+#include "mItem.h"
+
 
 mPlayer::mPlayer()
 {	
@@ -53,6 +57,19 @@ void mPlayer::onInit(){
 	m_naSkill[0] = DIRECTION::LEFT;
 	m_naSkill[1] = DIRECTION::DOWN;
 	m_naSkill[2] = DIRECTION::RIGHT;
+
+	// TODO: 차후 상점 구현시
+	//		추가되는 것 추가
+	m_vInventory.insert
+		(std::pair<int, mItem*>(ITEM_POTION_HEALTH_SMALL, 
+		(new mItem(ITEM_CONSUME, Item_Consume_DB[ITEM_POTION_HEALTH_SMALL]))));
+	
+	// TODO: 벨트에는 인벤토리에 저장된 포인터를 넘겨서 사용하는 방식으로 사용
+	// 벨트는 쓸수 있는 단축키의 제한이 있으므로 일반 어레를 이용해서
+	// 서치타임을 줄이는 법을 이용해도 될것 같다.
+	m_aBelt[0] = m_vInventory.at(ITEM_POTION_HEALTH_SMALL);
+	m_aBelt[1] = nullptr;
+	m_aBelt[2] = nullptr;
 }
 
 void mPlayer::onUpdate(float fdeltatime){	
@@ -115,6 +132,37 @@ void mPlayer::onUpdate(float fdeltatime){
 			//m_spriteAtlas->setCurrentFrame(0);
 		}
 	}
+
+	/// item belt
+	else if (::coControl::GetInstance().getKeyControlInfo()[0x41]){
+		::coControl::GetInstance().onKeyUp(0x41);
+		if (m_aBelt[KEY_A] != nullptr){			
+			if (m_aBelt[KEY_A]->getAmount() == 0){
+				// do nothing.... 아마 인벤토리에서 삭제하는 과정을
+				// 거쳐야 할거 같은데
+				int type = m_aBelt[KEY_A]->getType();
+
+					
+			}
+			else {
+				m_aBelt[KEY_A]->itemOnEffect(this);
+			}
+		}
+	}
+	else if (::coControl::GetInstance().getKeyControlInfo()[0x53]){
+		::coControl::GetInstance().onKeyUp(0x53);
+		if (m_aBelt[KEY_S] != nullptr){
+			m_aBelt[KEY_S]->itemOnEffect(this);
+		}
+	}
+	else if (::coControl::GetInstance().getKeyControlInfo()[0x44]){
+		::coControl::GetInstance().onKeyUp(0x44);
+		if (m_aBelt[KEY_D] != nullptr){
+			m_aBelt[KEY_D]->itemOnEffect(this);
+		}
+	}
+	///
+
 
 	else if (m_State == ONCASTING){
 		// 캐스팅을 실시하고 x키를 떼었을때

@@ -1,10 +1,19 @@
 #pragma once
+
 #include "mCharacter.h"
+//#include "IInventoryHandler.h"
+
 #include <queue>
+#include <map>
 
 #define SKILLCOMMAND_MAX 16
+#define BELT_MAX 3
+
+// 벨트 단축키, A, S, D로 각각 체력, 마나, 특수
+enum BELTSHORTCUT{KEY_A, KEY_S, KEY_D};
 
 class uSprite;
+class mItem;
 
 // Statemachine을 이용하지 않은 채로 실행하는
 // player object
@@ -30,7 +39,16 @@ public:
 	// void onIdle();
 
 	bool isDeadComplete() { return m_deadcomp; }
+
+	// inventory control
+	//void addToInventory();
+	//void removeFromInventory(int ID);
+	//void useItem(int index);
 	
+	std::map<int, mItem*> getInventory(){ return m_vInventory; }
+
+	void setBelt(int index, mItem* item);
+	mItem* getBelt(int index){ return m_aBelt[index]; }
 private:
 	// 키보드 입력에 따른 움직임
 	// Helper methods -> 몬스터에게도 필요할경우 object로 이동
@@ -78,5 +96,17 @@ private:
 	
 	// 스킬에 따라 다른 효과를 얻기위한 함수
 	void skillEffect(int skilltype);	
+	
+	// player가 inventory를 가지고 있지만, 
+	// 컨트롤은UI에서 처리해야한다.
+	// 테스트용으로 Init에서 넣어놓고
+	// 차후에 UI에서 관리하는 펑션을 만들어서 처리
+	std::map<int, mItem*> m_vInventory;
+	// IItem 단축키는 a, s, d
+	mItem* m_aBelt[BELT_MAX];
+
+	// 차후 상점용
+	// default 10000
+	int m_nGold = 10000;
 };
 
