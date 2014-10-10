@@ -1,5 +1,5 @@
 #pragma once
-#include "mIObject.h"
+#include "mCharacter.h"
 #include <queue>
 
 #define SKILLCOMMAND_MAX 16
@@ -9,7 +9,7 @@ class uSprite;
 // Statemachine을 이용하지 않은 채로 실행하는
 // player object
 // 차후 상황에 따라서 statemachine형으로 변화
-class mPlayer : public mIObject
+class mPlayer : public mCharacter, public IPlayable
 {
 public:
 	mPlayer();
@@ -38,11 +38,9 @@ private:
 	void onAttack(float deltaTime);
 	void onHit(float fdeltatime);
 	void onDead(float);
-	
-	//VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
-
-	
-
+	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
+	void onCasting(float);
+		
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	DIRECTION m_MoveDir;
 	OBJECTSTATE m_State;	
@@ -63,19 +61,22 @@ private:
 
 	bool m_deadcomp = false;
 
+
+	/// Skill관련 헬퍼
 	// 스킬 캐스팅 변수
+	int m_naSkill[SKILLCOMMAND_MAX];
 	float m_castaccumtime = 0.0f;
 	
-	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
-	void onCasting(float);
 	std::queue<int> m_qKeyInput;
 	void putKeyIntoQueue();
 
-	int m_naSkill[SKILLCOMMAND_MAX];
-
+	// 스킬 캐스팅시에 Update체크를 위한 변수
 	int m_castingSkill = 99;
+	
+	// 재귀함수로, 스킬이 같은지 비교하기 위한 함수
 	bool skillCompare(std::queue<int> &keyinput, int* skillArray, int index);
-
-	void skillEffect(int skilltype);
+	
+	// 스킬에 따라 다른 효과를 얻기위한 함수
+	void skillEffect(int skilltype);	
 };
 

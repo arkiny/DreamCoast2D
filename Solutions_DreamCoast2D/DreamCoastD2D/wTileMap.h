@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
+#include "IGObject.h"
 
 class VECTOR2D;
 class uSprite;
-class mIObject;
 class uCamera;
 class uTile;
 class cResourceManager;
@@ -18,7 +18,7 @@ public:
 	void onRender();
 
 	// player와 커뮤니케이션 포인터 연결, init단계에서 설정해줘야한다.
-	void setPlayer(mIObject* p);
+	void setPlayer(ICharacter* p);
 
 	// setSize, wWorld init단계에 설정해줘야 한다.
 	void setSize(float horizontal, float vertical);
@@ -32,7 +32,7 @@ public:
 
 	VECTOR2D getMapLimit();
 	// 타일에 오브젝트를 주입
-	void addRenderObjectToTile(float x, float y, mIObject* in);
+	void addRenderObjectToTile(float x, float y, ICharacter* in);
 	uTile* getTile(float x, float y);
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
 	VECTOR2D twoDtoISO(VECTOR2D in);
@@ -43,15 +43,15 @@ public:
 	float getRectTileWidth(){ return _RectTileWidth; }
 	float getRectTileHeight(){	return _RectTileHeight;	}
 
-	std::vector<mIObject*> getMobList() { return m_mobs; }
+	std::vector<ICharacter*> getMobList() { return m_mobs; }
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
 	// 전투, 충돌 처리 실시 혹은 맵(이 아니라 이제 자체적으로 월드인듯)
 	// 에서 단체로 초기화하는 방법도 좋을듯. (이미 오브젝트를 상속받은 클래스가 아니므로,
 	// 월드 작업을 이 위에서 하는 것도 좋은 방법일듯하다.)
 	// 하지만 스테이지가 맵단위로 바뀌면 어떻게 될까?... 아마 생각좀 해봐야할듯 하다.
-	mIObject* m_player;
-	std::vector<mIObject*> m_mobs;
+	ICharacter* m_player;
+	std::vector<ICharacter*> m_mobs;
 	
 	uSprite* m_spriteAtlas;			// 맵 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 맵 스프라이트 파일
@@ -86,7 +86,7 @@ private:
 	void renderMap();		
 	
 	// 나중에 옵션에 따라서 헬스바 키고 끄고 결정 -> UI
-	void drawHealthBar(mIObject* obj);
+	void drawHealthBar(ICharacter* obj);
 
 	// monster의 시야 스캐닝
 	void scanVision(float sight, VECTOR2D monsterpos, VECTOR2D playerPos, bool* ret);

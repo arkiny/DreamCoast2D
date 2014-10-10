@@ -1,6 +1,5 @@
 #pragma once
 
-class mIObject;
 class VECTOR2D;
 
 class uCamera

@@ -20,29 +20,35 @@
     <Filter Include="Util">
       <UniqueIdentifier>{feebceb4-aaae-438d-944e-4f1519cb31e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World">
-      <UniqueIdentifier>{9c387f86-7168-4d32-953f-09b80c0dac1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Screen">
-      <UniqueIdentifier>{a84b52a2-77f0-4494-a2f3-8f7281c58b06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Model\Mob">
-      <UniqueIdentifier>{17f5a786-7431-49eb-814a-30974400c4d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="aMain">
       <UniqueIdentifier>{7a0dfb9b-faa0-4617-8b99-03e601e6416f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Model\Player State">
-      <UniqueIdentifier>{267531aa-aa14-41ef-b6a3-feedb128522a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Screen\UI">
-      <UniqueIdentifier>{19e322b1-99c5-475d-beb5-848ba08118c0}</UniqueIdentifier>
     </Filter>
     <Filter Include="AIStateFSM">
       <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Screen\InScreenUI">
+    <Filter Include="Model\Item">
+      <UniqueIdentifier>{2547eb39-8bb2-48d5-b8ec-0dbfde447365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Screen">
+      <UniqueIdentifier>{a84b52a2-77f0-4494-a2f3-8f7281c58b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Screen\UI">
+      <UniqueIdentifier>{19e322b1-99c5-475d-beb5-848ba08118c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Screen\InScreenUI">
       <UniqueIdentifier>{d14fdf2a-7829-468d-bc31-4553745aec4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Screen\World">
+      <UniqueIdentifier>{9c387f86-7168-4d32-953f-09b80c0dac1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Character">
+      <UniqueIdentifier>{73856d1a-5927-4b84-ad27-a7849c737081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Character\Mob">
+      <UniqueIdentifier>{17f5a786-7431-49eb-814a-30974400c4d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Character\Player State">
+      <UniqueIdentifier>{267531aa-aa14-41ef-b6a3-feedb128522a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,12 +67,6 @@
     <ClInclude Include="cIGameMgr.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="mIObject.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="mPlayer.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="coControl.h">
       <Filter>Control</Filter>
     </ClInclude>
@@ -80,19 +80,19 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="sGameScreen.h">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClInclude>
     <ClInclude Include="sIScreen.h">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClInclude>
     <ClInclude Include="wWorld.h">
-      <Filter>World</Filter>
+      <Filter>Model\Screen\World</Filter>
     </ClInclude>
     <ClInclude Include="wTileMap.h">
-      <Filter>World</Filter>
+      <Filter>Model\Screen\World</Filter>
     </ClInclude>
     <ClInclude Include="mMonster.h">
-      <Filter>Model\Mob</Filter>
+      <Filter>Model\Character\Mob</Filter>
     </ClInclude>
     <ClInclude Include="aiState.h">
       <Filter>AIStateFSM</Filter>
@@ -131,19 +131,19 @@
       <Filter>aMain</Filter>
     </ClInclude>
     <ClInclude Include="piState.h">
-      <Filter>Model\Player State</Filter>
+      <Filter>Model\Character\Player State</Filter>
     </ClInclude>
     <ClInclude Include="pStateIdle.h">
-      <Filter>Model\Player State</Filter>
+      <Filter>Model\Character\Player State</Filter>
     </ClInclude>
     <ClInclude Include="uiInterface.h">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClInclude>
     <ClInclude Include="uiPlayerStatBar.h">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClInclude>
     <ClInclude Include="uiGameMiniMap.h">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClInclude>
     <ClInclude Include="cResourceManager.h">
       <Filter>Core</Filter>
@@ -152,31 +152,46 @@
       <Filter>aMain</Filter>
     </ClInclude>
     <ClInclude Include="uiButton.h">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClInclude>
     <ClInclude Include="sMainMenuScreen.h">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClInclude>
     <ClInclude Include="InGameUI.h">
-      <Filter>Screen\InScreenUI</Filter>
+      <Filter>Model\Screen\InScreenUI</Filter>
     </ClInclude>
     <ClInclude Include="InMainUI.h">
-      <Filter>Screen\InScreenUI</Filter>
+      <Filter>Model\Screen\InScreenUI</Filter>
     </ClInclude>
     <ClInclude Include="iInScreenUI.h">
-      <Filter>Screen\InScreenUI</Filter>
+      <Filter>Model\Screen\InScreenUI</Filter>
     </ClInclude>
     <ClInclude Include="cResourceID.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="uiMenu.h">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClInclude>
     <ClInclude Include="sResourceLoad.h">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClInclude>
     <ClInclude Include="cSoundManager.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="IInventoryHandler.h">
+      <Filter>Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="mItem.h">
+      <Filter>Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="mCharacter.h">
+      <Filter>Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="mPlayer.h">
+      <Filter>Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="IGObject.h">
+      <Filter>Model\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,12 +206,6 @@
     </ClCompile>
     <ClCompile Include="cIGameMgr.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="mIObject.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="mPlayer.cpp">
-      <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="Trash.cpp">
       <Filter>Trash</Filter>
@@ -214,19 +223,19 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="sGameScreen.cpp">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClCompile>
     <ClCompile Include="sIScreen.cpp">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClCompile>
     <ClCompile Include="wWorld.cpp">
-      <Filter>World</Filter>
+      <Filter>Model\Screen\World</Filter>
     </ClCompile>
     <ClCompile Include="wTileMap.cpp">
-      <Filter>World</Filter>
+      <Filter>Model\Screen\World</Filter>
     </ClCompile>
     <ClCompile Include="mMonster.cpp">
-      <Filter>Model\Mob</Filter>
+      <Filter>Model\Character\Mob</Filter>
     </ClCompile>
     <ClCompile Include="aiState.cpp">
       <Filter>AIStateFSM</Filter>
@@ -259,49 +268,58 @@
       <Filter>aMain</Filter>
     </ClCompile>
     <ClCompile Include="piState.cpp">
-      <Filter>Model\Player State</Filter>
+      <Filter>Model\Character\Player State</Filter>
     </ClCompile>
     <ClCompile Include="pStateIdle.cpp">
-      <Filter>Model\Player State</Filter>
+      <Filter>Model\Character\Player State</Filter>
     </ClCompile>
     <ClCompile Include="uiInterface.cpp">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClCompile>
     <ClCompile Include="uiPlayerStatBar.cpp">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClCompile>
     <ClCompile Include="uiGameMiniMap.cpp">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClCompile>
     <ClCompile Include="cResourceManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="uiButton.cpp">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClCompile>
     <ClCompile Include="sMainMenuScreen.cpp">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClCompile>
     <ClCompile Include="InGameUI.cpp">
-      <Filter>Screen\InScreenUI</Filter>
+      <Filter>Model\Screen\InScreenUI</Filter>
     </ClCompile>
     <ClCompile Include="InMainUI.cpp">
-      <Filter>Screen\InScreenUI</Filter>
+      <Filter>Model\Screen\InScreenUI</Filter>
     </ClCompile>
     <ClCompile Include="iInScreenUI.cpp">
-      <Filter>Screen\InScreenUI</Filter>
+      <Filter>Model\Screen\InScreenUI</Filter>
     </ClCompile>
     <ClCompile Include="uiMenu.cpp">
-      <Filter>Screen\UI</Filter>
+      <Filter>Model\Screen\UI</Filter>
     </ClCompile>
     <ClCompile Include="sResourceLoad.cpp">
-      <Filter>Screen</Filter>
+      <Filter>Model\Screen</Filter>
     </ClCompile>
     <ClCompile Include="cSoundManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="mItem.cpp">
+      <Filter>Model\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="mCharacter.cpp">
+      <Filter>Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="mPlayer.cpp">
+      <Filter>Model\Character</Filter>
+    </ClCompile>
     <ClCompile Include="mPlayerState.cpp">
-      <Filter>Model</Filter>
+      <Filter>Model\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

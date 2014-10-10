@@ -4,7 +4,7 @@
 #include "wTileMap.h"
 #include "VECTOR2D.h"
 #include "uTile.h"
-#include "mIObject.h"
+#include "IGObject.h"
 #include "cResourceManager.h"
 
 uiGameMiniMap::uiGameMiniMap()
@@ -98,7 +98,7 @@ void uiGameMiniMap::Render(){
 
 	// 몹들 위치 출력
 	VECTOR2D pt(0.0f, 0.0f);
-	for (mIObject* x : m_pTileMap->getMobList()){
+	for (ICharacter* x : m_pTileMap->getMobList()){
 		pt = m_pTileMap->getTileCoordinates(*(x->getDrawPos()));
 
 		MiniRectangle.left = MiniMapinline.left + (width* pt.y) + 1.0f;

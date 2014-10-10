@@ -170,7 +170,7 @@ void mPlayer::onUpdate(float fdeltatime){
 
 // 피격 시 처리 (체력감소)
 void mPlayer::getHit(float dmg){
-	mIObject::getHit(dmg);
+	mCharacter::getHit(dmg);
 	if (this->getHealth() >= 0.0f){
 		m_State = ONHIT;
 	}

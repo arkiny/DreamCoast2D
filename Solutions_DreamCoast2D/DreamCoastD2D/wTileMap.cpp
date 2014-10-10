@@ -4,7 +4,7 @@
 #include "VECTOR2D.h"
 #include "uSprite.h"
 #include "wTileMap.h"
-#include "mIObject.h"
+#include "IGObject.h"
 #include "uCamera.h"
 #include "mMonster.h"
 #include "uTile.h"
@@ -49,7 +49,7 @@ void wTileMap::onInit(){
 	// Debug---------------------------------------------------
 	VECTOR2D in(6.0f*_RectTileWidth, 8.0f*_RectTileHeight);
 	VECTOR2D pt = twoDtoISO(in);
-	mIObject* ptr = new mMonster(pt.x, pt.y);
+	ICharacter* ptr = new mMonster(pt.x, pt.y);
 	mMonster* ptr2 = (mMonster*)ptr;
 	ptr2->setDir(LEFTDOWN);
 	ptr2->setTileMap(this);
@@ -141,7 +141,7 @@ void wTileMap::onRender(){
 	}
 }
 
-void wTileMap::drawHealthBar(mIObject* obj){
+void wTileMap::drawHealthBar(ICharacter* obj){
 	VECTOR2D cpos = m_Cam->translasteToScreen(obj->getDrawPos());
 
 	::D2D1_RECT_F healthBar;
@@ -168,7 +168,7 @@ void wTileMap::drawHealthBar(mIObject* obj){
 	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(healthBar, ::cD2DRenderer::GetInstance().GetBlackBrush());
 }
 
-void wTileMap::setPlayer(mIObject* p){
+void wTileMap::setPlayer(ICharacter* p){
 	m_player = p;
 }
 
@@ -309,7 +309,7 @@ int wTileMap::getMapinfo(int x, int y) {
 	return m_vMapObjectHandler[(static_cast<int>(_vertical)*y) + x]->getType();
 }
 
-void wTileMap::addRenderObjectToTile(float x, float y, mIObject* in){
+void wTileMap::addRenderObjectToTile(float x, float y, ICharacter* in){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
 	m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addObject(in);

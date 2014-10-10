@@ -4,7 +4,6 @@
 #include "VECTOR2D.h"
 #include "uSprite.h"
 #include "cD2DRenderer.h"
-#include "miObject.h"
 
 uTile::uTile()
 {
@@ -61,7 +60,7 @@ void uTile::renderTile(float x, float y,
 		hRender(m_Cam->translasteToScreen(&tilePos), m_spriteAtlas, m_ipD2DBitmap);
 	}
 
-	mIObject* ptr = nullptr;
+	ICharacter* ptr = nullptr;
 	while (!m_vObjects.empty()){
 		ptr = m_vObjects.back();
 		m_vObjects.pop_back();
@@ -98,12 +97,12 @@ void uTile::hRender(VECTOR2D tilePos,
 	}
 }
 
-void uTile::addObject(mIObject* in){
+void uTile::addObject(ICharacter* in){
 	m_vObjects.push_back(in);
 }
 
 void uTile::onHit(float dmg){
-	for (mIObject* obj : m_vObjects){
+	for (ICharacter* obj : m_vObjects){
 		obj->getHit(dmg);
 	}
 }

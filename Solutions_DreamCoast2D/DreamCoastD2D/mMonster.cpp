@@ -191,7 +191,7 @@ void mMonster::onRender(){
 }
 
 void mMonster::getHit(float dmg){	
-	mIObject::getHit(dmg);
+	mCharacter::getHit(dmg);
 	if (this->getHealth() >= 0.0f){
 		m_State = ONHIT;
 	}
@@ -211,23 +211,23 @@ void mMonster::setDest(float x, float y){
 void mMonster::moveToDest(float deltaTime){
 	VECTOR2D vMover;
 	if (m_dest->x < _realVector->x && m_dest->y < _realVector->y){
-		vMover= mIObject::vectorMove(deltaTime, LEFTUP);
+		vMover= mCharacter::vectorMove(deltaTime, LEFTUP);
 		m_SeeDir = LEFTUP;
 	}
 	else if (m_dest->x > _realVector->x && m_dest->y > _realVector->y){
-		vMover= mIObject::vectorMove(deltaTime, RIGHTDOWN);
+		vMover= mCharacter::vectorMove(deltaTime, RIGHTDOWN);
 		m_SeeDir = RIGHTDOWN;
 	}
 	else if (m_dest->x < _realVector->x && m_dest->y > _realVector->y){
-		vMover = mIObject::vectorMove(deltaTime, LEFTDOWN);
+		vMover = mCharacter::vectorMove(deltaTime, LEFTDOWN);
 		m_SeeDir = LEFTDOWN;
 	}
 	else if (m_dest->x > _realVector->x && m_dest->y < _realVector->y){
-		vMover= mIObject::vectorMove(deltaTime, RIGHTUP);
+		vMover= mCharacter::vectorMove(deltaTime, RIGHTUP);
 		m_SeeDir = RIGHTUP;
 	}
 	else if (m_dest->x < _realVector->x){
-		vMover = mIObject::vectorMove(deltaTime, LEFT);
+		vMover = mCharacter::vectorMove(deltaTime, LEFT);
 		/*if (m_SeeDir == RIGHTUP){
 			m_SeeDir = LEFTUP;
 		}
@@ -237,7 +237,7 @@ void mMonster::moveToDest(float deltaTime){
 		m_SeeDir = LEFTDOWN;
 	}
 	else if (m_dest->x > _realVector->x){
-		vMover = mIObject::vectorMove(deltaTime, RIGHT);
+		vMover = mCharacter::vectorMove(deltaTime, RIGHT);
 		/*if (m_SeeDir == LEFTUP){
 			m_SeeDir = RIGHTUP;
 		}
@@ -247,7 +247,7 @@ void mMonster::moveToDest(float deltaTime){
 		m_SeeDir = RIGHTDOWN;
 	}
 	else if (m_dest->y < _realVector->y){
-		vMover= mIObject::vectorMove(deltaTime, UP);
+		vMover= mCharacter::vectorMove(deltaTime, UP);
 		if (m_SeeDir == LEFTDOWN){
 			m_SeeDir = LEFTUP;
 		}
@@ -256,7 +256,7 @@ void mMonster::moveToDest(float deltaTime){
 		}
 	}
 	else if (m_dest->y > _realVector->y){
-		vMover = mIObject::vectorMove(deltaTime, DOWN);
+		vMover = mCharacter::vectorMove(deltaTime, DOWN);
 		if (m_SeeDir == LEFTUP){
 			m_SeeDir = LEFTDOWN;
 		}

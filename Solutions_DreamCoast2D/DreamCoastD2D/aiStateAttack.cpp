@@ -22,7 +22,7 @@ void aiStateAttack::execute(mMonster* pmon){
 		pmon->changeState(new aiStateOnHit);
 	}
 
-	// 공격은 3프레임 이후에, 공격 안했을 경우
+	// 데미지는 3프레임 이후에, 공격 안했을 경우
 	if (attacktimer >= FRAMERATE * 3 && !attacked){
 		pmon->getTileMap()->playerGetHit(pmon->getAttackPower());
 		attacked = true;

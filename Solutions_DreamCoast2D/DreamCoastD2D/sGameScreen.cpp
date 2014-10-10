@@ -36,7 +36,7 @@ void sGameScreen::OnInit(){
 	::cResourceManager::GetInstance().load();
 
 	m_pWorld->OnInit();
-	m_pGameUI = new InGameUI((mIObject*)m_pWorld->getPlayer(), m_pWorld->getMap());
+	m_pGameUI = new InGameUI((ICharacter*)m_pWorld->getPlayer(), m_pWorld->getMap());
 	m_pGameUI->OnInit(this);
 	::cSoundManager::GetInstance().executeBGMinGame();
 }

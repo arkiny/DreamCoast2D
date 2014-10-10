@@ -1,5 +1,6 @@
 #pragma once
 #include "sIScreen.h"
+#include "IGObject.h"
 
 class wWorld;
 class iInScreenUI;

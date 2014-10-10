@@ -100,10 +100,13 @@
     <ClInclude Include="cResourceManager.h" />
     <ClInclude Include="cSoundManager.h" />
     <ClInclude Include="DreamCoastD2D.h" />
+    <ClInclude Include="IGObject.h" />
     <ClInclude Include="iInScreenUI.h" />
+    <ClInclude Include="IInventoryHandler.h" />
     <ClInclude Include="InGameUI.h" />
     <ClInclude Include="InMainUI.h" />
-    <ClInclude Include="mIObject.h" />
+    <ClInclude Include="mCharacter.h" />
+    <ClInclude Include="mItem.h" />
     <ClInclude Include="mMonster.h" />
     <ClInclude Include="mPlayer.h" />
     <ClInclude Include="piState.h" />
@@ -150,7 +153,8 @@
     <ClCompile Include="iInScreenUI.cpp" />
     <ClCompile Include="InGameUI.cpp" />
     <ClCompile Include="InMainUI.cpp" />
-    <ClCompile Include="mIObject.cpp" />
+    <ClCompile Include="mCharacter.cpp" />
+    <ClCompile Include="mItem.cpp" />
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
     <ClCompile Include="mPlayerState.cpp" />

@@ -1,14 +1,13 @@
 #pragma once
 #include "uiInterface.h"
-
-class mIObject;
+#include "IGObject.h"
 
 class uiPlayerStatBar :
 	public uiInterface
 {
 public:
 	uiPlayerStatBar();
-	uiPlayerStatBar(mIObject*);
+	uiPlayerStatBar(ICharacter*);
 	~uiPlayerStatBar();
 public:
 	void OnInit();
@@ -16,9 +15,9 @@ public:
 	void Render();
 
 	//setter
-	void setPlayer(mIObject* in){ m_pplayer = in; }
+	void setPlayer(ICharacter* in){ m_pplayer = in; }
 private:
 	void drawStatbar();
-	mIObject* m_pplayer;
+	ICharacter* m_pplayer;
 };
 

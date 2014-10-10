@@ -322,7 +322,7 @@ tileX = Math.round(tileX / tileHeight);*/
 //}
 
 
-///mplayer->miobject
+///mplayer->mCharacter
 //VECTOR2D mPlayer::vectorMove(float fdeltatime, DIRECTION dir){
 //	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
 //	VECTOR2D vDir = VECTOR2D(0.0f, 0.0f);

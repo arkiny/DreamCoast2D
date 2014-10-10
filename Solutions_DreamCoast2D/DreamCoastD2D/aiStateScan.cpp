@@ -4,7 +4,6 @@
 #include "aiStateMoveto.h"
 #include "aiStateIdle.h"
 #include "mMonster.h"
-#include "mIObject.h"
 #include "VECTOR2D.h"
 #include "wTileMap.h"
 #include "aiStateAttack.h"

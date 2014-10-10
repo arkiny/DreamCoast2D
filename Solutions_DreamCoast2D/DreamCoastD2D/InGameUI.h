@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include "iInScreenUI.h"
+#include "IGObject.h"
 
 class uiInterface;
-class mIObject;
 class wTileMap;
 
 // UI Screen has UI interface classes.
@@ -14,7 +14,7 @@ class InGameUI : public iInScreenUI
 {
 public:
 	InGameUI();
-	InGameUI(mIObject*, wTileMap*);
+	InGameUI(ICharacter*, wTileMap*);
 	~InGameUI();
 	void Render();
 	void Update(float);

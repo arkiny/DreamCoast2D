@@ -1,11 +1,11 @@
 #pragma once
-#include "mIObject.h"
+#include "mCharacter.h"
 
 class aiState;
 class VECTOR2D;
 
 class mMonster :
-	public mIObject
+	public mCharacter, public IMonster
 {
 public:
 	mMonster();

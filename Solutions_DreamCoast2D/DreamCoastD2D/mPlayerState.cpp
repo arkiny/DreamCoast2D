@@ -209,7 +209,8 @@ void mPlayer::onMove(float fdeltatime){
 	}
 	// frame update
 	m_spriteAtlas->nextFrame(fdeltatime);
-	vMover = mIObject::vectorMove(fdeltatime, m_MoveDir);
+	vMover = 
+		mCharacter::vectorMove(fdeltatime, m_MoveDir);
 
 	// Todo
 	// 맵 포인터에서 맵 정보를 받아와서 이동 불가 컨트롤, 차후 동적할당식으로 전환

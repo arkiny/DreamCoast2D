@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "uiPlayerStatBar.h"
 #include "cD2DRenderer.h"
-#include "mIObject.h"
 #include "VECTOR2D.h"
 #include "cResourceManager.h"
 
@@ -11,7 +10,7 @@ uiPlayerStatBar::uiPlayerStatBar()
 	this->setPos(new VECTOR2D(20.0f, 40.0f));
 }
 
-uiPlayerStatBar::uiPlayerStatBar(mIObject* player){
+uiPlayerStatBar::uiPlayerStatBar(ICharacter* player){
 	/// todo: 일단 고정형
 	this->setPos(new VECTOR2D(20.0f, 40.0f));
 	m_pplayer = player;
