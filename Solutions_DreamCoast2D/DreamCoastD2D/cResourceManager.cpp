@@ -58,11 +58,14 @@ void cResourceManager::load(){
 	m_Bitmap_UI[UIID::MAP_L_BORDER] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_bigminimap.png", NULL);
 	m_Bitmap_UI[UIID::MAP_TAG] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_minimaptag.png", NULL);
 
+	m_Bitmap_UI[UIID::UI_BELT] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_belt.png", NULL);
+
 	m_UI_SIZE[UIID::STATBAR] = { 352.0f, 44.0f };
 	m_UI_SIZE[UIID::BLUEBAR] = { 279.0f, 12.0f };
 	m_UI_SIZE[UIID::REDBAR] = { 343.0f, 19.0f };
 	m_UI_SIZE[UIID::MAP_L_BORDER] = { 210.0f, 210.0f };
 	m_UI_SIZE[UIID::MAP_TAG] = { 210.0f, 20.0f };
+	m_UI_SIZE[UIID::UI_BELT] = {197.0f, 64.0f};
 
 	// Normal Menu
 	m_Bitmap_UI[UIID::MN_NORMAL] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/menu/menu_normalbox.png", NULL);

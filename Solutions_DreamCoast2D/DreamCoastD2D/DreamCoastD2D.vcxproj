@@ -102,10 +102,13 @@
     <ClInclude Include="DreamCoastD2D.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="iInScreenUI.h" />
+    <ClInclude Include="IInventory.h" />
     <ClInclude Include="IInventoryHandler.h" />
     <ClInclude Include="InGameUI.h" />
     <ClInclude Include="InMainUI.h" />
     <ClInclude Include="mCharacter.h" />
+    <ClInclude Include="mEquipped.h" />
+    <ClInclude Include="mInventory.h" />
     <ClInclude Include="mItem.h" />
     <ClInclude Include="mMonster.h" />
     <ClInclude Include="mPlayer.h" />
@@ -115,6 +118,7 @@
     <ClInclude Include="sMainMenuScreen.h" />
     <ClInclude Include="sResourceLoad.h" />
     <ClInclude Include="uCamera.h" />
+    <ClInclude Include="uiBelt.h" />
     <ClInclude Include="uiButton.h" />
     <ClInclude Include="uiGameMiniMap.h" />
     <ClInclude Include="uiInterface.h" />
@@ -154,6 +158,8 @@
     <ClCompile Include="InGameUI.cpp" />
     <ClCompile Include="InMainUI.cpp" />
     <ClCompile Include="mCharacter.cpp" />
+    <ClCompile Include="mEquipped.cpp" />
+    <ClCompile Include="mInventory.cpp" />
     <ClCompile Include="mItem.cpp" />
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
@@ -163,6 +169,7 @@
     <ClCompile Include="sMainMenuScreen.cpp" />
     <ClCompile Include="sResourceLoad.cpp" />
     <ClCompile Include="uCamera.cpp" />
+    <ClCompile Include="uiBelt.cpp" />
     <ClCompile Include="uiButton.cpp" />
     <ClCompile Include="uiGameMiniMap.cpp" />
     <ClCompile Include="uiInterface.cpp" />

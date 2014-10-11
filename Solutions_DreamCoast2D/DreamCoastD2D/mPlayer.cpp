@@ -12,12 +12,15 @@
 #include "cResourceManager.h"
 #include "cSoundManager.h"
 #include "mItem.h"
+#include "mInventory.h"
 
 
 mPlayer::mPlayer()
 {	
 	m_ipD2DBitmap = nullptr;
 	m_Cam = nullptr;
+
+	m_Inventory = new mInventory;
 	
 	//todo: 임시로 중앙에 대기, 차후 맵정보에 따라 시작점 정보 수정	
 	_realVector = new VECTOR2D(514.0f, 384.0f);
@@ -60,17 +63,53 @@ void mPlayer::onInit(){
 
 	// TODO: 차후 상점 구현시
 	//		추가되는 것 추가
-	m_vInventory.insert
-		(std::pair<int, mItem*>(ITEM_POTION_HEALTH_SMALL, 
-		(new mItem(ITEM_CONSUME, Item_Consume_DB[ITEM_POTION_HEALTH_SMALL]))));
-	
+	//m_vInventory.insert
+	//	(std::pair<int, mItem*>
+	//	(ITEM_POTION_HEALTH_SMALL, 
+	//	(new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_SMALL, Item_Consume_DB[ITEM_POTION_HEALTH_SMALL])
+	//	)));
+
+	mItem* adder = new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_SMALL, Item_Consume_DB[ITEM_POTION_HEALTH_SMALL]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+
 	// TODO: 벨트에는 인벤토리에 저장된 포인터를 넘겨서 사용하는 방식으로 사용
 	// 벨트는 쓸수 있는 단축키의 제한이 있으므로 일반 어레를 이용해서
 	// 서치타임을 줄이는 법을 이용해도 될것 같다.
-	m_aBelt[0] = m_vInventory.at(ITEM_POTION_HEALTH_SMALL);
+	m_aBelt[0] = m_Inventory->getInventory().at(ITEM_POTION_HEALTH_SMALL);
+	//m_aBelt[0]->setAmount(3);
+
 	m_aBelt[1] = nullptr;
 	m_aBelt[2] = nullptr;
 }
+
+//void mPlayer::addToInventory(mItem* item){
+//	if (m_vInventory.count(item->getID()) >= 1){
+//		mItem* ptr = m_vInventory.at(item->getID());
+//		ptr->setAmount(item->getAmount() + ptr->getAmount());
+//		ptr = nullptr;
+//	}
+//	else {
+//		m_vInventory.insert(std::pair<int, mItem*>(item->getID(), item));
+//	}
+//}
+//
+//void mPlayer::removeFromInventory(int ID){
+//	if (m_vInventory.count(ID) >= 1){ 
+//		// 해당 아이디의 아이템이 존재하고 1번이상 사용 가능하다면
+//		mItem* ptr = m_vInventory.at(ID);
+//		if (ptr->getAmount() > 2){
+//			ptr->setAmount(ptr->getAmount() - 1);
+//		}
+//		else { 
+//			// 1번 사용할양만 남았거나, 안남았다면
+//			// 하지만 equipment는 사용되었다는 체킹만하고 사라지지 않게 처리...
+//			mItem* ptr = m_vInventory.at(ID);
+//			m_vInventory.erase(m_aBelt[KEY_A]->getID());
+//			delete ptr;
+//		}
+//	}
+//}
 
 void mPlayer::onUpdate(float fdeltatime){	
 	// 대단히 primitive한 컨디션 스테잇을 이용한 statecontroller, 
@@ -133,35 +172,54 @@ void mPlayer::onUpdate(float fdeltatime){
 		}
 	}
 
-	/// item belt
-	else if (::coControl::GetInstance().getKeyControlInfo()[0x41]){
-		::coControl::GetInstance().onKeyUp(0x41);
-		if (m_aBelt[KEY_A] != nullptr){			
-			if (m_aBelt[KEY_A]->getAmount() == 0){
-				// do nothing.... 아마 인벤토리에서 삭제하는 과정을
-				// 거쳐야 할거 같은데
-				int type = m_aBelt[KEY_A]->getType();
+	///ui belt로 이동
+	///// item belt
+	//else if (::coControl::GetInstance().getKeyControlInfo()[0x41]){
+	//	::coControl::GetInstance().onKeyUp(0x41);
+	//	if (m_aBelt[KEY_A] != nullptr){			
+	//		m_aBelt[KEY_A]->itemOnEffect(this);
+	//		int in = m_aBelt[KEY_A]->getAmount() - 1;
+	//		m_aBelt[KEY_A]->setAmount(in);
 
-					
-			}
-			else {
-				m_aBelt[KEY_A]->itemOnEffect(this);
-			}
-		}
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[0x53]){
-		::coControl::GetInstance().onKeyUp(0x53);
-		if (m_aBelt[KEY_S] != nullptr){
-			m_aBelt[KEY_S]->itemOnEffect(this);
-		}
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[0x44]){
-		::coControl::GetInstance().onKeyUp(0x44);
-		if (m_aBelt[KEY_D] != nullptr){
-			m_aBelt[KEY_D]->itemOnEffect(this);
-		}
-	}
-	///
+	//		if (m_aBelt[KEY_A]->getAmount() == 0){
+	//			mItem* ptr = m_Inventory->getInventory().at(m_aBelt[KEY_A]->getID());
+	//			m_Inventory->getInventory().erase(m_aBelt[KEY_A]->getID());
+	//			delete ptr;
+
+	//			m_aBelt[KEY_A] = nullptr;
+	//		}			
+	//	}
+	//}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[0x53]){
+	//	::coControl::GetInstance().onKeyUp(0x53);
+	//	if (m_aBelt[KEY_S] != nullptr){
+	//		m_aBelt[KEY_S]->itemOnEffect(this);
+	//		int in = m_aBelt[KEY_S]->getAmount() - 1;
+	//		m_aBelt[KEY_S]->setAmount(in);
+	//		if (m_aBelt[KEY_S]->getAmount() == 0){
+	//			mItem* ptr = m_Inventory->getInventory().at(m_aBelt[KEY_S]->getID());
+	//			m_Inventory->getInventory().erase(m_aBelt[KEY_S]->getID());
+	//			delete ptr;
+
+	//			m_aBelt[KEY_S] = nullptr;
+	//		}
+	//	}
+	//}	
+	//else if (::coControl::GetInstance().getKeyControlInfo()[0x44]){
+	//	::coControl::GetInstance().onKeyUp(0x44);
+	//	if (m_aBelt[KEY_D] != nullptr){
+	//		m_aBelt[KEY_D]->itemOnEffect(this);
+	//		int in = m_aBelt[KEY_D]->getAmount() - 1;
+	//		m_aBelt[KEY_D]->setAmount(in);
+	//		if (m_aBelt[KEY_D]->getAmount() == 0){
+	//			mItem* ptr = m_Inventory->getInventory().at(m_aBelt[KEY_D]->getID());
+	//			m_Inventory->getInventory().erase(m_aBelt[KEY_D]->getID());
+	//			delete ptr;
+	//			m_aBelt[KEY_D] = nullptr;			
+	//		}
+	//	}
+	//}
+	/////
 
 
 	else if (m_State == ONCASTING){

@@ -50,6 +50,9 @@
     <Filter Include="Model\Character\Player State">
       <UniqueIdentifier>{267531aa-aa14-41ef-b6a3-feedb128522a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Inventory">
+      <UniqueIdentifier>{a7170233-6e79-41be-a6e2-9a0339684b4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -193,6 +196,18 @@
     <ClInclude Include="IGObject.h">
       <Filter>Model\Character</Filter>
     </ClInclude>
+    <ClInclude Include="mEquipped.h">
+      <Filter>Model\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="mInventory.h">
+      <Filter>Model\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="IInventory.h">
+      <Filter>Model\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="uiBelt.h">
+      <Filter>Model\Screen\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -320,6 +335,15 @@
     </ClCompile>
     <ClCompile Include="mPlayerState.cpp">
       <Filter>Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="mEquipped.cpp">
+      <Filter>Model\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="mInventory.cpp">
+      <Filter>Model\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="uiBelt.cpp">
+      <Filter>Model\Screen\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

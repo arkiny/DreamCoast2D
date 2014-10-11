@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mCharacter.h"
+#include "IInventory.h"
 //#include "IInventoryHandler.h"
 
 #include <queue>
@@ -45,10 +46,15 @@ public:
 	//void removeFromInventory(int ID);
 	//void useItem(int index);
 	
-	std::map<int, mItem*> getInventory(){ return m_vInventory; }
+	//std::map<int, mItem*> getInventory(){ return m_vInventory; }
+	//virtual void addToInventory(mItem*);
+	//virtual void removeFromInventory(int ID);
 
-	void setBelt(int index, mItem* item);
+	void setBelt(int index, mItem* item){ m_aBelt[index] = item; }
 	mItem* getBelt(int index){ return m_aBelt[index]; }
+	IInventory* getInventory() { return m_Inventory; }
+
+
 private:
 	// 키보드 입력에 따른 움직임
 	// Helper methods -> 몬스터에게도 필요할경우 object로 이동
@@ -101,9 +107,10 @@ private:
 	// 컨트롤은UI에서 처리해야한다.
 	// 테스트용으로 Init에서 넣어놓고
 	// 차후에 UI에서 관리하는 펑션을 만들어서 처리
-	std::map<int, mItem*> m_vInventory;
+	//std::map<int, mItem*> m_vInventory;
 	// IItem 단축키는 a, s, d
 	mItem* m_aBelt[BELT_MAX];
+	IInventory* m_Inventory;
 
 	// 차후 상점용
 	// default 10000

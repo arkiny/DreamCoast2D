@@ -48,7 +48,7 @@ static EFFECT Item_Consume_DB[ITEM_CONSUME_MAX] =
 // 렌더할 필요가 생길때는 UI로써 출력되었을때
 __interface IItem {
 	// 타입 수정시
-	virtual void setType(int type);
+	virtual void setType(int type, int id);
 	virtual int getType();
 
 	// 버튼처럼 선택시와 액티베잇시로 나눔
@@ -62,6 +62,8 @@ __interface IItem {
 
 	virtual void setAmount(int);
 	virtual int getAmount();
+	virtual int getID();
+	virtual void setID(int in);
 };
 
 

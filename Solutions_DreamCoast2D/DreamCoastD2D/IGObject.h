@@ -1,6 +1,7 @@
 #pragma once
 #include <d2d1.h>
-
+#include <map>
+#include "IInventory.h"
 
 // up to first entering
 enum DIRECTION{ LEFT, RIGHT, UP, DOWN, RIGHTDOWN, LEFTUP, LEFTDOWN, RIGHTUP, NOMOVE };
@@ -12,6 +13,7 @@ class uSprite;
 class wTileMap;
 class uCamera;
 class aiState;
+class mItem; 
 
 __interface IGOBJECT {
 	virtual void onInit() = 0;
@@ -69,11 +71,15 @@ __interface IPlayable{
 	// void onIdle();
 
 	virtual bool isDeadComplete();
-
-	//virtual void addToInventory();
+	virtual IInventory* getInventory();
+	virtual void setBelt(int index, mItem* item);
+	virtual mItem* getBelt(int index);
+	//virtual void addToInventory(mItem*);
 	//virtual void removeFromInventory(int ID);
 	//virtual void useItem(int index);
 };
+
+
 
 //
 //__interface IInventory{
@@ -125,3 +131,4 @@ __interface IMonster{
 	virtual float getSight();
 	virtual float getAttackPower();
 };
+

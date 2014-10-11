@@ -4,6 +4,7 @@
 #include "uiPlayerStatBar.h"
 #include "uiGameMiniMap.h"
 #include "uiMenu.h"
+#include "uiBelt.h"
 
 InGameUI::InGameUI()
 {
@@ -12,6 +13,7 @@ InGameUI::InGameUI()
 InGameUI::InGameUI(ICharacter* player, wTileMap* tileMap){
 	m_pInterface.push_back(new uiPlayerStatBar(player));
 	m_pInterface.push_back(new uiGameMiniMap(tileMap));
+	m_pInterface.push_back(new uiBelt(player));
 }
 
 InGameUI::~InGameUI()
@@ -22,7 +24,7 @@ void InGameUI::Render(){
 	for (uiInterface* x : m_pInterface){
 		x->Render();
 	}
-}
+} 
 
 void InGameUI::Update(float delta){
 	// 비트맵 이용시 컨트롤

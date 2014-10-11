@@ -7,10 +7,10 @@ class mItem : public IItem
 {
 public:
 	mItem();
-	mItem(int, Effect);
+	mItem(int, int, Effect);
 	~mItem();
 	// 타입 수정시
-	virtual void setType(int type);
+	virtual void setType(int type, int id);
 	virtual int getType();
 	
 	virtual void setEffect(EFFECT);
@@ -25,7 +25,11 @@ public:
 
 	virtual void setAmount(int in) { m_nAmount = in; }
 	virtual int getAmount(){ return m_nAmount; }
+
+	virtual int getID(){ return m_nID; }
+	virtual void setID(int in) { m_nID = in; }
 private:
+	int m_nID;
 	int m_nType;
 	EFFECT m_sEffect;
 	int m_nAmount;
