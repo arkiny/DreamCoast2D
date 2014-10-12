@@ -18,6 +18,21 @@ mItem::mItem(int type, int id, Effect effectinput){
 	m_nID = id;
 	m_sEffect = effectinput;
 }
+
+void mItem::Init(){
+
+}
+
+void mItem::Update(float delta){	
+	// 각 mItem이 doubleclick됬을 경우 아이템 사용, 클릭앤 드래그 했을 경우 이동하게
+	// 드롭시에 벨트 위에 드롭했을 경우 해당 칸에 포인터 입력
+	// 만약 벨트위에 드롭이 아닐 경우 노띵해픈
+}
+
+void mItem::Render(){
+	// 차후 각 mItem에 render를 넣어서, position에 따라서 렌더링하게 처리
+}
+
 // 타입 수정시
 void mItem::setType(int type, int id){
 	m_nType = type;

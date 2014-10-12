@@ -5,6 +5,9 @@
 #include "uiGameMiniMap.h"
 #include "uiMenu.h"
 #include "uiBelt.h"
+#include "uiInventory.h"
+#include "uiStat.h"
+#include "uiInGameMenu.h"
 
 InGameUI::InGameUI()
 {
@@ -14,6 +17,9 @@ InGameUI::InGameUI(ICharacter* player, wTileMap* tileMap){
 	m_pInterface.push_back(new uiPlayerStatBar(player));
 	m_pInterface.push_back(new uiGameMiniMap(tileMap));
 	m_pInterface.push_back(new uiBelt(player));
+	m_pInterface.push_back(new uiInventory(player));
+	m_pInterface.push_back(new uiStat(player));
+	m_pInterface.push_back(new uiInGameMenu());
 }
 
 InGameUI::~InGameUI()

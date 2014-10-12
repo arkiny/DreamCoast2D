@@ -9,6 +9,7 @@ public:
 	virtual std::map<int, mItem*> getInventory();
 	virtual void addToInventory(mItem*);
 	virtual void removeFromInventory(int ID);
+	virtual void removeFromInventory(int ID, int amount);
 
 
 	// weapon (공속, 공격력)

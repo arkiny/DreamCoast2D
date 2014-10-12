@@ -85,6 +85,37 @@ void cD2DRenderer::InitializeD2D(void)
 
 }
 
+void cD2DRenderer::setTextFormat(DWRITE_TEXT_ALIGNMENT textFormat, DWRITE_PARAGRAPH_ALIGNMENT paraformat){
+	HRESULT hr = S_OK;
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetTextAlignment(textFormat);
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetParagraphAlignment(paraformat);
+	}
+	if (SUCCEEDED(hr))
+	{
+		// 스페이싱 메소드를 유니폼으로 때리면, 글은 첫라인을 베이스라인 삼아서 그려진다
+		hr = m_pTextFormat->SetLineSpacing(DWRITE_LINE_SPACING_METHOD::DWRITE_LINE_SPACING_METHOD_UNIFORM, 20.0f, 1.4f);
+	}
+}
+
+void cD2DRenderer::setToTextOriginalFormat(){
+	HRESULT hr = S_OK;
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT_CENTER);
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+	}
+}
+
 void cD2DRenderer::InitializeRT(HWND hWnd)
 {
 

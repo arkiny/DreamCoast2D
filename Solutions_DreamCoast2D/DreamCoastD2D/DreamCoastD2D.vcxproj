@@ -104,7 +104,7 @@
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="iInScreenUI.h" />
     <ClInclude Include="IInventory.h" />
-    <ClInclude Include="IInventoryHandler.h" />
+    <ClInclude Include="IItem.h" />
     <ClInclude Include="InGameUI.h" />
     <ClInclude Include="InMainUI.h" />
     <ClInclude Include="mCharacter.h" />
@@ -122,9 +122,12 @@
     <ClInclude Include="uiBelt.h" />
     <ClInclude Include="uiButton.h" />
     <ClInclude Include="uiGameMiniMap.h" />
+    <ClInclude Include="uiInGameMenu.h" />
     <ClInclude Include="uiInterface.h" />
+    <ClInclude Include="uiInventory.h" />
     <ClInclude Include="uiMenu.h" />
     <ClInclude Include="uiPlayerStatBar.h" />
+    <ClInclude Include="uiStat.h" />
     <ClInclude Include="wTileMap.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sGameScreen.h" />
@@ -174,9 +177,12 @@
     <ClCompile Include="uiBelt.cpp" />
     <ClCompile Include="uiButton.cpp" />
     <ClCompile Include="uiGameMiniMap.cpp" />
+    <ClCompile Include="uiInGameMenu.cpp" />
     <ClCompile Include="uiInterface.cpp" />
+    <ClCompile Include="uiInventory.cpp" />
     <ClCompile Include="uiMenu.cpp" />
     <ClCompile Include="uiPlayerStatBar.cpp" />
+    <ClCompile Include="uiStat.cpp" />
     <ClCompile Include="wTileMap.cpp" />
     <ClCompile Include="sGameScreen.cpp" />
     <ClCompile Include="sIScreen.cpp" />

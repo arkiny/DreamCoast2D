@@ -57,7 +57,8 @@ public:
 	ID2D1Bitmap* CreateD2DBitmapFromFile(HWND hWnd, TCHAR* pImageFullPath, int option);
 	void BeginRender(HWND hWnd);
 	void EndRender();
-	
+	void setTextFormat(DWRITE_TEXT_ALIGNMENT textFormat, DWRITE_PARAGRAPH_ALIGNMENT paraformat);
+	void setToTextOriginalFormat();	
 
 	ID2D1HwndRenderTarget* GetRenderTarget(){
 		return  m_ipRT;

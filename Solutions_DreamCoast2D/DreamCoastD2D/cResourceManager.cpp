@@ -59,13 +59,19 @@ void cResourceManager::load(){
 	m_Bitmap_UI[UIID::MAP_TAG] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_minimaptag.png", NULL);
 
 	m_Bitmap_UI[UIID::UI_BELT] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_belt.png", NULL);
-
+	m_Bitmap_UI[UIID::UI_INVENTORY] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_inventory.png", NULL);
+	m_Bitmap_UI[UIID::UI_STAT] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/ui_stat.png", NULL);
+	m_Bitmap_UI[UIID::UI_HUD_MENU] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/UI/btn_hud_menu.png", NULL);
+	
 	m_UI_SIZE[UIID::STATBAR] = { 352.0f, 44.0f };
 	m_UI_SIZE[UIID::BLUEBAR] = { 279.0f, 12.0f };
 	m_UI_SIZE[UIID::REDBAR] = { 343.0f, 19.0f };
 	m_UI_SIZE[UIID::MAP_L_BORDER] = { 210.0f, 210.0f };
 	m_UI_SIZE[UIID::MAP_TAG] = { 210.0f, 20.0f };
 	m_UI_SIZE[UIID::UI_BELT] = {197.0f, 64.0f};
+	m_UI_SIZE[UIID::UI_INVENTORY] = { 279.0f, 290.0f };
+	m_UI_SIZE[UIID::UI_STAT] = { 279.0f, 143.0f };
+	m_UI_SIZE[UIID::UI_HUD_MENU] = { 282.0f, 25.0f }; 
 
 	// Normal Menu
 	m_Bitmap_UI[UIID::MN_NORMAL] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/menu/menu_normalbox.png", NULL);
@@ -130,5 +136,8 @@ void cResourceManager::releaseGameResource(){
 	SafeRelease(m_Bitmap_Poring);
 	for (int i = BTN_GAME_START + 1; i < BTN_BUTTONTYPEMAX; i++){
 		SafeRelease(m_Bitmap_Button[i]);
+	}
+	for (int i = 0; i < UI_ID_MAX; i++){
+		SafeRelease(m_Bitmap_UI[i]);
 	}
 }

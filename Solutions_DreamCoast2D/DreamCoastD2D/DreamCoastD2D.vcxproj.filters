@@ -184,9 +184,6 @@
     <ClInclude Include="cSoundManager.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="IInventoryHandler.h">
-      <Filter>Model\Item</Filter>
-    </ClInclude>
     <ClInclude Include="mItem.h">
       <Filter>Model\Item</Filter>
     </ClInclude>
@@ -213,6 +210,18 @@
     </ClInclude>
     <ClInclude Include="DB_Skill_Area_List.h">
       <Filter>Model\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="IItem.h">
+      <Filter>Model\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="uiInventory.h">
+      <Filter>Model\Screen\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="uiStat.h">
+      <Filter>Model\Screen\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="uiInGameMenu.h">
+      <Filter>Model\Screen\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +362,15 @@
     </ClCompile>
     <ClCompile Include="mPlayerSkill.cpp">
       <Filter>Model\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="uiInventory.cpp">
+      <Filter>Model\Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="uiStat.cpp">
+      <Filter>Model\Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="uiInGameMenu.cpp">
+      <Filter>Model\Screen\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

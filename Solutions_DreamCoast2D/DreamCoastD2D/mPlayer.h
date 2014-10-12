@@ -3,7 +3,7 @@
 #include "mCharacter.h"
 #include "IInventory.h"
 #include "DB_Skill_Area_List.h"
-//#include "IInventoryHandler.h"
+//#include "IItem.h"
 
 #include <queue>
 #include <map>
@@ -56,7 +56,8 @@ public:
 	void setBelt(int index, mItem* item){ m_aBelt[index] = item; }
 	mItem* getBelt(int index){ return m_aBelt[index]; }
 	IInventory* getInventory() { return m_Inventory; }
-
+	float getAttackPower() { return m_default_attackPower; }
+	float getAttackSpeed() { return m_attackSpeed; }
 
 private:
 	// 키보드 입력에 따른 움직임

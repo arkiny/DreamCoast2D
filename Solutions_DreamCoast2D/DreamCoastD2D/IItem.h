@@ -58,6 +58,10 @@ __interface IItem {
 	// 버튼처럼 선택시와 액티베잇시로 나눔
 	//virtual void setActivate();
 	//virtual void setSelected();
+
+	virtual void Init();
+	virtual void Render();
+	virtual void Update(float);
 	
 	// 사용시
 	virtual void itemOnEffect(ICharacter*);

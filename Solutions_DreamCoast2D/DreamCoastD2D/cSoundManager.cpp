@@ -66,7 +66,7 @@ void cSoundManager::executeAttack(){
 
 void cSoundManager::executeSkill(int in){
 	if (m_init){
-		if (in == 0){
+		if (in == 0 || in == 1){
 			engine->play2D("Sounds/Effect/ef_magnumbreak.wav");
 		}
 	}

@@ -41,10 +41,19 @@ void mPlayer::onHit(float fdeltatime){
 }
 
 void mPlayer::onCasting(float delta){
-	if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+	if (m_SeeDir == LEFTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(880.0f, 300.0f, 50.0f, 89.0f, 10.5f, 0.0f, 0);
 	}
-	//else if (){}
+	else if (m_SeeDir == LEFTUP){
+		m_spriteAtlas->pickSpriteAtlas(950.0f, 300.0f, 46.0f, 85.0f, 0);
+	}
+	else if (m_SeeDir == RIGHTDOWN){
+		m_spriteAtlas->pickSpriteAtlas(880.0f, 400.0f, 50.0f, 89.0f, -10.5f, 0.0f, 0);
+	}
+	else if (m_SeeDir == RIGHTUP){
+		m_spriteAtlas->pickSpriteAtlas(950.0f, 400.0f, 46.0f, 85.0f, 0);
+	}
+	m_spriteAtlas->nextFrame(delta);
 }
 
 

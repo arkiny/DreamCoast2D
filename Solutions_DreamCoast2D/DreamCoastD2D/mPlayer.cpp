@@ -145,12 +145,14 @@ void mPlayer::onUpdate(float fdeltatime){
 		if (m_State == ONCASTING){
 			// 입력하는 키들을 순서대로 어레이, 벡터 혹은 문자열에 입력
 			// 애니메이션은 캐스팅애니메이션으로
+			mPlayer::onCasting(fdeltatime);
 			putKeyIntoQueue();
 		}
 		else {
 			// 상태를 온캐스팅으로 변경
 			m_State = ONCASTING;
 			// 최초 스킬 캐스팅 시전
+			mPlayer::onCasting(fdeltatime);
 			cSoundManager::GetInstance().executeBeginSpell();
 			// 혹시나 들어오게 되는 첫키를 입력받음
 			putKeyIntoQueue();			
