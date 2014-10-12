@@ -8,6 +8,7 @@
 #include "wTileMap.h"
 #include "aiStateAttack.h"
 #include "uSprite.h"
+#include "aiStateDead.h"
 
 void aiStateScan::enter(mMonster* pmon){
 	m_sprite = pmon->getSprite();
@@ -17,6 +18,11 @@ void aiStateScan::execute(mMonster* pmon){
 	m_sprite->nextFrame(pmon->getdeltaTime());
 	accumtime += pmon->getdeltaTime();
 
+
+	if (pmon->getHealth() <= 0.0f){
+		pmon->changeState(new aiStateDead);
+		return;
+	}
 	// 하지만 스캔중에 쳐맞으면 
 	// 다시 경직에 들어감 ㅡㅡ
 	if (pmon->getState() == ONHIT){

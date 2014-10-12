@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <vector>
 #include "cD2DRenderer.h"
 #include "mPlayer.h"
 #include "coControl.h"
@@ -8,6 +9,7 @@
 #include "uCamera.h"
 #include "uTile.h"
 #include "cResourceManager.h"
+
 
 void mPlayer::onHit(float fdeltatime){
 	// 경직 시간은 FRAMERATE의 딱 두배
@@ -45,43 +47,15 @@ void mPlayer::onCasting(float delta){
 	//else if (){}
 }
 
+
+
 // todo: 공속조정 변수가 필요함
 void mPlayer::onAttack(float fdeltatime){
 	// fdeltatime을 받아서 일정 시간에 도달하였을 경우 attack처리
-	m_attackaccumtime += fdeltatime;
-
-	//bool attacktrigger = false;
-	VECTOR2D currentTile = m_pTileMap->getTileCoordinates(*_realVector);
-	float fx, fy;
-
-	if (m_attackaccumtime > FRAMERATE * 2.0f){
-		//attacktrigger = true;
-		m_attackaccumtime = 0.0f;
-		if (m_SeeDir == LEFTDOWN){
-			fx = currentTile.x + 1.0f;
-			fy = currentTile.y;
-		}
-		else if (m_SeeDir == LEFTUP){
-			fx = currentTile.x;
-			fy = currentTile.y - 1.0f;
-		}
-		else if (m_SeeDir == RIGHTDOWN){
-			fx = currentTile.x;
-			fy = currentTile.y + 1.0f;
-		}
-		else if (m_SeeDir == RIGHTUP){
-			fx = currentTile.x - 1.0f;;
-			fy = currentTile.y;
-		}
-		else {}
-		// 같은 타일내에 겹쳐 있을수도 있으므로...
-		// 차후 이 자리에는 타일 onHIT계열이 들어간다. 
-		m_pTileMap->getTile(currentTile.x, currentTile.y)->onHit(10.0f);
-		m_pTileMap->getTile(fx, fy)->onHit(10.0f);
-	}
-
 	if (m_spriteAtlas->getCurrentFrame() == 7){
 		m_spriteAtlas->setCurrentFrame(0);
+		m_bEndbehavior = true;
+		m_castingSkill = 99;
 		m_State = ONMOVE;
 		return;
 	}

@@ -5,6 +5,7 @@
 #include "wTileMap.h"
 #include "aiStateIdle.h"
 #include "aiStateOnHit.h"
+#include "aiStateDead.h"
 
 void aiStateAttack::enter(mMonster* pmon){
 	// attack과 move는 같은 스프라이트를 쓴다.
@@ -17,6 +18,11 @@ void aiStateAttack::execute(mMonster* pmon){
 	attacktimer += pmon->getdeltaTime();
 	m_sprite->nextFrame(pmon->getdeltaTime());
 	
+	if (pmon->getHealth() <= 0.0f){
+		pmon->changeState(new aiStateDead);
+		return;
+	}
+
 	// 공격중이라도 읃어 맞으면 경직
 	if (pmon->getState() == ONHIT){
 		pmon->changeState(new aiStateOnHit);

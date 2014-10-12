@@ -12,6 +12,8 @@ enum ITEM_CONSUME_ID
 {
 	ITEM_POTION_HEALTH_SMALL,	// potion effect
 	ITEM_POTION_HEALTH_BIG,		// potion effect
+	ITEM_POTION_MANA_SMALL,
+	ITEM_POTION_MANA_BIG,
 	ITEM_CONSUME_MAX
 };
 
@@ -40,7 +42,9 @@ static EFFECT Item_Equip_DB[ITEM_EQUIP_MAX] = {
 static EFFECT Item_Consume_DB[ITEM_CONSUME_MAX] =
 {
 	{ 100, 0, 0, 0, 0, 0 },	//ITEM_POTION_HEALTH_SMALL
-	{ 200, 0, 0, 0, 0, 0 }	//ITEM_POTION_HEALTH_BIG
+	{ 200, 0, 0, 0, 0, 0 },	//ITEM_POTION_HEALTH_BIG
+	{ 0, 100, 0, 0, 0, 0 }, //ITEM_POTION_MANA_SMALL,
+	{ 0, 200, 0, 0, 0, 0 }  //ITEM_POTION_MANA_BIG,
 };
 
 // 아이템 하나하나가 버튼

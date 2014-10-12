@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include <algorithm>
 
 #include "cD2DRenderer.h"
 #include "mPlayer.h"
@@ -13,7 +12,6 @@
 #include "cSoundManager.h"
 #include "mItem.h"
 #include "mInventory.h"
-
 
 mPlayer::mPlayer()
 {	
@@ -30,9 +28,9 @@ mPlayer::mPlayer()
 	m_State = ONMOVE;
 
 	m_MAXHP = 2000.0f;
-	m_MAXMP = 200.0f;
+	m_MAXMP = 50.0f;
 	m_HP = 2000.0f;
-	m_MP = 200.0f;
+	m_MP = 50.0f;
 }
 
 
@@ -54,67 +52,37 @@ void mPlayer::onInit(){
 	m_ipD2DBitmap = ::cResourceManager::GetInstance().getPlayerBitMap();
 	m_Cam = new uCamera(1028.0, 768.0f, this->getRealPos());
 	
-	for (int i = 0; i < SKILLCOMMAND_MAX; i++){
-		m_naSkill[i] = 99;
-	}
-	m_naSkill[0] = DIRECTION::LEFT;
-	m_naSkill[1] = DIRECTION::DOWN;
-	m_naSkill[2] = DIRECTION::RIGHT;
-
-	// TODO: 차후 상점 구현시
-	//		추가되는 것 추가
-	//m_vInventory.insert
-	//	(std::pair<int, mItem*>
-	//	(ITEM_POTION_HEALTH_SMALL, 
-	//	(new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_SMALL, Item_Consume_DB[ITEM_POTION_HEALTH_SMALL])
-	//	)));
-
+	/// skill list init
+	// player의 스킬 리스트 입력
+	// 스킬커맨드리스트는 스킬 범위와 함께 DB_Skill_Area_List에 추가되어 있음
+	m_SkillList.push_back(skill1);
+	m_SkillList.push_back(skill2);
+	
+	/// item
+	// TODO: 차후 상점을 통해 인벤토리에 추가할수 있도록 할 것
 	mItem* adder = new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_SMALL, Item_Consume_DB[ITEM_POTION_HEALTH_SMALL]);
 	adder->setAmount(3);
 	m_Inventory->addToInventory(adder);
+	m_Inventory->addToInventory(adder); // should be 6, ok
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_MANA_SMALL, Item_Consume_DB[ITEM_POTION_MANA_SMALL]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = nullptr;
 
 	// TODO: 벨트에는 인벤토리에 저장된 포인터를 넘겨서 사용하는 방식으로 사용
-	// 벨트는 쓸수 있는 단축키의 제한이 있으므로 일반 어레를 이용해서
+	// 벨트는 쓸수 있는 단축키의 제한이 있으므로 일반 어레이를 이용해서
 	// 서치타임을 줄이는 법을 이용해도 될것 같다.
 	m_aBelt[0] = m_Inventory->getInventory().at(ITEM_POTION_HEALTH_SMALL);
 	//m_aBelt[0]->setAmount(3);
 
-	m_aBelt[1] = nullptr;
+	m_aBelt[1] = m_Inventory->getInventory().at(ITEM_POTION_MANA_SMALL);
 	m_aBelt[2] = nullptr;
 }
 
-//void mPlayer::addToInventory(mItem* item){
-//	if (m_vInventory.count(item->getID()) >= 1){
-//		mItem* ptr = m_vInventory.at(item->getID());
-//		ptr->setAmount(item->getAmount() + ptr->getAmount());
-//		ptr = nullptr;
-//	}
-//	else {
-//		m_vInventory.insert(std::pair<int, mItem*>(item->getID(), item));
-//	}
-//}
-//
-//void mPlayer::removeFromInventory(int ID){
-//	if (m_vInventory.count(ID) >= 1){ 
-//		// 해당 아이디의 아이템이 존재하고 1번이상 사용 가능하다면
-//		mItem* ptr = m_vInventory.at(ID);
-//		if (ptr->getAmount() > 2){
-//			ptr->setAmount(ptr->getAmount() - 1);
-//		}
-//		else { 
-//			// 1번 사용할양만 남았거나, 안남았다면
-//			// 하지만 equipment는 사용되었다는 체킹만하고 사라지지 않게 처리...
-//			mItem* ptr = m_vInventory.at(ID);
-//			m_vInventory.erase(m_aBelt[KEY_A]->getID());
-//			delete ptr;
-//		}
-//	}
-//}
-
-void mPlayer::onUpdate(float fdeltatime){	
+void mPlayer::onUpdate(float fdeltatime){
 	// 대단히 primitive한 컨디션 스테잇을 이용한 statecontroller, 
 	// 차후 시간이 남으면 statemachine으로 교체
-	
+
 	if (m_State == ONDEAD){
 		// 플레이어 사망 처리, 가장 기본적인 DeadEnd State
 		// 가장 1순위 처리는 사망시 처리,
@@ -134,24 +102,43 @@ void mPlayer::onUpdate(float fdeltatime){
 	// x키를 뗄때 스킬 커맨드를 발현시킨다.
 	// 물론 입력중에 타격을 받으면 취소되므로, 우선순위는 onhit보다는 아래
 	// 하지만 이동은 멈추고 키를 입력받아야 하므로 이동/대기 보다는 빠르게
-	
+
 
 	// skill
 	else if (::coControl::GetInstance().getKeyControlInfo()[0x5A]){
 		if (m_State == ONATTACK){
 			mPlayer::onAttack(fdeltatime);
+			mPlayer::dmgToTile(fdeltatime, m_default_attackPower);
 		}
 		else {
 			m_State = ONATTACK;
 			cSoundManager::GetInstance().executeAttack();
 			m_attackaccumtime = 0.0f;
-			m_spriteAtlas->setCurrentFrame(0);			
+			m_spriteAtlas->setCurrentFrame(0);
 		}
 	}
 	else if (m_State == ONATTACK){
 		// skill casted
 		m_castingSkill = 99;
 		mPlayer::onAttack(fdeltatime);
+		mPlayer::dmgToTile(fdeltatime, m_default_attackPower);
+	}
+
+	else if (m_State == ONSKILLEFFECTING){		
+		switch (m_castingSkill)
+		{
+		case 0:
+			mPlayer::onAttack(fdeltatime);
+			mPlayer::dmgToArea(fdeltatime, m_default_attackPower, AREA_TYPE1);
+			break;
+		case 1:
+			mPlayer::onAttack(fdeltatime);
+			mPlayer::dmgToTile(fdeltatime, m_default_attackPower*10.0f);
+			break;
+		default:
+			break;
+		}	
+		// onAttack 모션 종료후에 스킬 플래그로 스킬역시 종료
 	}
 
 	else if (::coControl::GetInstance().getKeyControlInfo()[0x58]){
@@ -171,57 +158,6 @@ void mPlayer::onUpdate(float fdeltatime){
 			//m_spriteAtlas->setCurrentFrame(0);
 		}
 	}
-
-	///ui belt로 이동
-	///// item belt
-	//else if (::coControl::GetInstance().getKeyControlInfo()[0x41]){
-	//	::coControl::GetInstance().onKeyUp(0x41);
-	//	if (m_aBelt[KEY_A] != nullptr){			
-	//		m_aBelt[KEY_A]->itemOnEffect(this);
-	//		int in = m_aBelt[KEY_A]->getAmount() - 1;
-	//		m_aBelt[KEY_A]->setAmount(in);
-
-	//		if (m_aBelt[KEY_A]->getAmount() == 0){
-	//			mItem* ptr = m_Inventory->getInventory().at(m_aBelt[KEY_A]->getID());
-	//			m_Inventory->getInventory().erase(m_aBelt[KEY_A]->getID());
-	//			delete ptr;
-
-	//			m_aBelt[KEY_A] = nullptr;
-	//		}			
-	//	}
-	//}
-	//else if (::coControl::GetInstance().getKeyControlInfo()[0x53]){
-	//	::coControl::GetInstance().onKeyUp(0x53);
-	//	if (m_aBelt[KEY_S] != nullptr){
-	//		m_aBelt[KEY_S]->itemOnEffect(this);
-	//		int in = m_aBelt[KEY_S]->getAmount() - 1;
-	//		m_aBelt[KEY_S]->setAmount(in);
-	//		if (m_aBelt[KEY_S]->getAmount() == 0){
-	//			mItem* ptr = m_Inventory->getInventory().at(m_aBelt[KEY_S]->getID());
-	//			m_Inventory->getInventory().erase(m_aBelt[KEY_S]->getID());
-	//			delete ptr;
-
-	//			m_aBelt[KEY_S] = nullptr;
-	//		}
-	//	}
-	//}	
-	//else if (::coControl::GetInstance().getKeyControlInfo()[0x44]){
-	//	::coControl::GetInstance().onKeyUp(0x44);
-	//	if (m_aBelt[KEY_D] != nullptr){
-	//		m_aBelt[KEY_D]->itemOnEffect(this);
-	//		int in = m_aBelt[KEY_D]->getAmount() - 1;
-	//		m_aBelt[KEY_D]->setAmount(in);
-	//		if (m_aBelt[KEY_D]->getAmount() == 0){
-	//			mItem* ptr = m_Inventory->getInventory().at(m_aBelt[KEY_D]->getID());
-	//			m_Inventory->getInventory().erase(m_aBelt[KEY_D]->getID());
-	//			delete ptr;
-	//			m_aBelt[KEY_D] = nullptr;			
-	//		}
-	//	}
-	//}
-	/////
-
-
 	else if (m_State == ONCASTING){
 		// 캐스팅을 실시하고 x키를 떼었을때
 		if (!::coControl::GetInstance().getKeyControlInfo()[0x58]){
@@ -236,27 +172,44 @@ void mPlayer::onUpdate(float fdeltatime){
 			// 업데이트 시마다 체크하게 되므로 문제가 된다.
 			// TODO 업데이트 타임 체크
 			if (!m_qKeyInput.empty()){
-				if (skillCompare(m_qKeyInput, m_naSkill, 0)){
-					m_castingSkill = 0;
+				for (unsigned int i = 0; i < m_SkillList.size(); i++){
+					std::queue<int> temp = m_qKeyInput;
+					if (skillCompare(temp, m_SkillList[i], 0)){
+						m_castingSkill = i;
+						break;
+					}
 				}
-				else {
+				
+				if(m_castingSkill==99) {
 					// 아니면 페널티를 주는 걸로
-					getHit(10.0f);
+					getHit(10.0f);					
 				}
+
 				while (!m_qKeyInput.empty()){
 					m_qKeyInput.pop();
 				}
 			}
 			else {
-				if (m_castingSkill == 0){
-					// skill에따른 상황 정리
-					m_State = ONATTACK;
-					cSoundManager::GetInstance().executeSkill(m_castingSkill);
-					m_attackaccumtime = 0.0f;
-					m_spriteAtlas->setCurrentFrame(0);
+				if (m_castingSkill != 99){
+					// skill에따른 스킬 시전
+					if (m_MP >= 10.0f){
+						m_State = ONSKILLEFFECTING;
+						cSoundManager::GetInstance().executeSkill(m_castingSkill);
+						m_MP -= 10.0f;
+						m_attackaccumtime = 0.0f;
+						m_spriteAtlas->setCurrentFrame(0);
+						//m_bEndbehavior = false;
+						/*mPlayer::onAttack(fdeltatime);
+						mPlayer::dmgToArea(fdeltatime, m_default_attackPower);*/
+					}
+					else{
+						// 마나 없을때 페널티
+						getHit(10.0f);
+					}
 				}
 				else {
 					m_State = ONMOVE;
+					//m_bEndbehavior = true;
 				}
 			}
 		}

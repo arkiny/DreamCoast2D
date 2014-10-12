@@ -53,6 +53,9 @@
     <Filter Include="Model\Inventory">
       <UniqueIdentifier>{a7170233-6e79-41be-a6e2-9a0339684b4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Character\Player">
+      <UniqueIdentifier>{83018bac-df0e-4d3b-b7a6-23c793bdc840}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -190,9 +193,6 @@
     <ClInclude Include="mCharacter.h">
       <Filter>Model\Character</Filter>
     </ClInclude>
-    <ClInclude Include="mPlayer.h">
-      <Filter>Model\Character</Filter>
-    </ClInclude>
     <ClInclude Include="IGObject.h">
       <Filter>Model\Character</Filter>
     </ClInclude>
@@ -207,6 +207,12 @@
     </ClInclude>
     <ClInclude Include="uiBelt.h">
       <Filter>Model\Screen\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="mPlayer.h">
+      <Filter>Model\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="DB_Skill_Area_List.h">
+      <Filter>Model\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -330,12 +336,6 @@
     <ClCompile Include="mCharacter.cpp">
       <Filter>Model\Character</Filter>
     </ClCompile>
-    <ClCompile Include="mPlayer.cpp">
-      <Filter>Model\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="mPlayerState.cpp">
-      <Filter>Model\Character</Filter>
-    </ClCompile>
     <ClCompile Include="mEquipped.cpp">
       <Filter>Model\Inventory</Filter>
     </ClCompile>
@@ -344,6 +344,15 @@
     </ClCompile>
     <ClCompile Include="uiBelt.cpp">
       <Filter>Model\Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mPlayer.cpp">
+      <Filter>Model\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="mPlayerState.cpp">
+      <Filter>Model\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="mPlayerSkill.cpp">
+      <Filter>Model\Character\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

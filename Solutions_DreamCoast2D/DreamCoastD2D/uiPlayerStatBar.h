@@ -19,5 +19,7 @@ public:
 private:
 	void drawStatbar();
 	ICharacter* m_pplayer;
+	::D2D1_RECT_F healthBar;
+	::D2D1_RECT_F manaBar;
 };
 

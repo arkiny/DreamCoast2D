@@ -2,13 +2,16 @@
 
 #include "mCharacter.h"
 #include "IInventory.h"
+#include "DB_Skill_Area_List.h"
 //#include "IInventoryHandler.h"
 
 #include <queue>
 #include <map>
 
-#define SKILLCOMMAND_MAX 16
+
 #define BELT_MAX 3
+
+
 
 // 벨트 단축키, A, S, D로 각각 체력, 마나, 특수
 enum BELTSHORTCUT{KEY_A, KEY_S, KEY_D};
@@ -64,6 +67,10 @@ private:
 	void onDead(float);
 	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
 	void onCasting(float);
+
+	//tile dmg 처리
+	void dmgToTile(float delta, float attackpower);
+	void dmgToArea(float delta, float attackpower, int AreaType);
 		
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	DIRECTION m_MoveDir;
@@ -73,6 +80,7 @@ private:
 	float m_alpha = 1.0f;
 	
 	// 공속 변수, 차후 아이템 추가, 캐릭터 추가시 동적 변화
+	float m_default_attackPower = 10.0f;
 	float m_attackSpeed = 2.0f;
 	float m_attackaccumtime = 0.0f;
 
@@ -88,7 +96,8 @@ private:
 
 	/// Skill관련 헬퍼
 	// 스킬 캐스팅 변수
-	int m_naSkill[SKILLCOMMAND_MAX];
+	std::vector<int*> m_SkillList; 
+
 	float m_castaccumtime = 0.0f;
 	
 	std::queue<int> m_qKeyInput;
@@ -115,5 +124,7 @@ private:
 	// 차후 상점용
 	// default 10000
 	int m_nGold = 10000;
+
+	bool m_bEndbehavior = false;
 };
 

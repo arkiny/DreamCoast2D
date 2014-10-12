@@ -5,6 +5,7 @@
 #include "aiStateOnHit.h"
 #include "aiStateMoveto.h"
 #include "aiStateScan.h"
+#include "aiStateDead.h"
 #include "VECTOR2D.h"
 
 void aiStateIdle::enter(mMonster* pmon){
@@ -21,6 +22,11 @@ void aiStateIdle::execute(mMonster* pmon){
 	accumtime += pmon->getdeltaTime();
 	m_sprite->nextFrame(pmon->getdeltaTime());
 	
+	if (pmon->getHealth() <= 0.0f){
+		pmon->changeState(new aiStateDead);
+		return;
+	}
+
 	// 대략 6초마다 랜덤 방향으로 이동
 	if (accumtime > 6.0f){
 		pmon->moveRandom();
