@@ -14,7 +14,7 @@ void mPlayer::dmgToTile(float delta, float dmg){
 	VECTOR2D currentTile = m_pTileMap->getTileCoordinates(*_realVector);
 	float fx, fy;
 
-	if (m_attackaccumtime > FRAMERATE * 2.0f){
+	if (m_attackaccumtime > FRAMERATE * 2.5f){
 		//attacktrigger = true;
 		m_attackaccumtime = 0.0f;
 		if (m_SeeDir == LEFTDOWN){
@@ -83,7 +83,7 @@ void mPlayer::dmgToArea(float delta, float dmg, int AreaType){
 		break;
 	}		
 	std::queue <std::pair<float, float>> skillCoord;
-	if (m_attackaccumtime > FRAMERATE * 2.0f){
+	if (m_attackaccumtime > FRAMERATE * 2.5f){
 		//attacktrigger = true;
 		m_attackaccumtime = 0.0f;
 		std::pair < float, float > adder;

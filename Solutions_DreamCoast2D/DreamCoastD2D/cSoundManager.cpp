@@ -72,3 +72,17 @@ void cSoundManager::executeSkill(int in){
 	}
 }
 
+void cSoundManager::executeOnHit(){
+	// todo 차후 무기에 따라서 다른소리
+	if (m_init){		
+		engine->play2D("Sounds/Effect/_hit_sword.wav");	
+	}
+}
+
+void cSoundManager::executeOnDie(int montype){
+	// todo 차후 몬스터에 따라서 다른 소리
+	if (m_init){
+		engine->play2D("Sounds/Monster/poring_die.wav");
+	}
+}
+

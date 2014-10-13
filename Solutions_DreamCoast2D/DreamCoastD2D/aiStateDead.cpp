@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "cSoundManager.h"
 #include "aiStateDead.h"
 #include "aiStateOnHit.h"
 #include "aiStateIdle.h"
@@ -10,6 +11,7 @@
 void aiStateDead::enter(mMonster* pmon){
 	m_sprite = pmon->getSprite();
 	pmon->onDeath();
+	cSoundManager::GetInstance().executeOnDie(0);
 }
 
 void aiStateDead::execute(mMonster* pmon){

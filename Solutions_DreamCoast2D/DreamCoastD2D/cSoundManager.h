@@ -19,6 +19,8 @@ public:
 	void executeSkill(int);
 	void stopBeginSpell();
 	void stopBGM();
+	void executeOnHit();
+	void executeOnDie(int);
 
 private:
 	irrklang::ISoundEngine* engine;

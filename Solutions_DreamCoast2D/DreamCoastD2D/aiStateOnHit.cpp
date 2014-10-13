@@ -2,6 +2,7 @@
 #include "aiStateOnHit.h"
 #include "aiStateIdle.h"
 #include "aiStateDead.h"
+#include "cSoundManager.h"
 #include "uSprite.h"
 #include "mMonster.h"
 
@@ -10,6 +11,7 @@ void aiStateOnHit::enter(mMonster* pmon){
 	pmon->onHit();
 	// 맞은 즉시 어그로레벨 최대화
 	pmon->setCurrentAggroLevel(pmon->getMaxAggroLevel());
+	cSoundManager::GetInstance().executeOnHit();
 }
 
 void aiStateOnHit::execute(mMonster* pmon){
