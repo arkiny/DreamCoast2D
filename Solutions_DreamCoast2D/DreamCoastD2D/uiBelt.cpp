@@ -26,6 +26,12 @@ void uiBelt::OnInit(){
 }
 
 void uiBelt::Update(float){
+	// 각 버튼 내부 클릭시
+	// 각 버튼 관련 업데이트
+	// if (A button Area){
+	// ::coControl::GetInstance().onKeyDown(0x41);
+	// }
+
 	// 차후 벨트 포인터 갱신 포션 이동시나 그럴시에
 	mPlayer* ptr = (mPlayer*)m_player;
 	/// item belt

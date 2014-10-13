@@ -49,6 +49,23 @@ void uiInventory::Update(float delta){
 	if (!coControl::GetInstance().getKeyControlInfo()[0x49]){
 		m_fdelaytime = m_fKeydelay;
 	}	
+
+	mPlayer* playerPtr = (mPlayer*)m_player;
+	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
+
+	if (m_bActivated){
+		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
+			itr->second->Update(delta);
+			if (itr->second->isActivated()){
+				itr->second->itemOnEffect(m_player);
+				itr->second->setAmount(itr->second->getAmount() - 1);
+
+				if (itr->second->getAmount() == 0){
+					playerPtr->getInventory()->removeFromInventory(itr->first);					
+				}
+			}
+		}
+	}
 }
 
 void uiInventory::Render(){
@@ -83,7 +100,12 @@ void uiInventory::Render(){
 
 		int length = 0;
 		length += swprintf(wszText_ + length, 1028, L"");
+		int i = 0;
 		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
+
+			itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
+			itr->second->Render();
+			
 			if (itr->first == 0){
 				length += swprintf(wszText_ + length, 1028, L"HealthPotion / ");
 			}
@@ -91,6 +113,8 @@ void uiInventory::Render(){
 				length += swprintf(wszText_ + length, 1028, L"ManaPotion / ");
 			}
 			length+= swprintf(wszText_+length, 1028, L"amount %d \n", itr->second->getAmount());
+
+			i++;
 		}		
 		
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);

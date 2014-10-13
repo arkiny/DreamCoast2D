@@ -79,7 +79,7 @@ void mPlayer::dmgToArea(float delta, float dmg, int AreaType){
 		}
 		break;
 	default:
-
+		// do nothing. will not be happend by events
 		break;
 	}		
 	std::queue <std::pair<float, float>> skillCoord;

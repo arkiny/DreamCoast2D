@@ -378,7 +378,12 @@ bool mPlayer::skillCompare(std::queue<int> &keyinput, int* skillArray, int index
 	}
 
 	if (skillArray[index] == 99){
-		return true;
+		if (keyinput.empty()){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	if (keyinput.empty()){

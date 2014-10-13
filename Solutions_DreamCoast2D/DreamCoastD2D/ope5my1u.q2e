@@ -36,11 +36,6 @@ public:
 
 	virtual void setPos(float, float);
 	virtual VECTOR2D* getPos();
-
-	virtual bool isSelected() { return m_bSelected; }
-	virtual bool isActivated() { return m_bActivated; }
-	virtual void setSelected(bool in){ m_bSelected = in; }
-	virtual void setActivated(bool in) { m_bActivated = in; }
 private:
 	int m_nID;
 	int m_nType;
