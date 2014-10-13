@@ -114,6 +114,11 @@ void cD2DRenderer::setToTextOriginalFormat(){
 	{
 		hr = m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_FAR);
 	}
+	if (SUCCEEDED(hr))
+	{
+		// 스페이싱 메소드를 유니폼으로 때리면, 글은 첫라인을 베이스라인 삼아서 그려진다
+		hr = m_pTextFormat->SetLineSpacing(DWRITE_LINE_SPACING_METHOD::DWRITE_LINE_SPACING_METHOD_DEFAULT, 1.0f, 1.0f);
+	}
 }
 
 void cD2DRenderer::InitializeRT(HWND hWnd)
