@@ -3,6 +3,7 @@
 #include <map>
 
 class mItem;
+//class ICharacter;
 __interface IEquippedInven{
 	// weapon (공속, 공격력)
 	// 장착하고 있는 무기를 벗기고 인자의 무기를 끼운다.
@@ -17,6 +18,12 @@ __interface IEquippedInven{
 	virtual void equipShoes(mItem*);
 	virtual mItem* getCurrentShoes();
 };
+
+//__interface IBelt{
+//	virtual void setBelt(int beltID, int itemID);
+//	virtual void usingBelt(int beltID);
+//	virtual void removeFromBelt(int beltID);
+//};
 
 __interface IInventory : public IEquippedInven{
 	virtual std::map<int, mItem*> getInventory();

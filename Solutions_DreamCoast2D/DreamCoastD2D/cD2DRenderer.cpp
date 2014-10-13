@@ -73,6 +73,32 @@ void cD2DRenderer::InitializeD2D(void)
 	}
 
 
+	m_pDWriteFactory->CreateTextFormat(
+		L"Gabriola",                // Font family name.
+		NULL,                       // Font collection (NULL sets it to use the system font collection).
+		DWRITE_FONT_WEIGHT_REGULAR,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		20.0f,
+		L"en-us",
+		&m_pTextFormat2
+		);
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat2->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT::DWRITE_TEXT_ALIGNMENT_LEADING);
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat2->SetParagraphAlignment(::DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+	}
+	if (SUCCEEDED(hr))
+	{
+		// 스페이싱 메소드를 유니폼으로 때리면, 글은 첫라인을 베이스라인 삼아서 그려진다
+		hr = m_pTextFormat2->SetLineSpacing(DWRITE_LINE_SPACING_METHOD::DWRITE_LINE_SPACING_METHOD_UNIFORM, 20.0f, 1.4f);
+	}
+
 	CoInitialize(0);
 
 	//-----------------------------------------------------------------------
@@ -83,42 +109,6 @@ void cD2DRenderer::InitializeD2D(void)
 		IID_PPV_ARGS(&m_ipWICFactory));
 	assert(hr == S_OK);
 
-}
-
-void cD2DRenderer::setTextFormat(DWRITE_TEXT_ALIGNMENT textFormat, DWRITE_PARAGRAPH_ALIGNMENT paraformat){
-	HRESULT hr = S_OK;
-	if (SUCCEEDED(hr))
-	{
-		hr = m_pTextFormat->SetTextAlignment(textFormat);
-	}
-
-	if (SUCCEEDED(hr))
-	{
-		hr = m_pTextFormat->SetParagraphAlignment(paraformat);
-	}
-	if (SUCCEEDED(hr))
-	{
-		// 스페이싱 메소드를 유니폼으로 때리면, 글은 첫라인을 베이스라인 삼아서 그려진다
-		hr = m_pTextFormat->SetLineSpacing(DWRITE_LINE_SPACING_METHOD::DWRITE_LINE_SPACING_METHOD_UNIFORM, 20.0f, 1.4f);
-	}
-}
-
-void cD2DRenderer::setToTextOriginalFormat(){
-	HRESULT hr = S_OK;
-	if (SUCCEEDED(hr))
-	{
-		hr = m_pTextFormat->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT_CENTER);
-	}
-
-	if (SUCCEEDED(hr))
-	{
-		hr = m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_FAR);
-	}
-	if (SUCCEEDED(hr))
-	{
-		// 스페이싱 메소드를 유니폼으로 때리면, 글은 첫라인을 베이스라인 삼아서 그려진다
-		hr = m_pTextFormat->SetLineSpacing(DWRITE_LINE_SPACING_METHOD::DWRITE_LINE_SPACING_METHOD_DEFAULT, 1.0f, 1.0f);
-	}
 }
 
 void cD2DRenderer::InitializeRT(HWND hWnd)

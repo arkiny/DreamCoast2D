@@ -89,17 +89,13 @@ void uiStat::Render(){
 		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(layoutRect, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 
-		::cD2DRenderer::GetInstance().setTextFormat(
-			::DWRITE_TEXT_ALIGNMENT::DWRITE_TEXT_ALIGNMENT_LEADING, 
-			::DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 		// draw text
 		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
 			wszText_,
 			cTextLength_,
-			::cD2DRenderer::GetInstance().GetTextFormat(),
+			::cD2DRenderer::GetInstance().GetTextFormat2(),
 			layoutRect,
 			::cD2DRenderer::GetInstance().GetBlackBrush());
 
-		::cD2DRenderer::GetInstance().setToTextOriginalFormat();
 	}
 }

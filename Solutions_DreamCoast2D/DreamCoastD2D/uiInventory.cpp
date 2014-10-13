@@ -61,8 +61,17 @@ void uiInventory::Update(float delta){
 				itr->second->setAmount(itr->second->getAmount() - 1);
 
 				if (itr->second->getAmount() == 0){
+					//
+					for (int i = 0; i < BELT_MAX; i++){
+						if (playerPtr->getBelt(i) != nullptr){
+							if (playerPtr->getBelt(i)->getType() == itr->first){
+								playerPtr->setBelt(i, nullptr);
+							}
+						}
+					}
+					//
 					playerPtr->getInventory()->removeFromInventory(itr->first);					
-				}
+				}				
 			}
 		}
 	}

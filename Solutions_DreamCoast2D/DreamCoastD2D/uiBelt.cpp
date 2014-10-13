@@ -94,6 +94,16 @@ void uiBelt::Render(){
 
 	/// TOdo, 차후 리소스화
 	wchar_t* wszText_ = new wchar_t[20];
+	int length = 0;
+	length += swprintf(wszText_ + length, 20, L"");
+	swprintf(wszText_, 20, L"");
+
+	// release에서는 문제가 안되는데 디버그에선 익셉션이 난다.
+	// 버그 픽스해야함
+	//if (ptr->getBelt(0) == NULL || ptr->getBelt(0) == nullptr){
+	//	int i = 0;
+	//}
+
 	if (ptr->getBelt(0) != nullptr){
 		swprintf(wszText_, 20, L"%d",
 			ptr->getBelt(0)->getAmount());

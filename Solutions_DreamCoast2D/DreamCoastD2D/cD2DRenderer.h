@@ -40,6 +40,7 @@ private:
 
 	IDWriteFactory* m_pDWriteFactory;
 	IDWriteTextFormat* m_pTextFormat;
+	IDWriteTextFormat* m_pTextFormat2;
 
 	D2D1_SIZE_U m_dxSize;
 	
@@ -57,8 +58,6 @@ public:
 	ID2D1Bitmap* CreateD2DBitmapFromFile(HWND hWnd, TCHAR* pImageFullPath, int option);
 	void BeginRender(HWND hWnd);
 	void EndRender();
-	void setTextFormat(DWRITE_TEXT_ALIGNMENT textFormat, DWRITE_PARAGRAPH_ALIGNMENT paraformat);
-	void setToTextOriginalFormat();	
 
 	ID2D1HwndRenderTarget* GetRenderTarget(){
 		return  m_ipRT;
@@ -95,6 +94,11 @@ public:
 	IDWriteTextFormat* GetTextFormat()
 	{
 		return m_pTextFormat;
+	}
+
+	IDWriteTextFormat* GetTextFormat2()
+	{
+		return m_pTextFormat2;
 	}
 };
 
