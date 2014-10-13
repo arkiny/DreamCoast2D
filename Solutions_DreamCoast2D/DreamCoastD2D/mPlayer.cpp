@@ -185,7 +185,6 @@ void mPlayer::onUpdate(float fdeltatime){
 				if(m_castingSkill==99) {
 					// 아니면 페널티를 주는 걸로
 					getHit(10.0f);			
-					m_State = ONMOVE;
 					m_attackaccumtime = 0.0f;
 				}
 
@@ -206,7 +205,6 @@ void mPlayer::onUpdate(float fdeltatime){
 					else{
 						// 마나 없을때 페널티
 						getHit(10.0f);
-						m_State = ONMOVE;
 						m_attackaccumtime = 0.0f;
 					}
 				}
