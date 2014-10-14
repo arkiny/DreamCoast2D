@@ -22,7 +22,22 @@ uiBelt::~uiBelt()
 }
 
 void uiBelt::OnInit(){
-
+	::RECT winRect;
+	GetClientRect(::cD2DRenderer::GetInstance().GetHwnd(), &winRect);
+	m_ARect = D2D1::RectF( this->getPos()->x + 5.0f,
+		winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 6.0f,
+		this->getPos()->x + 59.0f,
+		winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 60.0f );
+	m_SRect = D2D1::RectF( this->getPos()->x + 70.0f,
+		winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 6.0f,
+		this->getPos()->x + 124.0f,
+		winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 60.0f );
+	m_DRect = D2D1::RectF(
+		this->getPos()->x + 137.0f,
+		winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 6.0f,
+		this->getPos()->x + 191.0f,
+		winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 60.0f
+		);
 }
 
 void uiBelt::Update(float){
@@ -109,12 +124,7 @@ void uiBelt::Render(){
 			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_A))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
 
-		D2D1_RECT_F layoutRect = D2D1::RectF(
-			this->getPos()->x + 5.0f,
-			winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 6.0f,
-			this->getPos()->x + 59.0f,
-			winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 60.0f
-			);
+		D2D1_RECT_F layoutRect = m_ARect;
 
 		// draw text
 		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
@@ -130,12 +140,7 @@ void uiBelt::Render(){
 			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_S))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
 
-		D2D1_RECT_F layoutRect = D2D1::RectF(
-			this->getPos()->x + 70.0f,
-			winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 6.0f,
-			this->getPos()->x + 124.0f,
-			winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 60.0f
-			);
+		D2D1_RECT_F layoutRect = m_SRect;
 
 		// draw text
 		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
@@ -151,12 +156,7 @@ void uiBelt::Render(){
 			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_D))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
 
-		D2D1_RECT_F layoutRect = D2D1::RectF(
-			this->getPos()->x + 137.0f,
-			winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 6.0f,
-			this->getPos()->x + 191.0f,
-			winRect.bottom - this->getPos()->y - ::cResourceManager::GetInstance().getUISize(UIID::UI_BELT).y + 60.0f
-			);
+		D2D1_RECT_F layoutRect = m_DRect;
 
 		// draw text
 		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
@@ -184,4 +184,30 @@ void uiBelt::Render(){
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 	}
+
+	// debug
+	::cD2DRenderer::GetInstance().GetRenderTarget()
+		->DrawRectangle(m_ARect, ::cD2DRenderer::GetInstance().GetBlackBrush());
+	::cD2DRenderer::GetInstance().GetRenderTarget()
+		->DrawRectangle(m_SRect, ::cD2DRenderer::GetInstance().GetBlackBrush());
+	::cD2DRenderer::GetInstance().GetRenderTarget()
+		->DrawRectangle(m_DRect, ::cD2DRenderer::GetInstance().GetBlackBrush());
+}
+
+D2D1_RECT_F uiBelt::getBeltRect(int i){
+	switch (i)
+	{
+	case 0:
+		return m_ARect;
+		break;
+	case 1:
+		return m_SRect;
+		break;
+	case 2:
+		return m_DRect;
+		break;
+	default:
+		break;
+	}
+	return{0.0f,};
 }

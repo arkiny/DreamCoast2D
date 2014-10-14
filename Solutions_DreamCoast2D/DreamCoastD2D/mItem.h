@@ -17,14 +17,14 @@ public:
 	virtual void Update(float);
 	virtual void setType(int type, int id);
 	virtual int getType();
-	
+
 	virtual void setEffect(EFFECT);
 	virtual void setEffect(float, float, float, float, float, float);
 
 	// 버튼처럼 선택시와 액티베잇시로 나눔
 	// virtual void setActivate();
 	// virtual void setSelected();
-	
+
 	// 사용시
 	virtual void itemOnEffect(ICharacter*);
 
@@ -41,6 +41,17 @@ public:
 	virtual bool isActivated() { return m_bActivated; }
 	virtual void setSelected(bool in){ m_bSelected = in; }
 	virtual void setActivated(bool in) { m_bActivated = in; }
+
+	virtual bool isMoving() { return m_bIsMoving; }
+	virtual void setMoving(bool in){ m_bIsMoving = in; }
+
+	virtual void saveOldPos(float x, float y);
+	virtual POINTFLOAT getOldcur() { return m_fMB_cache_old; }
+	virtual POINTFLOAT getGap() { return m_fMB_cache_gap; }
+	virtual void moveTo(float x, float y);
+
+	virtual bool isInside(float x, float y);
+
 private:
 	int m_nID;
 	int m_nType;
@@ -51,5 +62,9 @@ private:
 	VECTOR2D* m_vPos;
 	bool m_bSelected = false;
 	bool m_bActivated = false;
+	bool m_bIsMoving = false;
+
+	POINTFLOAT m_fMB_cache_old;
+	POINTFLOAT m_fMB_cache_gap;
 };
 

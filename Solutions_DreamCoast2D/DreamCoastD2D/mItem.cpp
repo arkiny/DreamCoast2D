@@ -45,18 +45,19 @@ void mItem::Update(float delta){
 	// 만약 벨트위에 드롭이 아닐 경우 노띵해픈
 
 	POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
-	if (mousepoint.x >= this->getPos()->x &&
-		mousepoint.y >= this->getPos()->y &&
-		mousepoint.x <= (this->getPos()->x + m_fWidth) &&
-		mousepoint.y <= (this->getPos()->y + m_fHeight)){
+	if (mItem::isInside(mousepoint.x, mousepoint.y)){
 		this->setSelected(true);
-		if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON]){
-			::coControl::GetInstance().onKeyUp(VK_LBUTTON);
-			
+		if (::coControl::GetInstance().getKeyControlInfo()[VK_RBUTTON]){
+			::coControl::GetInstance().onKeyUp(VK_RBUTTON);
 			this->setActivated(true);
 		}
 		else {
 			this->setActivated(false);
+		}
+
+		if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && m_bIsMoving == false){
+			::mItem::saveOldPos(mousepoint.x, mousepoint.y);
+			this->setMoving(true);
 		}
 	}
 	else
@@ -76,6 +77,7 @@ void mItem::Render(){
 		m_vPos->y + 40.0f
 		);
 
+	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(itemRect, ::cD2DRenderer::GetInstance().GetWhiteBrush());
 	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(itemRect, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 	wchar_t* wszText_ = new wchar_t[20];
@@ -161,4 +163,21 @@ void mItem::setPos(float x, float y){
 
 VECTOR2D* mItem::getPos(){
 	return m_vPos;
+}
+
+void mItem::saveOldPos(float x, float y){
+	m_fMB_cache_old = { m_vPos->x, m_vPos->y };
+	m_fMB_cache_gap = { x - m_vPos->x, y - m_vPos->y };
+}
+
+void mItem::moveTo(float x, float y){
+	m_vPos->x = x - m_fMB_cache_gap.x;
+	m_vPos->y = y - m_fMB_cache_gap.y;
+}
+
+bool mItem::isInside(float mousex, float mousey){
+	return (mousex >= this->getPos()->x &&
+		mousey >= this->getPos()->y &&
+		mousex <= (this->getPos()->x + m_fWidth) &&
+		mousey <= (this->getPos()->y + m_fHeight));
 }

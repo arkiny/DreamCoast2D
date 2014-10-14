@@ -17,13 +17,24 @@ uiInventory::~uiInventory()
 }
 
 
-uiInventory::uiInventory(ICharacter* player){
+uiInventory::uiInventory(ICharacter* player, uiInterface* ubelt){
 	m_player = player;
+	m_belt = ubelt;;
 	this->setPos(new VECTOR2D(20.0f, 350.0f));
 }
 
 void uiInventory::OnInit(){
 	m_bActivated = false;
+
+	mPlayer* playerPtr = (mPlayer*)m_player;
+	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
+
+	int i = 0;
+	for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
+		itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
+		i++;
+	}
+
 }
 
 void uiInventory::Update(float delta){
@@ -56,6 +67,7 @@ void uiInventory::Update(float delta){
 	if (m_bActivated){
 		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
 			itr->second->Update(delta);
+
 			if (itr->second->isActivated()){
 				itr->second->itemOnEffect(m_player);
 				itr->second->setAmount(itr->second->getAmount() - 1);
@@ -72,6 +84,39 @@ void uiInventory::Update(float delta){
 					//
 					playerPtr->getInventory()->removeFromInventory(itr->first);					
 				}				
+			}
+
+			if (itr->second->isMoving()){
+				POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
+				// 이동중이고 마우스 키를 떼었을때, 원래 위치로 되돌린다.
+				// 원래 위치로 되돌릴 생각이 없다면, 
+				// 아래 좌표를 현재 좌표로 확정한다.
+				itr->second->moveTo(mousepoint.x, mousepoint.y);
+				bool info = ::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON];
+				if (info == false){
+					// 마우스를 놓았을때 벨트의 일정 범위 안이면 해당 벨트에 
+					// 아이디를 집어넣는다.
+					itr->second->setPos(itr->second->getOldcur().x, itr->second->getOldcur().y);
+					itr->second->setMoving(false);
+
+					// 만약 숏컷 범위 안이면
+					for (int i = 0; i < BELT_MAX; i++){
+						D2D1_RECT_F rect = dynamic_cast<uiBelt*>(m_belt)->getBeltRect(i);
+						if (mousepoint.x >= rect.left &&
+							mousepoint.y >= rect.top &&
+							mousepoint.x <= rect.right &&
+							mousepoint.y <= rect.bottom){
+							// 3*3의 프로세스가 들지만 어차피 많지 않으니 brute force 처리
+							for (int j = 0; j < BELT_MAX; j++){
+								if (dynamic_cast<mPlayer*>(m_player)->getBelt(j) == itr->first){
+									dynamic_cast<mPlayer*>(m_player)->setBelt(j, NULLITEM);
+								}
+							}
+							//
+							dynamic_cast<mPlayer*>(m_player)->setBelt(i, itr->first);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -111,36 +156,7 @@ void uiInventory::Render(){
 		length += swprintf(wszText_ + length, 1028, L"");
 		int i = 0;
 		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
-			itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
 			itr->second->Render();
-			i++;
 		}
-			
-		/*	if (itr->first == 0){
-				length += swprintf(wszText_ + length, 1028, L"HealthPotion / ");
-			}
-			else if (itr->first == 2){
-				length += swprintf(wszText_ + length, 1028, L"ManaPotion / ");
-			}
-			length+= swprintf(wszText_+length, 1028, L"amount %d \n", itr->second->getAmount());*/
-
-			
-		
-		//UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
-		//
-		//D2D1_RECT_F layoutRect = D2D1::RectF(
-		//	this->getPos()->x,
-		//	this->getPos()->y,
-		//	this->getPos()->x + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).x,
-		//	this->getPos()->y + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).y
-		//	);
-
-		//// draw text
-		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
-		//	wszText_,
-		//	cTextLength_,
-		//	::cD2DRenderer::GetInstance().GetTextFormat(),
-		//	layoutRect,
-		//	::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }

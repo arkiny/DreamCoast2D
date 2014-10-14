@@ -98,6 +98,19 @@ void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		m_pControl->onKeyUp(VK_LBUTTON);
 		break;
 
+	case WM_RBUTTONDOWN:
+		m_pControl->onKeyDown(wParam);
+		break;
+
+	case WM_RBUTTONUP:
+		m_pControl->onKeyUp(VK_RBUTTON);
+		break;
+
+
+	//case WM_LBUTTONDBLCLK:
+	//	m_pControl->onKeyDown(wParam);
+	//	break;
+
 	case WM_MOUSEMOVE:
 		m_pControl->onMouseMove(lParam);
 		break;

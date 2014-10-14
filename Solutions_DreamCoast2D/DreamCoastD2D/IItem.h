@@ -49,10 +49,22 @@ static EFFECT Item_Consume_DB[ITEM_CONSUME_MAX] =
 	{ 0, 200, 0, 0, 0, 0 }  //ITEM_POTION_MANA_BIG,
 };
 
+__interface MovableItem{
+	virtual bool isMoving();
+	virtual void setMoving(bool in);
+
+	virtual void saveOldPos(float x, float y);
+	virtual POINTFLOAT getOldcur();
+	virtual POINTFLOAT getGap();
+	virtual void moveTo(float x, float y);
+
+	virtual bool isInside(float x, float y);
+};
+
 // 아이템 하나하나가 버튼
 // 아이템은 하나의 데이터로만 존재하고 렌더할 필요는 없다
 // 렌더할 필요가 생길때는 UI로써 출력되었을때
-__interface IItem {
+__interface IItem : public MovableItem{
 	// 타입 수정시
 	virtual void setType(int type, int id);
 	virtual int getType();

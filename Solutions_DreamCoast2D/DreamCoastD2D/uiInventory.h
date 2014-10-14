@@ -6,13 +6,14 @@ class uiInventory :
 {
 public:
 	uiInventory();
-	uiInventory(ICharacter*);
+	uiInventory(ICharacter*, uiInterface*);
 	~uiInventory();
 	virtual void OnInit();
 	virtual void Update(float);
 	virtual void Render();
 private:
 	ICharacter* m_player;
+	uiInterface* m_belt;
 	bool m_bActivated;
 	const float m_fKeydelay = 0.2f;
 	float m_fdelaytime = m_fKeydelay;
