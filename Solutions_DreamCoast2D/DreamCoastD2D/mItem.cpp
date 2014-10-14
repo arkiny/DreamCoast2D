@@ -48,6 +48,7 @@ void mItem::Update(float delta){
 		this->setSelected(true);
 		if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON]){
 			::coControl::GetInstance().onKeyUp(VK_LBUTTON);
+			
 			this->setActivated(true);
 		}
 		else {

@@ -1,6 +1,8 @@
 #pragma once
 #include "IGObject.h"
 
+#define NULLITEM 6553526
+
 enum ITEM_TYPE
 {
 	ITEM_EQUIPMENT,		// effect to static stat

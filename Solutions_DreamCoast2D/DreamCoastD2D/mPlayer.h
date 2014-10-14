@@ -53,8 +53,8 @@ public:
 	//virtual void addToInventory(mItem*);
 	//virtual void removeFromInventory(int ID);
 
-	void setBelt(int index, mItem* item){ m_aBelt[index] = item; }
-	mItem* getBelt(int index){ return m_aBelt[index]; }
+	void setBelt(int index, int id){ m_aBelt[index] = id; }
+	int getBelt(int index){ return m_aBelt[index]; }
 	IInventory* getInventory() { return m_Inventory; }
 	float getAttackPower() { return m_default_attackPower; }
 	float getAttackSpeed() { return m_attackSpeed; }
@@ -119,7 +119,7 @@ private:
 	// 차후에 UI에서 관리하는 펑션을 만들어서 처리
 	//std::map<int, mItem*> m_vInventory;
 	// IItem 단축키는 a, s, d
-	mItem* m_aBelt[BELT_MAX];
+	int m_aBelt[BELT_MAX];
 	IInventory* m_Inventory;
 
 	// 차후 상점용

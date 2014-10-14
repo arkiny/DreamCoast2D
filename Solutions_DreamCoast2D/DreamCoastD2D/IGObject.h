@@ -72,8 +72,8 @@ __interface IPlayable{
 
 	virtual bool isDeadComplete();
 	virtual IInventory* getInventory();
-	virtual void setBelt(int index, mItem* item);
-	virtual mItem* getBelt(int index);
+	virtual void setBelt(int index, int id);
+	virtual int getBelt(int index);
 	//virtual void addToInventory(mItem*);
 	//virtual void removeFromInventory(int ID);
 	//virtual void useItem(int index);

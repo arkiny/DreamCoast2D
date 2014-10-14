@@ -72,11 +72,11 @@ void mPlayer::onInit(){
 	// TODO: 벨트에는 인벤토리에 저장된 포인터를 넘겨서 사용하는 방식으로 사용
 	// 벨트는 쓸수 있는 단축키의 제한이 있으므로 일반 어레이를 이용해서
 	// 서치타임을 줄이는 법을 이용해도 될것 같다.
-	m_aBelt[0] = m_Inventory->getInventory().at(ITEM_POTION_HEALTH_SMALL);
+	m_aBelt[0] = m_Inventory->getInventory().at(ITEM_POTION_HEALTH_SMALL)->getID();
 	//m_aBelt[0]->setAmount(3);
 
-	m_aBelt[1] = m_Inventory->getInventory().at(ITEM_POTION_MANA_SMALL);
-	m_aBelt[2] = nullptr;
+	m_aBelt[1] = m_Inventory->getInventory().at(ITEM_POTION_MANA_SMALL)->getID();
+	m_aBelt[2] = NULLITEM;
 }
 
 void mPlayer::onUpdate(float fdeltatime){

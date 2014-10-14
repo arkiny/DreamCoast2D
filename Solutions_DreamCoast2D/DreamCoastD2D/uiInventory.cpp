@@ -63,9 +63,9 @@ void uiInventory::Update(float delta){
 				if (itr->second->getAmount() == 0){
 					//
 					for (int i = 0; i < BELT_MAX; i++){
-						if (playerPtr->getBelt(i) != nullptr){
-							if (playerPtr->getBelt(i)->getType() == itr->first){
-								playerPtr->setBelt(i, nullptr);
+						if (playerPtr->getBelt(i) != NULLITEM){
+							if (playerPtr->getBelt(i) == itr->first){
+								playerPtr->setBelt(i, NULLITEM);
 							}
 						}
 					}
