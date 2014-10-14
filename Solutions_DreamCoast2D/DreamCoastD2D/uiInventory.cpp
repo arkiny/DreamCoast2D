@@ -21,19 +21,27 @@ uiInventory::uiInventory(ICharacter* player, uiInterface* ubelt){
 	m_player = player;
 	m_belt = ubelt;;
 	this->setPos(new VECTOR2D(20.0f, 350.0f));
+	this->setMoveRectangle({ this->getPos()->x + 2.0f,
+		this->getPos()->y + 0.0f,
+		this->getPos()->x + 54.0f,
+		this->getPos()->y + 13.0f });
 }
 
 void uiInventory::OnInit(){
-	m_bActivated = false;
+	this->setActivated(false);
+	m_bMoving = NULLITEM;
 
 	mPlayer* playerPtr = (mPlayer*)m_player;
 	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
 
 	int i = 0;
+
 	for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
 		itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
 		i++;
 	}
+
+	m_nInventorySize = inventory.size();
 
 }
 
@@ -44,12 +52,13 @@ void uiInventory::Update(float delta){
 
 	 //i키로 인벤토리 불러오기
 	if (coControl::GetInstance().getKeyControlInfo()[0x49]){
+		coControl::GetInstance().onKeyUp(0x49);
 		if (m_fdelaytime >= m_fKeydelay){
-			if (m_bActivated == false){
-				m_bActivated = true;
+			if (this->isActivated() == false){
+				this->setActivated(true);
 			}
 			else{
-				m_bActivated = false;
+				this->setActivated(false);
 			}
 		}
 		m_fdelaytime -= delta;
@@ -64,7 +73,23 @@ void uiInventory::Update(float delta){
 	mPlayer* playerPtr = (mPlayer*)m_player;
 	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
 
-	if (m_bActivated){
+	if (this->isActivated()){
+		// window move
+		POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
+		if (this->isInside(mousepoint.x, mousepoint.y)){
+			if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && this->isMoving() == false
+				&& this->isInside(::coControl::GetInstance().getClickPosition().x, ::coControl::GetInstance().getClickPosition().y)){
+				POINTFLOAT clickpoint = ::coControl::GetInstance().getClickPosition();
+				this->saveOldPos(clickpoint.x, clickpoint.y);
+				this->setMoving(true);
+			}
+		}
+		else
+		{
+			this->setSelected(false);
+		}
+		//
+
 		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
 			itr->second->Update(delta);
 
@@ -82,15 +107,25 @@ void uiInventory::Update(float delta){
 						}
 					}
 					//
-					playerPtr->getInventory()->removeFromInventory(itr->first);					
+					playerPtr->getInventory()->removeFromInventory(itr->first);		
+					// 순서 재소팅
+
 				}				
 			}
+
+			//if (itr->second->isSelected()){
+			//	POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
+			//	if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && itr->second->isMoving()==false){
+			//		itr->second->saveOldPos(mousepoint.x, mousepoint.y);
+			//		itr->second->setMoving(true);
+			//	}
 
 			if (itr->second->isMoving()){
 				POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
 				// 이동중이고 마우스 키를 떼었을때, 원래 위치로 되돌린다.
 				// 원래 위치로 되돌릴 생각이 없다면, 
 				// 아래 좌표를 현재 좌표로 확정한다.
+
 				itr->second->moveTo(mousepoint.x, mousepoint.y);
 				bool info = ::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON];
 				if (info == false){
@@ -116,14 +151,33 @@ void uiInventory::Update(float delta){
 							dynamic_cast<mPlayer*>(m_player)->setBelt(i, itr->first);
 						}
 					}
+					
+					// 차후 인벤토리 밖으로 끌어놓으면 해당 아이템 삭제 추가
+					//if (mousepoint.x < this->getPos()->x &&
+					//	mousepoint.y < this->getPos()->y &&
+					//	mousepoint.x > this->getPos()->x + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).x &&
+					//	mousepoint.y > this->getPos()->y + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).y){
+					//	playerPtr->getInventory()->removeFromInventory(itr->first, itr->second->getAmount()+1);
+					//}
 				}
 			}
+			//}
+		}
+
+		// 재소팅은 무언가 삭제되서 원래 사이즈와 달라졌을때 재소팅
+		if (m_nInventorySize != inventory.size()){
+			int i = 0;
+			for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
+				itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
+				i++;
+			}
+			m_nInventorySize = inventory.size();
 		}
 	}
 }
 
 void uiInventory::Render(){
-	if (m_bActivated){
+	if (this->isActivated()){
 		if (::cResourceManager::GetInstance().getUIBitMap(UIID::UI_INVENTORY) != nullptr){
 			::D2D1_RECT_F dxArea
 				= { this->getPos()->x,
@@ -155,8 +209,28 @@ void uiInventory::Render(){
 		int length = 0;
 		length += swprintf(wszText_ + length, 1028, L"");
 		int i = 0;
+		int movingItemID = NULLITEM;
 		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
-			itr->second->Render();
+			if (itr->second->isMoving()){
+				movingItemID = itr->first;
+			}
+			else{
+				itr->second->Render();
+			}
 		}
+		if (movingItemID != NULLITEM){
+			inventory.at(movingItemID)->Render();
+		}
+	}
+}
+
+void uiInventory::moveTo(float x, float y){
+	uiInterface::moveTo(x, y);
+	mPlayer* playerPtr = (mPlayer*)m_player;
+	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
+	int i = 0;
+	for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
+		itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
+		i++;
 	}
 }

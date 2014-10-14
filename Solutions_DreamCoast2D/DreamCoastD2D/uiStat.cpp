@@ -8,6 +8,10 @@
 uiStat::uiStat()
 {
 	this->setPos(new VECTOR2D(20.0f, 200.0f));
+	this->setMoveRectangle({ this->getPos()->x + 4.0f, 
+		this->getPos()->y + 0.0f, 
+		this->getPos()->x + 54.0f, 
+		this->getPos()->y + 13.0f });
 }
 
 
@@ -18,21 +22,26 @@ uiStat::~uiStat()
 uiStat::uiStat(ICharacter* in){
 	m_player = in;
 	this->setPos(new VECTOR2D(20.0f, 200.0f));
+	this->setMoveRectangle({ this->getPos()->x + 4.0f,
+		this->getPos()->y + 0.0f,
+		this->getPos()->x + 54.0f,
+		this->getPos()->y + 13.0f });
 }
 
 void uiStat::OnInit(){
-	m_bActivated = false;
+	this->setActivated(false);
 }
 
 void uiStat::Update(float delta){
 	// c키로 캐릭터 info창 불러오기
 	if (coControl::GetInstance().getKeyControlInfo()[0x43]){
+		coControl::GetInstance().onKeyUp(0x43);
 		if (m_fdelaytime >= m_fKeydelay){
-			if (m_bActivated == false){
-				m_bActivated = true;
+			if (this->isActivated() == false){
+				this->setActivated(true);
 			}
 			else{
-				m_bActivated = false;
+				this->setActivated(false);
 			}
 		}
 		m_fdelaytime -= delta;
@@ -43,10 +52,27 @@ void uiStat::Update(float delta){
 	if (!coControl::GetInstance().getKeyControlInfo()[0x43]){
 		m_fdelaytime = m_fKeydelay;
 	}
+
+	
+	if (this->isActivated()){
+		POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
+		if (this->isInside(mousepoint.x, mousepoint.y)){
+			if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && this->isMoving() == false
+				&& this->isInside(::coControl::GetInstance().getClickPosition().x, ::coControl::GetInstance().getClickPosition().y)){
+				POINTFLOAT clickpoint = ::coControl::GetInstance().getClickPosition();
+				this->saveOldPos(clickpoint.x, clickpoint.y);
+				this->setMoving(true);
+			}
+		}
+		else
+		{
+			this->setSelected(false);
+		}
+	}
 }
 
 void uiStat::Render(){
-	if (m_bActivated){
+	if (this->isActivated()){
 		if (::cResourceManager::GetInstance().getUIBitMap(UIID::UI_STAT) != nullptr){
 			::D2D1_RECT_F dxArea
 				= { this->getPos()->x,
@@ -99,3 +125,4 @@ void uiStat::Render(){
 
 	}
 }
+

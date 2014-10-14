@@ -114,6 +114,7 @@ void uiMenu::Update(float delta){
 	}
 	else{ //게임오버 아닐때는 esc로 메뉴를 불러올수 있다.
 		if (coControl::GetInstance().getKeyControlInfo()[VK_ESCAPE]){
+			coControl::GetInstance().onKeyUp(VK_ESCAPE);
 			if (m_fdelaytime >= m_fKeydelay){
 				if (m_bMenuActivated == false){
 					m_bMenuActivated = true;

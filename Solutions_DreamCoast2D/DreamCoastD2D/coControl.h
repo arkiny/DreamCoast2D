@@ -14,13 +14,15 @@ public:
 	//void onLMBDown(LPARAM lParam); 
 	//void onLMBUp(LPARAM lParam);
 	void onMouseMove(LPARAM lParam);
+	void onMouseClick(LPARAM lParam);
 
 	// Getter
 	bool* getKeyControlInfo();
 	POINTFLOAT getMousePosition();
-
+	POINTFLOAT getClickPosition();
 private:
 	bool m_bKeyCodeArray[256];
 	POINTFLOAT m_MousePos;
+	POINTFLOAT m_ClickPos;
 };
 

@@ -62,8 +62,8 @@ private:
 	VECTOR2D* m_vPos;
 	bool m_bSelected = false;
 	bool m_bActivated = false;
+	
 	bool m_bIsMoving = false;
-
 	POINTFLOAT m_fMB_cache_old;
 	POINTFLOAT m_fMB_cache_gap;
 };

@@ -45,6 +45,8 @@ void mItem::Update(float delta){
 	// 만약 벨트위에 드롭이 아닐 경우 노띵해픈
 
 	POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
+	
+
 	if (mItem::isInside(mousepoint.x, mousepoint.y)){
 		this->setSelected(true);
 		if (::coControl::GetInstance().getKeyControlInfo()[VK_RBUTTON]){
@@ -55,8 +57,10 @@ void mItem::Update(float delta){
 			this->setActivated(false);
 		}
 
-		if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && m_bIsMoving == false){
-			::mItem::saveOldPos(mousepoint.x, mousepoint.y);
+		if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && m_bIsMoving == false
+			&& mItem::isInside(::coControl::GetInstance().getClickPosition().x, ::coControl::GetInstance().getClickPosition().y)){
+			POINTFLOAT clickpoint = ::coControl::GetInstance().getClickPosition();
+			::mItem::saveOldPos(clickpoint.x, clickpoint.y);
 			this->setMoving(true);
 		}
 	}

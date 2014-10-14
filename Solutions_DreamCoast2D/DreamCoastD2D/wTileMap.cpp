@@ -277,20 +277,20 @@ void wTileMap::setSize(float horizontal, float vertical){
 	ptr = nullptr;
 	
 	//debug및 테스트용 코드
-	for (int i = 0; i < 50; i++){
+	for (int i = 0; i < 25; i++){
 		setTile(static_cast<float>(i), 0.0f, 2);
 	}
 
-	for (int i = 0; i < 50; i++){
+	for (int i = 0; i < 25; i++){
 		setTile(0.0f, static_cast<float>(i), 2);
 	}
 
-	for (int i = 0; i < 50; i++){
-		setTile(49.0f, static_cast<float>(i), 2);
+	for (int i = 0; i < 25; i++){
+		setTile(24.0f, static_cast<float>(i), 2);
 	}
 
-	for (int i = 0; i < 50; i++){
-		setTile(static_cast<float>(i), 49.0f, 2);
+	for (int i = 0; i < 25; i++){
+		setTile(static_cast<float>(i), 24.0f, 2);
 	}
 
 	setTile(11.0f, 12.0f, 3);

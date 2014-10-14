@@ -90,6 +90,7 @@ void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 	case WM_LBUTTONDOWN:
 		m_pControl->onKeyDown(wParam);
+		m_pControl->onMouseClick(lParam);
 		break;
 
 	case WM_LBUTTONUP: 

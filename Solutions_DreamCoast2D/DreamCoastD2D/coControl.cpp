@@ -50,6 +50,11 @@ void coControl::onMouseMove(LPARAM lParam){
 	m_MousePos.y = HIWORD(lParam);
 }
 
+void coControl::onMouseClick(LPARAM lParam){
+	m_ClickPos.x = LOWORD(lParam);
+	m_ClickPos.y = HIWORD(lParam);
+}
+
 
 // Getter
 bool* coControl::getKeyControlInfo(){
@@ -58,4 +63,8 @@ bool* coControl::getKeyControlInfo(){
 
 POINTFLOAT coControl::getMousePosition(){
 	return m_MousePos;
+}
+
+POINTFLOAT coControl::getClickPosition(){
+	return m_ClickPos;
 }

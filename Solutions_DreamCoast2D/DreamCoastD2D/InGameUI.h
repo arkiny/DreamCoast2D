@@ -19,5 +19,8 @@ public:
 	void Render();
 	void Update(float);
 	void OnInit(sIScreen*);
+private:
+	std::vector<uiInterface*> m_pInterfaceCanMove;
+	bool m_bGameUIActivate = true;
 };
 

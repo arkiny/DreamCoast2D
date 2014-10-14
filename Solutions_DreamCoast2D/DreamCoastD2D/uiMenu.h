@@ -38,5 +38,7 @@ private:
 	const float m_fKeydelay = 0.2f;
 	float m_fdelaytime = m_fKeydelay;
 	float m_fmovedelaytime = m_fKeydelay;
+
+
 };
 
