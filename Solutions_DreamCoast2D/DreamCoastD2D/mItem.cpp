@@ -5,6 +5,10 @@
 #include "cResourceManager.h"
 #include "coControl.h"
 
+// drag and drop reference
+//https://github.com/arkiny/SGA-Learning-Heedong/blob/master/WinAPI/Porfolio/DreamCoastEngine/DreamCoastEngine%20Basic/DreamCoastEngine%20Basic.cpp
+//
+
 mItem::mItem()
 {
 	m_nType = 0;
@@ -86,8 +90,7 @@ void mItem::Render(){
 		cTextLength_,
 		::cD2DRenderer::GetInstance().GetTextFormat(),
 		itemRect,
-		::cD2DRenderer::GetInstance().GetBlackBrush());
-	
+		::cD2DRenderer::GetInstance().GetBlackBrush());	
 }
 
 // 타입 수정시

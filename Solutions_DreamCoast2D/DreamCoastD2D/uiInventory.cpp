@@ -111,36 +111,36 @@ void uiInventory::Render(){
 		length += swprintf(wszText_ + length, 1028, L"");
 		int i = 0;
 		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
-
 			itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
 			itr->second->Render();
+			i++;
+		}
 			
-			if (itr->first == 0){
+		/*	if (itr->first == 0){
 				length += swprintf(wszText_ + length, 1028, L"HealthPotion / ");
 			}
 			else if (itr->first == 2){
 				length += swprintf(wszText_ + length, 1028, L"ManaPotion / ");
 			}
-			length+= swprintf(wszText_+length, 1028, L"amount %d \n", itr->second->getAmount());
+			length+= swprintf(wszText_+length, 1028, L"amount %d \n", itr->second->getAmount());*/
 
-			i++;
-		}		
+			
 		
-		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
-		
-		D2D1_RECT_F layoutRect = D2D1::RectF(
-			this->getPos()->x,
-			this->getPos()->y,
-			this->getPos()->x + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).x,
-			this->getPos()->y + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).y
-			);
+		//UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+		//
+		//D2D1_RECT_F layoutRect = D2D1::RectF(
+		//	this->getPos()->x,
+		//	this->getPos()->y,
+		//	this->getPos()->x + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).x,
+		//	this->getPos()->y + ::cResourceManager::GetInstance().getUISize(UIID::UI_INVENTORY).y
+		//	);
 
-		// draw text
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
-			wszText_,
-			cTextLength_,
-			::cD2DRenderer::GetInstance().GetTextFormat(),
-			layoutRect,
-			::cD2DRenderer::GetInstance().GetBlackBrush());
+		//// draw text
+		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
+		//	wszText_,
+		//	cTextLength_,
+		//	::cD2DRenderer::GetInstance().GetTextFormat(),
+		//	layoutRect,
+		//	::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
