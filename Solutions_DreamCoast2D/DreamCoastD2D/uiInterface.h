@@ -32,6 +32,7 @@ public:
 	virtual void moveTo(float x, float y);
 	virtual void saveOldPos(float x, float y);
 	virtual bool isInside(float x, float y);
+	virtual D2D1_RECT_F getMoveWindowRect(){ return m_MoveWindowRect; }
 
 //todo: 차후 마우스를 이용해서 유저인터페이스를 옮기기 위해 주석추가
 private:

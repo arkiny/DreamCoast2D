@@ -74,21 +74,21 @@ void uiInventory::Update(float delta){
 	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
 
 	if (this->isActivated()){
-		// window move
-		POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
-		if (this->isInside(mousepoint.x, mousepoint.y)){
-			if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && this->isMoving() == false
-				&& this->isInside(::coControl::GetInstance().getClickPosition().x, ::coControl::GetInstance().getClickPosition().y)){
-				POINTFLOAT clickpoint = ::coControl::GetInstance().getClickPosition();
-				this->saveOldPos(clickpoint.x, clickpoint.y);
-				this->setMoving(true);
-			}
-		}
-		else
-		{
-			this->setSelected(false);
-		}
-		//
+		//// window move
+		//POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
+		//if (this->isInside(mousepoint.x, mousepoint.y)){
+		//	if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && this->isMoving() == false
+		//		&& this->isInside(::coControl::GetInstance().getClickPosition().x, ::coControl::GetInstance().getClickPosition().y)){
+		//		POINTFLOAT clickpoint = ::coControl::GetInstance().getClickPosition();
+		//		this->saveOldPos(clickpoint.x, clickpoint.y);
+		//		this->setMoving(true);
+		//	}
+		//}
+		//else
+		//{
+		//	this->setSelected(false);
+		//}
+		////
 
 		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
 			itr->second->Update(delta);

@@ -22,5 +22,6 @@ public:
 private:
 	std::vector<uiInterface*> m_pInterfaceCanMove;
 	bool m_bGameUIActivate = true;
+	//bool RectCheck(uiInterface*, POINTFLOAT&);
 };
 

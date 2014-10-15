@@ -22,5 +22,8 @@ private:
 	float m_fmovedelaytime = m_fKeydelay;
 	int m_nInventorySize;
 	int m_bMoving;
+
+	// 현재 보여주는 페이지에 따라서 뿌려주는 (update/render)해주는 범위가 달라진다.
+	int m_nPage; 
 };
 
