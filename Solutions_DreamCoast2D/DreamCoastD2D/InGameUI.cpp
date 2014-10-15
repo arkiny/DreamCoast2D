@@ -58,11 +58,12 @@ void InGameUI::Update(float delta){
 
 			if (x->isActivated()){
 				POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
-				if (x->isInside(mousepoint.x, mousepoint.y)){
+				if (x->isInsideMovingRect(mousepoint.x, mousepoint.y)){
 					if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON] && x->isMoving() == false
-						&& x->isInside(::coControl::GetInstance().getClickPosition().x, ::coControl::GetInstance().getClickPosition().y)){
+						&& x->isInsideMovingRect(::coControl::GetInstance().getClickPosition().x, ::coControl::GetInstance().getClickPosition().y)){
 						POINTFLOAT clickpoint = ::coControl::GetInstance().getClickPosition();
 						x->saveOldPos(clickpoint.x, clickpoint.y);
+						// setclicked
 						x->setMoving(true);
 					}
 				}
@@ -73,6 +74,8 @@ void InGameUI::Update(float delta){
 			}
 
 			if (x->isMoving()){	
+				// setclicked is true
+				// put the window to back
 				movingIndex = i;
 				break;
 			}
@@ -121,7 +124,7 @@ void InGameUI::OnInit(sIScreen* in){
 		x->OnInit();
 	}
 }
-//
+
 //bool InGameUI::RectCheck(uiInterface* input, POINTFLOAT& mousePoint){
 //	return (mousePoint.x >= input->getMoveWindowRect().left &&
 //		mousePoint.y >= input->getMoveWindowRect().top&&

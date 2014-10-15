@@ -21,10 +21,10 @@ uiInventory::uiInventory(ICharacter* player, uiInterface* ubelt){
 	m_player = player;
 	m_belt = ubelt;;
 	this->setPos(new VECTOR2D(20.0f, 350.0f));
-	this->setMoveRectangle({ this->getPos()->x + 2.0f,
-		this->getPos()->y + 0.0f,
-		this->getPos()->x + 54.0f,
-		this->getPos()->y + 13.0f });
+	this->setMoveRectangle({2.0f,
+		0.0f,
+		54.0f,
+		13.0f });
 }
 
 void uiInventory::OnInit(){

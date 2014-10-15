@@ -9,6 +9,9 @@ uiInterface::uiInterface()
 	m_fMB_cache_old = { 0.0f, 0.0f };
 	m_fMB_cache_gap = { 0.0f, 0.0f };
 	m_MoveWindowRect = { 0.0f, 0.0f,0.0f, 0.0f };
+	m_ClickWindowRect = { 0.0f, 0.0f, 0.0f, 0.0f };
+	m_MoveWindowRectOrigin = { 0.0f, 0.0f, 0.0f, 0.0f };
+	m_ClickWindowRectOrigin = { 0.0f, 0.0f, 0.0f, 0.0f };
 }
 
 uiInterface::uiInterface(float x, float y)
@@ -17,6 +20,9 @@ uiInterface::uiInterface(float x, float y)
 	m_fMB_cache_old = { 0.0f, 0.0f };
 	m_fMB_cache_gap = { 0.0f, 0.0f };
 	m_MoveWindowRect = { 0.0f, 0.0f, 0.0f, 0.0f };
+	m_ClickWindowRect = { 0.0f, 0.0f, 0.0f, 0.0f };
+	m_MoveWindowRectOrigin = { 0.0f, 0.0f, 0.0f, 0.0f };
+	m_ClickWindowRectOrigin = { 0.0f, 0.0f, 0.0f, 0.0f };
 }
 
 
@@ -40,12 +46,40 @@ void uiInterface::setPos(VECTOR2D* in){
 	m_vpos = in;
 }
 
+void uiInterface::setMoveRectangle(D2D1_RECT_F in){
+	m_MoveWindowRectOrigin = in;
+	m_MoveWindowRect = {
+		this->getPos()->x + m_MoveWindowRectOrigin.left,
+		this->getPos()->y + m_MoveWindowRectOrigin.top,
+		this->getPos()->x + m_MoveWindowRectOrigin.right,
+		this->getPos()->y + m_MoveWindowRectOrigin.bottom
+	};
+}
+
+void uiInterface::setClickRenctangle(D2D1_RECT_F in){
+	m_ClickWindowRectOrigin = in;
+	m_ClickWindowRect = {
+		this->getPos()->x + m_ClickWindowRectOrigin.left,
+		this->getPos()->y + m_ClickWindowRectOrigin.top,
+		this->getPos()->x + m_ClickWindowRectOrigin.right,
+		this->getPos()->y + m_ClickWindowRectOrigin.bottom
+	};
+}
+
 void uiInterface::moveTo(float x, float y){
 	this->setPos(x - m_fMB_cache_gap.x, y - m_fMB_cache_gap.y);
-	m_MoveWindowRect = { this->getPos()->x + 4.0f,
-		this->getPos()->y + 0.0f,
-		this->getPos()->x + 54.0f,
-		this->getPos()->y + 13.0f };
+
+	m_MoveWindowRect = { this->getPos()->x + m_MoveWindowRectOrigin.left,
+		this->getPos()->y + m_MoveWindowRectOrigin.top,
+		this->getPos()->x + m_MoveWindowRectOrigin.right,
+		this->getPos()->y + m_MoveWindowRectOrigin.bottom };
+
+	m_ClickWindowRect = {
+		this->getPos()->x + m_ClickWindowRectOrigin.left,
+		this->getPos()->y + m_ClickWindowRectOrigin.top,
+		this->getPos()->x + m_ClickWindowRectOrigin.right,
+		this->getPos()->y + m_ClickWindowRectOrigin.bottom
+	};
 }
 
 void uiInterface::saveOldPos(float x, float y){
@@ -53,9 +87,16 @@ void uiInterface::saveOldPos(float x, float y){
 	m_fMB_cache_gap = { x - this->getPos()->x, y - this->getPos()->y };
 }
 
-bool uiInterface::isInside(float mousex, float mousey){
+bool uiInterface::isInsideMovingRect(float mousex, float mousey){
 	return (mousex >= m_MoveWindowRect.left &&
 		mousey >= m_MoveWindowRect.top&&
 		mousex <= m_MoveWindowRect.right &&
 		mousey <= m_MoveWindowRect.bottom);
+}
+
+bool uiInterface::isInsideClickRect(float x, float y){
+	return (x >= m_ClickWindowRectOrigin.left &&
+		y >= m_ClickWindowRectOrigin.top&&
+		x <= m_ClickWindowRectOrigin.right &&
+		y <= m_ClickWindowRectOrigin.bottom);
 }

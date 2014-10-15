@@ -17,7 +17,7 @@ public:
 	VECTOR2D* getPos(){ return m_vpos; }
 	void setPos(VECTOR2D* in);
 	void setPos(float x, float y);
-	void setMoveRectangle(D2D1_RECT_F in){ m_MoveWindowRect = in; }
+	
 	virtual bool isActivated() { return m_bActivated; }
 	virtual void setActivated(bool in) { m_bActivated = in; }
 
@@ -31,8 +31,12 @@ public:
 
 	virtual void moveTo(float x, float y);
 	virtual void saveOldPos(float x, float y);
-	virtual bool isInside(float x, float y);
+	virtual bool isInsideMovingRect(float x, float y);
+	virtual bool isInsideClickRect(float x, float y);
 	virtual D2D1_RECT_F getMoveWindowRect(){ return m_MoveWindowRect; }
+	
+	virtual void setMoveRectangle(D2D1_RECT_F in);
+	virtual void setClickRenctangle(D2D1_RECT_F in);
 
 //todo: 차후 마우스를 이용해서 유저인터페이스를 옮기기 위해 주석추가
 private:
@@ -47,6 +51,11 @@ private:
 
 	POINTFLOAT m_fMB_cache_old;
 	POINTFLOAT m_fMB_cache_gap;
+
+	D2D1_RECT_F m_MoveWindowRectOrigin;
 	D2D1_RECT_F m_MoveWindowRect;
+	
+	D2D1_RECT_F m_ClickWindowRectOrigin;
+	D2D1_RECT_F m_ClickWindowRect;
 };
 

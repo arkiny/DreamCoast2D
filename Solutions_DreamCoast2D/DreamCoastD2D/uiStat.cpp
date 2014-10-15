@@ -8,10 +8,14 @@
 uiStat::uiStat()
 {
 	this->setPos(new VECTOR2D(20.0f, 200.0f));
-	this->setMoveRectangle({ this->getPos()->x + 4.0f, 
-		this->getPos()->y + 0.0f, 
-		this->getPos()->x + 54.0f, 
-		this->getPos()->y + 13.0f });
+	this->setMoveRectangle({ 4.0f, 
+		0.0f, 
+		54.0f, 
+		13.0f });
+
+	this->setClickRenctangle({ 0.0f, 0.0f, 
+		::cResourceManager::GetInstance().getUISize(UIID::UI_STAT).x, 
+		::cResourceManager::GetInstance().getUISize(UIID::UI_STAT).y });
 }
 
 
@@ -22,10 +26,14 @@ uiStat::~uiStat()
 uiStat::uiStat(ICharacter* in){
 	m_player = in;
 	this->setPos(new VECTOR2D(20.0f, 200.0f));
-	this->setMoveRectangle({ this->getPos()->x + 4.0f,
-		this->getPos()->y + 0.0f,
-		this->getPos()->x + 54.0f,
-		this->getPos()->y + 13.0f });
+	this->setMoveRectangle({ 4.0f,
+		0.0f,
+		54.0f,
+		13.0f });
+
+	this->setClickRenctangle({ 0.0f, 0.0f,
+		::cResourceManager::GetInstance().getUISize(UIID::UI_STAT).x,
+		::cResourceManager::GetInstance().getUISize(UIID::UI_STAT).y });
 }
 
 void uiStat::OnInit(){
