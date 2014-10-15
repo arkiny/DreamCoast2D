@@ -69,7 +69,7 @@ void cResourceManager::load(){
 	m_UI_SIZE[UIID::MAP_L_BORDER] = { 210.0f, 210.0f };
 	m_UI_SIZE[UIID::MAP_TAG] = { 210.0f, 20.0f };
 	m_UI_SIZE[UIID::UI_BELT] = {197.0f, 64.0f};
-	m_UI_SIZE[UIID::UI_INVENTORY] = { 279.0f, 290.0f };
+	m_UI_SIZE[UIID::UI_INVENTORY] = { 279.0f, 152.0f };
 	m_UI_SIZE[UIID::UI_STAT] = { 279.0f, 143.0f };
 	m_UI_SIZE[UIID::UI_HUD_MENU] = { 282.0f, 25.0f }; 
 

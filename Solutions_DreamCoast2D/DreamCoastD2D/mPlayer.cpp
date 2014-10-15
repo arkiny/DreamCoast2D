@@ -64,11 +64,45 @@ void mPlayer::onInit(){
 	adder->setAmount(3);
 	m_Inventory->addToInventory(adder);
 	m_Inventory->addToInventory(adder); // should be 6, ok
+
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_BIG, Item_Consume_DB[ITEM_POTION_HEALTH_BIG]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_1, Item_Consume_DB[ITEM_POTION_HEALTH_1]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_2, Item_Consume_DB[ITEM_POTION_HEALTH_2]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_3, Item_Consume_DB[ITEM_POTION_HEALTH_3]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_HEALTH_4, Item_Consume_DB[ITEM_POTION_HEALTH_4]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+
+
+
 	adder = new mItem(ITEM_CONSUME, ITEM_POTION_MANA_SMALL, Item_Consume_DB[ITEM_POTION_MANA_SMALL]);
 	adder->setAmount(3);
 	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_MANA_BIG, Item_Consume_DB[ITEM_POTION_MANA_BIG]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_MANA_1, Item_Consume_DB[ITEM_POTION_MANA_1]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_MANA_2, Item_Consume_DB[ITEM_POTION_MANA_2]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_MANA_3, Item_Consume_DB[ITEM_POTION_MANA_3]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
+	adder = new mItem(ITEM_CONSUME, ITEM_POTION_MANA_4, Item_Consume_DB[ITEM_POTION_MANA_4]);
+	adder->setAmount(3);
+	m_Inventory->addToInventory(adder);
 	adder = nullptr;
-
+	
 	// TODO: 벨트에는 인벤토리에 저장된 포인터를 넘겨서 사용하는 방식으로 사용
 	// 벨트는 쓸수 있는 단축키의 제한이 있으므로 일반 어레이를 이용해서
 	// 서치타임을 줄이는 법을 이용해도 될것 같다.
