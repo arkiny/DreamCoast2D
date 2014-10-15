@@ -37,24 +37,7 @@ uiInventory::uiInventory(ICharacter* player, uiInterface* ubelt){
 void uiInventory::OnInit(){
 	this->setActivated(false);
 	m_bMoving = NULLITEM;
-
-	mPlayer* playerPtr = (mPlayer*)m_player;
-	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
-	std::map<int, mItem*>::iterator itr = inventory.begin();
-		int i = 0;
-	int j = 0;
-	while (itr != inventory.end()){
-		itr->second->setPos(this->getPos()->x + 10.0f + (i * 50.0f), this->getPos()->y + 20.0f + (j * 50.0f));
-		itr++;
-		i++;
-		if (i >= m_nWidthMax){
-			i = 0;
-			j++;
-			if (j >= m_nHeightMax){
-				j = 0;
-			}
-		}
-	}
+	this->resorting();
 
 
 	/*itr->second->setPos(this->getPos()->x + 10.0f + (0*50.0f), this->getPos()->y + 20.0f + (0*50.0f));
@@ -65,7 +48,8 @@ void uiInventory::OnInit(){
 	//	
 
 	//}
-
+	mPlayer* playerPtr = (mPlayer*)m_player;
+	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
 	m_nInventorySize = inventory.size();
 
 }
@@ -212,23 +196,7 @@ void uiInventory::Update(float delta){
 
 			// 재소팅은 무언가 삭제되서 원래 사이즈와 달라졌을때 재소팅
 			if (m_nInventorySize != inventory.size()){
-				mPlayer* playerPtr = (mPlayer*)m_player;
-				std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
-				std::map<int, mItem*>::iterator itr = inventory.begin();
-				int i = 0;
-				int j = 0;
-				while (itr != inventory.end()){
-					itr->second->setPos(this->getPos()->x + 10.0f + (i * 50.0f), this->getPos()->y + 20.0f + (j * 50.0f));
-					itr++;
-					i++;
-					if (i >= m_nWidthMax){
-						i = 0;
-						j++;
-						if (j >= m_nHeightMax){
-							j = 0;
-						}
-					}
-				}
+				this->resorting();
 				m_nInventorySize = inventory.size();
 			}
 			index++;
@@ -302,17 +270,31 @@ void uiInventory::Render(){
 
 void uiInventory::moveTo(float x, float y){
 	uiInterface::moveTo(x, y);
-	mPlayer* playerPtr = (mPlayer*)m_player;
-	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
-	int i = 0;
-	for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
-		itr->second->setPos(this->getPos()->x + 10.0f + (i*50.0f), this->getPos()->y + 20.0f);
-		i++;
-	}
+	this->resorting();
 	m_RectPrevButton = { this->getPos()->x + 115.0f, this->getPos()->y + 132.0f,
 		this->getPos()->x + 129.0f, this->getPos()->y + 143.0f };
 	m_RectNextButton = { this->getPos()->x + 149.0f, this->getPos()->y + 132.0f,
 		this->getPos()->x + 163.0f, this->getPos()->y + 143.0f };
 	m_RectPageOut = { this->getPos()->x + 130.0f, this->getPos()->y + 132.0f,
 		this->getPos()->x + 148.0f, this->getPos()->y + 144.0f };
+}
+
+void uiInventory::resorting(){
+	mPlayer* playerPtr = (mPlayer*)m_player;
+	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
+	std::map<int, mItem*>::iterator itr = inventory.begin();
+	int i = 0;
+	int j = 0;
+	while (itr != inventory.end()){
+		itr->second->setPos(this->getPos()->x + 10.0f + (i * 50.0f), this->getPos()->y + 20.0f + (j * 50.0f));
+		itr++;
+		i++;
+		if (i >= m_nWidthMax){
+			i = 0;
+			j++;
+			if (j >= m_nHeightMax){
+				j = 0;
+			}
+		}
+	}
 }

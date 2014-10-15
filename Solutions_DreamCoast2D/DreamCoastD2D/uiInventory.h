@@ -33,6 +33,8 @@ private:
 	const int m_nHeightMax = 2;
 	const int m_nMaxNumforaPage = m_nHeightMax * m_nWidthMax;
 
+	void resorting();
+
 	D2D1_RECT_F m_RectPrevButton;
 	D2D1_RECT_F m_RectNextButton;
 	D2D1_RECT_F m_RectPageOut;
