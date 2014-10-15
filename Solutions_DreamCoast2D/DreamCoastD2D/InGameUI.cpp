@@ -87,6 +87,8 @@ void InGameUI::Update(float delta){
 		// resorting
 		if (movingIndex != 999 && movingIndex != m_pInterfaceCanMove.size()-1){
 			uiInterface* temp = m_pInterfaceCanMove[movingIndex];
+			temp->setLast(true);
+			m_pInterfaceCanMove.back()->setLast(false);
 			m_pInterfaceCanMove.erase(m_pInterfaceCanMove.begin() + movingIndex);
 			m_pInterfaceCanMove.shrink_to_fit();
 			m_pInterfaceCanMove.push_back(temp);			

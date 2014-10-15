@@ -10,7 +10,7 @@ uiStat::uiStat()
 	this->setPos(new VECTOR2D(20.0f, 200.0f));
 	this->setMoveRectangle({ 4.0f, 
 		0.0f, 
-		54.0f, 
+		273.0f, 
 		13.0f });
 
 	this->setClickRenctangle({ 0.0f, 0.0f, 
@@ -28,7 +28,7 @@ uiStat::uiStat(ICharacter* in){
 	this->setPos(new VECTOR2D(20.0f, 200.0f));
 	this->setMoveRectangle({ 4.0f,
 		0.0f,
-		54.0f,
+		273.0f,
 		13.0f });
 
 	this->setClickRenctangle({ 0.0f, 0.0f,

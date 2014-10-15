@@ -38,16 +38,20 @@ public:
 	virtual void setMoveRectangle(D2D1_RECT_F in);
 	virtual void setClickRenctangle(D2D1_RECT_F in);
 
+	virtual void setLast(bool in){ m_bIsLast = in; }
+	virtual bool isLast() { return m_bIsLast; }
+
 //todo: 차후 마우스를 이용해서 유저인터페이스를 옮기기 위해 주석추가
 private:
 	VECTOR2D* m_vpos;
-
 
 	bool m_bActivated = true;
 	// 창 움직임
 	bool m_bSelected = false;
 	//bool m_bActivated = false;
 	bool m_bIsMoving = false;
+
+	bool m_bIsLast = false;
 
 	POINTFLOAT m_fMB_cache_old;
 	POINTFLOAT m_fMB_cache_gap;
