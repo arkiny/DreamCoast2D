@@ -120,6 +120,21 @@ void uiBelt::Render(){
 	//}
 
 	if (ptr->getBelt(0) != NULLITEM){
+
+		if (::cResourceManager::GetInstance().getConsumeItemBitMap(ptr->getBelt(0)) != nullptr){
+			::D2D1_RECT_F dxArea
+				=  m_ARect ;
+			::D2D1_RECT_F srcArea
+				= { 0, 0,
+				::cResourceManager::GetInstance().getConsumeItemUISize(ptr->getBelt(0)).x,
+				::cResourceManager::GetInstance().getConsumeItemUISize(ptr->getBelt(0)).y };
+
+			::cD2DRenderer::GetInstance().GetRenderTarget()
+				->DrawBitmap(::cResourceManager::GetInstance().getConsumeItemBitMap(ptr->getBelt(0)), dxArea, 1.0f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+		}
+
 		swprintf(wszText_, 20, L"%d",
 			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_A))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
@@ -136,6 +151,21 @@ void uiBelt::Render(){
 	}
 
 	if (ptr->getBelt(1) != NULLITEM){
+
+		if (::cResourceManager::GetInstance().getConsumeItemBitMap(ptr->getBelt(1)) != nullptr){
+			::D2D1_RECT_F dxArea
+				= m_SRect;
+			::D2D1_RECT_F srcArea
+				= { 0, 0,
+				::cResourceManager::GetInstance().getConsumeItemUISize(ptr->getBelt(1)).x,
+				::cResourceManager::GetInstance().getConsumeItemUISize(ptr->getBelt(1)).y };
+
+			::cD2DRenderer::GetInstance().GetRenderTarget()
+				->DrawBitmap(::cResourceManager::GetInstance().getConsumeItemBitMap(ptr->getBelt(1)), dxArea, 1.0f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+		}
+
 		swprintf(wszText_, 20, L"%d",
 			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_S))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
@@ -152,6 +182,21 @@ void uiBelt::Render(){
 	}
 
 	if (ptr->getBelt(2) != NULLITEM){
+
+		if (::cResourceManager::GetInstance().getConsumeItemBitMap(ptr->getBelt(2)) != nullptr){
+			::D2D1_RECT_F dxArea
+				= m_DRect;
+			::D2D1_RECT_F srcArea
+				= { 0, 0,
+				::cResourceManager::GetInstance().getConsumeItemUISize(ptr->getBelt(2)).x,
+				::cResourceManager::GetInstance().getConsumeItemUISize(ptr->getBelt(1)).y };
+
+			::cD2DRenderer::GetInstance().GetRenderTarget()
+				->DrawBitmap(::cResourceManager::GetInstance().getConsumeItemBitMap(ptr->getBelt(2)), dxArea, 1.0f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+		}
+
 		swprintf(wszText_, 20, L"%d",
 			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_D))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);

@@ -84,6 +84,20 @@ void mItem::Render(){
 	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(itemRect, ::cD2DRenderer::GetInstance().GetWhiteBrush());
 	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(itemRect, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
+	if (::cResourceManager::GetInstance().getConsumeItemBitMap(m_nID) != nullptr){
+		::D2D1_RECT_F dxArea
+			= { this->getPos()->x, this->getPos()->y, this->getPos()->x + m_fWidth, this->getPos()->y + m_fHeight };
+		::D2D1_RECT_F srcArea
+			= { 0, 0,
+			::cResourceManager::GetInstance().getConsumeItemUISize(m_nID).x,
+			::cResourceManager::GetInstance().getConsumeItemUISize(m_nID).y };
+
+		::cD2DRenderer::GetInstance().GetRenderTarget()
+			->DrawBitmap(::cResourceManager::GetInstance().getConsumeItemBitMap(m_nID), dxArea, 1.0f,
+			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+			srcArea);
+	}
+
 	wchar_t* wszText_ = new wchar_t[20];
 
 	int length = 0;
@@ -96,7 +110,7 @@ void mItem::Render(){
 		cTextLength_,
 		::cD2DRenderer::GetInstance().GetTextFormat(),
 		itemRect,
-		::cD2DRenderer::GetInstance().GetBlackBrush());	
+		::cD2DRenderer::GetInstance().GetWhiteBrush());	
 }
 
 // 타입 수정시

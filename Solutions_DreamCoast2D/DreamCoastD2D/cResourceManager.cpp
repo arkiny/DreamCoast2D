@@ -15,11 +15,15 @@ cResourceManager::cResourceManager()
 	for (ID2D1Bitmap* x : m_Bitmap_UI){
 		x = nullptr;
 	}
+	for (ID2D1Bitmap* x : m_Bitmap_Item_Consume){
+
+	}
 	//for (D2D_POINT_2F x : m_ButtonSize){
 	//	x = { 0.0f, 0.0f };
 	//}
 	memset(m_ButtonSize, NULL, sizeof(m_ButtonSize));
 	memset(m_UI_SIZE, NULL, sizeof(m_UI_SIZE));
+	memset(m_Size_Item_Consume, NULL, sizeof(m_UI_SIZE));
 }
 
 // 이제 모든 리소스는 여기서 관리하므로
@@ -101,6 +105,48 @@ void cResourceManager::load(){
 	m_Bitmap_Button[BTN_VILLAGE] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, L"Images/menu/btn_village.png", NULL);
 	m_ButtonSize[BTN_LOADLAST] = { 254.0f, 44.0f };
 	m_ButtonSize[BTN_VILLAGE] = { 254.0f, 44.0f };
+
+	// Items
+	m_Bitmap_Item_Consume[ITEM_POTION_HEALTH_SMALL] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-red-minor.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_HEALTH_BIG] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-red-medium.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_HEALTH_1] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-red-large.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_HEALTH_2] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-red-huge.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_HEALTH_3] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-green-minor.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_HEALTH_4] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-green-medium.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_MANA_SMALL] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-blue-tiny.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_MANA_BIG] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-blue.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_MANA_1] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-blue-big.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_MANA_2] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-blue-massive.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_MANA_3] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-green-moderate.png", NULL);
+	m_Bitmap_Item_Consume[ITEM_POTION_MANA_4] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/Item/potion-icons/potion-green-major.png", NULL);
+
+	for (int i = 0; i < ITEM_CONSUME_MAX; i++){
+		m_Size_Item_Consume[i] = { 60.0f, 60.0f };
+	}
 }
 
 void cResourceManager::loadMainMenuResource(){

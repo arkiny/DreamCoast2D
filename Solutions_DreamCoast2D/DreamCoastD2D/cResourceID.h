@@ -10,3 +10,65 @@ enum UIID{
 	STATBAR, BLUEBAR, REDBAR, MAP_L_BORDER, MAP_TAG, 
 	MN_NORMAL, MN_GAMEOVER, UI_BELT, UI_INVENTORY, UI_STAT, UI_HUD_MENU,
 	UI_ID_MAX };
+
+enum ITEM_TYPE
+{
+	ITEM_EQUIPMENT,		// effect to static stat
+	ITEM_CONSUME,		// effect to current stat
+	ITEM_TYPE_MAX
+};
+
+enum ITEM_CONSUME_ID
+{
+	ITEM_POTION_HEALTH_SMALL,	// potion effect
+	ITEM_POTION_HEALTH_BIG,		// potion effect
+	ITEM_POTION_HEALTH_1,		// potion effect
+	ITEM_POTION_HEALTH_2,		// potion effect
+	ITEM_POTION_HEALTH_3,		// potion effect
+	ITEM_POTION_HEALTH_4,		// potion effect
+	ITEM_POTION_MANA_SMALL,
+	ITEM_POTION_MANA_BIG,
+	ITEM_POTION_MANA_1,
+	ITEM_POTION_MANA_2,
+	ITEM_POTION_MANA_3,
+	ITEM_POTION_MANA_4,
+	ITEM_CONSUME_MAX
+};
+
+enum ITEM_EQUIP_ID
+{
+	ITEM_SWORD_ARMINGSWORD,
+	ITEM_SWORD_BASTARDSWORD,
+	ITEM_EQUIP_MAX
+};
+
+typedef struct Effect
+{
+	float HP;
+	float MP;
+	float Attack;
+	float AttackSpeed;
+	float Defense;
+	float MoveSpeed;
+}EFFECT, *LPEFFECT;
+
+static EFFECT Item_Equip_DB[ITEM_EQUIP_MAX] = {
+		{ 0, 0, 100.0f, 0, 0, 0 },
+		{ 0, 0, 200.0f, 0, 0, 0 }
+};
+
+static EFFECT Item_Consume_DB[ITEM_CONSUME_MAX] =
+{
+	{ 100, 0, 0, 0, 0, 0 },	//ITEM_POTION_HEALTH_SMALL
+	{ 200, 0, 0, 0, 0, 0 },	//ITEM_POTION_HEALTH_BIG
+	{ 300, 0, 0, 0, 0, 0 }, //ITEM_POTION_HEALTH_1
+	{ 400, 0, 0, 0, 0, 0 }, //ITEM_POTION_HEALTH_2
+	{ 500, 0, 0, 0, 0, 0 }, //ITEM_POTION_HEALTH_3
+	{ 600, 0, 0, 0, 0, 0 }, //ITEM_POTION_HEALTH_4
+	{ 0, 10, 0, 0, 0, 0 }, //ITEM_POTION_MANA_SMALL,
+	{ 0, 20, 0, 0, 0, 0 }, //ITEM_POTION_MANA_BIG,
+	{ 0, 30, 0, 0, 0, 0 }, //ITEM_POTION_MANA_1,
+	{ 0, 40, 0, 0, 0, 0 }, //ITEM_POTION_MANA_2,
+	{ 0, 50, 0, 0, 0, 0 }, //ITEM_POTION_MANA_3,
+	{ 0, 100, 0, 0, 0, 0 }, //ITEM_POTION_MANA_4,
+};

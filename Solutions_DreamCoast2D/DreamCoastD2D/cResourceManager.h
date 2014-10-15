@@ -26,6 +26,9 @@ public:
 	ID2D1Bitmap* getUIBitMap(int uiID) { return m_Bitmap_UI[uiID]; }
 	D2D_POINT_2F getUISize(int uiID) { return m_UI_SIZE[uiID]; }
 
+	ID2D1Bitmap* getConsumeItemBitMap(int itemID) { return m_Bitmap_Item_Consume[itemID]; }
+	D2D_POINT_2F getConsumeItemUISize(int itemID) { return m_Size_Item_Consume[itemID]; }
+
 
 private:
 	ID2D1Bitmap* m_Bitmap_Player;		// 플레이어(차후 클래스 number vector로 관리)
@@ -41,5 +44,8 @@ private:
 
 	ID2D1Bitmap* m_Bitmap_Button[BTN_BUTTONTYPEMAX];
 	::D2D_POINT_2F m_ButtonSize[BTN_BUTTONTYPEMAX];
+
+	ID2D1Bitmap* m_Bitmap_Item_Consume[ITEM_CONSUME_MAX];
+	::D2D_POINT_2F m_Size_Item_Consume[ITEM_CONSUME_MAX];
 };
 
