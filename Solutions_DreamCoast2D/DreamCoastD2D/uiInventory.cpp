@@ -286,7 +286,7 @@ void uiInventory::resorting(){
 	int i = 0;
 	int j = 0;
 	while (itr != inventory.end()){
-		itr->second->setPos(this->getPos()->x + 10.0f + (i * 50.0f), this->getPos()->y + 20.0f + (j * 50.0f));
+		itr->second->setPos(this->getPos()->x + 20.0f + (i * 50.0f), this->getPos()->y + 30.0f + (j * 50.0f));
 		itr++;
 		i++;
 		if (i >= m_nWidthMax){
