@@ -40,6 +40,14 @@ wTileMap::~wTileMap()
 	if (m_Cam != NULL){
 		delete m_Cam;
 	}
+
+	uTile* ptr;
+	while (m_vMapObjectHandler.empty()){
+		ptr = m_vMapObjectHandler.back();
+		m_vMapObjectHandler.pop_back();
+		delete ptr;
+	}
+	ptr = nullptr;
 }
 
 void wTileMap::onInit(){

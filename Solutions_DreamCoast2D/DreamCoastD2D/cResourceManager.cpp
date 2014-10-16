@@ -16,7 +16,7 @@ cResourceManager::cResourceManager()
 		x = nullptr;
 	}
 	for (ID2D1Bitmap* x : m_Bitmap_Item_Consume){
-
+		x = nullptr;
 	}
 	//for (D2D_POINT_2F x : m_ButtonSize){
 	//	x = { 0.0f, 0.0f };

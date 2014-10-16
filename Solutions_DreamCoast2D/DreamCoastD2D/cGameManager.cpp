@@ -23,6 +23,14 @@ cGameManager::~cGameManager(void)
 	if (m_pCurrentScreen != NULL)
 		delete m_pCurrentScreen;
 
+	// TODO : destructor
+	/*if (m_pResourceMng != NULL)
+		delete m_pResourceMng;*/
+	
+	// TODO : destructor
+	/*if (m_pSoundMng != NULL)
+		delete m_pSoundMng;*/
+
 	// 문제는 이 두줄이요
 	// 리소스는 싱글톤으로 전역화했기때문에 지우면 큰일남 ㅡㅡ
 	// if (m_pResourceMng != NULL)

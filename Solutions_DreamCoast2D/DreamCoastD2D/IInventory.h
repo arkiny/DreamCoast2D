@@ -26,7 +26,7 @@ __interface IEquippedInven{
 //};
 
 __interface IInventory : public IEquippedInven{
-	virtual std::map<int, mItem*> getInventory();
+	virtual std::map<int, mItem*>* getInventory();
 	virtual void addToInventory(mItem*);
 	virtual void removeFromInventory(int ID);
 	virtual void removeFromInventory(int ID, int amount);

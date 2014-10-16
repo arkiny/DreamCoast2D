@@ -55,15 +55,37 @@ void sResourceLoad::Render(){
 	target.right = static_cast<float>(winRect.right);
 
 	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(target, ::cD2DRenderer::GetInstance().GetBlackBrush());
-	// 텍스트 출력
-	wchar_t* wszText_;
+	
+	
+	//
+	//wchar_t* wszText_ = new wchar_t[20];
 
+	//int length = 0;
+	//length += swprintf(wszText_ + length, 20, L"%d", m_nCurrentPage);
+	//UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+
+	//// draw text
+	//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
+	//	wszText_,
+	//	cTextLength_,
+	//	::cD2DRenderer::GetInstance().GetTextFormat(),
+	//	m_RectPageOut,
+	//	::cD2DRenderer::GetInstance().GetBlackBrush());
+
+	//delete[] wszText_;
+	
+	// 텍스트 출력
+	wchar_t* wszText_ = new wchar_t[20];
+	int length = 0;
+	length += swprintf(wszText_ + length, 20, L"");
+	UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+	
 	// 차후 로딩 페이즈 콜백으로 조절
 	if (m_nLoadingphase == 0){
-		wszText_ = L"Loading...";
+		length += swprintf(wszText_ + length, 20, L"Loading...");
 	}
-	
-	UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+	cTextLength_ = (UINT32)wcslen(wszText_);
+		
 	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
 		wszText_,
 		cTextLength_,
@@ -72,6 +94,7 @@ void sResourceLoad::Render(){
 		::cD2DRenderer::GetInstance().GetWhiteBrush());
 
 	m_bLoadingRendered = true;
+	delete[] wszText_;
 }
 
 void sResourceLoad::OnExit(){

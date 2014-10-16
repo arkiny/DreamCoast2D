@@ -27,6 +27,7 @@ uiMenu::~uiMenu()
 		m_vButtons.pop_back();
 	}
 	ptr = nullptr;
+	delete m_btnSelect;
 }
 
 void uiMenu::OnInit(){

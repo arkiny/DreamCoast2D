@@ -53,11 +53,11 @@ void uiBelt::Update(float){
 	if (::coControl::GetInstance().getKeyControlInfo()[0x41]){
 		::coControl::GetInstance().onKeyUp(0x41);
 		if (ptr->getBelt(KEY_A) != NULLITEM){
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_A))->itemOnEffect(m_player);
-			int in = ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_A))->getAmount() - 1;
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_A))->setAmount(in);
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_A))->itemOnEffect(m_player);
+			int in = ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_A))->getAmount() - 1;
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_A))->setAmount(in);
 
-			if (ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_A))->getAmount() == 0){
+			if (ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_A))->getAmount() == 0){
 				ptr->getInventory()->removeFromInventory(ptr->getBelt(KEY_A));
 				//getInventory().at(ptr->getBelt(KEY_A)->getID());
 				//m_Inventory->getInventory().erase(m_aBelt[KEY_A]->getID());
@@ -69,11 +69,11 @@ void uiBelt::Update(float){
 	else if (::coControl::GetInstance().getKeyControlInfo()[0x53]){
 		::coControl::GetInstance().onKeyUp(0x53);
 		if (ptr->getBelt(KEY_S) != NULLITEM){
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_S))->itemOnEffect(m_player);
-			int in = ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_S))->getAmount() - 1;
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_S))->setAmount(in);
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_S))->itemOnEffect(m_player);
+			int in = ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_S))->getAmount() - 1;
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_S))->setAmount(in);
 
-			if (ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_S))->getAmount() == 0){
+			if (ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_S))->getAmount() == 0){
 				ptr->getInventory()->removeFromInventory(ptr->getBelt(KEY_S));
 				//getInventory().at(ptr->getBelt(KEY_A)->getID());
 				//m_Inventory->getInventory().erase(m_aBelt[KEY_A]->getID());
@@ -85,11 +85,11 @@ void uiBelt::Update(float){
 	else if (::coControl::GetInstance().getKeyControlInfo()[0x44]){
 		::coControl::GetInstance().onKeyUp(0x44);
 		if (ptr->getBelt(KEY_D) != NULLITEM){
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_D))->itemOnEffect(m_player);
-			int in = ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_D))->getAmount() - 1;
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_D))->setAmount(in);
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_D))->itemOnEffect(m_player);
+			int in = ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_D))->getAmount() - 1;
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_D))->setAmount(in);
 
-			if (ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_D))->getAmount() == 0){
+			if (ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_D))->getAmount() == 0){
 				ptr->getInventory()->removeFromInventory(ptr->getBelt(KEY_D));
 				//getInventory().at(ptr->getBelt(KEY_A)->getID());
 				//m_Inventory->getInventory().erase(m_aBelt[KEY_A]->getID());
@@ -136,7 +136,7 @@ void uiBelt::Render(){
 		}
 
 		swprintf(wszText_, 20, L"%d",
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_A))->getAmount());
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_A))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
 
 		D2D1_RECT_F layoutRect = m_ARect;
@@ -167,7 +167,7 @@ void uiBelt::Render(){
 		}
 
 		swprintf(wszText_, 20, L"%d",
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_S))->getAmount());
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_S))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
 
 		D2D1_RECT_F layoutRect = m_SRect;
@@ -198,7 +198,7 @@ void uiBelt::Render(){
 		}
 
 		swprintf(wszText_, 20, L"%d",
-			ptr->getInventory()->getInventory().at(ptr->getBelt(KEY_D))->getAmount());
+			ptr->getInventory()->getInventory()->at(ptr->getBelt(KEY_D))->getAmount());
 		UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
 
 		D2D1_RECT_F layoutRect = m_DRect;
@@ -237,6 +237,8 @@ void uiBelt::Render(){
 		->DrawRectangle(m_SRect, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	::cD2DRenderer::GetInstance().GetRenderTarget()
 		->DrawRectangle(m_DRect, ::cD2DRenderer::GetInstance().GetBlackBrush());
+
+	delete[] wszText_;
 }
 
 D2D1_RECT_F uiBelt::getBeltRect(int i){

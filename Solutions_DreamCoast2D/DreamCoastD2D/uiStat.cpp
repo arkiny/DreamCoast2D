@@ -115,6 +115,7 @@ void uiStat::Render(){
 			layoutRect,
 			::cD2DRenderer::GetInstance().GetBlackBrush());
 
+		delete[] wszText_;
 	}
 }
 

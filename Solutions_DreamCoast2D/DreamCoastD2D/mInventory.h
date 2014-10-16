@@ -6,7 +6,7 @@ class mInventory : public IInventory
 public:
 	mInventory();
 	virtual ~mInventory();
-	virtual std::map<int, mItem*> getInventory();
+	virtual std::map<int, mItem*>* getInventory();
 	virtual void addToInventory(mItem*);
 	virtual void removeFromInventory(int ID);
 	virtual void removeFromInventory(int ID, int amount);

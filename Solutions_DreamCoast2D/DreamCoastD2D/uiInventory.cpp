@@ -49,8 +49,8 @@ void uiInventory::OnInit(){
 
 	//}
 	mPlayer* playerPtr = (mPlayer*)m_player;
-	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
-	m_nInventorySize = inventory.size();
+	std::map<int, mItem*>* inventory = playerPtr->getInventory()->getInventory();
+	m_nInventorySize = inventory->size();
 
 }
 
@@ -80,7 +80,7 @@ void uiInventory::Update(float delta){
 	}	
 
 	mPlayer* playerPtr = (mPlayer*)m_player;
-	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
+	std::map<int, mItem*>* inventory = playerPtr->getInventory()->getInventory();
 
 	if (this->isActivated()){
 		//// window move
@@ -115,22 +115,22 @@ void uiInventory::Update(float delta){
 				m_nCurrentPage++;
 			}
 
-			if (m_nCurrentPage > static_cast<int>(inventory.size()) / m_nMaxNumforaPage){
+			if (m_nCurrentPage > static_cast<int>(inventory->size()) / m_nMaxNumforaPage){
 				m_nCurrentPage = 0;
 			}
 
 			if (m_nCurrentPage < 0){
-				m_nCurrentPage = static_cast<int>(inventory.size()) / m_nMaxNumforaPage;
+				m_nCurrentPage = static_cast<int>(inventory->size()) / m_nMaxNumforaPage;
 			}
 		}
 
-		// 페이지에 맞는 아이템만 렌더
+		// 페이지에 맞는 아이템만 업데이트
 		int index = 0;
-
-		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
+		for (std::map<int, mItem*>::iterator itr = inventory->begin(); itr != inventory->end(); itr++){
 			if (index / m_nMaxNumforaPage == m_nCurrentPage){
 
 				itr->second->Update(delta);
+
 				if (itr->second->isMoving()){
 					POINTFLOAT mousepoint = ::coControl::GetInstance().getMousePosition();
 					// 이동중이고 마우스 키를 떼었을때, 원래 위치로 되돌린다.
@@ -188,16 +188,23 @@ void uiInventory::Update(float delta){
 						}
 						//
 						playerPtr->getInventory()->removeFromInventory(itr->first);
+						if (inventory->size() == 0){
+							// 만약 인벤토리를 다썼으면 브레이크
+							break;
+						}
+						else{
+							// 지우고 나서는 처음부터 다시 시작
+							itr = inventory->begin();
+						}
 						// 순서 재소팅
-
 					}
 				}
 			}
 
 			// 재소팅은 무언가 삭제되서 원래 사이즈와 달라졌을때 재소팅
-			if (m_nInventorySize != inventory.size()){
+			if (m_nInventorySize != inventory->size()){
 				this->resorting();
-				m_nInventorySize = inventory.size();
+				m_nInventorySize = inventory->size();
 			}
 			index++;
 		}		
@@ -230,12 +237,12 @@ void uiInventory::Render(){
 		// 만약 벨트위에 드롭이 아닐 경우 노띵해픈
 
 		mPlayer* playerPtr = (mPlayer*)m_player;
-		std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
+		std::map<int, mItem*>* inventory = playerPtr->getInventory()->getInventory();
 		int movingItemID = NULLITEM;
 
 		// 페이지에 맞는 아이템만 렌더
 		int index = 0;
-		for (std::map<int, mItem*>::iterator itr = inventory.begin(); itr != inventory.end(); itr++){
+		for (std::map<int, mItem*>::iterator itr = inventory->begin(); itr != inventory->end(); itr++){
 			if (index / m_nMaxNumforaPage == m_nCurrentPage){
 				if (itr->second->isMoving()){
 					movingItemID = itr->first;
@@ -249,7 +256,7 @@ void uiInventory::Render(){
 		//
 
 		if (movingItemID != NULLITEM){
-			inventory.at(movingItemID)->Render();
+			inventory->at(movingItemID)->Render();
 		}
 
 		wchar_t* wszText_ = new wchar_t[20];
@@ -265,6 +272,8 @@ void uiInventory::Render(){
 			::cD2DRenderer::GetInstance().GetTextFormat(),
 			m_RectPageOut,
 			::cD2DRenderer::GetInstance().GetBlackBrush());
+		
+		delete[] wszText_;
 	}
 }
 
@@ -281,11 +290,11 @@ void uiInventory::moveTo(float x, float y){
 
 void uiInventory::resorting(){
 	mPlayer* playerPtr = (mPlayer*)m_player;
-	std::map<int, mItem*> inventory = playerPtr->getInventory()->getInventory();
-	std::map<int, mItem*>::iterator itr = inventory.begin();
+	std::map<int, mItem*>* inventory = playerPtr->getInventory()->getInventory();
+	std::map<int, mItem*>::iterator itr = inventory->begin();
 	int i = 0;
 	int j = 0;
-	while (itr != inventory.end()){
+	while (itr != inventory->end()){
 		itr->second->setPos(this->getPos()->x + 20.0f + (i * 50.0f), this->getPos()->y + 30.0f + (j * 50.0f));
 		itr++;
 		i++;

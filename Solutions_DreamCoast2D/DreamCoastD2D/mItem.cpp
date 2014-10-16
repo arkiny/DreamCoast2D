@@ -111,6 +111,8 @@ void mItem::Render(){
 		::cD2DRenderer::GetInstance().GetTextFormat(),
 		itemRect,
 		::cD2DRenderer::GetInstance().GetWhiteBrush());	
+
+	delete[] wszText_;
 }
 
 // 타입 수정시

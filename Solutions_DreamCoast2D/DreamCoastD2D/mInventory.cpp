@@ -16,8 +16,8 @@ mInventory::~mInventory()
 	}
 }
 
-std::map<int, mItem*> mInventory::getInventory(){
-	return m_vInventory;
+std::map<int, mItem*>* mInventory::getInventory(){
+	return &m_vInventory;
 }
 
 void mInventory::addToInventory(mItem* item){

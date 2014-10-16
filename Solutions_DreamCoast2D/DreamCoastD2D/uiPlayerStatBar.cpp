@@ -150,4 +150,6 @@ void uiPlayerStatBar::drawStatbar(){
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 	}
+
+	delete[] wszText_;
 }

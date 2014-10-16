@@ -98,8 +98,8 @@ void uiGameMiniMap::Render(){
 
 	// 몹들 위치 출력
 	VECTOR2D pt(0.0f, 0.0f);
-	for (ICharacter* x : m_pTileMap->getMobList()){
-		pt = m_pTileMap->getTileCoordinates(*(x->getDrawPos()));
+	for (unsigned int i = 0; i < m_pTileMap->getMobList()->size();i++){
+		pt = m_pTileMap->getTileCoordinates(*(m_pTileMap->getMobList()->at(i)->getDrawPos()));
 
 		MiniRectangle.left = MiniMapinline.left + (width* pt.y) + 1.0f;
 		MiniRectangle.right = MiniRectangle.left + width - 2.0f;
@@ -108,6 +108,16 @@ void uiGameMiniMap::Render(){
 		::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(MiniRectangle,
 			::cD2DRenderer::GetInstance().GetRedBrush());
 	}
+	/*for (ICharacter* x : m_pTileMap->getMobList()){
+		pt = m_pTileMap->getTileCoordinates(*(x->getDrawPos()));
+
+		MiniRectangle.left = MiniMapinline.left + (width* pt.y) + 1.0f;
+		MiniRectangle.right = MiniRectangle.left + width - 2.0f;
+		MiniRectangle.top = MiniMapinline.top + (height* pt.x) + 1.0f;
+		MiniRectangle.bottom = MiniRectangle.top + height - 2.0f;
+		::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(MiniRectangle,
+			::cD2DRenderer::GetInstance().GetRedBrush());
+	}*/
 
 	/// 텍스트 타이틀 출력
 	::D2D1_RECT_F MiniMapTitle;	
