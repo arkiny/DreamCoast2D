@@ -30,12 +30,12 @@ InGameUI::~InGameUI()
 
 void InGameUI::Render(){
 	if (m_bGameUIActivate){
-		for (uiInterface* x : m_pInterfaceCanMove){
-			x->Render();
-		}
 		for (uiInterface* x : m_pInterface){
 			x->Render();
 		}
+		for (uiInterface* x : m_pInterfaceCanMove){
+			x->Render();
+		}		
 	}
 } 
 

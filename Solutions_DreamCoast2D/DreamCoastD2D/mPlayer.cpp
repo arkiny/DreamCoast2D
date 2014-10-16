@@ -288,27 +288,27 @@ void mPlayer::onRender(){
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 		
-		//회전등에 필요한 부분
-		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+		////회전등에 필요한 부분
+		////renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
-		//debug 용
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
-		
-		::D2D1_RECT_F pivotArea;
-		pivotArea.top = cpos.y - 2.0f;
-		pivotArea.bottom = cpos.y + 2.0f;
-		pivotArea.left = cpos.x - 2.0f;
-		pivotArea.right = cpos.x + 2.0f;
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
-		
-		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
-		//pivotArea;
-		cpos = m_Cam->translasteToScreen(_realVector);
-		pivotArea.top = cpos.y - 2.0f;
-		pivotArea.bottom = cpos.y + 2.0f;
-		pivotArea.left = cpos.x - 2.0f;
-		pivotArea.right = cpos.x + 2.0f;
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		////debug 용
+		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		//
+		//::D2D1_RECT_F pivotArea;
+		//pivotArea.top = cpos.y - 2.0f;
+		//pivotArea.bottom = cpos.y + 2.0f;
+		//pivotArea.left = cpos.x - 2.0f;
+		//pivotArea.right = cpos.x + 2.0f;
+		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		//
+		////renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		////pivotArea;
+		//cpos = m_Cam->translasteToScreen(_realVector);
+		//pivotArea.top = cpos.y - 2.0f;
+		//pivotArea.bottom = cpos.y + 2.0f;
+		//pivotArea.left = cpos.x - 2.0f;
+		//pivotArea.right = cpos.x + 2.0f;
+		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
 
@@ -331,25 +331,25 @@ void mPlayer::onRender(bool alpha){
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
-		//debug 용
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		////debug 용
+		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
-		::D2D1_RECT_F pivotArea;
-		pivotArea.top = cpos.y - 2.0f;
-		pivotArea.bottom = cpos.y + 2.0f;
-		pivotArea.left = cpos.x - 2.0f;
-		pivotArea.right = cpos.x + 2.0f;
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		//::D2D1_RECT_F pivotArea;
+		//pivotArea.top = cpos.y - 2.0f;
+		//pivotArea.bottom = cpos.y + 2.0f;
+		//pivotArea.left = cpos.x - 2.0f;
+		//pivotArea.right = cpos.x + 2.0f;
+		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 
-		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
-		//pivotArea;
-		cpos = m_Cam->translasteToScreen(_realVector);
-		pivotArea.top = cpos.y - 2.0f;
-		pivotArea.bottom = cpos.y + 2.0f;
-		pivotArea.left = cpos.x - 2.0f;
-		pivotArea.right = cpos.x + 2.0f;
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		////renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBrush());
+		////pivotArea;
+		//cpos = m_Cam->translasteToScreen(_realVector);
+		//pivotArea.top = cpos.y - 2.0f;
+		//pivotArea.bottom = cpos.y + 2.0f;
+		//pivotArea.left = cpos.x - 2.0f;
+		//pivotArea.right = cpos.x + 2.0f;
+		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
 

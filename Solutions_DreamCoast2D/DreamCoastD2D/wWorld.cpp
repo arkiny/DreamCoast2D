@@ -45,6 +45,7 @@ void wWorld::Render(){
 }
 
 void wWorld::Update(float deltaTime){
+
 	if (m_Player->isDeadComplete()){
 
 	}
