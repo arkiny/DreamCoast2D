@@ -3,11 +3,6 @@
 #include "cGameApplication.h"
 #include "cGameManager.h"
 
-
-#include <xaudio2.h>
-
-
-
 cGameApplication* app;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
