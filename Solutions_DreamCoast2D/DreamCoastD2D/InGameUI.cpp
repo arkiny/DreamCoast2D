@@ -26,6 +26,14 @@ InGameUI::InGameUI(ICharacter* player, wTileMap* tileMap){
 
 InGameUI::~InGameUI()
 {
+	while (!m_pInterface.empty()){
+		delete m_pInterface.back();
+		m_pInterface.pop_back();
+	}
+	while (!m_pInterfaceCanMove.empty()){
+		delete m_pInterfaceCanMove.back();
+		m_pInterfaceCanMove.pop_back();
+	}
 }
 
 void InGameUI::Render(){
@@ -40,6 +48,12 @@ void InGameUI::Render(){
 } 
 
 void InGameUI::Update(float delta){
+#ifdef _DEBUG
+	int flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+	flag |= _CRTDBG_LEAK_CHECK_DF; // Turn on leak-checking bit
+	_CrtSetDbgFlag(flag);
+	_CrtSetBreakAlloc(931); // Comment or un-comment on need basis
+#endif
 	if (m_bGameUIActivate){
 		// 비트맵 이용시 컨트롤
 		for (uiInterface* x : m_pInterface){

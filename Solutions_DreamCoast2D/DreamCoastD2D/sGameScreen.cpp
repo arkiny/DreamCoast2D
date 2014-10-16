@@ -12,7 +12,7 @@
 sGameScreen::sGameScreen(){
 	m_pWorld = nullptr;
 	m_pGameUI = nullptr;
-	memset(m_bNextScreenBtn, false, sizeof(m_bNextScreenBtn));
+	memset(m_bNextScreenBtn, false, BTN_BUTTONTYPEMAX);
 }
 
 sGameScreen::~sGameScreen(){	
@@ -27,7 +27,7 @@ sGameScreen::~sGameScreen(){
 
 sGameScreen::sGameScreen(cGameManager* cg){
 	m_pGameManager = cg;
-	memset(m_bNextScreenBtn, false, sizeof(m_bNextScreenBtn));
+	memset(m_bNextScreenBtn, false, BTN_BUTTONTYPEMAX);
 }
 
 void sGameScreen::OnInit(){
@@ -38,6 +38,7 @@ void sGameScreen::OnInit(){
 	m_pWorld->OnInit();
 	m_pGameUI = new InGameUI((ICharacter*)m_pWorld->getPlayer(), m_pWorld->getMap());
 	m_pGameUI->OnInit(this);
+
 	::cSoundManager::GetInstance().executeBGMinGame();
 }
 

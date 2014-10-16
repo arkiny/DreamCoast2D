@@ -19,7 +19,7 @@ uTile::uTile(int type, uCamera* const in){
 
 uTile::~uTile()
 {
-
+	m_Cam = nullptr;
 }
 
 void uTile::renderTile(float x, float y, 

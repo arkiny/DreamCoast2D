@@ -32,11 +32,12 @@ private:
 	IWICImagingFactory*			m_ipWICFactory;
 	IWICFormatConverter*		m_ipConvertedSrcBmp;
 
-	ID2D1SolidColorBrush* m_pBrush;
 	ID2D1SolidColorBrush* m_pBlackBrush;
 	ID2D1SolidColorBrush* m_pGreenBrush;
 	ID2D1SolidColorBrush* m_pRedBrush;
 	ID2D1SolidColorBrush* m_pWhiteBrush;
+	ID2D1SolidColorBrush* m_pForestGreenBrush;
+	ID2D1SolidColorBrush* m_pGreyBrush;
 
 	IDWriteFactory* m_pDWriteFactory;
 	IDWriteTextFormat* m_pTextFormat;
@@ -54,7 +55,6 @@ public:
 	void InitializeD2D(void);
 	void Setup(HWND hWnd);
 	void InitializeRT(HWND hWnd);
-	void ChangeBrush(D2D1::ColorF in);
 	ID2D1Bitmap* CreateD2DBitmapFromFile(HWND hWnd, TCHAR* pImageFullPath, int option);
 	void BeginRender(HWND hWnd);
 	void EndRender();
@@ -66,11 +66,6 @@ public:
 	HWND GetHwnd(){ return m_hWnd; }
 	D2D1_SIZE_U GetRenderTargetSize(){
 		return m_dxSize;
-	}
-
-	ID2D1SolidColorBrush* GetBrush()
-	{
-		return m_pBrush;
 	}
 
 	ID2D1SolidColorBrush* GetBlackBrush()
@@ -91,6 +86,14 @@ public:
 		return m_pWhiteBrush;
 	}
 
+	ID2D1SolidColorBrush* GetForestGreenBrush(){
+		return m_pForestGreenBrush;
+	}
+
+	ID2D1SolidColorBrush* GetGrayBrush(){
+		return m_pGreyBrush;
+	}
+	
 	IDWriteTextFormat* GetTextFormat()
 	{
 		return m_pTextFormat;

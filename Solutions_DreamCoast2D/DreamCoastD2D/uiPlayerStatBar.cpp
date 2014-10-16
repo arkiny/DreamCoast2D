@@ -88,8 +88,8 @@ void uiPlayerStatBar::drawStatbar(){
 		);
 	
 
-	::cD2DRenderer::GetInstance().ChangeBrush(D2D1::ColorF::Gray);
-	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(healthBar, ::cD2DRenderer::GetInstance().GetBrush());
+
+	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(healthBar, ::cD2DRenderer::GetInstance().GetGrayBrush());
 	
 	if (::cResourceManager::GetInstance().getUIBitMap(UIID::REDBAR) != nullptr){
 		::D2D1_RECT_F dxArea
@@ -131,9 +131,7 @@ void uiPlayerStatBar::drawStatbar(){
 	else {
 		currentmanaBar.right = manaRate;
 	}
-
-	::cD2DRenderer::GetInstance().ChangeBrush(D2D1::ColorF::Gray);
-	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(manaBar, ::cD2DRenderer::GetInstance().GetBrush());
+	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(manaBar, ::cD2DRenderer::GetInstance().GetGrayBrush());
 
 	/// manabar
 	if (::cResourceManager::GetInstance().getUIBitMap(UIID::BLUEBAR) != nullptr){

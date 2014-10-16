@@ -164,21 +164,18 @@ void cD2DRenderer::InitializeRT(HWND hWnd)
 		);
 	assert(hr == S_OK);
 
-	//default
 	hr = m_ipRT->CreateSolidColorBrush(
-		D2D1::ColorF(D2D1::ColorF::White),
-		&m_pBrush
+		D2D1::ColorF(D2D1::ColorF::ForestGreen),
+		&m_pForestGreenBrush
 		);
 	assert(hr == S_OK);
-	
-}
 
-void cD2DRenderer::ChangeBrush(D2D1::ColorF in){
-	HRESULT hr = m_ipRT->CreateSolidColorBrush(
-		D2D1::ColorF(in),
-		&m_pBrush
+	hr = m_ipRT->CreateSolidColorBrush(
+		D2D1::ColorF(D2D1::ColorF::Gray),
+		&m_pGreyBrush
 		);
-	assert(hr == S_OK);
+	assert(hr == S_OK);	
+	
 }
 
 ID2D1Bitmap* cD2DRenderer::CreateD2DBitmapFromFile(

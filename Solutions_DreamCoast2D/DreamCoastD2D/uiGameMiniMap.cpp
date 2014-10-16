@@ -92,9 +92,8 @@ void uiGameMiniMap::Render(){
 	MiniRectangle.top = MiniMapinline.top + (height* m_pTileMap->getPlayerTilePos().x) + 1.0f;
 	MiniRectangle.bottom = MiniRectangle.top + height - 2.0f;
 	
-	::cD2DRenderer::GetInstance().ChangeBrush(D2D1::ColorF::ForestGreen);
 	::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(MiniRectangle,
-		::cD2DRenderer::GetInstance().GetBrush());
+		::cD2DRenderer::GetInstance().GetForestGreenBrush());
 
 	// 몹들 위치 출력
 	VECTOR2D pt(0.0f, 0.0f);
