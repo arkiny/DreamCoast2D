@@ -29,8 +29,13 @@ void aiStateMoveto::execute(mMonster* pmon)
 		return;
 	}
 
+	/*if (pmon->getCurrentAggroLevel() >= pmon->getMaxAggroLevel()){
+		accumtime = 0;
+		pmon->changeState(new aiStateScan);
+	}*/
+
 	if (pmon->getCurrentAggroLevel() >= pmon->getMaxAggroLevel() 
-		&& accumtime >= 2.0f){
+		&& accumtime >= 1.0f){
 		accumtime = 0;
 		pmon->changeState(new aiStateScan);
 	}

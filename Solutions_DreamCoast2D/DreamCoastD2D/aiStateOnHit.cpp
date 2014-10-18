@@ -6,12 +6,14 @@
 #include "uSprite.h"
 #include "mMonster.h"
 
+
 void aiStateOnHit::enter(mMonster* pmon){	
 	m_sprite = pmon->getSprite();
 	pmon->onHit();
 	// 맞은 즉시 어그로레벨 최대화
 	pmon->setCurrentAggroLevel(pmon->getMaxAggroLevel());
 	cSoundManager::GetInstance().executeOnHit();
+
 }
 
 void aiStateOnHit::execute(mMonster* pmon){
@@ -30,5 +32,5 @@ void aiStateOnHit::execute(mMonster* pmon){
 }
 
 void aiStateOnHit::exit(mMonster* pmon){
-
+	pmon->setDmg(0.0f);
 }

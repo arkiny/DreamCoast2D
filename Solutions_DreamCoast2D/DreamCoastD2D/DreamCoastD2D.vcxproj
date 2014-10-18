@@ -101,6 +101,7 @@
     <ClInclude Include="cSoundManager.h" />
     <ClInclude Include="DB_Skill_Area_List.h" />
     <ClInclude Include="DreamCoastD2D.h" />
+    <ClInclude Include="IEffect.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="iInScreenUI.h" />
     <ClInclude Include="IInventory.h" />
@@ -108,7 +109,9 @@
     <ClInclude Include="InGameUI.h" />
     <ClInclude Include="InMainUI.h" />
     <ClInclude Include="mCharacter.h" />
+    <ClInclude Include="mEffect.h" />
     <ClInclude Include="mEquipped.h" />
+    <ClInclude Include="mGFX.h" />
     <ClInclude Include="mInventory.h" />
     <ClInclude Include="mItem.h" />
     <ClInclude Include="mMonster.h" />
@@ -162,7 +165,9 @@
     <ClCompile Include="InGameUI.cpp" />
     <ClCompile Include="InMainUI.cpp" />
     <ClCompile Include="mCharacter.cpp" />
+    <ClCompile Include="mEffect.cpp" />
     <ClCompile Include="mEquipped.cpp" />
+    <ClCompile Include="mGFX.cpp" />
     <ClCompile Include="mInventory.cpp" />
     <ClCompile Include="mItem.cpp" />
     <ClCompile Include="mMonster.cpp" />

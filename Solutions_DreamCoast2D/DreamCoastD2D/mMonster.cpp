@@ -8,6 +8,8 @@
 #include "aiStateIdle.h"
 #include "wTileMap.h"
 #include "cResourceManager.h"
+#include "mGFX.h"
+#include "mEffect.h"
 
 mMonster::mMonster()
 {
@@ -168,6 +170,23 @@ void mMonster::onRender(){
 			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
 
+		//if (this->getDmg() > 0){
+		//	/// 텍스트 출력
+		//	wchar_t* wszText_ = new wchar_t[20];
+		//	swprintf(wszText_, 20, L" %.0f",
+		//		this->getDmg());
+		//	UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+
+		//	D2D1_RECT_F layoutRect = dxArea;
+		//	// draw text
+		//	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
+		//		wszText_,
+		//		cTextLength_,
+		//		::cD2DRenderer::GetInstance().GetTextFormatDmg(),
+		//		layoutRect,
+		//		::cD2DRenderer::GetInstance().GetRedBrush());
+		//}
+
 
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
@@ -195,9 +214,12 @@ void mMonster::onRender(){
 
 void mMonster::getHit(float dmg){	
 	mCharacter::getHit(dmg);
+	
 	if (this->getHealth() >= 0.0f){
 		m_State = ONHIT;
 	}
+
+	mGFX::GetInstance().pushToEventQueue(new mEffect(0, dmg, new VECTOR2D(*_drawVector), m_Cam));
 }
 void mMonster::setDestinTile(float x, float y){
 	VECTOR2D in;

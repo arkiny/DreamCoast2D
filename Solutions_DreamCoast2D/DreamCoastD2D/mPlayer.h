@@ -125,7 +125,6 @@ private:
 	// 차후 상점용
 	// default 10000
 	int m_nGold = 10000;
-
 	bool m_bEndbehavior = false;
 };
 

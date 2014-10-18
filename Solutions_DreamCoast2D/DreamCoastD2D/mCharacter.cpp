@@ -136,4 +136,5 @@ VECTOR2D mCharacter::vectorMove(float fdeltatime, DIRECTION dir){
 
 void mCharacter::getHit(float dmg){
 	mCharacter::setHealth(this->getHealth() - dmg);
+	m_fDmg = dmg;
 }

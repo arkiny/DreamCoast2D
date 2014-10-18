@@ -13,6 +13,9 @@
 #include "mItem.h"
 #include "mInventory.h"
 
+#include "mGFX.h"
+#include "mEffect.h"
+
 mPlayer::mPlayer()
 {	
 	m_ipD2DBitmap = nullptr;
@@ -267,6 +270,8 @@ void mPlayer::getHit(float dmg){
 	else {
 		m_State = ONDEAD;
 	}
+	mGFX::GetInstance().pushToEventQueue(new mEffect(0, dmg, new VECTOR2D(*_drawVector), m_Cam));
+
 }
 
 
@@ -288,6 +293,22 @@ void mPlayer::onRender(){
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 		
+		//if (this->getDmg() > 0){
+		//	/// 텍스트 출력
+		//	wchar_t* wszText_ = new wchar_t[20];
+		//	swprintf(wszText_, 20, L" %.0f",
+		//		this->getDmg());
+		//	UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+
+		//	D2D1_RECT_F layoutRect = dxArea;
+		//	// draw text
+		//	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
+		//		wszText_,
+		//		cTextLength_,
+		//		::cD2DRenderer::GetInstance().GetTextFormatDmg(),
+		//		layoutRect,
+		//		::cD2DRenderer::GetInstance().GetRedBrush());
+		//}
 		////회전등에 필요한 부분
 		////renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
@@ -310,6 +331,8 @@ void mPlayer::onRender(){
 		//pivotArea.right = cpos.x + 2.0f;
 		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
+
+	
 }
 
 void mPlayer::onRender(bool alpha){
@@ -328,6 +351,23 @@ void mPlayer::onRender(bool alpha){
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 				srcArea);
 		}
+
+		//if (this->getDmg() > 0){
+		//	/// 텍스트 출력
+		//	wchar_t* wszText_ = new wchar_t[20];
+		//	swprintf(wszText_, 20, L" %.0f",
+		//		this->getDmg());
+		//	UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+
+		//	D2D1_RECT_F layoutRect = dxArea;
+		//	// draw text
+		//	::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
+		//		wszText_,
+		//		cTextLength_,
+		//		::cD2DRenderer::GetInstance().GetTextFormatDmg(),
+		//		layoutRect,
+		//		::cD2DRenderer::GetInstance().GetRedBrush());
+		//}
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 

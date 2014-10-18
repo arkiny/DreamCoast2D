@@ -21,6 +21,7 @@ void mPlayer::onHit(float fdeltatime){
 		// Idle상태로 돌아감
 		m_onhitAccumtime = 0.0f;
 		m_State = ONMOVE;
+		this->setDmg(0.0f);
 	}
 
 	//

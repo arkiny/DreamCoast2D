@@ -8,10 +8,12 @@
 #include "sMainMenuScreen.h"
 #include "sResourceLoad.h"
 #include "cSoundManager.h"
+#include "mGFX.h"
 
 sGameScreen::sGameScreen(){
 	m_pWorld = nullptr;
 	m_pGameUI = nullptr;
+	m_pGFX = nullptr;
 	memset(m_bNextScreenBtn, false, BTN_BUTTONTYPEMAX);
 }
 
@@ -40,6 +42,7 @@ void sGameScreen::OnInit(){
 	m_pGameUI->OnInit(this);
 
 	::cSoundManager::GetInstance().executeBGMinGame();
+	m_pGFX = new mGFX();
 }
 
 void sGameScreen::Render(){
@@ -67,7 +70,9 @@ void sGameScreen::Render(){
 
 	m_pWorld->Render();
 	// UI는 게임 화면보다 위에 깔리게
+	m_pGFX->render();
 	m_pGameUI->Render();
+	
 }
 
 void sGameScreen::Update(float deltaTime){
@@ -115,7 +120,7 @@ void sGameScreen::Update(float deltaTime){
 			m_fdelaytime = m_fKeydelay;
 		}
 	}
-
+	m_pGFX->update(deltaTime);
 }
 
 void sGameScreen::OnExit(){	

@@ -27,7 +27,8 @@ cD2DRenderer::~cD2DRenderer()
 
 	SafeRelease(m_pDWriteFactory);
 	SafeRelease(m_pTextFormat);
-
+	SafeRelease(m_pTextFormat2);
+	SafeRelease(m_pTextFormatDmg);
 }
 
 void cD2DRenderer::InitializeD2D(void)
@@ -72,7 +73,7 @@ void cD2DRenderer::InitializeD2D(void)
 		hr = m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_FAR);
 	}
 
-
+	assert(hr == S_OK);
 	m_pDWriteFactory->CreateTextFormat(
 		L"Gabriola",                // Font family name.
 		NULL,                       // Font collection (NULL sets it to use the system font collection).
@@ -97,6 +98,28 @@ void cD2DRenderer::InitializeD2D(void)
 	{
 		// 스페이싱 메소드를 유니폼으로 때리면, 글은 첫라인을 베이스라인 삼아서 그려진다
 		hr = m_pTextFormat2->SetLineSpacing(DWRITE_LINE_SPACING_METHOD::DWRITE_LINE_SPACING_METHOD_UNIFORM, 20.0f, 1.4f);
+	}
+
+
+	assert(hr == S_OK);
+	m_pDWriteFactory->CreateTextFormat(
+		L"Impact",                // Font family name.
+		NULL,                       // Font collection (NULL sets it to use the system font collection).
+		DWRITE_FONT_WEIGHT_REGULAR,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		20.0f,
+		L"en-us",
+		&m_pTextFormatDmg
+		);
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT_CENTER);
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_FAR);
 	}
 
 	CoInitialize(0);

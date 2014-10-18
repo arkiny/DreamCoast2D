@@ -51,6 +51,9 @@ public:
 	//
 	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
+	void setDmg(float in){ m_fDmg = in; }
+	float getDmg() const { return m_fDmg; }
+
 protected:
 	// 기본적으로 오브젝드들이 가지고 있을 정보들
 	// POINT를 쓸 경우 LONG 값에서 변환이 일어나기 때문에 가감연산에 문제가 생긴다.
@@ -78,6 +81,7 @@ protected:
 	float m_moveSpeed = 100.0f;
 	float m_defense = 0.0f;
 
+	float m_fDmg = 0.0f;
 	
 };
 

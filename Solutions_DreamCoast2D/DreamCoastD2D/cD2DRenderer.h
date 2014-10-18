@@ -42,6 +42,7 @@ private:
 	IDWriteFactory* m_pDWriteFactory;
 	IDWriteTextFormat* m_pTextFormat;
 	IDWriteTextFormat* m_pTextFormat2;
+	IDWriteTextFormat* m_pTextFormatDmg;
 
 	D2D1_SIZE_U m_dxSize;
 	
@@ -102,6 +103,11 @@ public:
 	IDWriteTextFormat* GetTextFormat2()
 	{
 		return m_pTextFormat2;
+	}
+
+	IDWriteTextFormat* GetTextFormatDmg()
+	{
+		return m_pTextFormatDmg;
 	}
 };
 

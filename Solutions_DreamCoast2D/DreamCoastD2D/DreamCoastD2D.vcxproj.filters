@@ -56,6 +56,12 @@
     <Filter Include="Model\Character\Player">
       <UniqueIdentifier>{83018bac-df0e-4d3b-b7a6-23c793bdc840}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\GFX">
+      <UniqueIdentifier>{e7ed93cf-dd6d-46ae-b026-63d23b6e75dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\GFX\Effect">
+      <UniqueIdentifier>{95e3f071-2869-4a3e-bd31-bb6712a1b9d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -223,6 +229,15 @@
     <ClInclude Include="uiInGameMenu.h">
       <Filter>Model\Screen\UI</Filter>
     </ClInclude>
+    <ClInclude Include="mGFX.h">
+      <Filter>Model\GFX</Filter>
+    </ClInclude>
+    <ClInclude Include="mEffect.h">
+      <Filter>Model\GFX\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="IEffect.h">
+      <Filter>Model\GFX\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -371,6 +386,12 @@
     </ClCompile>
     <ClCompile Include="uiInGameMenu.cpp">
       <Filter>Model\Screen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mGFX.cpp">
+      <Filter>Model\GFX</Filter>
+    </ClCompile>
+    <ClCompile Include="mEffect.cpp">
+      <Filter>Model\GFX\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
