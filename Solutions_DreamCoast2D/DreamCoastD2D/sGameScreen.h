@@ -39,7 +39,7 @@ private:
 private:
 	wWorld* m_pWorld;	
 	iInScreenUI* m_pGameUI;
-	mGFX* m_pGFX;
+	
 
 	// game over시 출력될 UI
 	iInScreenUI* m_pMenu;

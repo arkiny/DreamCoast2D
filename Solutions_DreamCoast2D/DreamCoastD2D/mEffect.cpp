@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "mEffect.h"
 #include "cD2DRenderer.h"
+#include "cResourceManager.h"
 #include "uSprite.h"
 #include "VECTOR2D.h"
 #include "uCamera.h"
@@ -15,6 +16,7 @@ mEffect::mEffect(int type, float dmg, VECTOR2D* cpos, uCamera* cam){
 	m_fDmg = dmg;
 	m_cpos = cpos;
 	m_cam = new uCamera(*cam);
+	m_sprite = new uSprite;
 }
 
 mEffect::mEffect(int type, int skillEffectType, VECTOR2D* cpos, uCamera* cam){
@@ -22,6 +24,18 @@ mEffect::mEffect(int type, int skillEffectType, VECTOR2D* cpos, uCamera* cam){
 	m_nSkillEffectType = skillEffectType;
 	m_cpos = cpos;
 	m_cam = new uCamera(*cam);
+	m_sprite = new uSprite;
+	switch (m_nSkillEffectType)
+	{
+	case 0:
+		m_sprite->pickSpriteAtlas(0.0f, 0.0f, 110.6f, 104.0f, 0.0f, 35.0f, 9);
+		break;
+	case 1:
+		m_sprite->pickSpriteAtlas(0.0f, 0.0f, 168.0f, 118.0f, 5);
+		break;
+	default:
+		break;
+	}
 }
 
 mEffect::~mEffect()
@@ -47,7 +61,11 @@ void mEffect::update(float delta){
 
 		break;
 	case 1: // using bitmap
-
+		m_sprite->nextFrame(delta);
+		// 이펙트 종료 조건
+		if (m_sprite->getCurrentFrame() >= 9){
+			m_endEffect = true;
+		}
 		break;
 	default:
 		break;
@@ -83,7 +101,21 @@ void mEffect::render(){
 		}
 		break;
 	case 1:
+	{
+		VECTOR2D cpos = m_cam->translasteToScreen(m_cpos);
+		::D2D1_RECT_F dxArea
+			= m_sprite->getCoordinateFromPivot(cpos);
+		::D2D1_RECT_F srcArea
+			= m_sprite->getSrcFrameFromSprite();
+		if (cResourceManager::GetInstance().getGEffectBitMap(SKILL2) != nullptr){
+			::cD2DRenderer::GetInstance().GetRenderTarget()
+				->DrawBitmap(cResourceManager::GetInstance().getGEffectBitMap(SKILL2), dxArea, 0.6f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+		}
+	}
 		break;
+
 	default:
 		break;
 	}

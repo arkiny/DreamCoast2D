@@ -119,7 +119,7 @@ void mPlayer::onInit(){
 void mPlayer::onUpdate(float fdeltatime){
 	// 대단히 primitive한 컨디션 스테잇을 이용한 statecontroller, 
 	// 차후 시간이 남으면 statemachine으로 교체
-
+	VECTOR2D coord;
 	if (m_State == ONDEAD){
 		// 플레이어 사망 처리, 가장 기본적인 DeadEnd State
 		// 가장 1순위 처리는 사망시 처리,
@@ -164,14 +164,19 @@ void mPlayer::onUpdate(float fdeltatime){
 	else if (m_State == ONSKILLEFFECTING){		
 		switch (m_castingSkill)
 		{
-		case 0:
+		case 0:{
+			
 			mPlayer::onAttack(fdeltatime);
 			mPlayer::dmgToArea(fdeltatime, m_default_attackPower, AREA_TYPE1);
+			
+			//delete coord;
 			break;
-		case 1:
+		}
+		case 1:{
 			mPlayer::onAttack(fdeltatime);
-			mPlayer::dmgToTile(fdeltatime, m_default_attackPower*10.0f);
+			mPlayer::dmgToTile(fdeltatime, m_default_attackPower*10.0f);			
 			break;
+		}
 		default:
 			break;
 		}	
@@ -236,6 +241,28 @@ void mPlayer::onUpdate(float fdeltatime){
 						cSoundManager::GetInstance().executeSkill(m_castingSkill);
 						m_MP -= 10.0f;
 						m_spriteAtlas->setCurrentFrame(0);
+
+						//
+						VECTOR2D currentTile = m_pTileMap->getTileCoordinates(*_realVector);
+						VECTOR2D iso;
+						switch (m_castingSkill)
+						{
+						case 0:
+							mPlayer::effectToArea(fdeltatime,0, AREA_TYPE1);
+							break;
+						case 1:
+							mPlayer::effectToTile(fdeltatime, 0);
+							break;
+						default:
+							break;
+						}			
+						
+						/*float x = iso.x*m_pTileMap->getRectTileWidth();
+						float y = iso.y*m_pTileMap->getRectTileHeight();
+						VECTOR2D in(x, y);
+						iso = m_pTileMap->twoDtoISO(in);
+						::mGFX::GetInstance().pushToEventQueue(new mEffect(1, 0, new VECTOR2D(iso.x, iso.y), m_Cam));*/
+
 					}
 					else{
 						// 마나 없을때 페널티
@@ -474,3 +501,4 @@ bool mPlayer::skillCompare(std::queue<int> &keyinput, int* skillArray, int index
 	bool ret = skillCompare(keyinput, skillArray, index + 1);
 	return ret;
 }
+

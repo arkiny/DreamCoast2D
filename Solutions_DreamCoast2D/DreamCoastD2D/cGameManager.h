@@ -7,6 +7,7 @@ class wWorld;
 class sIScreen;
 class cResourceManager;
 class cSoundManager;
+class mGFX;
 
 class cGameManager :
 	public cIGameMgr
@@ -29,5 +30,6 @@ private:
 	// 앞으로 구조 변경하면서 없앨수 있도록 노력은 해본다.
 	cResourceManager* m_pResourceMng;
 	cSoundManager* m_pSoundMng;
+	mGFX* m_pGFX;
 };
 

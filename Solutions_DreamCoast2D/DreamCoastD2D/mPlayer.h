@@ -126,5 +126,9 @@ private:
 	// default 10000
 	int m_nGold = 10000;
 	bool m_bEndbehavior = false;
+
+	//
+	void effectToArea(float delta, int effectType, int AreaType);
+	void effectToTile(float delta, int effectType);
 };
 

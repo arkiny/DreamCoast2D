@@ -42,6 +42,13 @@ enum ITEM_EQUIP_ID
 	ITEM_EQUIP_MAX
 };
 
+enum GEFFECT_ID{
+	SKILL1,
+	SKILL2,
+	HEALTHPOTION,	
+	GEFFECT_ID_MAX
+};
+
 typedef struct Effect
 {
 	float HP;

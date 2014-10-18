@@ -7,6 +7,7 @@
 #include "sMainMenuScreen.h"
 #include "cResourceManager.h"
 #include "cSoundManager.h"
+#include "mGFX.h"
 
 cGameManager::cGameManager(void)
 {
@@ -14,6 +15,7 @@ cGameManager::cGameManager(void)
 	m_pCurrentScreen = nullptr;
 	m_pResourceMng = nullptr;
 	m_pSoundMng = nullptr;
+	m_pGFX = nullptr;
 }
 
 cGameManager::~cGameManager(void)
@@ -50,6 +52,8 @@ void cGameManager::OnInit()
 	// 일단은 sGameScreen으로 게임을 시작한다.
 	m_pCurrentScreen = new sMainMenuScreen(this);
 	m_pCurrentScreen->OnInit();
+
+	m_pGFX = new mGFX;
 }
 
 void cGameManager::Render()

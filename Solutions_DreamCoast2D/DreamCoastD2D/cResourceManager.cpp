@@ -18,12 +18,16 @@ cResourceManager::cResourceManager()
 	for (ID2D1Bitmap* x : m_Bitmap_Item_Consume){
 		x = nullptr;
 	}
+	for (ID2D1Bitmap* x : m_Bitmap_Effect){
+		x = nullptr;
+	}
 	//for (D2D_POINT_2F x : m_ButtonSize){
 	//	x = { 0.0f, 0.0f };
 	//}
 	memset(m_ButtonSize, NULL, sizeof(m_ButtonSize));
 	memset(m_UI_SIZE, NULL, sizeof(m_UI_SIZE));
-	memset(m_Size_Item_Consume, NULL, sizeof(m_UI_SIZE));
+	memset(m_Size_Item_Consume, NULL, sizeof(m_Size_Item_Consume));
+	memset(m_Size_Effect, NULL, sizeof(m_Size_Effect));
 }
 
 // 이제 모든 리소스는 여기서 관리하므로
@@ -42,6 +46,16 @@ cResourceManager::~cResourceManager()
 		}
 	}
 	for (ID2D1Bitmap* x : m_Bitmap_UI){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
+	}
+	for (ID2D1Bitmap* x : m_Bitmap_Item_Consume){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
+	}
+	for (ID2D1Bitmap* x : m_Bitmap_Effect){
 		if (x != nullptr){
 			SafeRelease(x);
 		}
@@ -147,6 +161,17 @@ void cResourceManager::load(){
 	for (int i = 0; i < ITEM_CONSUME_MAX; i++){
 		m_Size_Item_Consume[i] = { 60.0f, 60.0f };
 	}
+
+	m_Bitmap_Effect[SKILL1] =
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/effect/ef_02_noBG.png", NULL);
+	m_Size_Effect[SKILL1] = { 1006.0f, 236.0f };
+
+	m_Bitmap_Effect[SKILL2] = 
+		::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/effect/ef_03_noBG.png", NULL);
+	m_Size_Effect[SKILL2] = { 1106.0f, 104.0f };
+	
 }
 
 void cResourceManager::loadMainMenuResource(){
@@ -186,4 +211,5 @@ void cResourceManager::releaseGameResource(){
 	for (int i = 0; i < UI_ID_MAX; i++){
 		SafeRelease(m_Bitmap_UI[i]);
 	}
+
 }
