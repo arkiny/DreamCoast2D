@@ -19,7 +19,7 @@ public:
 	void executeSkill(int);
 	void stopBeginSpell();
 	void stopBGM();
-	void executeOnHit();
+	void executeOnHit(int);
 	void executeOnDie(int);
 
 private:

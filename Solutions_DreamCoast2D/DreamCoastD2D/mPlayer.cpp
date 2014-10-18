@@ -298,7 +298,7 @@ void mPlayer::getHit(float dmg){
 		m_State = ONDEAD;
 	}
 	mGFX::GetInstance().pushToEventQueue(new mEffect(0, dmg, new VECTOR2D(*_drawVector), m_Cam));
-
+	cSoundManager::GetInstance().executeOnHit(1);
 }
 
 

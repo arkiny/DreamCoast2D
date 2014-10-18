@@ -72,10 +72,22 @@ void cSoundManager::executeSkill(int in){
 	}
 }
 
-void cSoundManager::executeOnHit(){
+void cSoundManager::executeOnHit(int type){
 	// todo 차후 무기에 따라서 다른소리
 	if (m_init){		
-		engine->play2D("Sounds/Effect/_hit_sword.wav");	
+		switch (type)
+		{
+		case 0:
+			engine->play2D("Sounds/Effect/_hit_sword.wav");
+			break;
+		case 1:
+			engine->play2D("Sounds/Effect/_enemy_hit1.wav");
+			break;
+		default:
+			engine->play2D("Sounds/Effect/_hit_sword.wav");
+			break;
+		}
+		
 	}
 }
 

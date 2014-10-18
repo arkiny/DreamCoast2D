@@ -172,6 +172,8 @@ void cResourceManager::load(){
 		(hWnd, L"Images/effect/ef_03_noBG.png", NULL);
 	m_Size_Effect[SKILL2] = { 1106.0f, 104.0f };
 	
+	m_Bitmap_Effect[HEALTHPOTION] = nullptr;
+	m_Size_Effect[HEALTHPOTION] = { 0.0f, 0.0f };
 }
 
 void cResourceManager::loadMainMenuResource(){
@@ -202,6 +204,7 @@ void cResourceManager::exitMainMenu(){
 }
 
 void cResourceManager::releaseGameResource(){
+	SafeRelease(m_Bitmap_MainBG);
 	SafeRelease(m_Bitmap_Player);
 	SafeRelease(m_Bitmap_TileMap);
 	SafeRelease(m_Bitmap_Poring);
@@ -210,6 +213,16 @@ void cResourceManager::releaseGameResource(){
 	}
 	for (int i = 0; i < UI_ID_MAX; i++){
 		SafeRelease(m_Bitmap_UI[i]);
+	}
+	for (ID2D1Bitmap* x : m_Bitmap_Item_Consume){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
+	}
+	for (ID2D1Bitmap* x : m_Bitmap_Effect){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
 	}
 
 }
