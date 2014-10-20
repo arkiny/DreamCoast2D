@@ -224,5 +224,4 @@ void cResourceManager::releaseGameResource(){
 			SafeRelease(x);
 		}
 	}
-
 }

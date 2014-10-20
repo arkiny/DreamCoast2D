@@ -48,6 +48,14 @@ wTileMap::~wTileMap()
 		delete ptr;
 	}
 	ptr = nullptr;
+
+	void* mptr;
+	while (m_mobs.empty()){
+		mptr = m_mobs.back();
+		m_mobs.pop_back();
+		delete mptr;
+	}
+	mptr = nullptr;
 }
 
 void wTileMap::onInit(){

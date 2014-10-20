@@ -19,7 +19,7 @@ wWorld::~wWorld()
 		delete m_Map;
 }
 
-void wWorld::OnInit(){
+void wWorld::OnInit(int mapnumber){
 
 	m_Player = new mPlayer;
 	m_Player->onInit();
@@ -38,10 +38,9 @@ void wWorld::OnInit(){
 	// 50*50 이상의 크기에서 심각하게 느려짐...
 	//m_Map->setSize(25.0f, 25.0f);
 
-
 	uFileControl a = uFileControl(this);
 	//a.SaveToFile(1);
-	a.LoadFromFile(1, this);
+	a.LoadFromFile(mapnumber, this);
 	m_Map->onInit();
 }
 

@@ -19,8 +19,8 @@ public:
 	// position control
 	VECTOR2D* getDrawPos(){ return _drawVector; }
 	VECTOR2D* getRealPos(){ return _realVector; }
-	void setRealPos(float x, float y);
-	void setDrawPos(float x, float y);
+	virtual void setRealPos(float x, float y);
+	virtual void setDrawPos(float x, float y);
 
 	uSprite* getSprite() { return m_spriteAtlas; }
 	wTileMap* getTileMap(){ return m_pTileMap; }

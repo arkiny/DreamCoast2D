@@ -35,6 +35,7 @@ void sResourceLoad::Update(float){
 			m_pGameManager->changeScreen(input);
 		}
 		else if (m_nNextScreenType == BUTTONID::BTN_MAINMENU){
+			cResourceManager::GetInstance().releaseGameResource();
 			cResourceManager::GetInstance().loadMainMenuResource();
 			sMainMenuScreen* input = new sMainMenuScreen(m_pGameManager);
 			m_pGameManager->changeScreen(input);

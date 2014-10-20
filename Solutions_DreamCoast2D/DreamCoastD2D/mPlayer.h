@@ -44,6 +44,9 @@ public:
 
 	bool isDeadComplete() { return m_deadcomp; }
 
+	void setRealPos(float x, float y);
+	//virtual void setDrawPos(float x, float y);
+
 	// inventory control
 	//void addToInventory();
 	//void removeFromInventory(int ID);

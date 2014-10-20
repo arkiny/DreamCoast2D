@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "sGameScreen.h"
+#include "sEditScreen.h"
 #include "cGameManager.h"
 #include "wWorld.h"
 #include "InGameUI.h"
@@ -35,10 +36,8 @@ sGameScreen::sGameScreen(cGameManager* cg){
 
 void sGameScreen::OnInit(){
 	m_pWorld = new wWorld();
-
-	::cResourceManager::GetInstance().load();
-
-	m_pWorld->OnInit();
+	
+	m_pWorld->OnInit(1);
 	m_pGameUI = new InGameUI((ICharacter*)m_pWorld->getPlayer(), m_pWorld->getMap());
 	m_pGameUI->OnInit(this);
 
@@ -93,6 +92,13 @@ void sGameScreen::Update(float deltaTime){
 		return;
 	}
 
+	if (coControl::GetInstance().getKeyControlInfo()[VK_TAB]){
+		coControl::GetInstance().onKeyUp(VK_TAB);
+		sEditScreen* input = new sEditScreen(m_pGameManager);
+		m_pGameManager->changeScreen(input);
+		return;
+	}
+
 	if (m_pWorld->isGameOver()){
 		m_bisGameOver = true;
 		/*m_pGameManager->changeScreen(new sGameOverScreen(m_pGameManager));
@@ -123,8 +129,7 @@ void sGameScreen::Update(float deltaTime){
 	mGFX::GetInstance().update(deltaTime);
 }
 
-void sGameScreen::OnExit(){	
-	::cResourceManager::GetInstance().releaseGameResource();
+void sGameScreen::OnExit(){		
 	::cSoundManager::GetInstance().stopBGM();
 	this->~sGameScreen();
 }

@@ -502,3 +502,7 @@ bool mPlayer::skillCompare(std::queue<int> &keyinput, int* skillArray, int index
 	return ret;
 }
 
+void mPlayer::setRealPos(float x, float y){
+	mCharacter::setRealPos(x, y);
+	mCharacter::setDrawPos(x, y + 15.0f);
+}

@@ -28,6 +28,7 @@ uFileControl::uFileControl(wWorld* worldMap)
 
 uFileControl::~uFileControl()
 {
+	m_pWorld = nullptr;
 }
 
 void uFileControl::SaveToFile(int num){
@@ -116,7 +117,6 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 		MessageBox(NULL, L"File Open Failed!!", L"Error", MB_OK);
 		return;
 	}
-
 	
 	//float player_x ;
 	//float player_y ;
@@ -138,7 +138,9 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 	fclose(f);
 	//to = m_pWorld;
 	//float x = a.mobpos.front().first;
-	MessageBox(NULL, L"파일이 로드 되었습니다.", L"파일 로드", MB_OK);
+	//MessageBox(NULL, L"파일이 로드 되었습니다.", L"파일 로드", MB_OK);
+
+	to->getPlayer()->setRealPos(loadchunk.player_x, loadchunk.player_y);
 
 	to->getMap()->setSize(loadchunk.map_width, loadchunk.map_height);
 	int load = 0;

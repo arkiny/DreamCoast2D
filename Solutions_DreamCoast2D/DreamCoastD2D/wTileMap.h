@@ -46,6 +46,7 @@ public:
 	void addMonsterTotile(float x, float y);
 
 	std::vector<ICharacter*>* getMobList() { return &m_mobs; }
+	uCamera* getCamera(){ return m_Cam; }
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
 	// 전투, 충돌 처리 실시 혹은 맵(이 아니라 이제 자체적으로 월드인듯)

@@ -20,6 +20,7 @@ uTile::uTile(int type, uCamera* const in){
 uTile::~uTile()
 {
 	m_Cam = nullptr;
+	m_vObjects.clear();
 }
 
 void uTile::renderTile(float x, float y, 

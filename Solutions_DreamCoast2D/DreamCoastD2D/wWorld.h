@@ -14,7 +14,7 @@ public:
 
 	void Render();
 	void Update(float deltaTime);
-	void OnInit();
+	void OnInit(int mapnumber);
 
 	mPlayer* getPlayer(){ return m_Player; }
 	wTileMap* getMap() { return m_Map; }

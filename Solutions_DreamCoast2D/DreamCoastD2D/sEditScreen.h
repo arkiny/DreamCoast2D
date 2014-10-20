@@ -7,7 +7,7 @@ class sEditScreen :
 	public sIScreen
 {
 public:
-	sEditScreen();
+	sEditScreen(cGameManager*);
 	~sEditScreen();
 	
 	// 해당 스크린에서 p누르면 업데이트 멈추게
