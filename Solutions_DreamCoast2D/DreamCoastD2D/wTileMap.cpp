@@ -77,7 +77,7 @@ void wTileMap::onInit(){
 	//in.y = 10.0f*_RectTileHeight;
 	//pt = twoDtoISO(in);
 	//ptr2->setDest(pt.x, pt.y);
-	ptr2->setCurrentAggroLevel(ptr2->getMaxAggroLevel());
+	//ptr2->setCurrentAggroLevel(ptr2->getMaxAggroLevel());
 	m_mobs.push_back(ptr);	
 
 	//
