@@ -62,6 +62,9 @@
     <Filter Include="Model\GFX\Effect">
       <UniqueIdentifier>{95e3f071-2869-4a3e-bd31-bb6712a1b9d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Screen\Screen">
+      <UniqueIdentifier>{62730ecd-331e-4b9d-9567-177154be5c73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -90,12 +93,6 @@
     </ClInclude>
     <ClInclude Include="uTile.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="sGameScreen.h">
-      <Filter>Model\Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="sIScreen.h">
-      <Filter>Model\Screen</Filter>
     </ClInclude>
     <ClInclude Include="wWorld.h">
       <Filter>Model\Screen\World</Filter>
@@ -166,9 +163,6 @@
     <ClInclude Include="uiButton.h">
       <Filter>Model\Screen\UI</Filter>
     </ClInclude>
-    <ClInclude Include="sMainMenuScreen.h">
-      <Filter>Model\Screen</Filter>
-    </ClInclude>
     <ClInclude Include="InGameUI.h">
       <Filter>Model\Screen\InScreenUI</Filter>
     </ClInclude>
@@ -183,9 +177,6 @@
     </ClInclude>
     <ClInclude Include="uiMenu.h">
       <Filter>Model\Screen\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="sResourceLoad.h">
-      <Filter>Model\Screen</Filter>
     </ClInclude>
     <ClInclude Include="cSoundManager.h">
       <Filter>Core</Filter>
@@ -238,6 +229,24 @@
     <ClInclude Include="IEffect.h">
       <Filter>Model\GFX\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="sEditScreen.h">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="sGameScreen.h">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="sIScreen.h">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="sMainMenuScreen.h">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="sResourceLoad.h">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="uFileControl.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -266,12 +275,6 @@
     </ClCompile>
     <ClCompile Include="uTile.cpp">
       <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="sGameScreen.cpp">
-      <Filter>Model\Screen</Filter>
-    </ClCompile>
-    <ClCompile Include="sIScreen.cpp">
-      <Filter>Model\Screen</Filter>
     </ClCompile>
     <ClCompile Include="wWorld.cpp">
       <Filter>Model\Screen\World</Filter>
@@ -333,9 +336,6 @@
     <ClCompile Include="uiButton.cpp">
       <Filter>Model\Screen\UI</Filter>
     </ClCompile>
-    <ClCompile Include="sMainMenuScreen.cpp">
-      <Filter>Model\Screen</Filter>
-    </ClCompile>
     <ClCompile Include="InGameUI.cpp">
       <Filter>Model\Screen\InScreenUI</Filter>
     </ClCompile>
@@ -347,9 +347,6 @@
     </ClCompile>
     <ClCompile Include="uiMenu.cpp">
       <Filter>Model\Screen\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="sResourceLoad.cpp">
-      <Filter>Model\Screen</Filter>
     </ClCompile>
     <ClCompile Include="cSoundManager.cpp">
       <Filter>Core</Filter>
@@ -392,6 +389,24 @@
     </ClCompile>
     <ClCompile Include="mEffect.cpp">
       <Filter>Model\GFX\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sEditScreen.cpp">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="sGameScreen.cpp">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="sIScreen.cpp">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="sMainMenuScreen.cpp">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="sResourceLoad.cpp">
+      <Filter>Model\Screen\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="uFileControl.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
