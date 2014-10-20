@@ -43,6 +43,8 @@ public:
 	float getRectTileWidth(){ return _RectTileWidth; }
 	float getRectTileHeight(){	return _RectTileHeight;	}
 
+	void addMonsterTotile(float x, float y);
+
 	std::vector<ICharacter*>* getMobList() { return &m_mobs; }
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
@@ -56,7 +58,7 @@ private:
 	uSprite* m_spriteAtlas;			// 맵 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 맵 스프라이트 파일
 	
-	std::vector<int> m_vMapinfo;	// 동적으로 저장된 맵 데이타
+	//std::vector<int> m_vMapinfo;	// 동적으로 저장된 맵 데이타
 	std::vector<uTile*> m_vMapObjectHandler; // uTile형식으로 핸들러
 
 	uCamera* m_Cam;

@@ -3,6 +3,7 @@
 #include "mPlayer.h"
 #include "wTileMap.h"
 #include "cResourceManager.h"
+#include "uFileControl.h"
 
 wWorld::wWorld()
 {
@@ -25,7 +26,7 @@ void wWorld::OnInit(){
 	
 	m_Map = new wTileMap;
 	m_Map->setPlayer(m_Player);
-	m_Map->onInit();
+	//m_Map->onInit();
 
 	// 데이터 통신용 포인터 연결
 	// 컨트롤은 한번 정의해놓으면 고칠일이 없지만, 
@@ -35,7 +36,13 @@ void wWorld::OnInit(){
 	m_Player->setTileMap(m_Map);
 	
 	// 50*50 이상의 크기에서 심각하게 느려짐...
-	m_Map->setSize(25.0f, 25.0f);
+	//m_Map->setSize(25.0f, 25.0f);
+
+
+	uFileControl a = uFileControl(this);
+	//a.SaveToFile(1);
+	a.LoadFromFile(1, this);
+	m_Map->onInit();
 }
 
 void wWorld::Render(){

@@ -54,61 +54,78 @@ void wTileMap::onInit(){
 	m_ipD2DBitmap = ::cResourceManager::GetInstance().getTileMapBitMap();
 	m_Cam = new uCamera(1028.0, 768.0f, m_player->getRealPos());
 	
-	// Debug---------------------------------------------------
-	VECTOR2D in(6.0f*_RectTileWidth, 8.0f*_RectTileHeight);
+	//// Debug---------------------------------------------------
+	//VECTOR2D in(6.0f*_RectTileWidth, 8.0f*_RectTileHeight);
+	//VECTOR2D pt = twoDtoISO(in);
+	//ICharacter* ptr = new mMonster(pt.x, pt.y);
+	//mMonster* ptr2 = (mMonster*)ptr;
+	//ptr2->setDir(LEFTDOWN);
+	//ptr2->setTileMap(this);
+	//m_mobs.push_back(ptr);
+	////
+
+	////
+	//in.x = 7.0f*_RectTileWidth;
+	//in.y = 8.0f*_RectTileHeight;
+	//pt = twoDtoISO(in);
+	//ptr = new mMonster(pt.x, pt.y);
+	//ptr2 = (mMonster*)ptr;
+	//ptr2->setDir(RIGHTDOWN);
+	//ptr2->setTileMap(this);
+	//// 이동 목표 설정 debug용
+	////in.x = 10.0f*_RectTileWidth;
+	////in.y = 10.0f*_RectTileHeight;
+	////pt = twoDtoISO(in);
+	////ptr2->setDest(pt.x, pt.y);
+	////ptr2->setCurrentAggroLevel(ptr2->getMaxAggroLevel());
+	//m_mobs.push_back(ptr);	
+
+	////
+	//in.x = 6.0f*_RectTileWidth;
+	//in.y = 7.0f*_RectTileHeight;
+	//pt = twoDtoISO(in);
+	//ptr = new mMonster(pt.x, pt.y);
+	//ptr2 = (mMonster*)ptr;
+	//ptr2->setDir(LEFTUP);	
+	//ptr2->setTileMap(this);
+	//m_mobs.push_back(ptr);
+	////
+	//
+	////
+	//in.x = 7.0f*_RectTileWidth;
+	//in.y = 7.0f*_RectTileHeight;
+	//pt = twoDtoISO(in);
+	//pt = twoDtoISO(in);
+	//ptr = new mMonster(pt.x, pt.y);
+	//ptr2 = (mMonster*)ptr;
+	//ptr2->setDir(RIGHTUP);
+	//ptr2->setTileMap(this);
+	//m_mobs.push_back(ptr);
+	//// Debug---------------------------------------------------
+	//
+	//ptr2 = nullptr;
+	//ptr = nullptr;
+
+	for (unsigned int i = 0; i < m_mobs.size(); i++){
+		m_mobs[i]->onInit();
+		m_mobs[i]->setCam(m_Cam);
+	}
+
+	for (int i = 0; i < _horizontal * _vertical; i++){
+		m_vMapObjectHandler[i]->setCam(m_Cam);
+	}
+}
+
+void wTileMap::addMonsterTotile(float x, float y){
+	VECTOR2D in(x*_RectTileWidth, y*_RectTileHeight);
 	VECTOR2D pt = twoDtoISO(in);
 	ICharacter* ptr = new mMonster(pt.x, pt.y);
 	mMonster* ptr2 = (mMonster*)ptr;
 	ptr2->setDir(LEFTDOWN);
 	ptr2->setTileMap(this);
 	m_mobs.push_back(ptr);
-	//
-
-	//
-	in.x = 7.0f*_RectTileWidth;
-	in.y = 8.0f*_RectTileHeight;
-	pt = twoDtoISO(in);
-	ptr = new mMonster(pt.x, pt.y);
-	ptr2 = (mMonster*)ptr;
-	ptr2->setDir(RIGHTDOWN);
-	ptr2->setTileMap(this);
-	// 이동 목표 설정 debug용
-	//in.x = 10.0f*_RectTileWidth;
-	//in.y = 10.0f*_RectTileHeight;
-	//pt = twoDtoISO(in);
-	//ptr2->setDest(pt.x, pt.y);
-	//ptr2->setCurrentAggroLevel(ptr2->getMaxAggroLevel());
-	m_mobs.push_back(ptr);	
-
-	//
-	in.x = 6.0f*_RectTileWidth;
-	in.y = 7.0f*_RectTileHeight;
-	pt = twoDtoISO(in);
-	ptr = new mMonster(pt.x, pt.y);
-	ptr2 = (mMonster*)ptr;
-	ptr2->setDir(LEFTUP);	
-	ptr2->setTileMap(this);
-	m_mobs.push_back(ptr);
-	//
-	
-	//
-	in.x = 7.0f*_RectTileWidth;
-	in.y = 7.0f*_RectTileHeight;
-	pt = twoDtoISO(in);
-	pt = twoDtoISO(in);
-	ptr = new mMonster(pt.x, pt.y);
-	ptr2 = (mMonster*)ptr;
-	ptr2->setDir(RIGHTUP);
-	ptr2->setTileMap(this);
-	m_mobs.push_back(ptr);
-	// Debug---------------------------------------------------
-	
 	ptr2 = nullptr;
 	ptr = nullptr;
-	for (unsigned int i = 0; i < m_mobs.size(); i++){
-		m_mobs[i]->onInit();
-		m_mobs[i]->setCam(m_Cam);
-	}
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
@@ -280,12 +297,11 @@ void wTileMap::setSize(float horizontal, float vertical){
 	for (int i = 0; i < _horizontal * _vertical; i++){
 		ptr = new uTile(0, m_Cam);
 		m_vMapObjectHandler.push_back(ptr);
-		//m_vMapinfo.push_back(0);
 	}
 	ptr = nullptr;
 	
 	//debug및 테스트용 코드
-	for (int i = 0; i < 25; i++){
+	/*for (int i = 0; i < 25; i++){
 		setTile(static_cast<float>(i), 0.0f, 2);
 	}
 
@@ -304,7 +320,7 @@ void wTileMap::setSize(float horizontal, float vertical){
 	setTile(11.0f, 12.0f, 3);
 	setTile(12.0f, 12.0f, 3);
 	setTile(11.0f, 11.0f, 3);
-	setTile(12.0f, 11.0f, 3);
+	setTile(12.0f, 11.0f, 3);*/
 	//
 	
 	/*mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));
