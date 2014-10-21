@@ -39,7 +39,10 @@ void uTile::renderTile(float x, float y,
 		break;
 	case 3:
 		// offsetY = -((높이 - 원래타일높이) / 2)
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.5f, 0);
+		m_spriteAtlas->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.0f, 0);
+		break;
+	case 4:
+		m_spriteAtlas->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, 2.0f, -119.0f, 0);
 		break;
 	default:
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);

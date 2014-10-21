@@ -131,6 +131,8 @@ void wTileMap::addMonsterTotile(float x, float y){
 	mMonster* ptr2 = (mMonster*)ptr;
 	ptr2->setDir(LEFTDOWN);
 	ptr2->setTileMap(this);
+	ptr->onInit();
+	ptr2->setCam(m_Cam);
 	m_mobs.push_back(ptr);
 	ptr2 = nullptr;
 	ptr = nullptr;
