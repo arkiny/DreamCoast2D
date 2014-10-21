@@ -130,6 +130,21 @@ void sEditScreen::Update(float deltaTime){
 				if (mousecoord.x - 2.0f >= 0 && mousecoord.y - 2.0f >= 0){
 					m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y - 2.0f, 1);
 				}
+				if (mousecoord.x + 1.0f <= m_pWorld->getMap()->getMapLimit().x && mousecoord.y <= m_pWorld->getMap()->getMapLimit().y){
+					m_pWorld->getMap()->setTile(mousecoord.x + 1.0f, mousecoord.y , 1);
+				}
+				if (mousecoord.x + 1.0f <= m_pWorld->getMap()->getMapLimit().x && mousecoord.y - 1.0f >= 0){
+					// 차후 알맞은 타일로 교체
+					m_pWorld->getMap()->setTile(mousecoord.x + 1.0f, mousecoord.y - 1.0f, 1);
+				}
+				if (mousecoord.x + 1.0f <= m_pWorld->getMap()->getMapLimit().x && mousecoord.y - 2.0f >= 0){
+					// 차후 알맞은 타일료 교체
+					m_pWorld->getMap()->setTile(mousecoord.x + 1.0f, mousecoord.y - 2.0f, 1);
+				}
+				if (mousecoord.x + 2.0f <= m_pWorld->getMap()->getMapLimit().x && mousecoord.y - 1.0f >= 0){
+					// 차후 알맞은 타일로 교체
+					m_pWorld->getMap()->setTile(mousecoord.x + 2.0f, mousecoord.y-1.0f, 1);
+				}
 			}
 		}
 		else if (m_nHook = MOB_PORING){

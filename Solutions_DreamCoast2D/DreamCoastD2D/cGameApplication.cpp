@@ -80,6 +80,7 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	HWND hWnd;
+	HWND hWndChild;
 
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
 
@@ -93,6 +94,9 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 		NULL, NULL, hInstance, NULL);
 
 	
+	//hWndChild = CreateWindow(TEXT("Edit"), TEXT("test"), WS_CHILD | WS_VISIBLE | WS_BORDER, 
+	//	100, 20, 140, 20, hWnd, NULL, NULL, NULL);
+
 
 	if (!hWnd)
 	{
