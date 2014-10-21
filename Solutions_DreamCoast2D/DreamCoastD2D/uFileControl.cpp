@@ -14,7 +14,9 @@ struct DATA{
 	float player_y;
 	int map_height;
 	int map_width;
-	int mapinfo[625];
+	// 차후 버퍼를 늘려 더 큰맵에도 대비할 수도 있다.
+	// convert함수가 필요할듯
+	int mapinfo[625]; 
 	int monsterNum;
 	float monster_x[100];
 	float monster_y[100];
@@ -33,7 +35,7 @@ uFileControl::~uFileControl()
 
 void uFileControl::SaveToFile(int num){
 	char fileName[128];
-	sprintf(fileName, "map%d.txt", num);
+	sprintf(fileName, "map%d.dat", num);
 
 	//char fileName[] = "map1.dat";
 	FILE* f;
@@ -110,7 +112,7 @@ void uFileControl::SaveToFile(int num){
 
 void uFileControl::LoadFromFile(int num, wWorld* to){
 	char fileName[128];
-	sprintf(fileName, "map%d.txt", num);
+	sprintf(fileName, "map%d.dat", num);
 	//char fileName[] = "map1.dat";
 	FILE* f;
 	if ((f = fopen(fileName, "rb")) == NULL)	{
@@ -142,11 +144,13 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 
 	to->getPlayer()->setRealPos(loadchunk.player_x, loadchunk.player_y);
 
-	to->getMap()->setSize(loadchunk.map_width, loadchunk.map_height);
+	to->getMap()->setSize(static_cast<float>(loadchunk.map_width), 
+		static_cast<float>(loadchunk.map_height));
+
 	int load = 0;
 	for (int j = 0; j < loadchunk.map_height; j++){
 		for (int i = 0; i < loadchunk.map_width; i++){
-			to->getMap()->setTile(i, j, loadchunk.mapinfo[load]);
+			to->getMap()->setTile(static_cast<float>(i), static_cast<float>(j), loadchunk.mapinfo[load]);
 			load++;
 		}
 	}

@@ -3,6 +3,8 @@
 
 class wWorld;
 
+enum MOUSE_HOOKING_ID{TILE_EMPTY, TILE_CANNOTMOVE, TILE_HIGH_GROUND, TILE_TREE, TILE_BUILDING, MOB_PORING, BUTTON_MAX};
+
 class sEditScreen :
 	public sIScreen
 {
@@ -37,5 +39,7 @@ private:
 
 	float m_fKeydelay = 0.2f;
 	float m_fdelaytime = 0.0f;
+
+	int m_nHook = 0;
 };
 
