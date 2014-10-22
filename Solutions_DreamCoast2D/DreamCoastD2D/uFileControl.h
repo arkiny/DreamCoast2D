@@ -1,5 +1,8 @@
 #pragma once
 
+// u sprite tool 
+// refer ndrive spriteTool
+
 class wWorld;
 
 class uFileControl

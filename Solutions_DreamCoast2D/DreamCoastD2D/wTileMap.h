@@ -44,6 +44,7 @@ public:
 	float getRectTileHeight(){	return _RectTileHeight;	}
 
 	void addMonsterTotile(float x, float y);
+	void addMonsterTotile(float x, float y, int type);
 
 	std::vector<ICharacter*>* getMobList() { return &m_mobs; }
 	uCamera* getCamera(){ return m_Cam; }

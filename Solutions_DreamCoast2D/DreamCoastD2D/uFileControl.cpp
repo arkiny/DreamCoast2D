@@ -35,11 +35,12 @@ uFileControl::~uFileControl()
 
 void uFileControl::SaveToFile(int num){
 	char fileName[128];
-	sprintf(fileName, "map%d.dat", num);
-
+	sprintf_s(fileName, "map%d.dat", num);
+	
 	//char fileName[] = "map1.dat";
-	FILE* f;
-	if ((f = fopen(fileName, "wb")) == NULL)	{
+	FILE* f;	
+	errno_t err = NULL;
+	if (err = fopen_s(&f, fileName, "wb")!=0)	{
 		MessageBox(NULL, L"File Open Failed!!", L"Error", MB_OK);
 		return;
 	}
@@ -112,10 +113,11 @@ void uFileControl::SaveToFile(int num){
 
 void uFileControl::LoadFromFile(int num, wWorld* to){
 	char fileName[128];
-	sprintf(fileName, "map%d.dat", num);
+	sprintf_s(fileName, "map%d.dat", num);
 	//char fileName[] = "map1.dat";
 	FILE* f;
-	if ((f = fopen(fileName, "rb")) == NULL)	{
+	errno_t err = NULL;
+	if (err = fopen_s(&f, fileName, "rb") != 0)	{
 		MessageBox(NULL, L"File Open Failed!!", L"Error", MB_OK);
 		return;
 	}

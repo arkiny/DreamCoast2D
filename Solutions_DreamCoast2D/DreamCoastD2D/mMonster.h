@@ -1,6 +1,8 @@
 #pragma once
 #include "mCharacter.h"
 
+enum MONSTERTYPE{MON_PASSIVE, MON_ACTIVE, MON_BOSS, MON_TYPE_MAX};
+
 class aiState;
 class VECTOR2D;
 
@@ -56,12 +58,19 @@ public:
 	float getSight(){ return m_visionRange; }
 	float getAttackPower() { return m_attackPower; }
 
+	int getMonsterType(){ return m_nMonsterType; }
+	void setMonsterType(int in);
+
 private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;
 	
 	VECTOR2D* m_dest; // 목적지
 	aiState* m_pState;	// statemachine
+
+	// 몬스터 타입, 지금은 스프라이트도 이것에 따라서 조정되지만,
+	// 차후 필요에 따라서 몬스터 아이디에 따라서 DB에서 뽑아오는 걸로 변경
+	int m_nMonsterType = 0;
 
 	// deltatime deliverer
 	float m_fdeltatime = 0.0f;

@@ -125,6 +125,10 @@ void wTileMap::onInit(){
 }
 
 void wTileMap::addMonsterTotile(float x, float y){
+	wTileMap::addMonsterTotile(x, y, 0);
+}
+
+void wTileMap::addMonsterTotile(float x, float y, int type){
 	VECTOR2D in(x*_RectTileWidth, y*_RectTileHeight);
 	VECTOR2D pt = twoDtoISO(in);
 	ICharacter* ptr = new mMonster(pt.x, pt.y);
@@ -133,6 +137,7 @@ void wTileMap::addMonsterTotile(float x, float y){
 	ptr2->setTileMap(this);
 	ptr->onInit();
 	ptr2->setCam(m_Cam);
+	ptr2->setMonsterType(type);
 	m_mobs.push_back(ptr);
 	ptr2 = nullptr;
 	ptr = nullptr;

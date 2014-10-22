@@ -6,6 +6,7 @@
 #include "aiStateDead.h"
 #include "uSprite.h"
 #include "mMonster.h"
+#include "wTileMap.h"
 #include "VECTOR2D.h"
 
 void aiStateMoveto::enter(mMonster* pmon)
@@ -34,11 +35,18 @@ void aiStateMoveto::execute(mMonster* pmon)
 		pmon->changeState(new aiStateScan);
 	}*/
 
-	if (pmon->getCurrentAggroLevel() >= pmon->getMaxAggroLevel() 
+
+	bool inSight = pmon->getTileMap()->sightScan(pmon->getSight(), *(pmon->getDrawPos()));
+	if (pmon->getMonsterType() != 0 && inSight){
+		pmon->setCurrentAggroLevel(pmon->getMaxAggroLevel());
+	}
+	
+	if (pmon->getCurrentAggroLevel() >= pmon->getMaxAggroLevel()
 		&& accumtime >= 1.0f){
 		accumtime = 0;
 		pmon->changeState(new aiStateScan);
-	}
+	} 
+
 
 	if (*(pmon->getRealPos()) == *(pmon->getDest())){
 		pmon->changeState(new aiStateIdle);

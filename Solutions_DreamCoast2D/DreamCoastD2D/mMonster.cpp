@@ -329,7 +329,10 @@ void mMonster::moveRandom(){
 		return;
 	}
 
-	// todo: 이동 불가타일 이동 불가하게 만들기
+	// todo: 이동 불가타일 도착 불가하게 만들기
+	if (m_pTileMap->getMapinfo(static_cast<int>(destTilePos.x), static_cast<int>(destTilePos.y))!=0){
+		return;
+	}
 
 	destTilePos.x = destTilePos.x * 45.0f;
 	destTilePos.y = destTilePos.y * 45.0f;
@@ -337,4 +340,11 @@ void mMonster::moveRandom(){
 	destTilePos = m_pTileMap->twoDtoISO(destTilePos);
 	m_dest->x = destTilePos.x;
 	m_dest->y = destTilePos.y;
+}
+
+void mMonster::setMonsterType(int in){
+	m_nMonsterType = in; 
+	/*if (m_nMonsterType != 0){
+		m_fcurAggroLevel = m_fMaxAggroLevel;
+	}*/
 }
