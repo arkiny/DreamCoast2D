@@ -183,7 +183,7 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 		//mobpos.push(std::pair<float, float>(mobpt.x, mobpt.y));
 		/*loadchunk.monster_x[i] = mobpt.x;
 		loadchunk.monster_y[i] = mobpt.y;*/
-		to->getMap()->addMonsterTotile(loadchunk.monster_x[i], loadchunk.monster_y[i]);
+		to->getMap()->addMonsterTotile(loadchunk.monster_x[i], loadchunk.monster_y[i], loadchunk.MapObject_type[i]);
 		//mobpos.pop();
 	}
 
