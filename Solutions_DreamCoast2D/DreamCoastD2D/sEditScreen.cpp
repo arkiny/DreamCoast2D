@@ -108,8 +108,10 @@ void sEditScreen::Update(float deltaTime){
 				mousecoord.x < m_pWorld->getMap()->getMapLimit().x&&
 				mousecoord.y < m_pWorld->getMap()->getMapLimit().y){
 
+				m_pWorld->getMap()->addMapObjectTotile(mousecoord.y, mousecoord.x);
+				
 				// 여기에 고른 타일이나 몬스터에 따라 추가하는 choose 명령어를 넣는다.
-				m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y, m_nHook);
+				m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y, 1);
 
 				if (mousecoord.y - 1.0f >= 0){
 					m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y - 1.0f, 1);

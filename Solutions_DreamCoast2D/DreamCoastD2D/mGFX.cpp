@@ -32,7 +32,7 @@ void mGFX::update(float delta){
 }
 
 void mGFX::render(){
-	std::queue<IEffect*> tempQueue;
+	std::queue<IEffect*> tempQueue;	
 	while (!m_qEffects.empty()){
 		m_qEffects.front()->render();	
 		tempQueue.push(m_qEffects.front());		

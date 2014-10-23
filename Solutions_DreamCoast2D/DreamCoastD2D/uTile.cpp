@@ -4,6 +4,7 @@
 #include "VECTOR2D.h"
 #include "uSprite.h"
 #include "cD2DRenderer.h"
+#include "IMapObject.h"
 
 uTile::uTile()
 {
@@ -21,6 +22,7 @@ uTile::~uTile()
 {
 	m_Cam = nullptr;
 	m_vObjects.clear();
+	m_qMapObject.clear();
 }
 
 void uTile::renderTile(float x, float y, 
@@ -103,9 +105,33 @@ void uTile::hRender(VECTOR2D tilePos,
 	}
 }
 
+void uTile::renderMapObject(float x, float y){
+	IMapObject* ptr;
+	while (!m_qMapObject.empty()){
+		ptr = m_qMapObject.back();
+		//m_qMapObject.pop_back();
+		//_camtile = m_Cam->translasteToScreen(ptr->getDrawPos());
+		//if (_camtile.x < (0 - 45.0f) || _camtile.y < (0 - 45.0f) ||
+		//	_camtile.x >(m_Cam->getScreenW() + 45.0f) ||
+		//	_camtile.y >(m_Cam->getScreenH() + 45.0f)){
+		//	// do nothing
+		//}
+		//else {
+		ptr->render();
+		//}
+		m_qMapObject.pop_back();
+	}
+}
+
 void uTile::addObject(ICharacter* in){
 	m_vObjects.push_back(in);
 }
+
+//
+void uTile::addMapObject(IMapObject* in){
+	m_qMapObject.push_back(in);
+}
+//
 
 void uTile::onHit(float dmg){
 	for (ICharacter* obj : m_vObjects){

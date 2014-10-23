@@ -1,13 +1,15 @@
 #pragma once
 #include <vector>
 #include "IGObject.h"
-
+#include "IMapObject.h"
 class VECTOR2D;
 class uSprite;
 class uCamera;
 class uTile;
 class cResourceManager;
+//
 
+//
 class wTileMap
 {
 public:
@@ -33,6 +35,7 @@ public:
 	VECTOR2D getMapLimit();
 	// 타일에 오브젝트를 주입
 	void addRenderObjectToTile(float x, float y, ICharacter* in);
+	void addRenderMapObjectToTile(float x, float y, IMapObject* in);
 	uTile* getTile(float x, float y);
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
 	VECTOR2D twoDtoISO(VECTOR2D in);
@@ -48,6 +51,10 @@ public:
 
 	std::vector<ICharacter*>* getMobList() { return &m_mobs; }
 	uCamera* getCamera(){ return m_Cam; }
+	
+	void addMapObjectTotile(float x, float y);
+	void removeMapObjectFromTile(float x, float y);
+
 private:
 	// 포인트 정보 저장, 제어는 world에서 하더라도, 해당 포인터를 받아와서
 	// 전투, 충돌 처리 실시 혹은 맵(이 아니라 이제 자체적으로 월드인듯)
@@ -56,12 +63,15 @@ private:
 	// 하지만 스테이지가 맵단위로 바뀌면 어떻게 될까?... 아마 생각좀 해봐야할듯 하다.
 	ICharacter* m_player;
 	std::vector<ICharacter*> m_mobs;
+	std::vector<IMapObject*> m_mapObjects;
 	
 	uSprite* m_spriteAtlas;			// 맵 스프라이트 정보
 	ID2D1Bitmap* m_ipD2DBitmap;		// 맵 스프라이트 파일
 	
+	//mObjManager* m_MapObjects;
+
 	//std::vector<int> m_vMapinfo;	// 동적으로 저장된 맵 데이타
-	std::vector<uTile*> m_vMapObjectHandler; // uTile형식으로 핸들러
+	std::vector<uTile*> m_vMapObjectHandler; // uTile형식으로 핸들러, 맵오브젝트도 여기로 뿌려서 랜더
 
 	uCamera* m_Cam;
 	// debug	
@@ -94,6 +104,8 @@ private:
 
 	// monster의 시야 스캐닝
 	void scanVision(float sight, VECTOR2D monsterpos, VECTOR2D playerPos, bool* ret);
+
+
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음 (sprite타일의 크기)

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "IGObject.h"
+#include "IMapObject.h"
 
 // 휘발성으로 넣어서?
 // 렌더만 여기서 하는 걸로?
@@ -23,6 +24,8 @@ public:
 	void setCam(uCamera* const in){ m_Cam = in; }
 
 	void addObject(ICharacter* in);
+	void addMapObject(IMapObject* in);
+
 	void deleteAllObject();
 	void setType(int in){ _type = in; }
 	int getType(){ return _type; }
@@ -30,12 +33,15 @@ public:
 
 	void renderTile(float x, float y, 
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);
+
+	void renderMapObject(float x, float y);
 	
 	void onHit(float dmg);
 private:
 	int _type;	
 	uCamera* m_Cam;
 	std::vector<ICharacter*> m_vObjects;
+	std::vector<IMapObject*> m_qMapObject;
 
 	void hRender(VECTOR2D tilePos,
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);

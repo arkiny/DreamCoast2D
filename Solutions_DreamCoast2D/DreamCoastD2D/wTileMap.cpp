@@ -7,14 +7,18 @@
 #include "IGObject.h"
 #include "uCamera.h"
 #include "mMonster.h"
+#include "mObjManager.h"
 #include "uTile.h"
 #include "cResourceManager.h"
+//
+#include "mBuilding.h"
 
 wTileMap::wTileMap()
 {	
 	m_player = nullptr;
 	m_ipD2DBitmap = nullptr;
 	m_Cam = nullptr;
+	//m_MapObjects = nullptr;
 
 	//임시로 타일맵 중앙에 배치
 	m_spriteAtlas = new uSprite();
@@ -61,7 +65,8 @@ wTileMap::~wTileMap()
 void wTileMap::onInit(){
 	m_ipD2DBitmap = ::cResourceManager::GetInstance().getTileMapBitMap();
 	m_Cam = new uCamera(1028.0, 768.0f, m_player->getRealPos());
-	
+	//m_MapObjects = new mObjManager;
+
 	//// Debug---------------------------------------------------
 	//VECTOR2D in(6.0f*_RectTileWidth, 8.0f*_RectTileHeight);
 	//VECTOR2D pt = twoDtoISO(in);
@@ -143,6 +148,16 @@ void wTileMap::addMonsterTotile(float x, float y, int type){
 	ptr = nullptr;
 }
 
+void wTileMap::addMapObjectTotile(float x, float y){
+	VECTOR2D in(x*_RectTileWidth, y*_RectTileHeight);
+	VECTOR2D pt = twoDtoISO(in);
+	m_mapObjects.push_back(new mBuilding(0, new VECTOR2D(pt.x, pt.y), m_Cam));
+}
+
+void wTileMap::removeMapObjectFromTile(float x, float y){
+	// todo
+}
+
 void wTileMap::onUpdate(float fdeltatime){	
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
 		m_mobs[i]->onUpdate(fdeltatime);			
@@ -159,6 +174,12 @@ void wTileMap::onUpdate(float fdeltatime){
 			VECTOR2D pos = getTileCoordinates(*m_mobs[i]->getDrawPos());
 			::wTileMap::addRenderObjectToTile(pos.x, pos.y, m_mobs[i]);
 		}
+	}
+
+	for (unsigned int i = 0; i < m_mapObjects.size(); i++){
+		VECTOR2D objpos(m_mapObjects[i]->getPos().x, m_mapObjects[i]->getPos().y);
+		VECTOR2D pos = getTileCoordinates(objpos);
+		::wTileMap::addRenderMapObjectToTile(pos.x, pos.y, m_mapObjects[i]);		
 	}
 	
 	// player는 고정되어 있는 메모리이므로
@@ -263,6 +284,7 @@ void wTileMap::renderMap(){
 			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->
 				renderTile(pt.x, pt.y, m_spriteAtlas, m_ipD2DBitmap);
 
+			
 			//mObjManager::getInstance().renderObject
 
 			//renderTile(pt.x, pt.y, type, renderer);
@@ -276,6 +298,13 @@ void wTileMap::renderMap(){
 			}
 		}
 	}
+	for (int j = 0; j < _vertical; j++){
+		for (int i = 0; i < _horizontal; i++){
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderMapObject
+				(pt.x, pt.y);
+		}
+	}
+	//m_MapObjects->render();
 	// 반투명처리해서 장애물 뒤에서도 보이게
 	m_player->onRender(true);
 }
@@ -355,6 +384,12 @@ void wTileMap::addRenderObjectToTile(float x, float y, ICharacter* in){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
 	m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addObject(in);
+}
+
+void wTileMap::addRenderMapObjectToTile(float x, float y, IMapObject* in){
+	int nx = static_cast<int>(x);
+	int ny = static_cast<int>(y);
+	m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addMapObject(in);
 }
 
 VECTOR2D wTileMap::getMapLimit(){ 

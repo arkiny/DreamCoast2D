@@ -1,31 +1,29 @@
 #pragma once
-#include "IEffect.h"
-
+#include "IMapObject.h"
 
 class uSprite;
 class uCamera;
 class VECTOR2D;
 
-class mEffect : public IEffect
+class mBuilding :
+	public IMapObject
 {
 public:
-	mEffect();
-	mEffect(int type, float dmg, VECTOR2D* cpos, uCamera* cam);
-	mEffect(int type, int skillEffectType, VECTOR2D* cpos, uCamera* cam);
-	~mEffect();
+	mBuilding();
+	mBuilding(int buildingtype, VECTOR2D* cpos, uCamera* cam);
+	~mBuilding();
 
 	virtual void update(float);
 	virtual void render();
 	virtual bool isEnd(){ return m_endEffect; }
+	virtual POINTFLOAT getPos();
 
 private:
 	uSprite* m_sprite;
 	uCamera* m_cam;
 	bool m_endEffect = false;
-	float m_fDmg = 0.0f;
 	float m_fAlpha = 1.0f;
-	int m_nEffectType = 0;
-	int m_nSkillEffectType = 0;
+	int m_nBuildingType = 0;
 	VECTOR2D* m_cpos;
 };
 

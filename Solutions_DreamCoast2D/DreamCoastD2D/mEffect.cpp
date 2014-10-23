@@ -25,6 +25,7 @@ mEffect::mEffect(int type, int skillEffectType, VECTOR2D* cpos, uCamera* cam){
 	m_cpos = cpos;
 	m_cam = new uCamera(*cam);
 	m_sprite = new uSprite;
+
 	switch (m_nSkillEffectType)
 	{
 	case 0:

@@ -68,6 +68,9 @@
     <Filter Include="Model\MapObject">
       <UniqueIdentifier>{7971afb7-23dd-4a8d-a085-e80cefac2034}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\MapObject\Building">
+      <UniqueIdentifier>{b3020239-3a56-4839-8099-aec739ef1aa9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -250,11 +253,11 @@
     <ClInclude Include="uFileControl.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="mObjManager.h">
-      <Filter>Model\MapObject</Filter>
-    </ClInclude>
     <ClInclude Include="IMapObject.h">
-      <Filter>Model\MapObject</Filter>
+      <Filter>Model\MapObject\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="mBuilding.h">
+      <Filter>Model\MapObject\Building</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -417,8 +420,8 @@
     <ClCompile Include="uFileControl.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="mObjManager.cpp">
-      <Filter>Model\MapObject</Filter>
+    <ClCompile Include="mBuilding.cpp">
+      <Filter>Model\MapObject\Building</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
