@@ -50,6 +50,10 @@ void wWorld::Render(){
 	m_Map->onRender();
 }
 
+void wWorld::RenderEdit(){
+	m_Map->onRenderEdit();
+}
+
 void wWorld::Update(float deltaTime){
 
 	if (m_Player->isDeadComplete()){

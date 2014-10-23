@@ -6,21 +6,30 @@
 #include "wWorld.h"
 #include "mPlayer.h"
 #include "mMonster.h"
+#include "IMapObject.h"
 #include "wTileMap.h"
 #include "VECTOR2D.h"
 
-struct DATA{
+struct DATA2{
 	float player_x;
 	float player_y;
 	int map_height;
 	int map_width;
 	// 차후 버퍼를 늘려 더 큰맵에도 대비할 수도 있다.
 	// convert함수가 필요할듯
-	int mapinfo[625]; 
+	int mapinfo[2500];
+
 	int monsterNum;
 	float monster_x[100];
 	float monster_y[100];
+
+	int mapObjectNum;
+	float MapObject_x[1024];
+	float MapObject_y[1024];
+
+	int MapObject_type[1024];
 };
+
 
 uFileControl::uFileControl(wWorld* worldMap)
 {
@@ -50,7 +59,7 @@ void uFileControl::SaveToFile(int num){
 	//// 맵사이즈
 	//int height;
 	//int width;
-	DATA savechunk;
+	DATA2 savechunk;
 
 	/*std::queue<int> mapinfo;
 	std::queue<std::pair<float, float>> mobpos;*/
@@ -83,6 +92,17 @@ void uFileControl::SaveToFile(int num){
 		savechunk.monster_y[i] = mobpt.y;
 		//mobpos.pop();
 	}
+
+	VECTOR2D objpt(0.0f, 0.0f);
+	savechunk.mapObjectNum = m_pWorld->getMap()->getMapObjList()->size();
+	for (int i = 0; i < savechunk.mapObjectNum; i++){
+		VECTOR2D pos = VECTOR2D(m_pWorld->getMap()->getMapObjList()->at(i)->getPos().x, m_pWorld->getMap()->getMapObjList()->at(i)->getPos().y);
+		objpt = m_pWorld->getMap()->getTileCoordinates(pos);
+		savechunk.MapObject_x[i] = objpt.x;
+		savechunk.MapObject_y[i] = objpt.y;
+		savechunk.MapObject_type[i] = m_pWorld->getMap()->getMapObjList()->at(i)->getType();
+	}
+
 	
 	/*fprintf(f, "%f ", player_x);
 	fprintf(f, "%f\n", player_y);
@@ -137,7 +157,7 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 	//	
 	//}
 
-	DATA loadchunk;
+	DATA2 loadchunk;
 	fread(&loadchunk, sizeof(loadchunk), 1, f);
 	fclose(f);
 	//to = m_pWorld;
@@ -145,7 +165,6 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 	//MessageBox(NULL, L"파일이 로드 되었습니다.", L"파일 로드", MB_OK);
 
 	to->getPlayer()->setRealPos(loadchunk.player_x, loadchunk.player_y);
-
 	to->getMap()->setSize(static_cast<float>(loadchunk.map_width), 
 		static_cast<float>(loadchunk.map_height));
 
@@ -166,5 +185,10 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 		loadchunk.monster_y[i] = mobpt.y;*/
 		to->getMap()->addMonsterTotile(loadchunk.monster_x[i], loadchunk.monster_y[i]);
 		//mobpos.pop();
+	}
+
+	VECTOR2D objpt(0.0f, 0.0f);
+	for (int i = 0; i < loadchunk.mapObjectNum; i++){
+		to->getMap()->addMapObjectTotile(loadchunk.MapObject_y[i], loadchunk.MapObject_x[i], loadchunk.MapObject_type[i]);
 	}
 }

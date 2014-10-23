@@ -17,10 +17,26 @@ mBuilding::mBuilding(int buildingtype, VECTOR2D* cpos, uCamera* cam){
 	m_nBuildingType = buildingtype;
 	m_cpos = cpos;
 	
-	m_cam = new uCamera(*cam);
+	if (cam != NULL){
+		m_cam = new uCamera(*cam);
+	}
 	m_sprite = new uSprite;
 
-	m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, 2.0f, -110.0f, 0);
+	/*m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, -75.0f, -75.0f, 0);*/ // to 남서
+	//m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, 2.0f, -110.0f, 0);//정북	
+	//m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, +2.0f, -30.0f, 0); // 정남
+	//m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, +20.0f, -30.0f, 0);//정남
+	/*m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, 94.0f, 73.0f, 0);*/
+	if (buildingtype == 0){
+		m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, +60.0f, -100.0f, 0);
+	}
+	else if (buildingtype == 1){
+		m_sprite->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.0f, 0);
+	}
+	else if (buildingtype == 2){
+		m_sprite->pickSpriteAtlas(200.0f, 0.0f, 90.0f, 62.0f, 0.0f, -9.0f, 0);
+	}
+	
 }
 
 mBuilding::~mBuilding()
@@ -42,6 +58,13 @@ POINTFLOAT mBuilding::getPos(){
 	return ret;
 }
 
+
+void mBuilding::setCam(uCamera* in) { 
+	//if (m_cam != NULL){
+	//	delete m_cam;
+	//}	
+	m_cam = new uCamera(*in);
+}
 void mBuilding::render(){
 	if (cResourceManager::GetInstance().getTileMapBitMap() != nullptr){
 		VECTOR2D cpos = m_cam->translasteToScreen(m_cpos);

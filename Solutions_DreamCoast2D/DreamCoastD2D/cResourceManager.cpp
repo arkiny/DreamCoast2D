@@ -21,6 +21,10 @@ cResourceManager::cResourceManager()
 	for (ID2D1Bitmap* x : m_Bitmap_Effect){
 		x = nullptr;
 	}
+	for (ID2D1Bitmap* x : m_Bitmap_MapObject){
+		x = nullptr;
+	}
+
 	//for (D2D_POINT_2F x : m_ButtonSize){
 	//	x = { 0.0f, 0.0f };
 	//}
@@ -28,6 +32,7 @@ cResourceManager::cResourceManager()
 	memset(m_UI_SIZE, NULL, sizeof(m_UI_SIZE));
 	memset(m_Size_Item_Consume, NULL, sizeof(m_Size_Item_Consume));
 	memset(m_Size_Effect, NULL, sizeof(m_Size_Effect));
+	memset(m_MapObject_Size, NULL, sizeof(m_MapObject_Size));
 }
 
 // 이제 모든 리소스는 여기서 관리하므로
@@ -56,6 +61,12 @@ cResourceManager::~cResourceManager()
 		}
 	}
 	for (ID2D1Bitmap* x : m_Bitmap_Effect){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
+	}
+
+	for (ID2D1Bitmap* x : m_Bitmap_MapObject){
 		if (x != nullptr){
 			SafeRelease(x);
 		}
@@ -174,6 +185,12 @@ void cResourceManager::load(){
 	
 	m_Bitmap_Effect[HEALTHPOTION] = nullptr;
 	m_Size_Effect[HEALTHPOTION] = { 0.0f, 0.0f };
+
+
+
+	m_Bitmap_MapObject[MAP_ID_BUILDING] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile
+		(hWnd, L"Images/object/map/building1.png", NULL);
+	m_MapObject_Size[MAP_ID_BUILDING] = { 169, 240 };
 }
 
 void cResourceManager::loadMainMenuResource(){

@@ -13,6 +13,7 @@ public:
 	~wWorld();
 
 	void Render();
+	void RenderEdit();
 	void Update(float deltaTime);
 	void OnInit(int mapnumber);
 

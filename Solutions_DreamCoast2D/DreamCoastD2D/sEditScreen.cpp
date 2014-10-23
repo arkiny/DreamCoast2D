@@ -32,11 +32,11 @@ void sEditScreen::setWorld(wWorld* in){
 }
 
 void sEditScreen::Render(){
-	m_pWorld->Render();
+	m_pWorld->RenderEdit();
 }
 
 void sEditScreen::Update(float deltaTime){
-	m_pWorld->Update(deltaTime);
+
 	if (coControl::GetInstance().getKeyControlInfo()[VK_TAB]){
 		coControl::GetInstance().onKeyUp(VK_TAB);
 		sGameScreen* input = new sGameScreen(m_pGameManager);
@@ -94,13 +94,34 @@ void sEditScreen::Update(float deltaTime){
 
 		VECTOR2D mousecoord = m_pWorld->getMap()
 			->getTileCoordinates(clickpoint);
-		if (m_nHook >= 0 && m_nHook <= 3){
+		if (m_nHook >= 0 && m_nHook <= 1){
 			if (mousecoord.x >= 0.0f && mousecoord.y >= 0.0f &&
 				mousecoord.x < m_pWorld->getMap()->getMapLimit().x&&
 				mousecoord.y < m_pWorld->getMap()->getMapLimit().y){
 
 				// 여기에 고른 타일이나 몬스터에 따라 추가하는 choose 명령어를 넣는다.
 				m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y, m_nHook);
+				m_pWorld->getMap()->removeMapObjectFromTile(mousecoord.x, mousecoord.y);
+			}
+		}
+		else if (m_nHook == TILE_HIGH_GROUND){
+			if (mousecoord.x >= 0.0f && mousecoord.y >= 0.0f &&
+				mousecoord.x < m_pWorld->getMap()->getMapLimit().x&&
+				mousecoord.y < m_pWorld->getMap()->getMapLimit().y){
+
+				// 여기에 고른 타일이나 몬스터에 따라 추가하는 choose 명령어를 넣는다.
+				m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y, 1);
+				m_pWorld->getMap()->addMapObjectTotile(mousecoord.y, mousecoord.x, 2);
+			}
+		}
+		else if (m_nHook == TILE_TREE){
+			if (mousecoord.x >= 0.0f && mousecoord.y >= 0.0f &&
+				mousecoord.x < m_pWorld->getMap()->getMapLimit().x&&
+				mousecoord.y < m_pWorld->getMap()->getMapLimit().y){
+
+				// 여기에 고른 타일이나 몬스터에 따라 추가하는 choose 명령어를 넣는다.
+				m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y, 1);
+				m_pWorld->getMap()->addMapObjectTotile(mousecoord.y, mousecoord.x, 1);
 			}
 		}
 		else if (m_nHook == TILE_BUILDING){
@@ -108,16 +129,41 @@ void sEditScreen::Update(float deltaTime){
 				mousecoord.x < m_pWorld->getMap()->getMapLimit().x&&
 				mousecoord.y < m_pWorld->getMap()->getMapLimit().y){
 
-				m_pWorld->getMap()->addMapObjectTotile(mousecoord.y, mousecoord.x);
+				m_pWorld->getMap()->addMapObjectTotile(mousecoord.y, mousecoord.x, 0);
 				
 				// 여기에 고른 타일이나 몬스터에 따라 추가하는 choose 명령어를 넣는다.
 				m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y, 1);
 
+				//if (mousecoord.y + 1.0f <= m_pWorld->getMap()->getMapLimit().y){
+				//	m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y + 1.0f, 1);
+				//}
+				//if (mousecoord.y + 2.0f <= m_pWorld->getMap()->getMapLimit().y){
+				//	m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y + 2.0f, 1);
+				//}
+				//if (mousecoord.x - 1.0f >= 0){
+				//	m_pWorld->getMap()->setTile(mousecoord.x - 1.0f, mousecoord.y, 1);
+				//}
+				//if (mousecoord.x - 1.0f >= 0 && mousecoord.y + 1.0f <= m_pWorld->getMap()->getMapLimit().y){
+				//	m_pWorld->getMap()->setTile(mousecoord.x - 1.0f, mousecoord.y + 1.0f, 1);
+				//}
+				//if (mousecoord.x - 1.0f >= 0 && mousecoord.y + 2.0f <= m_pWorld->getMap()->getMapLimit().y){
+				//	m_pWorld->getMap()->setTile(mousecoord.x - 1.0f, mousecoord.y + 2.0f, 1);
+				//}
+				//if (mousecoord.x - 2.0f >= 0){
+				//	m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y, 1);
+				//}
+				//if (mousecoord.x - 2.0f >= 0 && mousecoord.y + 1.0f <= m_pWorld->getMap()->getMapLimit().y){
+				//	m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y + 1.0f, 1);
+				//}
+				//if (mousecoord.x - 2.0f >= 0 && mousecoord.y + 2.0f <= m_pWorld->getMap()->getMapLimit().y){
+				//	m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y + 2.0f, 1);
+				//}
+
 				if (mousecoord.y - 1.0f >= 0){
 					m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y - 1.0f, 1);
 				}
-				if (mousecoord.y - 2.0f >= 0){
-					m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y - 2.0f, 1);
+				if (mousecoord.y + 1.0f <= m_pWorld->getMap()->getMapLimit().y){
+					m_pWorld->getMap()->setTile(mousecoord.x, mousecoord.y + 1.0f, 1);
 				}
 				if (mousecoord.x - 1.0f >= 0){
 					m_pWorld->getMap()->setTile(mousecoord.x - 1.0f, mousecoord.y, 1);
@@ -125,17 +171,17 @@ void sEditScreen::Update(float deltaTime){
 				if (mousecoord.x - 1.0f >= 0 && mousecoord.y - 1.0f >= 0){
 					m_pWorld->getMap()->setTile(mousecoord.x - 1.0f, mousecoord.y - 1.0f, 1);
 				}
-				if (mousecoord.x - 1.0f >= 0 && mousecoord.y - 2.0f >= 0){
-					m_pWorld->getMap()->setTile(mousecoord.x - 1.0f, mousecoord.y - 2.0f, 1);
+				if (mousecoord.x - 1.0f >= 0 && mousecoord.y <= m_pWorld->getMap()->getMapLimit().y){
+					m_pWorld->getMap()->setTile(mousecoord.x - 1.0f, mousecoord.y + 1.0f, 1);
 				}
-				if (mousecoord.x - 2.0f >= 0){
+				if (mousecoord.x + 1.0f >= 0){
 					m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y, 1);
 				}
-				if (mousecoord.x - 2.0f >= 0 && mousecoord.y - 1.0f >= 0){
+				if (mousecoord.x + 1.0f >= 0 && mousecoord.y - 1.0f >= 0){
 					m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y - 1.0f, 1);
 				}
-				if (mousecoord.x - 2.0f >= 0 && mousecoord.y - 2.0f >= 0){
-					m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y - 2.0f, 1);
+				if (mousecoord.x + 1.0f >= 0 && mousecoord.y + 1.0f <= m_pWorld->getMap()->getMapLimit().y){
+					m_pWorld->getMap()->setTile(mousecoord.x - 2.0f, mousecoord.y + 1.0f, 1);
 				}
 
 
@@ -163,6 +209,7 @@ void sEditScreen::Update(float deltaTime){
 			m_pWorld->getMap()->addMonsterTotile(mousecoord.y, mousecoord.x, 1);
 		}
 	}
+	m_pWorld->Update(deltaTime);
 }
 
 void sEditScreen::OnInit(){

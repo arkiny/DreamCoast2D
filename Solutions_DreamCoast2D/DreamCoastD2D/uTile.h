@@ -34,6 +34,11 @@ public:
 	void renderTile(float x, float y, 
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);
 
+	void renderTileEdit(float x, float y,
+		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);
+
+	void renderObject(float x, float y);
+
 	void renderMapObject(float x, float y);
 	
 	void onHit(float dmg);

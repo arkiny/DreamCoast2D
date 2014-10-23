@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include <math.h>
+#include <queue>
+//
 #include "cD2DRenderer.h"
 #include "VECTOR2D.h"
 #include "uSprite.h"
@@ -54,7 +56,7 @@ wTileMap::~wTileMap()
 	ptr = nullptr;
 
 	void* mptr;
-	while (m_mobs.empty()){
+	while (!m_mobs.empty()){
 		mptr = m_mobs.back();
 		m_mobs.pop_back();
 		delete mptr;
@@ -124,6 +126,13 @@ void wTileMap::onInit(){
 		m_mobs[i]->setCam(m_Cam);
 	}
 
+
+
+	for (unsigned int i = 0; i < m_mapObjects.size(); i++){
+		//m_mobs[i]->onInit();
+		m_mapObjects[i]->setCam(m_Cam);
+	}
+
 	for (int i = 0; i < _horizontal * _vertical; i++){
 		m_vMapObjectHandler[i]->setCam(m_Cam);
 	}
@@ -148,14 +157,37 @@ void wTileMap::addMonsterTotile(float x, float y, int type){
 	ptr = nullptr;
 }
 
-void wTileMap::addMapObjectTotile(float x, float y){
+void wTileMap::addMapObjectTotile(float x, float y, int type){
 	VECTOR2D in(x*_RectTileWidth, y*_RectTileHeight);
 	VECTOR2D pt = twoDtoISO(in);
-	m_mapObjects.push_back(new mBuilding(0, new VECTOR2D(pt.x, pt.y), m_Cam));
+	m_mapObjects.push_back(new mBuilding(type, new VECTOR2D(pt.x, pt.y), m_Cam));
 }
 
 void wTileMap::removeMapObjectFromTile(float x, float y){
-	// todo
+	/*VECTOR2D in(x*_RectTileWidth, y*_RectTileHeight);
+	VECTOR2D pt = twoDtoISO(in);*/
+	std::queue<IMapObject*> m_mapObjectsTemp;
+	IMapObject* ptr;
+	VECTOR2D pt;
+	while (!m_mapObjects.empty()){
+		ptr = m_mapObjects.back();
+		m_mapObjects.pop_back();
+
+		pt = VECTOR2D(ptr->getPos().x, ptr->getPos().y);
+		pt = getTileCoordinates(pt);
+		//if (ptr->getType() == 1){
+		if (x == pt.x && y == pt.y){
+			delete ptr;
+			ptr = nullptr;
+		}
+		else {
+			m_mapObjectsTemp.push(ptr);
+		}		
+	}
+	while (!m_mapObjectsTemp.empty()){
+		m_mapObjects.push_back(m_mapObjectsTemp.front());
+		m_mapObjectsTemp.pop();
+	}
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
@@ -194,6 +226,20 @@ void wTileMap::onRender(){
 	//
 	::wTileMap::renderMap();
 	
+	//::wTileMap::drawHealthBar(renderer, m_player);
+
+	// Todo: 차후 Mob healthbar option 넣을 것, 혹은 UI Screen에서 관리
+	for (unsigned int i = 0; i < m_mobs.size(); i++){
+		::wTileMap::drawHealthBar(m_mobs[i]);
+	}
+}
+
+void wTileMap::onRenderEdit(){
+	// debug
+	//renderer.GetRenderTarget()->DrawRectangle(mapSize, renderer.GetBlackBrush());
+	//
+	::wTileMap::renderMapEdit();
+
 	//::wTileMap::drawHealthBar(renderer, m_player);
 
 	// Todo: 차후 Mob healthbar option 넣을 것, 혹은 UI Screen에서 관리
@@ -266,18 +312,18 @@ void wTileMap::renderMap(){
 			pt = twoDtoISO(in);
 
 			// 플레이어가 타일위에 있을때 
-			if (test.x == i && test.y == j){
-				type = 1;				
-				onTilecheck = true;				
-			}
+			//if (test.x == i && test.y == j){
+			//	type = 1;				
+			//	onTilecheck = true;				
+			//}
 			//else {
 			//	//type = m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->getType();
 			//	//type = m_vMapinfo[i+j*static_cast<int>(_vertical)];
 			//}
 
-			if (test2.x == i && test2.y == j){
+			/*if (test2.x == i && test2.y == j){
 				onTilecheck = true;
-			}
+			}*/
 
 			// 타일 렌더 후 동시에 애드된 오브젝트들도 렌더
 			// 렌더 이후에 오브젝트 포인터들은 팝되면서 사라진다.
@@ -290,20 +336,107 @@ void wTileMap::renderMap(){
 			//renderTile(pt.x, pt.y, type, renderer);
 			// 오더링 타일 뒤에 플레이어 숨기도록 해당 타일위에 있을때에 렌더하게 한다.
 			// Todo: 매번 업데이트 할 필요 없도록 미리 계산해놓도록?
-			// 이러면 타일을 넘어가게 될경우 캐릭터 렌더가 다음 타일에 가려버리게 되는데...
-
-			if (onTilecheck) {
-				m_player->onRender();
-				onTilecheck = false;
-			}
+			// 이러면 타일을 넘어가게 될경우 캐릭터 렌더가 다음 타일에 가려버리게 되는데...			
 		}
 	}
+
 	for (int j = 0; j < _vertical; j++){
 		for (int i = 0; i < _horizontal; i++){
 			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderMapObject
 				(pt.x, pt.y);
+
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderObject
+				(pt.x, pt.y);
+
+			if (test.x == i && test.y == j) {
+				m_player->onRender();
+				//onTilecheck = false;
+			}
 		}
 	}
+
+	//m_MapObjects->render();
+	// 반투명처리해서 장애물 뒤에서도 보이게
+	m_player->onRender(true);
+}
+
+
+void wTileMap::renderMapEdit(){
+	VECTOR2D pt;
+	float x, y;
+	int type = 0;
+	bool onTilecheck = false;
+
+	// get real pos
+	VECTOR2D test = getTileCoordinates(*m_player->getRealPos());
+	VECTOR2D test2 = getTileCoordinates(*m_player->getDrawPos());
+
+	//VECTOR2D _camtile = m_Cam->translasteToScreen(&tilePos);
+	//if (_camtile.x < (0 - 45.0f) || _camtile.y < (0 - 45.0f) ||
+	//	_camtile.x >(m_Cam->getScreenW() + 45.0f) ||
+	//	_camtile.y >(m_Cam->getScreenH()) + 45.0f){
+	//	//do nothing
+	//}
+	//else {
+	//}
+
+	// startx = 카메라가 위치한 cellinext
+	// endx = start + cellwidth*(windowwith/cellwith)
+	// starty
+	// endy
+
+	for (int j = 0; j < _vertical; j++){
+		for (int i = 0; i < _horizontal; i++){
+			x = j*_RectTileWidth;
+			y = i*_RectTileHeight;
+			VECTOR2D in(x, y);
+
+			pt = twoDtoISO(in);
+
+			// 플레이어가 타일위에 있을때 
+			//if (test.x == i && test.y == j){
+			//	type = 1;				
+			//	onTilecheck = true;				
+			//}
+			//else {
+			//	//type = m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->getType();
+			//	//type = m_vMapinfo[i+j*static_cast<int>(_vertical)];
+			//}
+
+			/*if (test2.x == i && test2.y == j){
+			onTilecheck = true;
+			}*/
+
+			// 타일 렌더 후 동시에 애드된 오브젝트들도 렌더
+			// 렌더 이후에 오브젝트 포인터들은 팝되면서 사라진다.
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->
+				renderTileEdit(pt.x, pt.y, m_spriteAtlas, m_ipD2DBitmap);
+
+
+			//mObjManager::getInstance().renderObject
+
+			//renderTile(pt.x, pt.y, type, renderer);
+			// 오더링 타일 뒤에 플레이어 숨기도록 해당 타일위에 있을때에 렌더하게 한다.
+			// Todo: 매번 업데이트 할 필요 없도록 미리 계산해놓도록?
+			// 이러면 타일을 넘어가게 될경우 캐릭터 렌더가 다음 타일에 가려버리게 되는데...			
+		}
+	}
+
+	for (int j = 0; j < _vertical; j++){
+		for (int i = 0; i < _horizontal; i++){
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderMapObject
+				(pt.x, pt.y);
+
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderObject
+				(pt.x, pt.y);
+
+			if (test.x == i && test.y == j) {
+				m_player->onRender();
+				//onTilecheck = false;
+			}
+		}
+	}
+
 	//m_MapObjects->render();
 	// 반투명처리해서 장애물 뒤에서도 보이게
 	m_player->onRender(true);

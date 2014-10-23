@@ -17,6 +17,8 @@ public:
 	virtual void render();
 	virtual bool isEnd(){ return m_endEffect; }
 	virtual POINTFLOAT getPos();
+	virtual void setCam(uCamera* in);
+	virtual int getType() { return m_nBuildingType; }
 
 private:
 	uSprite* m_sprite;

@@ -18,6 +18,7 @@ public:
 	void onInit();
 	void onUpdate(float fdeltatime);
 	void onRender();
+	void onRenderEdit();
 
 	// player와 커뮤니케이션 포인터 연결, init단계에서 설정해줘야한다.
 	void setPlayer(ICharacter* p);
@@ -51,8 +52,10 @@ public:
 
 	std::vector<ICharacter*>* getMobList() { return &m_mobs; }
 	uCamera* getCamera(){ return m_Cam; }
+
+	std::vector<IMapObject*>* getMapObjList() { return &m_mapObjects; }
 	
-	void addMapObjectTotile(float x, float y);
+	void addMapObjectTotile(float x, float y, int type);
 	void removeMapObjectFromTile(float x, float y);
 
 private:
@@ -98,6 +101,7 @@ private:
 	//void renderTile(float x, float y, int type, cD2DRenderer& renderer);
 	// 모든 타일을 렌더하는 함수
 	void renderMap();		
+	void renderMapEdit();
 	
 	// 나중에 옵션에 따라서 헬스바 키고 끄고 결정 -> UI
 	void drawHealthBar(ICharacter* obj);
