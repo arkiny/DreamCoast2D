@@ -65,6 +65,9 @@
     <Filter Include="Model\Screen\Screen">
       <UniqueIdentifier>{62730ecd-331e-4b9d-9567-177154be5c73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\MapObject">
+      <UniqueIdentifier>{7971afb7-23dd-4a8d-a085-e80cefac2034}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -247,6 +250,12 @@
     <ClInclude Include="uFileControl.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="mObjManager.h">
+      <Filter>Model\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="IMapObject.h">
+      <Filter>Model\MapObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -407,6 +416,9 @@
     </ClCompile>
     <ClCompile Include="uFileControl.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="mObjManager.cpp">
+      <Filter>Model\MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

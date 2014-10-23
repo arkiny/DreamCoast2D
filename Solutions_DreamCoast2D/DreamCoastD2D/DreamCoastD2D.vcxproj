@@ -106,6 +106,7 @@
     <ClInclude Include="iInScreenUI.h" />
     <ClInclude Include="IInventory.h" />
     <ClInclude Include="IItem.h" />
+    <ClInclude Include="IMapObject.h" />
     <ClInclude Include="InGameUI.h" />
     <ClInclude Include="InMainUI.h" />
     <ClInclude Include="mCharacter.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="mInventory.h" />
     <ClInclude Include="mItem.h" />
     <ClInclude Include="mMonster.h" />
+    <ClInclude Include="mObjManager.h" />
     <ClInclude Include="mPlayer.h" />
     <ClInclude Include="piState.h" />
     <ClInclude Include="pStateIdle.h" />
@@ -173,6 +175,7 @@
     <ClCompile Include="mInventory.cpp" />
     <ClCompile Include="mItem.cpp" />
     <ClCompile Include="mMonster.cpp" />
+    <ClCompile Include="mObjManager.cpp" />
     <ClCompile Include="mPlayer.cpp" />
     <ClCompile Include="mPlayerSkill.cpp" />
     <ClCompile Include="mPlayerState.cpp" />

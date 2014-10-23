@@ -263,10 +263,13 @@ void wTileMap::renderMap(){
 			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->
 				renderTile(pt.x, pt.y, m_spriteAtlas, m_ipD2DBitmap);
 
+			//mObjManager::getInstance().renderObject
+
 			//renderTile(pt.x, pt.y, type, renderer);
 			// 오더링 타일 뒤에 플레이어 숨기도록 해당 타일위에 있을때에 렌더하게 한다.
 			// Todo: 매번 업데이트 할 필요 없도록 미리 계산해놓도록?
 			// 이러면 타일을 넘어가게 될경우 캐릭터 렌더가 다음 타일에 가려버리게 되는데...
+
 			if (onTilecheck) {
 				m_player->onRender();
 				onTilecheck = false;

@@ -42,6 +42,7 @@ void uTile::renderTile(float x, float y,
 		m_spriteAtlas->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.0f, 0);
 		break;
 	case 4:
+		// 일반 타일로 깔아주고 위에 오브젝트 올리기
 		m_spriteAtlas->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, 2.0f, -119.0f, 0);
 		break;
 	default:
