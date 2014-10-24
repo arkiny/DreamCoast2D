@@ -28,6 +28,7 @@ struct DATA2{
 	float MapObject_y[1024];
 
 	int MapObject_type[1024];
+	int Monster_type[100];
 };
 
 
@@ -90,6 +91,7 @@ void uFileControl::SaveToFile(int num){
 		//mobpos.push(std::pair<float, float>(mobpt.x, mobpt.y));
 		savechunk.monster_x[i] = mobpt.x;
 		savechunk.monster_y[i] = mobpt.y;
+		savechunk.Monster_type[i] = dynamic_cast<mMonster*>(m_pWorld->getMap()->getMobList()->at(i))->getMonsterType();
 		//mobpos.pop();
 	}
 
@@ -183,7 +185,7 @@ void uFileControl::LoadFromFile(int num, wWorld* to){
 		//mobpos.push(std::pair<float, float>(mobpt.x, mobpt.y));
 		/*loadchunk.monster_x[i] = mobpt.x;
 		loadchunk.monster_y[i] = mobpt.y;*/
-		to->getMap()->addMonsterTotile(loadchunk.monster_x[i], loadchunk.monster_y[i], loadchunk.MapObject_type[i]);
+		to->getMap()->addMonsterTotile(loadchunk.monster_x[i], loadchunk.monster_y[i], loadchunk.Monster_type[i]);
 		//mobpos.pop();
 	}
 

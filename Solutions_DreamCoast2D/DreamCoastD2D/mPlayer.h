@@ -59,6 +59,7 @@ public:
 	void setBelt(int index, int id){ m_aBelt[index] = id; }
 	int getBelt(int index){ return m_aBelt[index]; }
 	IInventory* getInventory() { return m_Inventory; }
+	void setAttackPower(float in) { m_default_attackPower = in; }
 	float getAttackPower() { return m_default_attackPower; }
 	float getAttackSpeed() { return m_attackSpeed; }
 

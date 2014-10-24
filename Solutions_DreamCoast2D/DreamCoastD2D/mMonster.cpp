@@ -169,6 +169,23 @@ void mMonster::onRender(){
 
 			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
+		// debug
+		if (m_nMonsterType != 0){
+			wchar_t* wszText_ = new wchar_t[4];
+			int length = 0;
+			length += swprintf(wszText_ + length, 4, L"A");
+			UINT32 cTextLength_ = (UINT32)wcslen(wszText_);
+
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawTextW(
+				wszText_,
+				cTextLength_,
+				::cD2DRenderer::GetInstance().GetTextFormat2(),
+				dxArea,
+				::cD2DRenderer::GetInstance().GetBlackBrush());
+
+			delete[] wszText_;
+
+		}
 
 		//if (this->getDmg() > 0){
 		//	/// 텍스트 출력

@@ -8,7 +8,9 @@
 #include "cGameManager.h"
 #include "coControl.h"
 #include "uFileControl.h"
+#include "mPlayer.h"
 #include "VECTOR2D.h"
+#include "mGFX.h"
 
 sEditScreen::sEditScreen(cGameManager* cg)
 {
@@ -33,6 +35,7 @@ void sEditScreen::setWorld(wWorld* in){
 
 void sEditScreen::Render(){
 	m_pWorld->RenderEdit();
+	mGFX::GetInstance().render();
 }
 
 void sEditScreen::Update(float deltaTime){
@@ -203,19 +206,25 @@ void sEditScreen::Update(float deltaTime){
 			}
 		}
 		else if (m_nHook == MOB_PORING){
-			m_pWorld->getMap()->addMonsterTotile(mousecoord.y, mousecoord.x);
+			m_pWorld->getMap()->addMonsterTotile(mousecoord.y, mousecoord.x, 0);
 		}
 		else if (m_nHook == MOB_PORING_A){
 			m_pWorld->getMap()->addMonsterTotile(mousecoord.y, mousecoord.x, 1);
 		}
 	}
 	m_pWorld->Update(deltaTime);
+	mGFX::GetInstance().update(deltaTime);
 }
 
 void sEditScreen::OnInit(){
 	m_pWorld = new wWorld();
 	//::cResourceManager::GetInstance().load();
 	m_pWorld->OnInit(1);
+	// 맵툴용 캐릭터 설정
+	m_pWorld->getPlayer()->setAttackPower(1000.0f);
+	m_pWorld->getPlayer()->setMAXHealth(10000.0f);
+	m_pWorld->getPlayer()->setHealth(10000.0f);
+	m_pWorld->getPlayer()->setMoveSpeed(300.0f);
 }
 
 void sEditScreen::OnExit(){	
