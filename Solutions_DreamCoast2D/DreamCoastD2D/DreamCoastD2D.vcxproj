@@ -124,6 +124,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="sMainMenuScreen.h" />
     <ClInclude Include="sResourceLoad.h" />
+    <ClInclude Include="uAnimationLoader.h" />
     <ClInclude Include="uCamera.h" />
     <ClInclude Include="uFileControl.h" />
     <ClInclude Include="uiBelt.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="sEditScreen.cpp" />
     <ClCompile Include="sMainMenuScreen.cpp" />
     <ClCompile Include="sResourceLoad.cpp" />
+    <ClCompile Include="uAnimationLoader.cpp" />
     <ClCompile Include="uCamera.cpp" />
     <ClCompile Include="uFileControl.cpp" />
     <ClCompile Include="uiBelt.cpp" />

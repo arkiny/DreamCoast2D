@@ -259,6 +259,9 @@
     <ClInclude Include="mBuilding.h">
       <Filter>Model\MapObject\Building</Filter>
     </ClInclude>
+    <ClInclude Include="uAnimationLoader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -422,6 +425,9 @@
     </ClCompile>
     <ClCompile Include="mBuilding.cpp">
       <Filter>Model\MapObject\Building</Filter>
+    </ClCompile>
+    <ClCompile Include="uAnimationLoader.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include "cD2DRenderer.h"
 #include "Singleton.h"
 #include "cResourceID.h"
+#include <vector>
 
 class cResourceManager : public Singleton<cResourceManager>
 {
@@ -13,6 +14,8 @@ public:
 	void loadMainMenuResource();
 	void exitMainMenu();
 	void releaseGameResource();
+
+	void loadFilePath(const char* szFileName);
 
 	ID2D1Bitmap* getPlayerBitMap() { return m_Bitmap_Player; }
 	ID2D1Bitmap* getTileMapBitMap() { return m_Bitmap_TileMap; }
@@ -58,5 +61,9 @@ private:
 
 	ID2D1Bitmap* m_Bitmap_Effect[GEFFECT_ID_MAX];
 	::D2D_POINT_2F m_Size_Effect[GEFFECT_ID_MAX];
+
+	std::vector<TCHAR*> m_vecFilepath;
+	std::vector<POINTFLOAT*> m_vecImageSize;
+	//TCHAR* m_File_path[IN_FILE_DB_ID_MAX];
 };
 
