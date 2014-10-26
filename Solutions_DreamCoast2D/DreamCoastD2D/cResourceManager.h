@@ -4,6 +4,18 @@
 #include "cResourceID.h"
 #include <vector>
 
+struct SpriteAnimationInfo{
+	DWORD typ;
+	DWORD direction;
+	float x;
+	float y;
+	float width;
+	float height;
+	float offsetX;
+	float offsetY;
+	DWORD maxFrame;
+};
+
 class cResourceManager : public Singleton<cResourceManager>
 {
 public:
@@ -16,6 +28,9 @@ public:
 	void releaseGameResource();
 
 	void loadFilePath(const char* szFileName);
+	void loadSpriteData(const char* szFileName, int id);
+
+	SpriteAnimationInfo* getPlayerSpriteInfo(int type, int direction);
 
 	ID2D1Bitmap* getPlayerBitMap() { return m_Bitmap_Player; }
 	ID2D1Bitmap* getTileMapBitMap() { return m_Bitmap_TileMap; }
@@ -64,6 +79,7 @@ private:
 
 	std::vector<TCHAR*> m_vecFilepath;
 	std::vector<POINTFLOAT*> m_vecImageSize;
-	//TCHAR* m_File_path[IN_FILE_DB_ID_MAX];
+
+	std::vector<SpriteAnimationInfo*> m_vecSpriteInfo[SPR_ID_MAX];
 };
 

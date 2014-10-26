@@ -42,6 +42,8 @@ cResourceManager::cResourceManager()
 	memset(m_MapObject_Size, NULL, sizeof(m_MapObject_Size));
 
 	loadFilePath("./Data/filepath.txt");
+
+	loadSpriteData("./Data/Player_Sprite_Data.txt", SPR_PLAYER);
 }
 
 // 이제 모든 리소스는 여기서 관리하므로
@@ -84,6 +86,13 @@ cResourceManager::~cResourceManager()
 	while (!m_vecFilepath.empty()){
 		delete m_vecFilepath.back();
 		m_vecFilepath.pop_back();
+	}
+
+	for (int i = 0; i < SPR_ID_MAX; i++){
+		while (!m_vecSpriteInfo[i].empty()){
+			delete m_vecSpriteInfo[i].back();
+			m_vecSpriteInfo[i].pop_back();
+		}
 	}
 }
 
@@ -143,6 +152,98 @@ void cResourceManager::loadFilePath(const char* szFileName){
 		}
 	}
 	fclose(fp);
+}
+
+void cResourceManager::loadSpriteData(const char* szFileName, int inid){
+	char szBuf[1024];
+
+	FILE* fp;
+	errno_t err;
+	err = fopen_s(&fp, szFileName, "r");
+	if (err != 0)
+	{
+		// error message
+		wchar_t szDebug[128];
+		wsprintf(szDebug, L"%s 파일 읽기 에러");
+		MessageBox(NULL, szDebug, L"Error", MB_OK);
+		return;
+	}
+
+
+	while (!feof(fp))
+	{
+		fgets(szBuf, 1024, fp);
+		if (szBuf[0] == '#')
+		{
+			continue;
+		}
+		else if (szBuf[0] == 'a')
+		{			
+			SpriteAnimationInfo* sprinfo = new SpriteAnimationInfo;
+
+			DWORD id;
+			DWORD direction;
+			float _x;
+			float _y;
+			float _width;
+			float _height;
+			float _offsetX;
+			float _offsetY;
+			DWORD _maxFrame;			
+
+			sscanf_s(szBuf, "%*s %d %d %f %f %f %f %f %f %d",
+				&id, &direction, &_x, &_y, &_width, &_height, &_offsetX, &_offsetY, &_maxFrame);
+
+			sprinfo->typ = id;
+			sprinfo->direction = direction;
+			sprinfo->x = _x;
+			sprinfo->y = _y;
+			sprinfo->width = _width;
+			sprinfo->height = _height;
+			sprinfo->offsetX = _offsetX;
+			sprinfo->offsetY = _offsetY;
+			sprinfo->maxFrame = _maxFrame;
+
+			m_vecSpriteInfo[inid].push_back(sprinfo);
+
+			sprinfo = nullptr;
+		}
+	}
+	fclose(fp);
+}
+
+SpriteAnimationInfo* cResourceManager::getPlayerSpriteInfo(int action, int direction){
+	/// @todo 차후 수정 가능시 수정
+	int index = 0;
+	if (action == 0){
+		index = 0;
+	}
+	else if (action == 1){
+		index = 4;
+	}
+	else if (action == 2){
+		index = 12;
+	}
+	else if (action == 3){
+		index = 16;
+	}
+	else if (action == 4){
+		index = 20;
+	}
+	else if (action == 5){
+		index = 24;
+	}
+	else {
+		return NULL;
+	}
+
+	for (unsigned int i = index; i < m_vecSpriteInfo[SPR_PLAYER].size(); i++){
+		if (m_vecSpriteInfo[SPR_PLAYER][i]->typ == action &&
+			m_vecSpriteInfo[SPR_PLAYER][i]->direction == direction){
+			return m_vecSpriteInfo[SPR_PLAYER][i];
+		}
+	}
+	return NULL;
 }
 
 void cResourceManager::load(){
