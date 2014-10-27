@@ -5,6 +5,7 @@
 #include "uSprite.h"
 #include "cD2DRenderer.h"
 #include "IMapObject.h"
+#include "cResourceManager.h"
 
 uTile::uTile()
 {
@@ -31,10 +32,21 @@ void uTile::renderTile(float x, float y,
 	// debug
 	switch (_type){
 	case 0:
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
+		m_spriteAtlas->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->x, 
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->y, 
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->width, 
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->height, 
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->maxFrame);
 		break;
 	case 1:
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
+		//m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
+		m_spriteAtlas->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->maxFrame);
 		//debug
 		//m_spriteAtlas->pickSpriteAtlas(100.0f, 0.0f, 90.0f, 45.0f, 0);
 		break;
@@ -81,12 +93,25 @@ void uTile::renderTileEdit(float x, float y,
 	// debug
 	switch (_type){
 	case 0:
-		m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
+		
+		//m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
+		m_spriteAtlas->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 0)->maxFrame);
 		break;
 	case 1:
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 90.0f, 45.0f, 0);
 		//debug
-		m_spriteAtlas->pickSpriteAtlas(100.0f, 0.0f, 90.0f, 45.0f, 0);
+		//m_spriteAtlas->pickSpriteAtlas(100.0f, 0.0f, 90.0f, 45.0f, 0);
+		m_spriteAtlas->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 1)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 1)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 1)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 1)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(0, 1)->maxFrame);
 		break;
 
 		// 이하 흔적으로만 남기는 코드

@@ -28,9 +28,13 @@ public:
 	void releaseGameResource();
 
 	void loadFilePath(const char* szFileName);
-	void loadSpriteData(const char* szFileName, int id);
+
+	void loadSpritePlayerData(const char* szFileName, int id);
+	void loadSpriteMonsterData(const char* szFileName, int id);
 
 	SpriteAnimationInfo* getPlayerSpriteInfo(int type, int direction);
+	SpriteAnimationInfo* getMonsterSpriteInfo(int mobtype,  int action, int direction);
+	SpriteAnimationInfo* getMapSpriteInfo(int tiletype, int type);
 
 	ID2D1Bitmap* getPlayerBitMap() { return m_Bitmap_Player; }
 	ID2D1Bitmap* getTileMapBitMap() { return m_Bitmap_TileMap; }

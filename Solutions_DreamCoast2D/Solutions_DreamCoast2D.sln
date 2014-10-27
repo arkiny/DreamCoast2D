@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DreamCoastD2D", "DreamCoastD2D\DreamCoastD2D.vcxproj", "{930FE24E-3473-41F5-8FED-A5FB21DE46B6}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpriteLoader", "SpriteLoader\SpriteLoader.vcxproj", "{F1283926-AC3C-414A-B606-716D3BE42B8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +23,6 @@ Global
 		{930FE24E-3473-41F5-8FED-A5FB21DE46B6}.Release|Win32.ActiveCfg = Release|Win32
 		{930FE24E-3473-41F5-8FED-A5FB21DE46B6}.Release|Win32.Build.0 = Release|Win32
 		{930FE24E-3473-41F5-8FED-A5FB21DE46B6}.Release|x64.ActiveCfg = Release|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Debug|ARM.ActiveCfg = Debug|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Debug|Win32.Build.0 = Debug|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Debug|x64.ActiveCfg = Debug|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Release|ARM.ActiveCfg = Release|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Release|Win32.ActiveCfg = Release|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Release|Win32.Build.0 = Release|Win32
-		{F1283926-AC3C-414A-B606-716D3BE42B8F}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,13 +28,37 @@ mBuilding::mBuilding(int buildingtype, VECTOR2D* cpos, uCamera* cam){
 	//m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, +20.0f, -30.0f, 0);//Á¤³²
 	/*m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, 94.0f, 73.0f, 0);*/
 	if (buildingtype == 0){
-		m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, +60.0f, -100.0f, 0);
+		m_sprite->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->offsetX,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->offsetY,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->maxFrame);
+		//m_sprite->pickSpriteAtlas(100.0f, 80.0f, 275.0f, 287.0f, +60.0f, -100.0f, 0);
 	}
 	else if (buildingtype == 1){
-		m_sprite->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.0f, 0);
+		//m_sprite->pickSpriteAtlas(0.0f, 80.0f, 90.0f, 162.0f, 0.0f, -58.0f, 0);
+		m_sprite->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 1)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 1)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 1)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 1)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 1)->offsetX,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 1)->offsetY,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 1)->maxFrame);
 	}
 	else if (buildingtype == 2){
-		m_sprite->pickSpriteAtlas(200.0f, 0.0f, 90.0f, 62.0f, 0.0f, -9.0f, 0);
+		//m_sprite->pickSpriteAtlas(200.0f, 0.0f, 90.0f, 62.0f, 0.0f, -9.0f, 0);
+		m_sprite->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->offsetX,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->offsetY,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->maxFrame);
 	}
 	
 }
