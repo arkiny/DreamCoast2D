@@ -86,6 +86,12 @@ void sEditScreen::Update(float deltaTime){
 		// 이동불가로 만들 타일 범위 설정 납작한 2번으로 다 설정해버림 됨
 		m_nHook = MOB_PORING_A;
 	}
+	if (::coControl::GetInstance().getKeyControlInfo()[0x45]){
+		::coControl::GetInstance().onKeyUp(0x45);
+		// 이동불가로 만들 타일 범위 설정 납작한 2번으로 다 설정해버림 됨
+		m_nHook = MOB_BAPO;
+	}
+
 
 	if (::coControl::GetInstance().getKeyControlInfo()[VK_LBUTTON]){		
 		::coControl::GetInstance().onKeyUp(VK_LBUTTON);
@@ -210,6 +216,9 @@ void sEditScreen::Update(float deltaTime){
 		}
 		else if (m_nHook == MOB_PORING_A){
 			m_pWorld->getMap()->addMonsterTotile(mousecoord.y, mousecoord.x, 1);
+		}
+		else if (m_nHook == MOB_BAPO){
+			m_pWorld->getMap()->addMonsterTotile(mousecoord.y, mousecoord.x, 2);
 		}
 	}
 	m_pWorld->Update(deltaTime);

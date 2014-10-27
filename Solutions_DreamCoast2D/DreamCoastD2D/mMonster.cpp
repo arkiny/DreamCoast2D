@@ -65,7 +65,9 @@ mMonster::~mMonster()
 
 void mMonster::onInit(){
 	// 현재는 기본으로 포링이지만, 상속받아서 바꿀수 있다.
-	m_ipD2DBitmap = ::cResourceManager::GetInstance().getPoringBitMap();
+	// 여기서 몬스터 타입에 따라 스프라이트 배정
+	m_ipD2DBitmap = ::cResourceManager::GetInstance().getMobBitMap(m_nMonsterType);
+	//m_ipD2DBitmap = ::cResourceManager::GetInstance().getMobBitMap(2);
 	//resource;
 	// idle에서 시작
 	m_pState = new aiStateIdle();
@@ -94,58 +96,111 @@ void mMonster::changeState(aiState* pnew){
 // 164, 39, 4frame
 void mMonster::onIdle(){
 	if (m_SeeDir == LEFTDOWN || m_SeeDir == RIGHTDOWN){
-		
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 0, 0);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 0, 0);
 		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 0)->x, 
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 0)->y, 
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 0)->width, 
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 0)->height,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 0)->offsetX, 
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 0)->offsetY, 
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 0)->maxFrame);
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
 	} 
 	else if (m_SeeDir == LEFTUP || m_SeeDir == RIGHTUP){
 		//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 0.0f, 5.0f, 3);
+
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 0, 1);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 0, 1);
 		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 1)->x,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 1)->y,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 1)->width,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 1)->height,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 1)->offsetX,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 1)->offsetY,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,0, 1)->maxFrame);
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 	}
 	//mMonster::onHit();	
 	
 }
 
 void mMonster::onAttack(){
+	//if (m_nMonsterType != 0 || m_nMonsterType != 1){
+		if (m_SeeDir == LEFTDOWN || m_SeeDir == RIGHTDOWN){
+			SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 2, 0);
+			//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 2, 0);
+			m_spriteAtlas->pickSpriteAtlas(
+				in->x,
+				in->y,
+				in->width,
+				in->height,
+				in->offsetX,
+				in->offsetY,
+				in->maxFrame);
+			//m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
+		}
+		else if (m_SeeDir == LEFTUP || m_SeeDir == RIGHTUP){
+			//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 0.0f, 5.0f, 3);
+
+			SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 2, 1);
+			//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 2, 1);
+			m_spriteAtlas->pickSpriteAtlas(
+				in->x,
+				in->y,
+				in->width,
+				in->height,
+				in->offsetX,
+				in->offsetY,
+				in->maxFrame);
+		}
+	//}
 }
 
 void mMonster::onHit(){
 	if (m_SeeDir == LEFTDOWN || m_SeeDir == RIGHTDOWN){
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 210.0f, 50.0f, 40.0f, 1);
+		/*m_spriteAtlas->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0)->x,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0)->y,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0)->width,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0)->height,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0)->offsetX,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0)->offsetY,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 0);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 4, 0);
 		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 0)->x,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 0)->y,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 0)->width,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 0)->height,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 0)->offsetX,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 0)->offsetY,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 0)->maxFrame);
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 		//m_spriteAtlas->pickSpriteAtlas(10.0f, 210.0f, 40.0f, 40.0f, 1);
 	}
 	else if (m_SeeDir == LEFTUP || m_SeeDir == RIGHTUP){
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
+		/*m_spriteAtlas->pickSpriteAtlas(
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1)->x,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1)->y,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1)->width,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1)->height,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1)->offsetX,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1)->offsetY,
+			cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 4, 1);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 4, 1);
 		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 1)->x,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 1)->y,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 1)->width,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 1)->height,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 1)->offsetX,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 1)->offsetY,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,4, 1)->maxFrame);
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 		//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 1);
 	}
 }
@@ -153,26 +208,46 @@ void mMonster::onHit(){
 void mMonster::onDeath(){
 	if (m_SeeDir == LEFTDOWN || m_SeeDir == RIGHTDOWN){
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 210.0f, 50.0f, 40.0f, 1);
-		m_spriteAtlas->pickSpriteAtlas(
+		/*m_spriteAtlas->pickSpriteAtlas(
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->x,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->y,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->width,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->height,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->offsetX,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->offsetY,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->maxFrame);
+			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 0)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 5, 0);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 5, 0);
+		m_spriteAtlas->pickSpriteAtlas(
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 		//m_spriteAtlas->pickSpriteAtlas(10.0f, 210.0f, 40.0f, 40.0f, 1);
 	}
 	else if (m_SeeDir == LEFTUP || m_SeeDir == RIGHTUP){
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 310.0f, 50.0f, 40.0f, 1);
-		m_spriteAtlas->pickSpriteAtlas(
+		/*m_spriteAtlas->pickSpriteAtlas(
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->x,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->y,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->width,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->height,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->offsetX,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->offsetY,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->maxFrame);
+			cResourceManager::GetInstance().getMonsterSpriteInfo(0,5, 1)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 5, 1);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 5, 1);
+		m_spriteAtlas->pickSpriteAtlas(
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 		//m_spriteAtlas->pickSpriteAtlas(240.0f, 0.0f, 60.0f, 60.0f, 1);
 	}
 }
@@ -180,24 +255,44 @@ void mMonster::onDeath(){
 void mMonster::onMove(){
 	if (m_SeeDir == LEFTDOWN || m_SeeDir == RIGHTDOWN){
 		//m_spriteAtlas->pickSpriteAtlas(0.0f, 68.0f, 53.0f, 40.0f, 7);
-		m_spriteAtlas->pickSpriteAtlas(
+		/*m_spriteAtlas->pickSpriteAtlas(
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->x,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->y,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->width,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->height,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->offsetX,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->offsetY,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->maxFrame);
+			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 1, 0);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 1, 0);
+		m_spriteAtlas->pickSpriteAtlas(
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 	}
 	else if (m_SeeDir == LEFTUP || m_SeeDir == RIGHTUP){
-		m_spriteAtlas->pickSpriteAtlas(
+		/*m_spriteAtlas->pickSpriteAtlas(
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->x,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->y,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->width,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->height,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->offsetX,
 			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->offsetY,
-			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->maxFrame);
+			cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 1, 1);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 1, 1);
+		m_spriteAtlas->pickSpriteAtlas(
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
 	}
 }
 
@@ -222,9 +317,8 @@ void mMonster::onRender(){
 				srcArea);
 		}
 		else if (m_SeeDir == RIGHTDOWN || m_SeeDir == RIGHTUP) {
-			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Scale(
-				D2D1::Size(-1.0f, 1.0f),
-				D2D1::Point2F(cpos.x, cpos.y)));
+			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(
+				D2D1::Matrix3x2F::Scale(D2D1::Size(-1.0f, 1.0f), D2D1::Point2F(cpos.x, cpos.y)));
 			
 			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, m_alpha,
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
@@ -272,23 +366,23 @@ void mMonster::onRender(){
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		////debug 용
-		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(dxArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
-		//::D2D1_RECT_F pivotArea;
-		//pivotArea.top = cpos.y - 2.0f;
-		//pivotArea.bottom = cpos.y + 2.0f;
-		//pivotArea.left = cpos.x - 2.0f;
-		//pivotArea.right = cpos.x + 2.0f;
-		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		::D2D1_RECT_F pivotArea;
+		pivotArea.top = cpos.y - 2.0f;
+		pivotArea.bottom = cpos.y + 2.0f;
+		pivotArea.left = cpos.x - 2.0f;
+		pivotArea.right = cpos.x + 2.0f;
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
-		////renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
-		////pivotArea;
-		//cpos = m_Cam->translasteToScreen(_realVector);
-		//pivotArea.top = cpos.y - 2.0f;
-		//pivotArea.bottom = cpos.y + 2.0f;
-		//pivotArea.left = cpos.x - 2.0f;
-		//pivotArea.right = cpos.x + 2.0f;
-		//::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
+		//renderer.GetRenderTarget()->DrawRectangle(dxArea, renderer.GetBlackBrush());
+		//pivotArea;
+		cpos = m_Cam->translasteToScreen(_realVector);
+		pivotArea.top = cpos.y - 2.0f;
+		pivotArea.bottom = cpos.y + 2.0f;
+		pivotArea.left = cpos.x - 2.0f;
+		pivotArea.right = cpos.x + 2.0f;
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pivotArea, ::cD2DRenderer::GetInstance().GetBlackBrush());
 	}
 }
 

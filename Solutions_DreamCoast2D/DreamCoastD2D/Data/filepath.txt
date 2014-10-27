@@ -45,3 +45,4 @@ a 41 60.0 60.0 ./Images/Item/potion-icons/potion-green-major.png
 a 42 1006.0 246.0 ./Images/effect/ef_02_noBG.png 
 a 43 1106.0 104.0 ./Images/effect/ef_03_noBG.png 
 a 44 169.0 240.0 ./Images/object/map/building1.png  
+a 45 875.0 1241.0 ./Images/object/monster/Baphomet_noBG.png 

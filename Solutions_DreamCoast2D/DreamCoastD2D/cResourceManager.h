@@ -28,6 +28,8 @@ public:
 	void releaseGameResource();
 
 	void loadFilePath(const char* szFileName);
+	void loadMobSpritePath(const char* szFileName);
+	void loadNormalSpritePath(const char* szFileName);
 
 	void loadSpritePlayerData(const char* szFileName, int id);
 	void loadSpriteMonsterData(const char* szFileName, int id);
@@ -39,7 +41,7 @@ public:
 
 	ID2D1Bitmap* getPlayerBitMap() { return m_Bitmap_Player; }
 	ID2D1Bitmap* getTileMapBitMap() { return m_Bitmap_TileMap; }
-	ID2D1Bitmap* getPoringBitMap() { return m_Bitmap_Poring; }
+	ID2D1Bitmap* getMobBitMap(int mobID) { return m_Bitmap_MoB[mobID]; }
 	ID2D1Bitmap* getBackGround() { return m_Bitmap_MainBG; }
 	D2D_POINT_2F getBackGroundSize() { return m_MainBG_Size; }
 
@@ -61,7 +63,7 @@ public:
 private:
 	ID2D1Bitmap* m_Bitmap_Player;		// 플레이어(차후 클래스 number vector로 관리)
 	ID2D1Bitmap* m_Bitmap_TileMap;		// 타일맵(차후 레벨 vector로 관리)
-	ID2D1Bitmap* m_Bitmap_Poring;		// 몬스터 포링 주소(차후 몬스터 번호 vector로 관리)
+	ID2D1Bitmap* m_Bitmap_MoB[MOB_ID_MAX];		// 몬스터 포링 주소(차후 몬스터 번호 vector로 관리)
 
 	//
 	ID2D1Bitmap* m_Bitmap_MainBG;
@@ -83,8 +85,12 @@ private:
 	::D2D_POINT_2F m_Size_Effect[GEFFECT_ID_MAX];
 
 	std::vector<TCHAR*> m_vecFilepath;
+	std::vector<char*> m_mobSpriteFilePath;
+	std::vector<char*> m_vecNormalSpriteFilePath;
+
 	std::vector<POINTFLOAT*> m_vecImageSize;
 
 	std::vector<SpriteAnimationInfo*> m_vecSpriteInfo[SPR_ID_MAX];
+	std::vector<SpriteAnimationInfo*> m_vecMobSpriteInfo[SPR_MOB_ID_MAX];
 };
 

@@ -10,7 +10,12 @@
 void aiStateAttack::enter(mMonster* pmon){
 	// attack과 move는 같은 스프라이트를 쓴다.
 	m_sprite = pmon->getSprite();
-	pmon->onMove();
+	if (pmon->getMonsterType() == 2){
+		pmon->onAttack();
+	}
+	else {
+		
+	}
 }
 
 void aiStateAttack::execute(mMonster* pmon){

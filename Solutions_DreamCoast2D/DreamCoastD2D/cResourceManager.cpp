@@ -10,7 +10,11 @@ cResourceManager::cResourceManager()
 {
 	m_Bitmap_Player = nullptr;
 	m_Bitmap_TileMap = nullptr;
-	m_Bitmap_Poring = nullptr;
+
+	for (ID2D1Bitmap* x : m_Bitmap_MoB){
+		x = nullptr;
+	}
+
 	m_Bitmap_MainBG = nullptr;
 	for (ID2D1Bitmap* x : m_Bitmap_Button){
 		x = nullptr;
@@ -42,11 +46,22 @@ cResourceManager::cResourceManager()
 	memset(m_MapObject_Size, NULL, sizeof(m_MapObject_Size));
 
 	loadFilePath("./Data/filepath.txt");
+	loadNormalSpritePath("./Data/filepath_NormalSprite.txt");
+	loadMobSpritePath("./Data/filepath_MobSprite.txt");
 
-	loadSpritePlayerData("./Data/Player_Sprite_Data.txt", SPR_PLAYER);
+	for (unsigned int i = 0; i < m_vecNormalSpriteFilePath.size(); i++){
+		loadSpritePlayerData(m_vecNormalSpriteFilePath[i], i);
+	}
+	for (unsigned int i = 0; i < m_mobSpriteFilePath.size(); i++){
+		loadSpriteMonsterData(m_mobSpriteFilePath[i], i);
+	}
+
+	/*loadSpritePlayerData("./Data/Player_Sprite_Data.txt", SPR_PLAYER);
 	loadSpritePlayerData("./Data/MapTile_Sprite_Data.txt", SPR_TILEMAP);
-	loadSpritePlayerData("./Data/Effect1_Sprite_Data.txt", SPR_EFFECT);
-	loadSpriteMonsterData("./Data/Poring_Sprite_Data.txt", SPR_MOB_PORING);
+	loadSpritePlayerData("./Data/Effect1_Sprite_Data.txt", SPR_EFFECT);*/
+	//loadSpriteMonsterData("./Data/Poring_Sprite_Data.txt", SPR_MOB_PORING);
+	//loadSpriteMonsterData("./Data/Poring_Sprite_Data.txt", SPR_MOB_PORING_A);
+	//loadSpriteMonsterData("./Data/Bapomat_Sprite_Data.txt", SPR_MOB_BAPOMAT);
 	//int a = 0;
 }
 
@@ -57,7 +72,12 @@ cResourceManager::~cResourceManager()
 	// todo : destructor fix
 	SafeRelease(m_Bitmap_Player);
 	SafeRelease(m_Bitmap_TileMap);
-	SafeRelease(m_Bitmap_Poring);
+	for (ID2D1Bitmap* x : m_Bitmap_MoB){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
+	}
+	//SafeRelease(m_Bitmap_Poring);
 	SafeRelease(m_Bitmap_MainBG);
 
 	for (ID2D1Bitmap* x : m_Bitmap_Button){
@@ -90,6 +110,11 @@ cResourceManager::~cResourceManager()
 	while (!m_vecFilepath.empty()){
 		delete m_vecFilepath.back();
 		m_vecFilepath.pop_back();
+	}
+
+	while (!m_mobSpriteFilePath.empty()){
+		delete m_mobSpriteFilePath.back();
+		m_mobSpriteFilePath.pop_back();
 	}
 
 	for (int i = 0; i < SPR_ID_MAX; i++){
@@ -157,6 +182,114 @@ void cResourceManager::loadFilePath(const char* szFileName){
 	}
 	fclose(fp);
 }
+
+void cResourceManager::loadMobSpritePath(const char* szFileName){
+	char szBuf[1024];
+
+	FILE* fp;
+	errno_t err;
+	err = fopen_s(&fp, szFileName, "r");
+	if (err != 0)
+	{
+		// error message
+		wchar_t szDebug[128];
+		wsprintf(szDebug, L"%s 파일 읽기 에러");
+		MessageBox(NULL, szDebug, L"Error", MB_OK);
+		return;
+	}
+
+
+	while (!feof(fp))
+	{
+		fgets(szBuf, 1024, fp);
+		if (szBuf[0] == '#')
+		{
+			continue;
+		}
+		else if (szBuf[0] == 'a')
+		{
+			/*char fileName[1024];*/
+			//ani.strFilaName = fileName;
+
+			char* fileName = new char[1024];
+
+			/*char* x = new char[100];
+			char* y = new char[100];*/
+			/*float x;
+			float y;*/
+
+			int id;
+			sscanf_s(szBuf, "%*s %d %s",
+				&id, fileName, 1024);
+			/*TCHAR* szName = new TCHAR[1024];
+			USES_CONVERSION;
+			_tcscpy(szName, A2T(fileName));*/
+
+			m_mobSpriteFilePath.push_back(fileName);
+
+			//szName = nullptr;
+			fileName = nullptr;
+
+			//m_vecAnimation.push_back(ani);
+		}
+	}
+	fclose(fp);
+}
+
+void cResourceManager::loadNormalSpritePath(const char* szFileName){
+	char szBuf[1024];
+
+	FILE* fp;
+	errno_t err;
+	err = fopen_s(&fp, szFileName, "r");
+	if (err != 0)
+	{
+		// error message
+		wchar_t szDebug[128];
+		wsprintf(szDebug, L"%s 파일 읽기 에러");
+		MessageBox(NULL, szDebug, L"Error", MB_OK);
+		return;
+	}
+
+
+	while (!feof(fp))
+	{
+		fgets(szBuf, 1024, fp);
+		if (szBuf[0] == '#')
+		{
+			continue;
+		}
+		else if (szBuf[0] == 'a')
+		{
+			/*char fileName[1024];*/
+			//ani.strFilaName = fileName;
+
+			char* fileName = new char[1024];
+
+			/*char* x = new char[100];
+			char* y = new char[100];*/
+		/*	float x;
+			float y;*/
+
+			int id;
+			sscanf_s(szBuf, "%*s %d %s",
+				&id, fileName, 1024);
+			/*TCHAR* szName = new TCHAR[1024];
+			USES_CONVERSION;
+			_tcscpy(szName, A2T(fileName));*/
+
+			m_vecNormalSpriteFilePath.push_back(fileName);
+
+			//szName = nullptr;
+			fileName = nullptr;
+
+			//m_vecAnimation.push_back(ani);
+		}
+	}
+	fclose(fp);
+}
+
+
 
 void cResourceManager::loadSpritePlayerData(const char* szFileName, int inid){
 	char szBuf[1024];
@@ -266,7 +399,7 @@ void cResourceManager::loadSpriteMonsterData(const char* szFileName, int inid){
 			sprinfo->offsetY = _offsetY;
 			sprinfo->maxFrame = _maxFrame;
 
-			m_vecSpriteInfo[inid].push_back(sprinfo);
+			m_vecMobSpriteInfo[inid].push_back(sprinfo);
 
 			sprinfo = nullptr;
 		}
@@ -312,6 +445,8 @@ SpriteAnimationInfo* cResourceManager::getPlayerSpriteInfo(int action, int direc
 SpriteAnimationInfo* cResourceManager::getMonsterSpriteInfo(int mobtype, int action, int direction){
 	/// @todo 차후 수정 가능시 수정
 	/// 차후 몹타입 추가
+	
+
 	int index = 0;
 	if (action == 0){
 		index = 0;
@@ -319,20 +454,38 @@ SpriteAnimationInfo* cResourceManager::getMonsterSpriteInfo(int mobtype, int act
 	else if (action == 1){
 		index = 2;
 	}
+	else if (action == 2){
+		if (mobtype == 0 || mobtype == 1){
+			index = 2;
+		}
+		else{
+			index = 4;
+		}
+	}
 	else if (action == 4){
-		index = 4;
+		if (mobtype == 0 || mobtype == 1){
+			index = 4;
+		}
+		else{
+			index = 6;
+		}		
 	}
 	else if (action == 5){
-		index = 6;
+		if (mobtype == 0 || mobtype == 1){
+			index = 6;
+		}
+		else{
+			index = 8;
+		}
 	}	
 	else {
 		return NULL;
 	}
 
-	for (unsigned int i = index; i < m_vecSpriteInfo[SPR_MOB_PORING].size(); i++){
-		if (m_vecSpriteInfo[SPR_MOB_PORING][i]->typ == action &&
-			m_vecSpriteInfo[SPR_MOB_PORING][i]->direction == direction){
-			return m_vecSpriteInfo[SPR_MOB_PORING][i];
+	for (unsigned int i = index; i < m_vecMobSpriteInfo[mobtype].size(); i++){
+		if (m_vecMobSpriteInfo[mobtype][i]->typ == action &&
+			m_vecMobSpriteInfo[mobtype][i]->direction == direction){
+			return m_vecMobSpriteInfo[mobtype][i];
 		}
 	}
 	return NULL;
@@ -373,7 +526,9 @@ void cResourceManager::load(){
 	///sprites
 	m_Bitmap_Player = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_GAME_PLAYER], NULL);		// 플레이어
 	m_Bitmap_TileMap = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_GAME_TILEMAP], NULL);		// 타일맵
-	m_Bitmap_Poring = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_GAME_MOB_PORING], NULL);		// 몬스터 포링 주소	
+	m_Bitmap_MoB[MOB_ID_PORING] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_GAME_MOB_PORING], NULL);		// 몬스터 포링 주소	
+	m_Bitmap_MoB[MOB_ID_PORING_A] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_GAME_MOB_PORING], NULL);
+	m_Bitmap_MoB[MOB_ID_BAPOMAT] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_GAME_MOB_BAPOMAT], NULL);
 	///sprites
 
 	m_Bitmap_UI[UIID::STATBAR] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_UI_STAT_BAR], NULL);
@@ -520,7 +675,11 @@ void cResourceManager::releaseGameResource(){
 	SafeRelease(m_Bitmap_MainBG);
 	SafeRelease(m_Bitmap_Player);
 	SafeRelease(m_Bitmap_TileMap);
-	SafeRelease(m_Bitmap_Poring);
+	for (ID2D1Bitmap* x : m_Bitmap_MoB){
+		if (x != nullptr){
+			SafeRelease(x);
+		}
+	}
 	for (int i = BTN_GAME_START + 1; i < BTN_BUTTONTYPEMAX; i++){
 		SafeRelease(m_Bitmap_Button[i]);
 	}

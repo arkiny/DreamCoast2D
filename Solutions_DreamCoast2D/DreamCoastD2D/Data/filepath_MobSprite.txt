@@ -1,0 +1,5 @@
+#Mob Sprite info
+#Token MobID, FilePath
+a 0 ./Data/Poring_Sprite_Data.txt
+a 1 ./Data/Poring_Sprite_Data.txt
+a 2 ./Data/Bapomat_Sprite_Data.txt
