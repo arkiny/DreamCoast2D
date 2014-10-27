@@ -45,6 +45,7 @@ cResourceManager::cResourceManager()
 
 	loadSpritePlayerData("./Data/Player_Sprite_Data.txt", SPR_PLAYER);
 	loadSpritePlayerData("./Data/MapTile_Sprite_Data.txt", SPR_TILEMAP);
+	loadSpritePlayerData("./Data/Effect1_Sprite_Data.txt", SPR_EFFECT);
 	loadSpriteMonsterData("./Data/Poring_Sprite_Data.txt", SPR_MOB_PORING);
 	//int a = 0;
 }
@@ -359,6 +360,9 @@ SpriteAnimationInfo* cResourceManager::getMapSpriteInfo(int tiletype, int type){
 	return NULL;
 }
 
+SpriteAnimationInfo* cResourceManager::getEffectSpriteInfo(int type){
+	return m_vecSpriteInfo[SPR_EFFECT][type];
+}
 
 void cResourceManager::load(){
 	HWND hWnd = ::cD2DRenderer::GetInstance().GetHwnd();

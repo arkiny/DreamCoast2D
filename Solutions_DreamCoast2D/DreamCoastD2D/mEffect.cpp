@@ -29,10 +29,26 @@ mEffect::mEffect(int type, int skillEffectType, VECTOR2D* cpos, uCamera* cam){
 	switch (m_nSkillEffectType)
 	{
 	case 0:
-		m_sprite->pickSpriteAtlas(0.0f, 0.0f, 110.6f, 104.0f, 0.0f, 35.0f, 9);
+		
+		m_sprite->pickSpriteAtlas(
+			cResourceManager::GetInstance().getEffectSpriteInfo(0)->x, 
+			cResourceManager::GetInstance().getEffectSpriteInfo(0)->y, 
+			cResourceManager::GetInstance().getEffectSpriteInfo(0)->width, 
+			cResourceManager::GetInstance().getEffectSpriteInfo(0)->height, 
+			cResourceManager::GetInstance().getEffectSpriteInfo(0)->offsetX, 
+			cResourceManager::GetInstance().getEffectSpriteInfo(0)->offsetY, 
+			cResourceManager::GetInstance().getEffectSpriteInfo(0)->maxFrame);
 		break;
 	case 1:
-		m_sprite->pickSpriteAtlas(0.0f, 0.0f, 168.0f, 118.0f, 5);
+		//m_sprite->pickSpriteAtlas(0.0f, 0.0f, 168.0f, 118.0f, 5);
+		m_sprite->pickSpriteAtlas(
+			cResourceManager::GetInstance().getEffectSpriteInfo(1)->x,
+			cResourceManager::GetInstance().getEffectSpriteInfo(1)->y,
+			cResourceManager::GetInstance().getEffectSpriteInfo(1)->width,
+			cResourceManager::GetInstance().getEffectSpriteInfo(1)->height,
+			cResourceManager::GetInstance().getEffectSpriteInfo(1)->offsetX,
+			cResourceManager::GetInstance().getEffectSpriteInfo(1)->offsetY,
+			cResourceManager::GetInstance().getEffectSpriteInfo(1)->maxFrame);
 		break;
 	default:
 		break;

@@ -35,6 +35,7 @@ public:
 	SpriteAnimationInfo* getPlayerSpriteInfo(int type, int direction);
 	SpriteAnimationInfo* getMonsterSpriteInfo(int mobtype,  int action, int direction);
 	SpriteAnimationInfo* getMapSpriteInfo(int tiletype, int type);
+	SpriteAnimationInfo* getEffectSpriteInfo(int type);
 
 	ID2D1Bitmap* getPlayerBitMap() { return m_Bitmap_Player; }
 	ID2D1Bitmap* getTileMapBitMap() { return m_Bitmap_TileMap; }
