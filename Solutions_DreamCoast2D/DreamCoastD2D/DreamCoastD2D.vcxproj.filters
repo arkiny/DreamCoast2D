@@ -262,6 +262,12 @@
     <ClInclude Include="uAnimationLoader.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="aiStateOnCasting.h">
+      <Filter>AIStateFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="aiStateSkillEffect.h">
+      <Filter>AIStateFSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -428,6 +434,12 @@
     </ClCompile>
     <ClCompile Include="uAnimationLoader.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="aiStateOnCasting.cpp">
+      <Filter>AIStateFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="aiStateSkillEffect.cpp">
+      <Filter>AIStateFSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

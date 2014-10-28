@@ -1,29 +1,29 @@
 #include "stdafx.h"
-#include "aiStateAttack.h"
 #include "mMonster.h"
+#include "aiStateDead.h"
+#include "aiStateOnHit.h"
+#include "aiStateIdle.h"
+#include "VECTOR2D.h"
+#include "aiStateSkillEffect.h"
 #include "uSprite.h"
 #include "wTileMap.h"
-#include "aiStateIdle.h"
-#include "aiStateOnHit.h"
-#include "aiStateDead.h"
 
-void aiStateAttack::enter(mMonster* pmon){
-	// attack과 move는 같은 스프라이트를 쓴다.
+void aiStateSkillEffect::enter(mMonster* pmon){
 	m_sprite = pmon->getSprite();
 	if (pmon->getMonsterType() == 2){
 		pmon->onAttack();
+		m_sprite->setCurrentFrame(0);
 	}
 	else {
-		
+
 	}
-	m_sprite->setCurrentFrame(0);
 }
 
-void aiStateAttack::execute(mMonster* pmon){
+void aiStateSkillEffect::execute(mMonster* pmon){
 	nextIdle += pmon->getdeltaTime();
 	attacktimer += pmon->getdeltaTime();
 	m_sprite->nextFrame(pmon->getdeltaTime());
-	
+
 	if (pmon->getHealth() <= 0.0f){
 		pmon->changeState(new aiStateDead);
 		return;
@@ -35,17 +35,9 @@ void aiStateAttack::execute(mMonster* pmon){
 	}
 
 	// 데미지는 3프레임 이후에, 공격 안했을 경우
-	if (pmon->getMonsterType() != 2){
-		if (attacktimer >= FRAMERATE * 3 && !attacked){
-			pmon->getTileMap()->playerGetHit(pmon->getAttackPower());
-			attacked = true;
-		}
-	}
-	else {
-		if (attacktimer >= FRAMERATE * 4 && !attacked){
-			pmon->getTileMap()->playerGetHit(pmon->getAttackPower());
-			attacked = true;
-		}
+	if (attacktimer >= FRAMERATE * 3 && !attacked){
+		pmon->getTileMap()->playerGetHit(pmon->getAttackPower()*5.0f);
+		attacked = true;
 	}
 
 	// 프레임 종료뒤 아이들로 돌아가서 어그로체크부터 다시
@@ -54,6 +46,6 @@ void aiStateAttack::execute(mMonster* pmon){
 	}
 }
 
-void aiStateAttack::exit(mMonster* pmon){
+void aiStateSkillEffect::exit(mMonster* pmon){
 
 }

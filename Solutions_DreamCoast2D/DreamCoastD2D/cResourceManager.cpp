@@ -455,29 +455,17 @@ SpriteAnimationInfo* cResourceManager::getMonsterSpriteInfo(int mobtype, int act
 		index = 2;
 	}
 	else if (action == 2){
-		if (mobtype == 0 || mobtype == 1){
-			index = 2;
-		}
-		else{
-			index = 4;
-		}
+		index = 4;
+	}
+	else if (action == 3){
+		index = 6;		
 	}
 	else if (action == 4){
-		if (mobtype == 0 || mobtype == 1){
-			index = 4;
-		}
-		else{
-			index = 6;
-		}		
-	}
-	else if (action == 5){
-		if (mobtype == 0 || mobtype == 1){
-			index = 6;
-		}
-		else{
-			index = 8;
-		}
+		index = 8;
 	}	
+	else if (action == 5){
+		index = 10;
+	}
 	else {
 		return NULL;
 	}

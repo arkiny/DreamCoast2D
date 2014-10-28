@@ -35,6 +35,7 @@ public:
 	void onHit();
 	void onDeath();
 	void onMove();
+	void onCasting();
 
 	// move control
 	void moveRandom();
@@ -61,6 +62,10 @@ public:
 	int getMonsterType(){ return m_nMonsterType; }
 	void setMonsterType(int in);
 
+	float getSkillCooltime(){ return m_skillCooltime; }
+	float getSkillAccumtime() { return m_skillAccumtime; }
+	void setSkillAccumtime(float in) { m_skillAccumtime = in; }
+
 private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;
@@ -86,5 +91,9 @@ private:
 	float m_attackRange = 0.0f; // 공격사거리 : 포링의 기본사거리는 딱붙어 공격
 
 	float m_attackPower = 100.0f;
+
+	// skill cooltime은 차후 스킬 DB에 따라서 유동화
+	const float m_skillCooltime = 10.0f;
+	float m_skillAccumtime = 0.0f;
 };
 

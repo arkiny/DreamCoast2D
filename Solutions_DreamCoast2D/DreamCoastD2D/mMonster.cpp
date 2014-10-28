@@ -70,6 +70,15 @@ void mMonster::onInit(){
 	//m_ipD2DBitmap = ::cResourceManager::GetInstance().getMobBitMap(2);
 	//resource;
 	// idle에서 시작
+
+	if (m_nMonsterType == 2){
+		m_visionRange = 5.0;
+		//m_attackRange = 1.0;
+		m_moveSpeed = 150.0f;
+		m_MAXHP = 1000.0f;
+		m_HP = 1000.0f;
+	}
+
 	m_pState = new aiStateIdle();
 	m_pState->enter(this);	
 }
@@ -81,6 +90,11 @@ void mMonster::onInit(){
 
 void mMonster::onUpdate(float fdeltatime){
 	m_fdeltatime = fdeltatime;
+	//
+	if (m_nMonsterType == 2 && m_fcurAggroLevel == m_fMaxAggroLevel){
+		m_skillAccumtime += fdeltatime;
+	}
+	//
 	m_pState->execute(this);
 }
 
@@ -296,6 +310,50 @@ void mMonster::onMove(){
 	}
 }
 
+void mMonster::onCasting(){
+	if (m_SeeDir == LEFTDOWN || m_SeeDir == RIGHTDOWN){
+		//m_spriteAtlas->pickSpriteAtlas(0.0f, 68.0f, 53.0f, 40.0f, 7);
+		/*m_spriteAtlas->pickSpriteAtlas(
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->x,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->y,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->width,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->height,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->offsetX,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->offsetY,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 0)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 3, 0);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 1, 0);
+		m_spriteAtlas->pickSpriteAtlas(
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
+	}
+	else if (m_SeeDir == LEFTUP || m_SeeDir == RIGHTUP){
+		/*m_spriteAtlas->pickSpriteAtlas(
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->x,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->y,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->width,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->height,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->offsetX,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->offsetY,
+		cResourceManager::GetInstance().getMonsterSpriteInfo(0,1, 1)->maxFrame);*/
+		SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(m_nMonsterType, 3, 1);
+		//SpriteAnimationInfo* in = cResourceManager::GetInstance().getMonsterSpriteInfo(2, 1, 1);
+		m_spriteAtlas->pickSpriteAtlas(
+			in->x,
+			in->y,
+			in->width,
+			in->height,
+			in->offsetX,
+			in->offsetY,
+			in->maxFrame);
+	}
+}
+
 void mMonster::onRender(){
 	if (m_ipD2DBitmap != nullptr){
 		//
@@ -470,7 +528,7 @@ void mMonster::moveToDest(float deltaTime){
 	// 플롯 벡터 움직임 오차범위
 	// 플롯이고, 또한 벡터 무빙으로 움직이기 때문에 어느정도의 오차는 발생한다.
 	// 오차범위내에 들어가면 도착한걸로 결정
-	float tolerance = 0.5f;
+	float tolerance = 2.0f;
 	if (abs(_realVector->x - m_dest->x) < tolerance){
 		m_dest->x = _realVector->x;
 	}

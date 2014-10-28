@@ -3,6 +3,7 @@
 #include "aiStateOnHit.h"
 #include "aiStateMoveto.h"
 #include "aiStateIdle.h"
+#include "aiStateOnCasting.h"
 #include "mMonster.h"
 #include "VECTOR2D.h"
 #include "wTileMap.h"
@@ -40,8 +41,13 @@ void aiStateScan::execute(mMonster* pmon){
 	bool inSight = pmon->getTileMap()->sightScan(pmon->getSight(), *(pmon->getDrawPos()));
 	if (inSight){
 		//if(공격범위내)
-		// 1. 스캔시 플레이어가 시야내에 플레이어가 있고, 공격범위내 일경우
-		if (pmon->getTileMap()->sightScan(pmon->getAttackRange(), *(pmon->getDrawPos()))){
+		// 2. 스캔시 플레이어가 시야내에 플레이어가 있고, 스킬이 준비되어 있는 경우
+		if (pmon->getTileMap()->sightScan(pmon->getAttackRange(), *(pmon->getDrawPos())) &&
+			pmon->getSkillAccumtime() >= pmon->getSkillCooltime() ){
+			pmon->changeState(new aiStateOnCasting);
+		}
+			// 2. 스캔시 플레이어가 시야내에 플레이어가 있고, 공격범위내 일경우
+		else if (pmon->getTileMap()->sightScan(pmon->getAttackRange(), *(pmon->getDrawPos()))){
 			//플레이어 공격
 			pmon->changeState(new aiStateAttack);
 			return;

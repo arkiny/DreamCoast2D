@@ -11,6 +11,7 @@
 void aiStateDead::enter(mMonster* pmon){
 	m_sprite = pmon->getSprite();
 	pmon->onDeath();
+	m_sprite->setCurrentFrame(0);
 	cSoundManager::GetInstance().executeOnDie(0);
 }
 
