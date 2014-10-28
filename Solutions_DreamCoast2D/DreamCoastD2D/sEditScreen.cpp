@@ -200,13 +200,13 @@ void sEditScreen::Update(float deltaTime){
 		::coControl::GetInstance().onKeyUp(0x32);
 		m_nHook = TILE_HIGH_GROUND;
 		m_sprite->pickSpriteAtlas(
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->x,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->y,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->width,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->height,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->offsetX,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->offsetY,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->maxFrame);
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->offsetX,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->offsetY,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->maxFrame);
 	}
 	if (::coControl::GetInstance().getKeyControlInfo()[0x33]){
 		::coControl::GetInstance().onKeyUp(0x33);
@@ -225,13 +225,13 @@ void sEditScreen::Update(float deltaTime){
 		m_nHook = TILE_BUILDING;
 		// 이동불가로 만들 타일 범위 설정 납작한 2번으로 다 설정해버림 됨
 		m_sprite->pickSpriteAtlas(
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->x,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->y,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->width,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->height,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->offsetX,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->offsetY,
-			cResourceManager::GetInstance().getMapSpriteInfo(1, 2)->maxFrame);
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->x,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->y,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->width,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->height,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->offsetX,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->offsetY,
+			cResourceManager::GetInstance().getMapSpriteInfo(1, 0)->maxFrame);
 	}
 	if (::coControl::GetInstance().getKeyControlInfo()[0x51]){
 		::coControl::GetInstance().onKeyUp(0x51);
@@ -408,6 +408,8 @@ void sEditScreen::Update(float deltaTime){
 			m_pWorld->getMap()->addMonsterTotile(mousecoord.y, mousecoord.x, 2);
 		}
 	}
+
+	// update
 	m_pWorld->Update(deltaTime);
 	mGFX::GetInstance().update(deltaTime);
 }
@@ -418,8 +420,8 @@ void sEditScreen::OnInit(){
 	m_pWorld->OnInit(1);
 	// 맵툴용 캐릭터 설정
 	m_pWorld->getPlayer()->setAttackPower(1000.0f);
-	m_pWorld->getPlayer()->setMAXHealth(10000.0f);
-	m_pWorld->getPlayer()->setHealth(10000.0f);
+	m_pWorld->getPlayer()->setMAXHealth(100000.0f);
+	m_pWorld->getPlayer()->setHealth(100000.0f);
 	m_pWorld->getPlayer()->setMoveSpeed(300.0f);
 }
 
