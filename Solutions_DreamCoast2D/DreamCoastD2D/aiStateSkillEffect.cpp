@@ -7,8 +7,13 @@
 #include "aiStateSkillEffect.h"
 #include "uSprite.h"
 #include "wTileMap.h"
+#include "cSoundManager.h"
+#include "mGFX.h"
+#include "mEffect.h"
+#include "wTileMap.h"
 
 void aiStateSkillEffect::enter(mMonster* pmon){
+	cSoundManager::GetInstance().stopBeginSpell();
 	m_sprite = pmon->getSprite();
 	if (pmon->getMonsterType() == 2){
 		pmon->onAttack();
@@ -17,6 +22,7 @@ void aiStateSkillEffect::enter(mMonster* pmon){
 	else {
 
 	}
+	cSoundManager::GetInstance().executeSkill(0);
 }
 
 void aiStateSkillEffect::execute(mMonster* pmon){
@@ -38,6 +44,21 @@ void aiStateSkillEffect::execute(mMonster* pmon){
 	if (attacktimer >= FRAMERATE * 3 && !attacked){
 		pmon->getTileMap()->playerGetHit(pmon->getAttackPower()*5.0f);
 		attacked = true;
+
+		// 플레이어의 위치에 스킬 이펙트 발현
+		float x, y;
+		VECTOR2D in;
+		VECTOR2D iso;
+		iso.x = pmon->getTileMap()->getPlayerTilePos().y;
+		iso.y = pmon->getTileMap()->getPlayerTilePos().x;
+		x = iso.x * pmon->getTileMap()->getRectTileWidth();
+		y = iso.y*pmon->getTileMap()->getRectTileHeight();
+		in = VECTOR2D(x, y);
+		iso = pmon->getTileMap()->twoDtoISO(in);
+		::mGFX::GetInstance().pushToEventQueue(new mEffect(1, 0, new VECTOR2D(iso.x, iso.y), pmon->getCam()));
+		//::mGFX::GetInstance().pushToEventQueue(new mEffect(1, 0, new VECTOR2D(in.x, in.y), m_Cam));
+		//skillCoord.pop();
+		
 	}
 
 	// 프레임 종료뒤 아이들로 돌아가서 어그로체크부터 다시

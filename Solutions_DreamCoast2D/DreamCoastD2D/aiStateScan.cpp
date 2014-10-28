@@ -13,6 +13,7 @@
 
 void aiStateScan::enter(mMonster* pmon){
 	m_sprite = pmon->getSprite();
+	pmon->onIdle();
 }
 
 void aiStateScan::execute(mMonster* pmon){

@@ -29,6 +29,7 @@ public:
 	// Set point connection with other class
 	void setTileMap(wTileMap* in);
 	void setCam(uCamera* in){ m_Cam = in; }
+	uCamera* getCam(){ return m_Cam; }
 
 	// health control
 	float getHealth(){ return m_HP; }

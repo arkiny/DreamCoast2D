@@ -2,6 +2,8 @@
 #include "sIScreen.h"
 
 class wWorld;
+//class iInScreenUI;
+class uSprite;
 
 enum MOUSE_HOOKING_ID{
 	TILE_EMPTY, TILE_CANNOTMOVE, TILE_HIGH_GROUND, TILE_TREE, TILE_BUILDING, 
@@ -29,6 +31,8 @@ private:
 
 private:
 	wWorld* m_pWorld;
+	//iInScreenUI* m_pEditUI;
+	uSprite* m_sprite;
 	
 	// 차후 맵툴용 UI 추가
 	//iInScreenUI* m_pGameUI;

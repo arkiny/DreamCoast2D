@@ -3,9 +3,10 @@
 #include "mMonster.h"
 #include "uSprite.h"
 #include "wTileMap.h"
-#include "aiStateIdle.h"
+//#include "aiStateIdle.h"
 #include "aiStateOnHit.h"
 #include "aiStateDead.h"
+#include "aiStateScan.h"
 
 void aiStateAttack::enter(mMonster* pmon){
 	// attack과 move는 같은 스프라이트를 쓴다.
@@ -50,7 +51,7 @@ void aiStateAttack::execute(mMonster* pmon){
 
 	// 프레임 종료뒤 아이들로 돌아가서 어그로체크부터 다시
 	if (nextIdle >= FRAMERATE * 8){
-		pmon->changeState(new aiStateIdle);
+		pmon->changeState(new aiStateScan);
 	}
 }
 
