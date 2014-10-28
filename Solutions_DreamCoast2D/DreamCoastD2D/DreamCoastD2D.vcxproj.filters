@@ -268,6 +268,9 @@
     <ClInclude Include="aiStateSkillEffect.h">
       <Filter>AIStateFSM</Filter>
     </ClInclude>
+    <ClInclude Include="InEditUI.h">
+      <Filter>Model\Screen\InScreenUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -440,6 +443,9 @@
     </ClCompile>
     <ClCompile Include="aiStateSkillEffect.cpp">
       <Filter>AIStateFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="InEditUI.cpp">
+      <Filter>Model\Screen\InScreenUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

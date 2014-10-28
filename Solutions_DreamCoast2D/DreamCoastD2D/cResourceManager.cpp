@@ -530,7 +530,8 @@ void cResourceManager::load(){
 	m_Bitmap_UI[UIID::UI_INVENTORY] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_UI_INVENTORY], NULL);
 	m_Bitmap_UI[UIID::UI_STAT] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_UI_STAT], NULL);
 	m_Bitmap_UI[UIID::UI_HUD_MENU] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_UI_HUD_MENU], NULL);
-	
+	m_Bitmap_UI[UIID::UI_HOOK] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_UI_HOOK], NULL);
+
 	m_UI_SIZE[UIID::STATBAR] = { m_vecImageSize[FILE_UI_STAT_BAR]->x, m_vecImageSize[FILE_UI_STAT_BAR]->y };
 	m_UI_SIZE[UIID::BLUEBAR] = { m_vecImageSize[FILE_UI_BLUEBAR]->x, m_vecImageSize[FILE_UI_BLUEBAR]->y };
 	m_UI_SIZE[UIID::REDBAR] = { m_vecImageSize[FILE_UI_REDBAR]->x, m_vecImageSize[FILE_UI_REDBAR]->y };
@@ -540,6 +541,7 @@ void cResourceManager::load(){
 	m_UI_SIZE[UIID::UI_INVENTORY] = { m_vecImageSize[FILE_UI_INVENTORY]->x, m_vecImageSize[FILE_UI_INVENTORY]->y };
 	m_UI_SIZE[UIID::UI_STAT] = { m_vecImageSize[FILE_UI_STAT]->x, m_vecImageSize[FILE_UI_STAT]->y };
 	m_UI_SIZE[UIID::UI_HUD_MENU] = { m_vecImageSize[FILE_UI_HUD_MENU]->x, m_vecImageSize[FILE_UI_HUD_MENU]->y };
+	m_UI_SIZE[UIID::UI_HOOK] = { m_vecImageSize[FILE_UI_HOOK]->x, m_vecImageSize[FILE_UI_HOOK]->y };
 
 	// Normal Menu
 	m_Bitmap_UI[UIID::MN_NORMAL] = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_MN_NORMAL], NULL);

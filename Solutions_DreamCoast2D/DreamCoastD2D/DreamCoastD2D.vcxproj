@@ -109,6 +109,7 @@
     <ClInclude Include="IInventory.h" />
     <ClInclude Include="IItem.h" />
     <ClInclude Include="IMapObject.h" />
+    <ClInclude Include="InEditUI.h" />
     <ClInclude Include="InGameUI.h" />
     <ClInclude Include="InMainUI.h" />
     <ClInclude Include="mBuilding.h" />
@@ -171,6 +172,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Heedong\Documents\GitHub\DreamCoast2D\Solutions_DreamCoast2D\DreamCoastD2D\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="iInScreenUI.cpp" />
+    <ClCompile Include="InEditUI.cpp" />
     <ClCompile Include="InGameUI.cpp" />
     <ClCompile Include="InMainUI.cpp" />
     <ClCompile Include="mBuilding.cpp" />
