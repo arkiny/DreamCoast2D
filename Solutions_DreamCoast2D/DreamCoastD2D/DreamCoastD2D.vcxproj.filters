@@ -71,6 +71,9 @@
     <Filter Include="Model\MapObject\Building">
       <UniqueIdentifier>{b3020239-3a56-4839-8099-aec739ef1aa9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ChatClient">
+      <UniqueIdentifier>{ecb2a0e9-6cf3-47b8-863c-d87d0758fa67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -271,6 +274,9 @@
     <ClInclude Include="InEditUI.h">
       <Filter>Model\Screen\InScreenUI</Filter>
     </ClInclude>
+    <ClInclude Include="chat_client.h">
+      <Filter>ChatClient</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -446,6 +452,9 @@
     </ClCompile>
     <ClCompile Include="InEditUI.cpp">
       <Filter>Model\Screen\InScreenUI</Filter>
+    </ClCompile>
+    <ClCompile Include="chat_client.cpp">
+      <Filter>ChatClient</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

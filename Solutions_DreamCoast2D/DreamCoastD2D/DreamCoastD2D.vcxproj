@@ -96,6 +96,7 @@
     <ClInclude Include="cD2DRenderer.h" />
     <ClInclude Include="cGameApplication.h" />
     <ClInclude Include="cGameManager.h" />
+    <ClInclude Include="chat_client.h" />
     <ClInclude Include="cIGameMgr.h" />
     <ClInclude Include="coControl.h" />
     <ClInclude Include="cResourceID.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="cD2DRenderer.cpp" />
     <ClCompile Include="cGameApplication.cpp" />
     <ClCompile Include="cGameManager.cpp" />
+    <ClCompile Include="chat_client.cpp" />
     <ClCompile Include="cIGameMgr.cpp" />
     <ClCompile Include="coControl.cpp" />
     <ClCompile Include="cResourceManager.cpp" />

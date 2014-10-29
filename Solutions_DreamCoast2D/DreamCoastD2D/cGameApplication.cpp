@@ -81,6 +81,7 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	HWND hWnd;
 	HWND hWndChild;
+	//HWND hWndChild;
 
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
 
@@ -93,6 +94,13 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 		_wndRect.bottom - _wndRect.top, 
 		NULL, NULL, hInstance, NULL);
 
+	//hWndChild = CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", L"CHAT",
+	//	/*WS_VISIBLE | WS_CHILD |
+	//	ES_LEFT | ES_MULTILINE | WS_HSCROLL,*/
+	//	WS_CHILD | WS_VISIBLE |
+	//	WS_OVERLAPPEDWINDOW,
+	//	CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, hWnd,
+	//	(HMENU)1004, hInstance, NULL);
 	
 	//hWndChild = CreateWindow(TEXT("Edit"), TEXT("test"), WS_CHILD | WS_VISIBLE | WS_BORDER, 
 	//	100, 20, 140, 20, hWnd, NULL, NULL, NULL);
@@ -114,6 +122,8 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
+	/*ShowWindow(hWndChild, nCmdShow);
+	UpdateWindow(hWndChild);*/
 	return TRUE;
 }
 
@@ -135,9 +145,9 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 
 	PAINTSTRUCT ps;
 	HDC hdc;
-
+	
 	switch (message)
-	{
+	{	
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 그리기 코드를 추가합니다.
