@@ -2,10 +2,31 @@
 #include "cGameApplication.h"
 #include "cIGameMgr.h"
 #include "cD2DRenderer.h"
+#include "chat_client.h"
 #include <MMSystem.h>
+#include  <atlstr.h>
 
+#define MAX_LOADSTRING 100
+#define BUTTON1 501
+#define BUTTON2 502
+#define EDIT1 601
+#define EDIT2 602
+#define EDIT3 603
+#define EDIT4 604
+#define MEMO1 701
+#define UN 100		
+#define TIMER 1001
+TCHAR buffer1[4096];
+char buffer2[4096];
+string sServerAddress;
 cIGameMgr* g_pGameMgr;
 cD2DRenderer d2dRender;
+HINSTANCE _hInst;
+HWND _hw;
+
+CIPMessage MyMessObj;
+char buffer3[4096]; // out
+char buffer4[4096]; // in
 
 RECT cGameApplication::_wndRect = { 0, 0, 1024, 768 };
 cGameApplication::cGameApplication(cIGameMgr* pGameMgr)
@@ -27,6 +48,7 @@ bool cGameApplication::Init(HINSTANCE hInstance, WCHAR* title, WCHAR* className,
 	wsprintf(_szTitle, title);
 	wsprintf(_szWindowClass, className);
 	MyRegisterClass(hInstance);
+//	MyRegisterClass2(hInstance);
 
 	// 응용 프로그램 초기화를 수행합니다.
 	if (!InitInstance(hInstance, nCmdShow))
@@ -67,6 +89,22 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 	return RegisterClass(&wc);
 }
 
+//ATOM cGameApplication::MyRegisterClass2(HINSTANCE hInstance)
+//{
+//	WNDCLASS wc = {};
+//	wc.hInstance = hInstance;
+//	wc.lpszClassName = _szWindowClass;
+//	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+//	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+//	wc.style = CS_VREDRAW | CS_HREDRAW;
+//	wc.cbClsExtra = 0;
+//	wc.cbWndExtra = 0;
+//	wc.lpfnWndProc = ChatProc;
+//	wc.lpszMenuName = NULL;
+//
+//	return RegisterClass(&wc);
+//}
+
 //
 //   함수: InitInstance(HINSTANCE, int)
 //
@@ -80,20 +118,33 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	HWND hWnd;
-	HWND hWndChild;
+	HWND hWnd2;
 	//HWND hWndChild;
 
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
 
 	// Window Size내의 Client를 정확하게 원하는 사이즈로 만든다.
+	//::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME, NULL);
+
 	::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, NULL);
 	hWnd = CreateWindow(_szWindowClass, _szTitle,
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU ,
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME,
 		CW_USEDEFAULT, 0, 
 		_wndRect.right - _wndRect.left, 
 		_wndRect.bottom - _wndRect.top, 
+		/*1028,
+		_wndRect.bottom - _wndRect.top,*/
 		NULL, NULL, hInstance, NULL);
 
+
+	hWnd2 = CreateWindow(_szWindowClass, _szTitle,
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME,
+		CW_USEDEFAULT, 0,
+		360,
+		190,
+		/*1028,
+		_wndRect.bottom - _wndRect.top,*/
+		NULL, NULL, hInstance, NULL);
 	//hWndChild = CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", L"CHAT",
 	//	/*WS_VISIBLE | WS_CHILD |
 	//	ES_LEFT | ES_MULTILINE | WS_HSCROLL,*/
@@ -112,6 +163,7 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 	}
 
 	_hwnd = hWnd;
+	_hw = hWnd;
 	GetClientRect(_hwnd, &_wndRect);
 
 	d2dRender.InitializeD2D();
@@ -122,12 +174,83 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
+	ShowWindow(hWnd2, nCmdShow);
+	UpdateWindow(hWnd2);
+
 	/*ShowWindow(hWndChild, nCmdShow);
 	UpdateWindow(hWndChild);*/
 	return TRUE;
 }
 
+HWND CreateButton(TCHAR *Titel, int x0, int y0, int w, int h, int ID, HWND hW, HINSTANCE hInst)
+{
+	return CreateWindowEx(WS_EX_PALETTEWINDOW, L"BUTTON", Titel,
+		WS_VISIBLE | WS_CHILD,
+		x0, y0, w, h, hW, (HMENU)ID, hInst, NULL);
+}
+HWND CreateEdit(TCHAR *Titel, int x0, int y0, int w, int h, int ID, HWND hW, HINSTANCE hInst)
+{
+	return CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", Titel,
+		/*WS_VISIBLE | WS_CHILD |
+		ES_LEFT | ES_MULTILINE | WS_HSCROLL,*/
+		WS_CHILD | WS_VISIBLE |
+		ES_MULTILINE | ES_AUTOHSCROLL,
+		x0, y0, w, h, hW,
+		(HMENU)ID, hInst, NULL);
+}
 
+HWND CreateMemo(TCHAR *Titel, int x0, int y0, int w, int h, int ID, HWND hW, HINSTANCE hInst)
+{
+	return CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", Titel,
+		WS_VISIBLE | WS_CHILD |
+		ES_LEFT | ES_MULTILINE | ES_READONLY |
+		WS_HSCROLL | WS_VSCROLL,
+		x0, y0, w, h,
+		hW, (HMENU)ID, hInst, NULL);
+}
+
+void Puts(HWND hW, int ID_EDIT, char *str)
+{
+	int nLen = GetWindowTextLength(GetDlgItem(hW, ID_EDIT));
+	SendMessage(GetDlgItem(hW, ID_EDIT), EM_SETSEL, nLen, nLen);
+	SendMessage(GetDlgItem(hW, ID_EDIT), EM_REPLACESEL, TRUE, (long)(LPCTSTR)str);
+	nLen = GetWindowTextLength(GetDlgItem(hW, ID_EDIT));
+	SendMessage(GetDlgItem(hW, ID_EDIT), EM_SETSEL, nLen, nLen);
+	SendMessage(GetDlgItem(hW, ID_EDIT), EM_REPLACESEL, TRUE, (long)(LPCTSTR)"\r\n");
+}
+
+
+
+//LRESULT CALLBACK cGameApplication::ChatProc(HWND hW, UINT message, WPARAM wParam, LPARAM lParam) {
+//	int wmId, wmEvent;
+//	PAINTSTRUCT ps;
+//	HDC hdc;
+//	char buf[4096];
+//
+//	switch (message)
+//	{
+//	case WM_PAINT:
+//		hdc = BeginPaint(hW, &ps);
+//		// TODO: 여기에 그리기 코드를 추가합니다.
+//		EndPaint(hW, &ps);
+//		break;
+//	case WM_DESTROY:
+//		PostQuitMessage(0);
+//		break;
+//	default:
+//		return DefWindowProc(hW, message, wParam, lParam);
+//	}
+//	return 0;
+//}
+UINT  MessageRecThread(LPVOID pParam)
+{
+	while (1)
+	{
+		if (MyMessObj.RecMessagePort(_hw, MEMO1));
+		break;
+	}
+	return 0;
+}
 
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -141,21 +264,123 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	g_pGameMgr->MsgProc(hWnd, message, wParam, lParam);
-
-	PAINTSTRUCT ps;
-	HDC hdc;
+	g_pGameMgr->MsgProc(hWnd, message, wParam, lParam, _hInst);
 	
+	char buf[4096];
+	int wmId, wmEvent;
+	PAINTSTRUCT ps;
+	HDC hdc;	
+	//HWND hWndChild;
+
 	switch (message)
-	{	
+	{		
+	case WM_CREATE:{
+		SetTimer(hWnd, TIMER, 50, NULL);
+
+		CreateButton(L"Send", 10, 22, 50, 20, BUTTON1, hWnd, _hInst);
+		CreateButton(L"Start", 10, 2, 50, 20, BUTTON2, hWnd, _hInst);
+
+		FILE *fp = fopen("server.ini", "r");
+		if (fp == NULL)
+		{
+			MessageBox(hWnd, L"Unable to open server.ini. Please specify server IPsddress in server.ini", L"Warning", MB_OK);
+			PostQuitMessage(NULL);
+		}
+
+		while ((fgets(buf, 4096, fp)) != NULL)
+		{
+			if (buf[0] == '#')
+				continue;
+			sServerAddress = buf;
+
+		}
+		fclose(fp);
+
+		if (sServerAddress.size() == 0)
+		{
+			MessageBox(hWnd, L"Unable to find server IPaddress in server.ini", L"Warning", MB_OK);
+			PostQuitMessage(NULL);
+		}
+
+		TCHAR szProxyAddr[16];
+		_tcscpy_s(szProxyAddr, CA2T(sServerAddress.c_str()));
+		//
+		CreateEdit(szProxyAddr, 70, 2, 180, 20, EDIT2, hWnd, _hInst); // ip
+		CreateEdit(L"8084", 260, 2, 90, 20, EDIT3, hWnd, _hInst); // port
+		//
+		CreateEdit(L"", 70, 22, 180, 20, EDIT1, hWnd, _hInst);
+		CreateEdit(L"ID", 260, 22, 90, 20, EDIT4, hWnd, _hInst);
+		
+		CreateMemo(L"Info.\n", 2, 45, 350, 120, MEMO1, hWnd, _hInst);
+
+		SetFocus(GetDlgItem(hWnd, BUTTON1));
+		EnableWindow(GetDlgItem(hWnd, BUTTON1), FALSE);
+		EnableWindow(GetDlgItem(hWnd, BUTTON2), TRUE);
+		break;
+	}
+	case WM_SETFOCUS:
+		wmId = LOWORD(wParam);
+		wmEvent = HIWORD(wParam);
+		switch (wmId)
+		{
+		case EDIT1:
+			//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
+			SetWindowText(GetDlgItem(hWnd, EDIT1), L"");
+			break;
+		case EDIT4:
+			SetWindowText(GetDlgItem(hWnd, EDIT4), L"");
+			break;
+		default:
+			break;
+		}
+		break;
+	case WM_TIMER:{
+					  AfxBeginThread(MessageRecThread, 0);
+					  break;
+	}
+	case WM_COMMAND:
+		wmId = LOWORD(wParam);
+		wmEvent = HIWORD(wParam);
+		// Parse the menu selections:
+		switch (wmId)
+		{
+
+		case BUTTON1:{
+			GetDlgItemTextA(hWnd, EDIT4, buffer2, sizeof(buffer2));
+			string a = buffer2;
+			GetDlgItemTextA(hWnd, EDIT1, buffer2, sizeof(buffer2));
+			a = a + ": " + buffer2;
+			//basic_string<TCHAR> str = buffer2;
+
+			MyMessObj.SendMessagePort(a);
+			//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
+			SetWindowText(GetDlgItem(hWnd, EDIT1), L"");
+			break;
+		}
+		case BUTTON2:
+			EnableWindow(GetDlgItem(hWnd, BUTTON2), FALSE);
+			EnableWindow(GetDlgItem(hWnd, BUTTON1), TRUE);
+			EnableWindow(GetDlgItem(hWnd, EDIT2), FALSE);
+			EnableWindow(GetDlgItem(hWnd, EDIT3), FALSE);
+			MyMessObj.Init(sServerAddress, 8084);
+			if (!MyMessObj.IsConnected())
+			{
+				MessageBox(hWnd, L"Unable to connect to the IPaddress specified in server.ini", L"Warning", MB_OK);
+				PostQuitMessage(NULL);
+			}
+			AfxBeginThread(MessageRecThread, 0);
+			SetFocus(GetDlgItem(hWnd, EDIT1));
+			break;
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 그리기 코드를 추가합니다.
-
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
-
 		PostQuitMessage(0);
 		break;
 	default:

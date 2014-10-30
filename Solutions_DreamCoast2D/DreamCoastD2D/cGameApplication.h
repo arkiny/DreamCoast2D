@@ -2,7 +2,6 @@
 #include <Windows.h>
 #pragma comment(lib, "winmm.lib")
 class cIGameMgr;
-
 class cGameApplication
 {
 public:
@@ -20,10 +19,15 @@ public:
 
 private:
 	BOOL	InitInstance(HINSTANCE, int);
-	ATOM	MyRegisterClass(HINSTANCE hInstance);
-	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-	HINSTANCE _hInst;								// 현재 인스턴스입니다.
+	ATOM	MyRegisterClass(HINSTANCE hInstance);
+	//ATOM	MyRegisterClass2(HINSTANCE hInstance);
+
+	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+	//static LRESULT CALLBACK ChatProc(HWND, UINT, WPARAM, LPARAM);
+
+	
+									// 현재 인스턴스입니다.
 	HWND _hwnd;
 	TCHAR _szTitle[128];					// 제목 표시줄 텍스트입니다.
 	TCHAR _szWindowClass[128];			// 기본 창 클래스 이름입니다.

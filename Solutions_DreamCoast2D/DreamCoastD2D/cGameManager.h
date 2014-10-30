@@ -17,7 +17,7 @@ public:
 	virtual ~cGameManager(void);
 	virtual void Render();
 	virtual void Update(float deltaTime);
-	virtual void MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	virtual void MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, HINSTANCE hInstance);
 	virtual void OnInit();
 
 	// 스크린 관리, 각 스크린이 콜백으로 받아와서, 씬관리를 한다?

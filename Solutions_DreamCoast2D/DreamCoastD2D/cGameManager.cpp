@@ -82,11 +82,14 @@ void cGameManager::changeScreen(sIScreen* pnew){
 	m_pCurrentScreen->OnInit();
 }
 
-void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, HINSTANCE hInstance)
 {
+	
 	// 키 컨트롤 처리
 	switch (message)
 	{
+	case WM_CREATE:
+		break;
 	case WM_KEYDOWN:
 		//if (wParam == VK_ESCAPE)
 		//{
