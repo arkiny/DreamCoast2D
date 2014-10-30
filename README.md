@@ -13,4 +13,4 @@ September 2014
 
 ============
 License
-https://github.com/arkiny/DreamCoast2D/blob/master/License/License.txt
+- https://github.com/arkiny/DreamCoast2D/blob/master/License/License.txt
