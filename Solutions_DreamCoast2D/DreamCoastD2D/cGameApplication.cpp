@@ -321,9 +321,10 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		
 		CreateMemo(L"Info.\n", 2, 85, 350, 120, MEMO1, hWnd, _hInst);
 
-		SetFocus(GetDlgItem(hWnd, BUTTON1));
+		//SetFocus(GetDlgItem(hWnd, BUTTON1));
 		EnableWindow(GetDlgItem(hWnd, BUTTON1), FALSE);
 		EnableWindow(GetDlgItem(hWnd, BUTTON2), TRUE);
+		SetFocus(hWnd);
 		break;
 	}
 	case WM_SETFOCUS:
