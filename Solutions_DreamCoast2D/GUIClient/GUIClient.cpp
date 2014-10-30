@@ -12,6 +12,7 @@
 #define EDIT1 601
 #define EDIT2 602
 #define EDIT3 603
+#define EDIT4 604
 #define MEMO1 701
 #define UN 100		
 #define TIMER 1001
@@ -107,12 +108,23 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        create and display the main program window.
 //
 HWND hWnd;
+RECT wndRect = { 0, 0, 360, 190 };
+
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
+   ::AdjustWindowRect(&wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, NULL);
 
-   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+  /* hWnd = CreateWindow(_szWindowClass, _szTitle,
+	   WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+	   CW_USEDEFAULT, 0,
+	   _wndRect.right - _wndRect.left,
+	   _wndRect.bottom - _wndRect.top,
+	   NULL, NULL, hInstance, NULL);*/
+
+
+   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+	   CW_USEDEFAULT, 0, wndRect.right - wndRect.left, wndRect.bottom - wndRect.top, NULL, NULL, hInstance, NULL);
 
    if (!hWnd)
    {
@@ -226,10 +238,13 @@ LRESULT CALLBACK WndProc(HWND hW, UINT message, WPARAM wParam, LPARAM lParam)
 
 		TCHAR szProxyAddr[16];
 		_tcscpy_s(szProxyAddr, CA2T(sServerAddress.c_str()));
-
+		//
 		CreateEdit(szProxyAddr, 70, 2, 180, 20, EDIT2, hW, hInst); // ip
 		CreateEdit(L"8084", 260, 2, 90, 20, EDIT3, hW, hInst); // port
-		CreateEdit(L"Hello client!", 70, 22, 280, 20, EDIT1, hW, hInst);
+		//
+		CreateEdit(L"", 70, 22, 180, 20, EDIT1, hW, hInst);
+		CreateEdit(L"ID", 260, 22, 90, 20, EDIT4, hW, hInst);
+
 		CreateMemo(L"Info.\n", 2, 45, 350, 120, MEMO1, hW, hInst);
 
 		SetFocus(GetDlgItem(hW, BUTTON1));
@@ -237,6 +252,22 @@ LRESULT CALLBACK WndProc(HWND hW, UINT message, WPARAM wParam, LPARAM lParam)
 		EnableWindow(GetDlgItem(hW, BUTTON2), TRUE);
 		break;
 	}
+	case WM_SETFOCUS:
+		wmId = LOWORD(wParam);
+		wmEvent = HIWORD(wParam);
+		switch (wmId)
+		{
+		case EDIT1:
+			//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
+			SetWindowText(GetDlgItem(hW, EDIT1), L"");
+			break;
+		case EDIT4:
+			SetWindowText(GetDlgItem(hW, EDIT4), L"");
+			break;
+		default:
+			break;
+		}
+		break;
 	case WM_TIMER:{
 		AfxBeginThread(MessageRecThread, 0);
 		break;
@@ -249,10 +280,15 @@ LRESULT CALLBACK WndProc(HWND hW, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 		
 		case BUTTON1:{
-			GetDlgItemTextA(hW, EDIT1, buffer2, sizeof(buffer2));
-			//basic_string<TCHAR> str = buffer2;
+			GetDlgItemTextA(hW, EDIT4, buffer2, sizeof(buffer2));
 			string a = buffer2;
+			GetDlgItemTextA(hW, EDIT1, buffer2, sizeof(buffer2));
+			a = a + ": " + buffer2;
+			//basic_string<TCHAR> str = buffer2;
+			
 			MyMessObj.SendMessagePort(a);
+			//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
+			SetWindowText(GetDlgItem(hW, EDIT1), L"");
 			break;
 		}
 		case BUTTON2:
@@ -267,6 +303,7 @@ LRESULT CALLBACK WndProc(HWND hW, UINT message, WPARAM wParam, LPARAM lParam)
 				PostQuitMessage(NULL);
 			}
 			AfxBeginThread(MessageRecThread, 0);
+			SetFocus(GetDlgItem(hW, EDIT1));
 			break;
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hW, About);
