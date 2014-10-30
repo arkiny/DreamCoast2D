@@ -6,6 +6,9 @@
 #include <MMSystem.h>
 #include  <atlstr.h>
 
+cIGameMgr* g_pGameMgr;
+cD2DRenderer d2dRender;
+
 #define MAX_LOADSTRING 100
 #define BUTTON1 501
 #define BUTTON2 502
@@ -19,10 +22,9 @@
 TCHAR buffer1[4096];
 char buffer2[4096];
 string sServerAddress;
-cIGameMgr* g_pGameMgr;
-cD2DRenderer d2dRender;
 HINSTANCE _hInst;
 HWND _hw;
+HWND _hw2;
 
 CIPMessage MyMessObj;
 char buffer3[4096]; // out
@@ -80,7 +82,9 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 	wc.lpszClassName = _szWindowClass;
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.style = CS_VREDRAW | CS_HREDRAW;
+	wc.style = 
+		CS_VREDRAW | CS_HREDRAW | 
+		CS_DBLCLKS;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.lpfnWndProc = WndProc;
@@ -118,7 +122,7 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	HWND hWnd;
-	HWND hWnd2;
+	
 	//HWND hWndChild;
 
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
@@ -128,7 +132,8 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, NULL);
 	hWnd = CreateWindow(_szWindowClass, _szTitle,
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME,
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
+		| WS_THICKFRAME,
 		CW_USEDEFAULT, 0, 
 		_wndRect.right - _wndRect.left, 
 		_wndRect.bottom - _wndRect.top, 
@@ -136,15 +141,16 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 		_wndRect.bottom - _wndRect.top,*/
 		NULL, NULL, hInstance, NULL);
 
-
-	hWnd2 = CreateWindow(_szWindowClass, _szTitle,
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME,
-		CW_USEDEFAULT, 0,
-		360,
-		190,
-		/*1028,
-		_wndRect.bottom - _wndRect.top,*/
-		NULL, NULL, hInstance, NULL);
+	//HWND hWnd2;
+	//hWnd2 = CreateWindow(_szWindowClass, _szTitle,
+	//	WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+	//	//| WS_THICKFRAME,
+	//	CW_USEDEFAULT, 0,
+	//	400,
+	//	220,
+	//	/*1028,
+	//	_wndRect.bottom - _wndRect.top,*/
+	//	NULL, NULL, hInstance, NULL);
 	//hWndChild = CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", L"CHAT",
 	//	/*WS_VISIBLE | WS_CHILD |
 	//	ES_LEFT | ES_MULTILINE | WS_HSCROLL,*/
@@ -164,6 +170,7 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	_hwnd = hWnd;
 	_hw = hWnd;
+	_hw2 = hWnd;
 	GetClientRect(_hwnd, &_wndRect);
 
 	d2dRender.InitializeD2D();
@@ -174,8 +181,8 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
-	ShowWindow(hWnd2, nCmdShow);
-	UpdateWindow(hWnd2);
+	/*ShowWindow(hWnd2, nCmdShow);
+	UpdateWindow(hWnd2);*/
 
 	/*ShowWindow(hWndChild, nCmdShow);
 	UpdateWindow(hWndChild);*/
@@ -246,7 +253,8 @@ UINT  MessageRecThread(LPVOID pParam)
 {
 	while (1)
 	{
-		if (MyMessObj.RecMessagePort(_hw, MEMO1));
+		if (MyMessObj.RecMessagePort(_hw, MEMO1))
+			//&& MyMessObj.RecMessagePort(_hw2, MEMO1))
 		break;
 	}
 	return 0;
@@ -277,8 +285,8 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 	case WM_CREATE:{
 		SetTimer(hWnd, TIMER, 50, NULL);
 
-		CreateButton(L"Send", 10, 22, 50, 20, BUTTON1, hWnd, _hInst);
-		CreateButton(L"Start", 10, 2, 50, 20, BUTTON2, hWnd, _hInst);
+		CreateButton(L"Send", 10, 62, 50, 20, BUTTON1, hWnd, _hInst);
+		CreateButton(L"Start", 10, 42, 50, 20, BUTTON2, hWnd, _hInst);
 
 		FILE *fp = fopen("server.ini", "r");
 		if (fp == NULL)
@@ -305,13 +313,13 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		TCHAR szProxyAddr[16];
 		_tcscpy_s(szProxyAddr, CA2T(sServerAddress.c_str()));
 		//
-		CreateEdit(szProxyAddr, 70, 2, 180, 20, EDIT2, hWnd, _hInst); // ip
-		CreateEdit(L"8084", 260, 2, 90, 20, EDIT3, hWnd, _hInst); // port
+		CreateEdit(szProxyAddr, 70, 42, 180, 20, EDIT2, hWnd, _hInst); // ip
+		CreateEdit(L"8084", 260, 42, 90, 20, EDIT3, hWnd, _hInst); // port
 		//
-		CreateEdit(L"", 70, 22, 180, 20, EDIT1, hWnd, _hInst);
-		CreateEdit(L"ID", 260, 22, 90, 20, EDIT4, hWnd, _hInst);
+		CreateEdit(L"", 70, 62, 180, 20, EDIT1, hWnd, _hInst);
+		CreateEdit(L"ID", 260, 62, 90, 20, EDIT4, hWnd, _hInst);
 		
-		CreateMemo(L"Info.\n", 2, 45, 350, 120, MEMO1, hWnd, _hInst);
+		CreateMemo(L"Info.\n", 2, 85, 350, 120, MEMO1, hWnd, _hInst);
 
 		SetFocus(GetDlgItem(hWnd, BUTTON1));
 		EnableWindow(GetDlgItem(hWnd, BUTTON1), FALSE);
@@ -335,8 +343,8 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		}
 		break;
 	case WM_TIMER:{
-					  AfxBeginThread(MessageRecThread, 0);
-					  break;
+			AfxBeginThread(MessageRecThread, 0);
+			break;
 	}
 	case WM_COMMAND:
 		wmId = LOWORD(wParam);
@@ -346,15 +354,21 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		{
 
 		case BUTTON1:{
-			GetDlgItemTextA(hWnd, EDIT4, buffer2, sizeof(buffer2));
-			string a = buffer2;
+			// 내용
 			GetDlgItemTextA(hWnd, EDIT1, buffer2, sizeof(buffer2));
-			a = a + ": " + buffer2;
-			//basic_string<TCHAR> str = buffer2;
+			if (strlen(buffer2) != 0){
+			//ID
+				string a = buffer2;
+				GetDlgItemTextA(hWnd, EDIT4, buffer2, sizeof(buffer2));
+				string b = buffer2;	
+				a = b + ": " + a;
+				//basic_string<TCHAR> str = buffer2;
 
-			MyMessObj.SendMessagePort(a);
-			//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
-			SetWindowText(GetDlgItem(hWnd, EDIT1), L"");
+				MyMessObj.SendMessagePort(a);
+				//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
+				SetWindowText(GetDlgItem(hWnd, EDIT1), L"");
+			}
+			SetFocus(hWnd);
 			break;
 		}
 		case BUTTON2:

@@ -149,8 +149,8 @@ void cD2DRenderer::InitializeRT(HWND hWnd)
 	m_dxSize = ::D2D1::SizeU(rc.right - rc.left,
 		rc.bottom - rc.top);
 
-	/*m_dxSize = ::D2D1::SizeU(800,
-		600);*/
+	/*m_dxSize = ::D2D1::SizeU(1024,
+		768);*/
 
 	//::D2D1_PRESENT_OPTIONS_IMMEDIATELY를 쓰면 수직동기화를 끌수있다.
 	// 기본옵션은 수직동기화...
