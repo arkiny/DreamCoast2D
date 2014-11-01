@@ -1,12 +1,14 @@
 #include "stdAfx.h"
 #include "cGameApplication.h"
 #include "cIGameMgr.h"
+#include "cIChatMgr.h"
 #include "cD2DRenderer.h"
 #include "chat_client.h"
 #include <MMSystem.h>
 #include  <atlstr.h>
 
 cIGameMgr* g_pGameMgr;
+cIChatMgr* g_pChatMgr;
 cD2DRenderer d2dRender;
 
 #define MAX_LOADSTRING 100
