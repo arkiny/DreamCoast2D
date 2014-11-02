@@ -1,5 +1,8 @@
 #include "stdafx.h"
+#include <string>
+#include "cChatManager.h"
 #include "chat_client.h"
+
 
 //Global Message object
 //CIPMessage MyMessObj;
@@ -74,7 +77,6 @@ int CIPMessage::SendMessagePort(string sMessage)
 
 int CIPMessage::RecMessagePort(HWND hw, int id)
 {
-
 	char acRetData[4096];
 	int iStat = 0;
 
@@ -84,19 +86,14 @@ int CIPMessage::RecMessagePort(HWND hw, int id)
 	//in = acRetData;
 	// cout이 아니라 텍스박스 보낼 메세지
 	//cout << "-->" << acRetData << "\n";
-	Puts(hw, id, acRetData);
+	//Puts(hw, id, acRetData);
+	std::string a = acRetData;
+	if (a.size() != 0){
+		cChatManager::GetInstance().addToChatLog(a);
+	}
+	//delete &a;
 	return 0;
 
-}
-
-void CIPMessage::Puts(HWND hW, int ID_EDIT, char *str)
-{
-	int nLen = GetWindowTextLengthA(GetDlgItem(hW, ID_EDIT));
-	SendMessageA(GetDlgItem(hW, ID_EDIT), EM_SETSEL, nLen, nLen);
-	SendMessageA(GetDlgItem(hW, ID_EDIT), EM_REPLACESEL, TRUE, (long)(LPCTSTR)str);
-	nLen = GetWindowTextLengthA(GetDlgItem(hW, ID_EDIT));
-	SendMessageA(GetDlgItem(hW, ID_EDIT), EM_SETSEL, nLen, nLen);
-	SendMessageA(GetDlgItem(hW, ID_EDIT), EM_REPLACESEL, TRUE, (long)(LPCTSTR)"\r\n");
 }
 
 

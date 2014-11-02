@@ -7,6 +7,7 @@
 #include "sMainMenuScreen.h"
 #include "cResourceManager.h"
 #include "cSoundManager.h"
+#include "cChatManager.h"
 #include "mGFX.h"
 
 cGameManager::cGameManager(void)
@@ -96,6 +97,14 @@ void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		//	PostQuitMessage(0);
 		//	return;
 		//}
+		if (wParam == VK_TAB){
+			if (cChatManager::GetInstance().getVisibleStatus()){
+				cChatManager::GetInstance().setVisible(false);
+			}
+			else{
+				cChatManager::GetInstance().setVisible(true);
+			}			
+		}
 		m_pControl->onKeyDown(wParam);
 		break;
 

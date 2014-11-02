@@ -277,6 +277,12 @@
     <ClInclude Include="chat_client.h">
       <Filter>ChatClient</Filter>
     </ClInclude>
+    <ClInclude Include="cChatManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="cIChatMgr.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -455,6 +461,12 @@
     </ClCompile>
     <ClCompile Include="chat_client.cpp">
       <Filter>ChatClient</Filter>
+    </ClCompile>
+    <ClCompile Include="cChatManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="cIChatMgr.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

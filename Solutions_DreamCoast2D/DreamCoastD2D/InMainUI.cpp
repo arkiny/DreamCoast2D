@@ -56,8 +56,7 @@ void InMainUI::Update(float delta){
 	}
 
 	// keyboard execute
-	if (coControl::GetInstance().getKeyControlInfo()[VK_RETURN] ||
-		coControl::GetInstance().getKeyControlInfo()[VK_SPACE] ||
+	if (coControl::GetInstance().getKeyControlInfo()[VK_SPACE] ||
 		coControl::GetInstance().getKeyControlInfo()[0x5A]){
 		ptr = (uiButton*)m_pInterface[m_nSelectedMenu];
 		dynamic_cast<sMainMenuScreen*>(m_callbackScreen)

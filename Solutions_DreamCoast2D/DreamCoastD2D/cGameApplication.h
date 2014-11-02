@@ -2,10 +2,11 @@
 #include <Windows.h>
 #pragma comment(lib, "winmm.lib")
 class cIGameMgr;
+class cIChatMgr;
 class cGameApplication
 {
 public:
-	cGameApplication(cIGameMgr*);
+	cGameApplication(cIGameMgr*, cIChatMgr*);
 	virtual ~cGameApplication(void);
 
 	bool Init(HINSTANCE hInstance, WCHAR* title, WCHAR* className, int nCmdShow);

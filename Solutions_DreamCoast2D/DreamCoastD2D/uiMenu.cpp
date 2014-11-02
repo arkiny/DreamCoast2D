@@ -202,15 +202,13 @@ void uiMenu::Update(float delta){
 
 		//
 		// keyboard execute
-		if (coControl::GetInstance().getKeyControlInfo()[VK_RETURN] ||
-			coControl::GetInstance().getKeyControlInfo()[VK_SPACE] ||
+		if (coControl::GetInstance().getKeyControlInfo()[VK_SPACE] ||
 			coControl::GetInstance().getKeyControlInfo()[0x5A]){
 			ptr = (uiButton*)m_vButtons[m_nSelectedMenu];
 			dynamic_cast<sGameScreen*>(m_pCallbackScreen)
 				->setActivate(ptr->getButtonType(), true);
 			// 다음 화면에서도 연속으로 입력되는 문제가 생기므로
-			// 여기서 해제하고 지나가야한다.
-			coControl::GetInstance().onKeyUp(VK_RETURN);
+			// 여기서 해제하고 지나가야한다.			
 			coControl::GetInstance().onKeyUp(VK_SPACE);
 			coControl::GetInstance().onKeyUp(0x5A);
 		}

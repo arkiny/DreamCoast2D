@@ -1,14 +1,23 @@
 #pragma once
-#include "cIChatMgr.h"
 
-class cChatManager : public cIChatMgr
+#include <queue>
+#include "cIChatMgr.h"
+#include "Singleton.h"
+
+class cChatManager : public cIChatMgr, public Singleton<cChatManager>
 {
 public:
 	cChatManager();
 	~cChatManager();
-	virtual void Render() = 0;
-	virtual void Update(float deltaTime) = 0;
-	virtual void MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, HINSTANCE hinst) = 0;
-	virtual void OnInit() = 0;
+	virtual void Render();
+	virtual void Update(float deltaTime);
+	virtual void OnInit();
+	virtual void addToChatLog(std::string add) { m_qChat.push(add);	}
+	virtual void setVisible(bool in){ m_bVisible = in; }
+
+	bool getVisibleStatus(){ return m_bVisible; }
+private:
+	std::queue<std::string> m_qChat;
+	bool m_bVisible = true;
 };
 

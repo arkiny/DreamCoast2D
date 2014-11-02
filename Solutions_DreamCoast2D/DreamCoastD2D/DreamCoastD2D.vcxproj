@@ -93,10 +93,12 @@
     <ClInclude Include="aiStateOnHit.h" />
     <ClInclude Include="aiStateScan.h" />
     <ClInclude Include="aiStateSkillEffect.h" />
+    <ClInclude Include="cChatManager.h" />
     <ClInclude Include="cD2DRenderer.h" />
     <ClInclude Include="cGameApplication.h" />
     <ClInclude Include="cGameManager.h" />
     <ClInclude Include="chat_client.h" />
+    <ClInclude Include="cIChatMgr.h" />
     <ClInclude Include="cIGameMgr.h" />
     <ClInclude Include="coControl.h" />
     <ClInclude Include="cResourceID.h" />
@@ -161,10 +163,12 @@
     <ClCompile Include="aiStateOnHit.cpp" />
     <ClCompile Include="aiStateScan.cpp" />
     <ClCompile Include="aiStateSkillEffect.cpp" />
+    <ClCompile Include="cChatManager.cpp" />
     <ClCompile Include="cD2DRenderer.cpp" />
     <ClCompile Include="cGameApplication.cpp" />
     <ClCompile Include="cGameManager.cpp" />
     <ClCompile Include="chat_client.cpp" />
+    <ClCompile Include="cIChatMgr.cpp" />
     <ClCompile Include="cIGameMgr.cpp" />
     <ClCompile Include="coControl.cpp" />
     <ClCompile Include="cResourceManager.cpp" />

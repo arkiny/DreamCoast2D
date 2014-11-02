@@ -2,6 +2,7 @@
 #include "cGameApplication.h"
 #include "cIGameMgr.h"
 #include "cIChatMgr.h"
+#include "cChatManager.h"
 #include "cD2DRenderer.h"
 #include "chat_client.h"
 #include <MMSystem.h>
@@ -26,22 +27,56 @@ char buffer2[4096];
 string sServerAddress;
 HINSTANCE _hInst;
 HWND _hw;
-HWND _hw2;
+HWND _hwMemo;
 
 CIPMessage MyMessObj;
 char buffer3[4096]; // out
 char buffer4[4096]; // in
 
+// 먼저 한번 거르고 메시지 처리
+void PreTranslateMessage(LPMSG msg){
+	if (msg->message == WM_KEYUP)
+	{
+		switch (msg->wParam)
+		{
+		case VK_RETURN:
+			if (GetFocus() == _hwMemo){
+				GetDlgItemTextA(_hw, EDIT1, buffer2, sizeof(buffer2));
+				if (strlen(buffer2) != 0){
+					//ID
+					string a = buffer2;
+					GetDlgItemTextA(_hw, EDIT4, buffer2, sizeof(buffer2));
+					string b = buffer2;
+					a = b + ": " + a;
+
+					MyMessObj.SendMessagePort(a);
+					SetWindowText(GetDlgItem(_hw, EDIT1), L"");
+				}
+				else {
+					SetFocus(_hw);
+				}				
+				break;
+				//return;/*i don't want this message to reach the procedures anway*/
+			}
+		}
+	}
+
+	TranslateMessage(msg);
+	DispatchMessage(msg);
+}
+
 RECT cGameApplication::_wndRect = { 0, 0, 1024, 768 };
-cGameApplication::cGameApplication(cIGameMgr* pGameMgr)
+cGameApplication::cGameApplication(cIGameMgr* pGameMgr, cIChatMgr* pChatMgr)
 {
 	g_pGameMgr = pGameMgr;
+	g_pChatMgr = pChatMgr;
 }
 
 
 cGameApplication::~cGameApplication(void)
 {
 	delete g_pGameMgr;
+	delete g_pChatMgr;
 }
 
 bool cGameApplication::Init(HINSTANCE hInstance, WCHAR* title, WCHAR* className, int nCmdShow)
@@ -52,7 +87,6 @@ bool cGameApplication::Init(HINSTANCE hInstance, WCHAR* title, WCHAR* className,
 	wsprintf(_szTitle, title);
 	wsprintf(_szWindowClass, className);
 	MyRegisterClass(hInstance);
-//	MyRegisterClass2(hInstance);
 
 	// 응용 프로그램 초기화를 수행합니다.
 	if (!InitInstance(hInstance, nCmdShow))
@@ -95,21 +129,6 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 	return RegisterClass(&wc);
 }
 
-//ATOM cGameApplication::MyRegisterClass2(HINSTANCE hInstance)
-//{
-//	WNDCLASS wc = {};
-//	wc.hInstance = hInstance;
-//	wc.lpszClassName = _szWindowClass;
-//	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-//	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-//	wc.style = CS_VREDRAW | CS_HREDRAW;
-//	wc.cbClsExtra = 0;
-//	wc.cbWndExtra = 0;
-//	wc.lpfnWndProc = ChatProc;
-//	wc.lpszMenuName = NULL;
-//
-//	return RegisterClass(&wc);
-//}
 
 //
 //   함수: InitInstance(HINSTANCE, int)
@@ -125,7 +144,6 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	HWND hWnd;
 	
-	//HWND hWndChild;
 
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
 
@@ -143,27 +161,6 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 		_wndRect.bottom - _wndRect.top,*/
 		NULL, NULL, hInstance, NULL);
 
-	//HWND hWnd2;
-	//hWnd2 = CreateWindow(_szWindowClass, _szTitle,
-	//	WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
-	//	//| WS_THICKFRAME,
-	//	CW_USEDEFAULT, 0,
-	//	400,
-	//	220,
-	//	/*1028,
-	//	_wndRect.bottom - _wndRect.top,*/
-	//	NULL, NULL, hInstance, NULL);
-	//hWndChild = CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", L"CHAT",
-	//	/*WS_VISIBLE | WS_CHILD |
-	//	ES_LEFT | ES_MULTILINE | WS_HSCROLL,*/
-	//	WS_CHILD | WS_VISIBLE |
-	//	WS_OVERLAPPEDWINDOW,
-	//	CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, hWnd,
-	//	(HMENU)1004, hInstance, NULL);
-	
-	//hWndChild = CreateWindow(TEXT("Edit"), TEXT("test"), WS_CHILD | WS_VISIBLE | WS_BORDER, 
-	//	100, 20, 140, 20, hWnd, NULL, NULL, NULL);
-
 
 	if (!hWnd)
 	{
@@ -172,7 +169,6 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	_hwnd = hWnd;
 	_hw = hWnd;
-	_hw2 = hWnd;
 	GetClientRect(_hwnd, &_wndRect);
 
 	d2dRender.InitializeD2D();
@@ -183,11 +179,6 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
-	/*ShowWindow(hWnd2, nCmdShow);
-	UpdateWindow(hWnd2);*/
-
-	/*ShowWindow(hWndChild, nCmdShow);
-	UpdateWindow(hWndChild);*/
 	return TRUE;
 }
 
@@ -218,45 +209,11 @@ HWND CreateMemo(TCHAR *Titel, int x0, int y0, int w, int h, int ID, HWND hW, HIN
 		hW, (HMENU)ID, hInst, NULL);
 }
 
-void Puts(HWND hW, int ID_EDIT, char *str)
-{
-	int nLen = GetWindowTextLength(GetDlgItem(hW, ID_EDIT));
-	SendMessage(GetDlgItem(hW, ID_EDIT), EM_SETSEL, nLen, nLen);
-	SendMessage(GetDlgItem(hW, ID_EDIT), EM_REPLACESEL, TRUE, (long)(LPCTSTR)str);
-	nLen = GetWindowTextLength(GetDlgItem(hW, ID_EDIT));
-	SendMessage(GetDlgItem(hW, ID_EDIT), EM_SETSEL, nLen, nLen);
-	SendMessage(GetDlgItem(hW, ID_EDIT), EM_REPLACESEL, TRUE, (long)(LPCTSTR)"\r\n");
-}
-
-
-
-//LRESULT CALLBACK cGameApplication::ChatProc(HWND hW, UINT message, WPARAM wParam, LPARAM lParam) {
-//	int wmId, wmEvent;
-//	PAINTSTRUCT ps;
-//	HDC hdc;
-//	char buf[4096];
-//
-//	switch (message)
-//	{
-//	case WM_PAINT:
-//		hdc = BeginPaint(hW, &ps);
-//		// TODO: 여기에 그리기 코드를 추가합니다.
-//		EndPaint(hW, &ps);
-//		break;
-//	case WM_DESTROY:
-//		PostQuitMessage(0);
-//		break;
-//	default:
-//		return DefWindowProc(hW, message, wParam, lParam);
-//	}
-//	return 0;
-//}
 UINT  MessageRecThread(LPVOID pParam)
 {
 	while (1)
 	{
 		if (MyMessObj.RecMessagePort(_hw, MEMO1))
-			//&& MyMessObj.RecMessagePort(_hw2, MEMO1))
 		break;
 	}
 	return 0;
@@ -285,16 +242,18 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 	switch (message)
 	{		
 	case WM_CREATE:{
-		SetTimer(hWnd, TIMER, 50, NULL);
+		//SetTimer(hWnd, TIMER, 50, NULL);
 
-		CreateButton(L"Send", 10, 62, 50, 20, BUTTON1, hWnd, _hInst);
-		CreateButton(L"Start", 10, 42, 50, 20, BUTTON2, hWnd, _hInst);
+		//CreateButton(L"Send", 10, 62, 50, 20, BUTTON1, hWnd, _hInst);
+		//CreateButton(L"Start", 10, 42, 50, 20, BUTTON2, hWnd, _hInst);
 
 		FILE *fp = fopen("server.ini", "r");
 		if (fp == NULL)
 		{
-			MessageBox(hWnd, L"Unable to open server.ini. Please specify server IPsddress in server.ini", L"Warning", MB_OK);
-			PostQuitMessage(NULL);
+			//MessageBox(hWnd, L"Unable to open server.ini. Please specify server IPsddress in server.ini", L"Warning", MB_OK);
+			//PostQuitMessage(NULL);
+			cChatManager::GetInstance().addToChatLog("서버 파일 로드 불가");
+			break;
 		}
 
 		while ((fgets(buf, 4096, fp)) != NULL)
@@ -308,24 +267,45 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 
 		if (sServerAddress.size() == 0)
 		{
-			MessageBox(hWnd, L"Unable to find server IPaddress in server.ini", L"Warning", MB_OK);
-			PostQuitMessage(NULL);
+			cChatManager::GetInstance().addToChatLog("서버파일내에서 주소 로드 불가");
+			break;
+			//MessageBox(hWnd, L"Unable to find server IPaddress in server.ini", L"Warning", MB_OK);
+			//PostQuitMessage(NULL);
 		}
 
 		TCHAR szProxyAddr[16];
 		_tcscpy_s(szProxyAddr, CA2T(sServerAddress.c_str()));
 		//
-		CreateEdit(szProxyAddr, 70, 42, 180, 20, EDIT2, hWnd, _hInst); // ip
-		CreateEdit(L"8084", 260, 42, 90, 20, EDIT3, hWnd, _hInst); // port
+		//CreateEdit(szProxyAddr, 70, 42, 180, 20, EDIT2, hWnd, _hInst); // ip
+		//CreateEdit(L"8084", 260, 42, 90, 20, EDIT3, hWnd, _hInst); // port
 		//
-		CreateEdit(L"", 70, 62, 180, 20, EDIT1, hWnd, _hInst);
-		CreateEdit(L"ID", 260, 62, 90, 20, EDIT4, hWnd, _hInst);
-		
-		CreateMemo(L"Info.\n", 2, 85, 350, 120, MEMO1, hWnd, _hInst);
+		_hwMemo = CreateEdit(L"", 730, 686, 180, 20, EDIT1, hWnd, _hInst);
+		CreateEdit(L"ID", 260, 62, 90, 20, EDIT4, hWnd, _hInst);		
+		CreateMemo(L"Info.\n", 2-800, 85, 350, 120, MEMO1, hWnd, _hInst);
 
 		//SetFocus(GetDlgItem(hWnd, BUTTON1));
-		EnableWindow(GetDlgItem(hWnd, BUTTON1), FALSE);
+		//EnableWindow(GetDlgItem(hWnd, BUTTON1), FALSE);
+		EnableWindow(GetDlgItem(hWnd, EDIT1), FALSE);
 		EnableWindow(GetDlgItem(hWnd, BUTTON2), TRUE);
+		EnableWindow(GetDlgItem(hWnd, BUTTON2), FALSE);
+		//EnableWindow(GetDlgItem(hWnd, BUTTON1), TRUE);
+		EnableWindow(GetDlgItem(hWnd, EDIT2), FALSE);
+		EnableWindow(GetDlgItem(hWnd, EDIT3), FALSE);
+		MyMessObj.Init(sServerAddress, 8084);
+		if (!MyMessObj.IsConnected())
+		{
+			//MessageBox(hWnd, L"Unable to connect to the IPaddress specified in server.ini", L"Warning", MB_OK);
+			cChatManager::GetInstance().addToChatLog("서버접속불가");
+			EnableWindow(GetDlgItem(hWnd, EDIT1), FALSE);
+			break;
+			//PostQuitMessage(NULL);
+		}
+		else {
+			cChatManager::GetInstance().addToChatLog("채팅 서버접속완료");
+		}
+		EnableWindow(GetDlgItem(hWnd, EDIT1), TRUE);
+		AfxBeginThread(MessageRecThread, 0);
+
 		SetFocus(hWnd);
 		break;
 	}
@@ -335,7 +315,6 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		switch (wmId)
 		{
 		case EDIT1:
-			//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
 			SetWindowText(GetDlgItem(hWnd, EDIT1), L"");
 			break;
 		case EDIT4:
@@ -345,49 +324,41 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 			break;
 		}
 		break;
-	case WM_TIMER:{
-			AfxBeginThread(MessageRecThread, 0);
+	/*case WM_TIMER:{
+			
 			break;
-	}
+	}*/
+	case WM_KEYUP:
+		switch (wParam){
+		case VK_RETURN : 
+			if (IsWindowEnabled(GetDlgItem(hWnd, EDIT1))){
+				SetFocus(_hwMemo);
+			}			
+			break;
+		}
+		break;
 	case WM_COMMAND:
 		wmId = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
 		// Parse the menu selections:
 		switch (wmId)
-		{
-
-		case BUTTON1:{
-			// 내용
-			GetDlgItemTextA(hWnd, EDIT1, buffer2, sizeof(buffer2));
-			if (strlen(buffer2) != 0){
-			//ID
-				string a = buffer2;
-				GetDlgItemTextA(hWnd, EDIT4, buffer2, sizeof(buffer2));
-				string b = buffer2;	
-				a = b + ": " + a;
-				//basic_string<TCHAR> str = buffer2;
-
-				MyMessObj.SendMessagePort(a);
-				//SendMessage(GetDlgItem(hW, EDIT1), EM_SETSEL, -1, -1);
-				SetWindowText(GetDlgItem(hWnd, EDIT1), L"");
-			}
-			SetFocus(hWnd);
-			break;
-		}
-		case BUTTON2:
-			EnableWindow(GetDlgItem(hWnd, BUTTON2), FALSE);
-			EnableWindow(GetDlgItem(hWnd, BUTTON1), TRUE);
-			EnableWindow(GetDlgItem(hWnd, EDIT2), FALSE);
-			EnableWindow(GetDlgItem(hWnd, EDIT3), FALSE);
-			MyMessObj.Init(sServerAddress, 8084);
-			if (!MyMessObj.IsConnected())
-			{
-				MessageBox(hWnd, L"Unable to connect to the IPaddress specified in server.ini", L"Warning", MB_OK);
-				PostQuitMessage(NULL);
-			}
-			AfxBeginThread(MessageRecThread, 0);
-			SetFocus(GetDlgItem(hWnd, EDIT1));
-			break;
+		{		
+		//case BUTTON2:
+			//EnableWindow(GetDlgItem(hWnd, BUTTON2), FALSE);
+			////EnableWindow(GetDlgItem(hWnd, BUTTON1), TRUE);
+			//EnableWindow(GetDlgItem(hWnd, EDIT2), FALSE);
+			//EnableWindow(GetDlgItem(hWnd, EDIT3), FALSE);
+			//MyMessObj.Init(sServerAddress, 8084);
+			//if (!MyMessObj.IsConnected())
+			//{
+			//	//MessageBox(hWnd, L"Unable to connect to the IPaddress specified in server.ini", L"Warning", MB_OK);
+			//	cChatManager::GetInstance().addToChatLog("서버접속불가");
+			//	//PostQuitMessage(NULL);
+			//}
+			//EnableWindow(GetDlgItem(hWnd, EDIT1), TRUE);
+			//AfxBeginThread(MessageRecThread, 0);
+			//SetFocus(GetDlgItem(hWnd, EDIT1));
+			//break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
@@ -424,8 +395,9 @@ void cGameApplication::Run()
 		{
 			if (msg.message == WM_QUIT)
 				break;
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			/*TranslateMessage(&msg);
+			DispatchMessage(&msg);*/
+			PreTranslateMessage(&msg);
 		}
 		else
 		{
@@ -465,6 +437,8 @@ void cGameApplication::Render()
 
 	if (g_pGameMgr != nullptr)
 		g_pGameMgr->Render();
+	if (g_pChatMgr != nullptr)
+		g_pChatMgr->Render();
 
 	hr = d2dRender.GetRenderTarget()->EndDraw();
 	assert(hr == S_OK);
@@ -475,4 +449,5 @@ void cGameApplication::Render()
 void cGameApplication::Update(float deltaTime)
 {
 	g_pGameMgr->Update(deltaTime);
+	g_pChatMgr->Update(deltaTime);
 }
