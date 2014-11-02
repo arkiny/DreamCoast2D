@@ -1,22 +1,18 @@
 #include "StdAfx.h"
 #include "cGameManager.h"
 #include "coControl.h"
+#include "cChatManager.h"
 #include "wWorld.h"
 #include "sIScreen.h"
 #include "sGameScreen.h"
 #include "sMainMenuScreen.h"
-#include "cResourceManager.h"
-#include "cSoundManager.h"
-#include "cChatManager.h"
-#include "mGFX.h"
+
 
 cGameManager::cGameManager(void)
 {
 	m_pControl = nullptr;
 	m_pCurrentScreen = nullptr;
-	m_pResourceMng = nullptr;
-	m_pSoundMng = nullptr;
-	m_pGFX = nullptr;
+
 }
 
 cGameManager::~cGameManager(void)
@@ -42,19 +38,16 @@ cGameManager::~cGameManager(void)
 
 void cGameManager::OnInit()
 {
-
+	m_pControl = new coControl;
 	// singleton 클래스 시작
 	// 아래 두개는 딱 1개씩만 필요한 클래스다.
-	m_pControl = new coControl;
-	m_pResourceMng = new cResourceManager;
-	m_pSoundMng = new cSoundManager;
-	m_pSoundMng->init();
+
 	// screen
 	// 일단은 sGameScreen으로 게임을 시작한다.
 	m_pCurrentScreen = new sMainMenuScreen(this);
 	m_pCurrentScreen->OnInit();
 
-	m_pGFX = new mGFX;
+	
 }
 
 void cGameManager::Render()
@@ -97,14 +90,14 @@ void cGameManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		//	PostQuitMessage(0);
 		//	return;
 		//}
-		if (wParam == VK_TAB){
-			if (cChatManager::GetInstance().getVisibleStatus()){
-				cChatManager::GetInstance().setVisible(false);
-			}
-			else{
-				cChatManager::GetInstance().setVisible(true);
-			}			
-		}
+		//if (wParam == VK_TAB){
+		//	if (cChatManager::GetInstance().getVisibleStatus()){
+		//		cChatManager::GetInstance().setVisible(false);
+		//	}
+		//	else{
+		//		cChatManager::GetInstance().setVisible(true);
+		//	}			
+		//}
 		m_pControl->onKeyDown(wParam);
 		break;
 

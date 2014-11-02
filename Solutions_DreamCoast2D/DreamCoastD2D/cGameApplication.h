@@ -3,6 +3,10 @@
 #pragma comment(lib, "winmm.lib")
 class cIGameMgr;
 class cIChatMgr;
+class cResourceManager;
+class cSoundManager;
+class mGFX;
+
 class cGameApplication
 {
 public:
@@ -35,6 +39,9 @@ private:
 
 	/// 애플리케이션의 현재 FPS(최근 1초)를 기억한다
 	float _fps;
+
+	// 각 매니저들
+
 protected:
 
 };

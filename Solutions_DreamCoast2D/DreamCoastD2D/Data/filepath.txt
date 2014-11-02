@@ -47,3 +47,4 @@ a 43 1106.0 104.0 ./Images/effect/ef_03_noBG.png
 a 44 169.0 240.0 ./Images/object/map/building1.png  
 a 45 875.0 1241.0 ./Images/object/monster/Baphomet_noBG.png 
 a 46 134.0 134.0 ./Images/UI/ui_hookeditem.png
+a 47 270.0 240.0 ./Images/UI/ui_chat.png

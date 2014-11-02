@@ -24,6 +24,8 @@ public:
 
 	void load();
 	void loadMainMenuResource();
+	void loadChatWindow();
+
 	void exitMainMenu();
 	void releaseGameResource();
 
@@ -60,11 +62,18 @@ public:
 	ID2D1Bitmap* getMapObjectBitMap(int ObjectID) { return m_Bitmap_Effect[ObjectID]; }
 	D2D_POINT_2F getMapObjectSize(int ObjectID) { return m_Size_Effect[ObjectID]; }
 
+	ID2D1Bitmap* getChatWindowBitMap() { return m_Bitmap_ChatWindow; }
+	D2D_POINT_2F getChatWindowSize() { return m_ChatWindow_Size; }
+
 private:
 	ID2D1Bitmap* m_Bitmap_Player;		// 플레이어(차후 클래스 number vector로 관리)
 	ID2D1Bitmap* m_Bitmap_TileMap;		// 타일맵(차후 레벨 vector로 관리)
 	ID2D1Bitmap* m_Bitmap_MoB[MOB_ID_MAX];		// 몬스터 포링 주소(차후 몬스터 번호 vector로 관리)
 
+	//
+	ID2D1Bitmap* m_Bitmap_ChatWindow;
+	D2D_POINT_2F m_ChatWindow_Size;
+	
 	//
 	ID2D1Bitmap* m_Bitmap_MainBG;
 	::D2D_POINT_2F m_MainBG_Size;

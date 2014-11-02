@@ -2,15 +2,25 @@
 #include "cGameApplication.h"
 #include "cIGameMgr.h"
 #include "cIChatMgr.h"
+#include "cResourceManager.h"
+#include "cSoundManager.h"
 #include "cChatManager.h"
+#include "coControl.h"
+#include "mGFX.h"
 #include "cD2DRenderer.h"
 #include "chat_client.h"
 #include <MMSystem.h>
 #include  <atlstr.h>
 
+// managers
+
+cD2DRenderer d2dRender;
 cIGameMgr* g_pGameMgr;
 cIChatMgr* g_pChatMgr;
-cD2DRenderer d2dRender;
+cResourceManager* m_pResourceMng;
+cSoundManager* m_pSoundMng;
+mGFX* m_pGFX;
+
 
 #define MAX_LOADSTRING 100
 #define BUTTON1 501
@@ -70,6 +80,10 @@ cGameApplication::cGameApplication(cIGameMgr* pGameMgr, cIChatMgr* pChatMgr)
 {
 	g_pGameMgr = pGameMgr;
 	g_pChatMgr = pChatMgr;
+	m_pResourceMng = nullptr;
+	m_pSoundMng = nullptr;
+	m_pGFX = nullptr;
+
 }
 
 
@@ -77,10 +91,16 @@ cGameApplication::~cGameApplication(void)
 {
 	delete g_pGameMgr;
 	delete g_pChatMgr;
+	/*delete m_pResourceMng;
+	delete m_pSoundMng;
+	delete m_pGFX;*/
 }
 
 bool cGameApplication::Init(HINSTANCE hInstance, WCHAR* title, WCHAR* className, int nCmdShow)
 {
+	
+
+
 	_hInst = hInstance;
 
 	// 문자열을 초기화합니다.
@@ -142,8 +162,7 @@ ATOM cGameApplication::MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-	HWND hWnd;
-	
+	HWND hWnd;	
 
 	_hInst = hInstance; // 인스턴스 핸들을 멤버 변수에 저장합니다.
 
@@ -152,8 +171,8 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, NULL);
 	hWnd = CreateWindow(_szWindowClass, _szTitle,
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
-		| WS_THICKFRAME,
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+		//| WS_THICKFRAME,
 		CW_USEDEFAULT, 0, 
 		_wndRect.right - _wndRect.left, 
 		_wndRect.bottom - _wndRect.top, 
@@ -173,8 +192,14 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	d2dRender.InitializeD2D();
 	d2dRender.Setup(hWnd);
-	g_pGameMgr->OnInit();
 
+	m_pResourceMng = new cResourceManager;
+	m_pSoundMng = new cSoundManager;
+	m_pSoundMng->init();
+	m_pGFX = new mGFX;
+
+	g_pGameMgr->OnInit();
+	g_pChatMgr->OnInit();
 
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
@@ -279,7 +304,7 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		//CreateEdit(szProxyAddr, 70, 42, 180, 20, EDIT2, hWnd, _hInst); // ip
 		//CreateEdit(L"8084", 260, 42, 90, 20, EDIT3, hWnd, _hInst); // port
 		//
-		_hwMemo = CreateEdit(L"", 730, 686, 180, 20, EDIT1, hWnd, _hInst);
+		_hwMemo = CreateEdit(L"", 738, 686, 254, 20, EDIT1, hWnd, _hInst);
 		CreateEdit(L"ID", 260, 62, 90, 20, EDIT4, hWnd, _hInst);		
 		CreateMemo(L"Info.\n", 2-800, 85, 350, 120, MEMO1, hWnd, _hInst);
 

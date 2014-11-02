@@ -11,6 +11,11 @@ cResourceManager::cResourceManager()
 	m_Bitmap_Player = nullptr;
 	m_Bitmap_TileMap = nullptr;
 
+	//
+	m_Bitmap_ChatWindow = nullptr;
+	m_ChatWindow_Size = { 0, };
+	//
+
 	for (ID2D1Bitmap* x : m_Bitmap_MoB){
 		x = nullptr;
 	}
@@ -72,6 +77,8 @@ cResourceManager::~cResourceManager()
 	// todo : destructor fix
 	SafeRelease(m_Bitmap_Player);
 	SafeRelease(m_Bitmap_TileMap);
+	SafeRelease(m_Bitmap_ChatWindow);
+
 	for (ID2D1Bitmap* x : m_Bitmap_MoB){
 		if (x != nullptr){
 			SafeRelease(x);
@@ -503,6 +510,12 @@ SpriteAnimationInfo* cResourceManager::getMapSpriteInfo(int tiletype, int type){
 
 SpriteAnimationInfo* cResourceManager::getEffectSpriteInfo(int type){
 	return m_vecSpriteInfo[SPR_EFFECT][type];
+}
+
+void cResourceManager::loadChatWindow(){
+	HWND hWnd = ::cD2DRenderer::GetInstance().GetHwnd();
+	m_Bitmap_ChatWindow = ::cD2DRenderer::GetInstance().CreateD2DBitmapFromFile(hWnd, m_vecFilepath[FILE_CHATWINDOW], NULL);
+	m_ChatWindow_Size = { m_vecImageSize[FILE_CHATWINDOW]->x, m_vecImageSize[FILE_CHATWINDOW]->y };
 }
 
 void cResourceManager::load(){
