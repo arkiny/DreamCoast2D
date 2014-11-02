@@ -4,11 +4,13 @@ DreamCoast2D
 Direct2D를 이용한 Isometric Tile Based Action RPG Game Project
 
 ============
-Working Diary 
-October 
-- https://github.com/arkiny/DreamCoast2D/wiki/October-Working-Diary
+Working Diary
 
-September 2014
+November 2014
+- https://github.com/arkiny/DreamCoast2D/wiki/November-Working-Diary
+
+Past Month
+- https://github.com/arkiny/DreamCoast2D/wiki/October-Working-Diary
 - https://github.com/arkiny/DreamCoast2D/wiki/September-Working-Diary
 
 ============
