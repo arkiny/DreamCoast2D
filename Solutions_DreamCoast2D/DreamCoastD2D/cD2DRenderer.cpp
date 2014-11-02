@@ -103,6 +103,28 @@ void cD2DRenderer::InitializeD2D(void)
 
 	assert(hr == S_OK);
 	m_pDWriteFactory->CreateTextFormat(
+		L"Gulim",                // Font family name.
+		NULL,                       // Font collection (NULL sets it to use the system font collection).
+		DWRITE_FONT_WEIGHT_REGULAR,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		15.0f,
+		L"en-us",
+		&m_pTextFormatChat
+		);
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormatChat->SetTextAlignment(::DWRITE_TEXT_ALIGNMENT_LEADING);
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pTextFormatChat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+	}
+
+
+	assert(hr == S_OK);
+	m_pDWriteFactory->CreateTextFormat(
 		L"Impact",                // Font family name.
 		NULL,                       // Font collection (NULL sets it to use the system font collection).
 		DWRITE_FONT_WEIGHT_REGULAR,

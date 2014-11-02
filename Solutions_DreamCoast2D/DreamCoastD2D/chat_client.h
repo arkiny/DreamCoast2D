@@ -15,7 +15,7 @@ public:
 	int SendMessagePort(string sMessage);
 	int RecMessagePort(HWND hw, int ID_EDIT);
 	bool IsConnected(){ return m_bIsConnected; }
-	void Puts(HWND hW, int ID_EDIT, char *str);
+	//void Puts(HWND hW, int ID_EDIT, char *str);
 
 private:
 	bool m_bIsConnected; // true - connected false - not connected
