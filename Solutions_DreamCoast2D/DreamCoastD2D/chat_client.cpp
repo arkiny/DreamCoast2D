@@ -14,18 +14,15 @@ CIPMessage::CIPMessage()
 
 void CIPMessage::Init(string sIpAddress, int iPort)
 {
-
 	m_sServerIPAddress = sIpAddress;
 	m_iServerPort = iPort;
 	struct hostent *hp;
 	unsigned int addr;
 	struct sockaddr_in server;
 
-
 	WSADATA wsaData;
 
 	int wsaret = WSAStartup(0x101, &wsaData);
-
 
 	if (wsaret != 0)
 	{
@@ -66,13 +63,13 @@ CIPMessage::~CIPMessage()
 int CIPMessage::SendMessagePort(string sMessage)
 {
 	int iStat = 0;
-
-	iStat = send(conn, sMessage.c_str(), sMessage.size() + 1, 0);
+	if (sMessage.size() > 6){
+		iStat = send(conn, sMessage.c_str(), sMessage.size() + 1, 0);
+	}
 	if (iStat == -1)
 		return 1;
 
 	return 0;
-
 }
 
 int CIPMessage::RecMessagePort(HWND hw, int id)
@@ -93,20 +90,6 @@ int CIPMessage::RecMessagePort(HWND hw, int id)
 	}
 	//delete &a;
 	return 0;
-
 }
-
-
-//
-//UINT  MessageRecThread(LPVOID pParam)
-//{
-//	while (1)
-//	{
-//		if (MyMessObj.RecMessagePort())
-//			break;
-//	}
-//	return 0;
-//}
-
 
 

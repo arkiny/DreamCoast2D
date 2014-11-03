@@ -58,11 +58,26 @@ void cChatManager::Render(){
 			temp.push(m_qChat.front());
 			m_qChat.pop();
 
-			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(chatline.front(), 
-				::cD2DRenderer::GetInstance().GetBlackBrush());
+			/*::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(chatline.front(), 
+				::cD2DRenderer::GetInstance().GetBlackBrush());*/
 			chatline.pop();
 		}
 		m_qChat = temp;
+
+		//
+		TCHAR print2[1024] = {};
+		::D2D1_RECT_F input = { 738.0f, 684.8f, 992.0f, 707.8f };
+		_tcscpy_s(print2, CA2T(m_sinput.c_str()));
+
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawText(
+			print2,
+			_tcslen(print2),
+			::cD2DRenderer::GetInstance().GetTextFormatChat(),
+			input,
+			::cD2DRenderer::GetInstance().GetBlackBrush());		
+
+		/*::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(input,
+			::cD2DRenderer::GetInstance().GetBlackBrush());*/
 	}
 }
 

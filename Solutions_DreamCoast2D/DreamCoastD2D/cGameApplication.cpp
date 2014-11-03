@@ -60,17 +60,30 @@ void PreTranslateMessage(LPMSG msg){
 					a = b + ": " + a;
 
 					MyMessObj.SendMessagePort(a);
-					SetWindowText(GetDlgItem(_hw, EDIT1), L"");
+					g_pChatMgr->setInputString(">");
+					SetWindowText(GetDlgItem(_hw, EDIT1), L"");					
 				}
 				else {
-					SetFocus(_hw);
+					g_pChatMgr->setInputString("");
+					//SetFocus(_hw);
 				}				
 				break;
 				//return;/*i don't want this message to reach the procedures anway*/
 			}
-		}
+		case VK_ESCAPE:
+			g_pChatMgr->setInputString("");
+			SetFocus(_hw);
+			break;
+		default:
+			if (GetFocus() == _hwMemo){				
+				GetDlgItemTextA(_hw, EDIT1, buffer3, sizeof(buffer3));				
+				string input = buffer3;
+				input = ">" + input;
+				g_pChatMgr->setInputString(input);
+			}
+			break;
+		}		
 	}
-
 	TranslateMessage(msg);
 	DispatchMessage(msg);
 }
@@ -304,7 +317,7 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		//CreateEdit(szProxyAddr, 70, 42, 180, 20, EDIT2, hWnd, _hInst); // ip
 		//CreateEdit(L"8084", 260, 42, 90, 20, EDIT3, hWnd, _hInst); // port
 		//
-		_hwMemo = CreateEdit(L"", 738, 686, 254, 20, EDIT1, hWnd, _hInst);
+		_hwMemo = CreateEdit(L"", 738, 686+1000, 254, 20+1000, EDIT1, hWnd, _hInst);
 		CreateEdit(L"ID", 260, 62, 90, 20, EDIT4, hWnd, _hInst);		
 		CreateMemo(L"Info.\n", 2-800, 85, 350, 120, MEMO1, hWnd, _hInst);
 
@@ -357,6 +370,7 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		switch (wParam){
 		case VK_RETURN : 
 			if (IsWindowEnabled(GetDlgItem(hWnd, EDIT1))){
+				g_pChatMgr->setInputString(">");
 				SetFocus(_hwMemo);
 			}			
 			break;
