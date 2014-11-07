@@ -283,6 +283,24 @@
     <ClInclude Include="cIChatMgr.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="pStateMove.h">
+      <Filter>Model\Character\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="pStateAttack.h">
+      <Filter>Model\Character\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="pStateOnCasting.h">
+      <Filter>Model\Character\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="pStateOnHit.h">
+      <Filter>Model\Character\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="pStateOnDead.h">
+      <Filter>Model\Character\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="pStateOnSkillEffect.h">
+      <Filter>Model\Character\Player State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -467,6 +485,24 @@
     </ClCompile>
     <ClCompile Include="cIChatMgr.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="pStateMove.cpp">
+      <Filter>Model\Character\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="pStateAttack.cpp">
+      <Filter>Model\Character\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="pStateOnCasting.cpp">
+      <Filter>Model\Character\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="pStateOnHit.cpp">
+      <Filter>Model\Character\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="pStateOnDead.cpp">
+      <Filter>Model\Character\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="pStateOnSkillEffect.cpp">
+      <Filter>Model\Character\Player State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

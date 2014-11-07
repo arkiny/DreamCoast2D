@@ -125,7 +125,13 @@
     <ClInclude Include="mMonster.h" />
     <ClInclude Include="mPlayer.h" />
     <ClInclude Include="piState.h" />
+    <ClInclude Include="pStateAttack.h" />
     <ClInclude Include="pStateIdle.h" />
+    <ClInclude Include="pStateMove.h" />
+    <ClInclude Include="pStateOnCasting.h" />
+    <ClInclude Include="pStateOnDead.h" />
+    <ClInclude Include="pStateOnHit.h" />
+    <ClInclude Include="pStateOnSkillEffect.h" />
     <ClInclude Include="sEditScreen.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="sMainMenuScreen.h" />
@@ -193,7 +199,13 @@
     <ClCompile Include="mPlayerSkill.cpp" />
     <ClCompile Include="mPlayerState.cpp" />
     <ClCompile Include="piState.cpp" />
+    <ClCompile Include="pStateAttack.cpp" />
     <ClCompile Include="pStateIdle.cpp" />
+    <ClCompile Include="pStateMove.cpp" />
+    <ClCompile Include="pStateOnCasting.cpp" />
+    <ClCompile Include="pStateOnDead.cpp" />
+    <ClCompile Include="pStateOnHit.cpp" />
+    <ClCompile Include="pStateOnSkillEffect.cpp" />
     <ClCompile Include="sEditScreen.cpp" />
     <ClCompile Include="sMainMenuScreen.cpp" />
     <ClCompile Include="sResourceLoad.cpp" />

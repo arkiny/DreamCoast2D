@@ -16,6 +16,9 @@
 #include "mGFX.h"
 #include "mEffect.h"
 
+#include "piState.h"
+#include "pStateIdle.h"
+
 mPlayer::mPlayer()
 {	
 	m_ipD2DBitmap = nullptr;
@@ -27,6 +30,7 @@ mPlayer::mPlayer()
 	_realVector = new VECTOR2D(514.0f, 384.0f);
 	_drawVector = new VECTOR2D(_realVector->x, _realVector->y + 15.0f);
 	m_spriteAtlas = new uSprite();
+	
 	m_SeeDir = RIGHTDOWN;
 	m_State = ONMOVE;
 
@@ -48,6 +52,15 @@ mPlayer::~mPlayer()
 	if (m_spriteAtlas != NULL){
 		delete m_spriteAtlas;
 	}
+}
+
+void mPlayer::changeStatus(piState* pnew){
+	if (m_playerState == nullptr || pnew == nullptr) return;
+	m_playerState->exit(this);
+	delete m_playerState;
+
+	m_playerState = pnew;
+	m_playerState->enter(this);
 }
 
 void mPlayer::onInit(){
@@ -114,12 +127,22 @@ void mPlayer::onInit(){
 
 	m_aBelt[1] = m_Inventory->getInventory()->at(ITEM_POTION_MANA_SMALL)->getID();
 	m_aBelt[2] = NULLITEM;
+
+
+	m_playerState = new pStateIdle();
+	m_playerState->enter(this);
 }
 
 void mPlayer::onUpdate(float fdeltatime){
+
+	//
+	//m_playerState->execute(this);
+
+	//
+
 	// 대단히 primitive한 컨디션 스테잇을 이용한 statecontroller, 
 	// 차후 시간이 남으면 statemachine으로 교체
-	VECTOR2D coord;
+	// VECTOR2D coord;
 	if (m_State == ONDEAD){
 		// 플레이어 사망 처리, 가장 기본적인 DeadEnd State
 		// 가장 1순위 처리는 사망시 처리,
@@ -285,6 +308,7 @@ void mPlayer::onUpdate(float fdeltatime){
 		m_attackaccumtime = 0.0f;
 		mPlayer::onMove(fdeltatime);
 	}
+
 }
 
 

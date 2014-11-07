@@ -6,8 +6,8 @@ class uSprite;
 class piState
 {
 public:
-	piState();
-	virtual ~piState();
+	piState(){};
+	virtual ~piState(){};
 public:
 	//상태진입
 	virtual void enter(mPlayer* pmon) = 0;

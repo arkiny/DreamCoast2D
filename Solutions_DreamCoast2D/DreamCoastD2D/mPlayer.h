@@ -11,13 +11,12 @@
 
 #define BELT_MAX 3
 
-
-
 // 벨트 단축키, A, S, D로 각각 체력, 마나, 특수
 enum BELTSHORTCUT{KEY_A, KEY_S, KEY_D};
 
 class uSprite;
 class mItem;
+class piState;
 
 // Statemachine을 이용하지 않은 채로 실행하는
 // player object
@@ -63,7 +62,17 @@ public:
 	float getAttackPower() { return m_default_attackPower; }
 	float getAttackSpeed() { return m_attackSpeed; }
 
-private:
+	//
+	void changeStatus(piState* nextState);
+	int getMoveDir(){ return m_MoveDir; }
+	int getSeeDir(){ return  m_SeeDir; }
+	int getState(){ return m_State; }
+	void setState(int in){ m_State = (OBJECTSTATE)in; }
+	void setMoveDir(int in) { m_MoveDir = (DIRECTION)in; }
+	void setSeeDir(int in) { m_SeeDir = (DIRECTION)in; }
+	//
+
+
 	// 키보드 입력에 따른 움직임
 	// Helper methods -> 몬스터에게도 필요할경우 object로 이동
 	void onMove(float deltaTime);
@@ -76,6 +85,13 @@ private:
 	//tile dmg 처리
 	void dmgToTile(float delta, float attackpower);
 	void dmgToArea(float delta, float attackpower, int AreaType);
+
+	//
+	void effectToArea(float delta, int effectType, int AreaType);
+	void effectToTile(float delta, int effectType);
+
+private:
+	piState* m_playerState;	
 		
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	DIRECTION m_MoveDir;
@@ -129,10 +145,6 @@ private:
 	// 차후 상점용
 	// default 10000
 	int m_nGold = 10000;
-	bool m_bEndbehavior = false;
-
-	//
-	void effectToArea(float delta, int effectType, int AreaType);
-	void effectToTile(float delta, int effectType);
+	bool m_bEndbehavior = false;	
 };
 
