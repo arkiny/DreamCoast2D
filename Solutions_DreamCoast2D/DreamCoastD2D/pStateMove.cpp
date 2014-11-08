@@ -21,6 +21,7 @@ void pStateMove::enter(mPlayer* pplayer){
 	m_sprite->setCurrentFrame(0);
 
 	if (pplayer->getMoveDir() == LEFTDOWN){
+		pplayer->setSeeDir(LEFTDOWN);
 		m_sprite->pickSpriteAtlas(
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->x,
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->y,
@@ -31,6 +32,7 @@ void pStateMove::enter(mPlayer* pplayer){
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->maxFrame);
 	}
 	else if (pplayer->getMoveDir() == LEFTUP){
+		pplayer->setSeeDir(LEFTUP);
 		m_sprite->pickSpriteAtlas(
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->x,
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->y,
@@ -41,6 +43,7 @@ void pStateMove::enter(mPlayer* pplayer){
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->maxFrame);
 	}
 	else if (pplayer->getMoveDir() == RIGHTDOWN){
+		pplayer->setSeeDir(RIGHTDOWN);
 		m_sprite->pickSpriteAtlas(
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->x,
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->y,
@@ -51,6 +54,7 @@ void pStateMove::enter(mPlayer* pplayer){
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->maxFrame);
 	}
 	else if (pplayer->getMoveDir() == RIGHTUP){
+		pplayer->setSeeDir(RIGHTUP);
 		m_sprite->pickSpriteAtlas(
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->x,
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->y,
@@ -139,11 +143,31 @@ void pStateMove::execute(mPlayer* pplayer){
 			pplayer->changeStatus(new pStateIdle);
 			return;
 		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
+			pplayer->setMoveDir(DOWN);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			pplayer->setMoveDir(LEFT);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
 	}
 	else if (pplayer->getMoveDir() == LEFTUP){
 		if (!::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
 			!::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 			pplayer->changeStatus(new pStateIdle);
+			return;
+		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
+			pplayer->setMoveDir(UP);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			pplayer->setMoveDir(LEFT);
+			pplayer->changeStatus(new pStateMove);
 			return;
 		}
 	}
@@ -153,11 +177,31 @@ void pStateMove::execute(mPlayer* pplayer){
 			pplayer->changeStatus(new pStateIdle);
 			return;
 		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
+			pplayer->setMoveDir(DOWN);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			pplayer->setMoveDir(RIGHT);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
 	}
 	else if (pplayer->getMoveDir() == RIGHTUP){
 		if (!::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
 			!::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 			pplayer->changeStatus(new pStateIdle);
+			return;
+		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
+			pplayer->setMoveDir(UP);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (!::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			pplayer->setMoveDir(RIGHT);
+			pplayer->changeStatus(new pStateMove);
 			return;
 		}
 	}
@@ -166,10 +210,34 @@ void pStateMove::execute(mPlayer* pplayer){
 			pplayer->changeStatus(new pStateIdle);
 			return;
 		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			pplayer->setMoveDir(RIGHTUP);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			pplayer->setMoveDir(RIGHTDOWN);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
 	}
 	else if (pplayer->getMoveDir() == LEFT){
 		if (!::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
 			pplayer->changeStatus(new pStateIdle);
+			return;
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			pplayer->setMoveDir(LEFTUP);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			pplayer->setMoveDir(LEFTDOWN);
+			pplayer->changeStatus(new pStateMove);
 			return;
 		}
 	}
@@ -178,14 +246,37 @@ void pStateMove::execute(mPlayer* pplayer){
 			pplayer->changeStatus(new pStateIdle);
 			return;
 		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			pplayer->setMoveDir(LEFTDOWN);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+			pplayer->setMoveDir(RIGHTDOWN);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
 	}
 	else if (pplayer->getMoveDir() == UP){
 		if (!::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 			pplayer->changeStatus(new pStateIdle);
 			return;
 		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			pplayer->setMoveDir(LEFTUP);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
+		else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+			::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+			pplayer->setMoveDir(RIGHTUP);
+			pplayer->changeStatus(new pStateMove);
+			return;
+		}
 	}
-
 
 	// 이동중 공격받았을때
 	// onhit
@@ -197,11 +288,24 @@ void pStateMove::execute(mPlayer* pplayer){
 	
 	// 이동중 공격키를 눌렀을때
 	// on attack
+	if (::coControl::GetInstance().getKeyControlInfo()[0x5A]){
+		pplayer->setState(ONATTACK);
+		pplayer->changeStatus(new pStateAttack);
+		return;
+	}
 
 	// 이동중 스킬키를 눌렀을때
 	// oncasting
-	
+	if (::coControl::GetInstance().getKeyControlInfo()[0x58]){
+		pplayer->setState(ONCASTING);
+		pplayer->changeStatus(new pStateOnCasting);
+		return;
+	}
+
+	// 애니메이션 처리
 	m_sprite->nextFrame(pplayer->getDeltaTime());
+
+	// 이동 처리	
 	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
 	vMover = pplayer->vectorMove(pplayer->getDeltaTime(), (DIRECTION)pplayer->getMoveDir());
 		//mCharacter::vectorMove(fdeltatime, m_MoveDir);
@@ -235,13 +339,9 @@ void pStateMove::execute(mPlayer* pplayer){
 		VECTOR2D drawin = *pplayer->getDrawPos() + vMover;
 		pplayer->setRealPos(realin.x, realin.y);
 		pplayer->setDrawPos(drawin.x, drawin.y);
-		/**_realVector = 
-		*_drawVector = *_drawVector + vMover;*/
-	}
-
-
-	
+	}	
 }
+
 //상태 이탈
 void pStateMove::exit(mPlayer* pmon){
 

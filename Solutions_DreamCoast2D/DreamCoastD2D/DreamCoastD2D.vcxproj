@@ -197,7 +197,6 @@
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
     <ClCompile Include="mPlayerSkill.cpp" />
-    <ClCompile Include="mPlayerState.cpp" />
     <ClCompile Include="piState.cpp" />
     <ClCompile Include="pStateAttack.cpp" />
     <ClCompile Include="pStateIdle.cpp" />

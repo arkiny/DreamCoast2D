@@ -17,7 +17,9 @@
 
 void pStateIdle::enter(mPlayer* pplayer){
 	pplayer->setState(ONIDLE);
-	m_sprite = pplayer->getSprite();	
+	pplayer->setCastingSkill(99);
+	m_sprite = pplayer->getSprite();
+	m_sprite->setCurrentFrame(0);
 
 	if (pplayer->getSeeDir() == RIGHTDOWN){
 		m_sprite->pickSpriteAtlas(
@@ -63,8 +65,6 @@ void pStateIdle::enter(mPlayer* pplayer){
 }
 
 void pStateIdle::execute(mPlayer* pplayer){
-	//VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
-	
 
 	// 사망시
 	if (pplayer->getHealth() <= 0.0f || pplayer->getState() == ONDEAD){
@@ -79,8 +79,6 @@ void pStateIdle::execute(mPlayer* pplayer){
 		pplayer->changeStatus(new pStateOnHit);
 		return;
 	}
-
-	//
 
 	// 공격키
 	if (::coControl::GetInstance().getKeyControlInfo()[0x5A]){
@@ -110,14 +108,12 @@ void pStateIdle::execute(mPlayer* pplayer){
 		pplayer->changeStatus(new pStateMove);
 		return;
 	}
-
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
 		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
 		pplayer->setMoveDir(RIGHTDOWN);	
 		pplayer->changeStatus(new pStateMove);
 		return;
 	}
-
 	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
 		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
 		pplayer->setMoveDir(RIGHTUP);

@@ -14,6 +14,7 @@
     <ProjectGuid>{3BB6D2D3-AC97-4544-AD41-4BA35EAAE274}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SimpleServer</RootNamespace>
+    <ProjectName>SimpleChatServer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

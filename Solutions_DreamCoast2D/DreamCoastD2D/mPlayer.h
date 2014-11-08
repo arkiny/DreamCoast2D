@@ -67,20 +67,37 @@ public:
 	int getMoveDir(){ return m_MoveDir; }
 	int getSeeDir(){ return  m_SeeDir; }
 	int getState(){ return m_State; }
+	int getCastingSkill(){ return m_castingSkill; }
 	void setState(int in){ m_State = (OBJECTSTATE)in; }
 	void setMoveDir(int in) { m_MoveDir = (DIRECTION)in; }
 	void setSeeDir(int in) { m_SeeDir = (DIRECTION)in; }
+	void setCastingSkill(int in) { m_castingSkill = in; }
+	void setAttackAccumTime(float in){ m_attackaccumtime = in; }
 	//
+
+	float getOnhitAccumTime(){ return m_onhitAccumtime; }
+	void setOnhitAccumTime(float in){ m_onhitAccumtime = in; }
 
 	float getDeltaTime(){ return m_fdeltatime; }
 	// 키보드 입력에 따른 움직임
 	// Helper methods -> 몬스터에게도 필요할경우 object로 이동
-	void onMove(float deltaTime);
-	void onAttack(float deltaTime);
-	void onHit(float fdeltatime);
-	void onDead(float);
+	//void onMove(float deltaTime);
+	//void onAttack(float deltaTime);
+	//void onHit(float fdeltatime);
+	//void onDead(float);
 	// skill 은 스킬 커맨드에 따라서 statemachine으로 처리?
-	void onCasting(float);
+	//void onCasting(float);
+	void putKeyIntoQueue();
+
+	std::queue<int> getKeyInput(){ return m_qKeyInput; }
+	std::queue<int>* getKeyInputPointer(){ return &m_qKeyInput; }
+	std::vector<int*> getSkillList() { return m_SkillList; }
+
+	float getDeadFadeOutTime() { return m_deadFadeOutTime; }
+	void setDeadFadeOutTime(float in){ m_deadFadeOutTime = in; }
+
+	//void setAlpha(float in){ m_alpha = in; }
+	//float getAlpha() { return m_alpha; }
 
 	//tile dmg 처리
 	void dmgToTile(float delta, float attackpower);
@@ -89,6 +106,13 @@ public:
 	//
 	void effectToArea(float delta, int effectType, int AreaType);
 	void effectToTile(float delta, int effectType);
+
+	// 재귀함수로, 스킬이 같은지 비교하기 위한 함수
+	bool skillCompare(std::queue<int> &keyinput, int* skillArray, int index);
+
+	// 스킬에 따라 다른 효과를 얻기위한 함수
+	void skillEffect(int skilltype);
+	void setDead(bool in){ m_deadcomp = in; }
 
 private:
 	piState* m_playerState;	
@@ -124,16 +148,12 @@ private:
 	float m_castaccumtime = 0.0f;
 	
 	std::queue<int> m_qKeyInput;
-	void putKeyIntoQueue();
+	
 
 	// 스킬 캐스팅시에 Update체크를 위한 변수
 	int m_castingSkill = 99;
 	
-	// 재귀함수로, 스킬이 같은지 비교하기 위한 함수
-	bool skillCompare(std::queue<int> &keyinput, int* skillArray, int index);
 	
-	// 스킬에 따라 다른 효과를 얻기위한 함수
-	void skillEffect(int skilltype);	
 	
 	// player가 inventory를 가지고 있지만, 
 	// 컨트롤은UI에서 처리해야한다.

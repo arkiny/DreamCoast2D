@@ -23,9 +23,6 @@
     <Filter Include="aMain">
       <UniqueIdentifier>{7a0dfb9b-faa0-4617-8b99-03e601e6416f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AIStateFSM">
-      <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Model\Item">
       <UniqueIdentifier>{2547eb39-8bb2-48d5-b8ec-0dbfde447365}</UniqueIdentifier>
     </Filter>
@@ -74,6 +71,9 @@
     <Filter Include="ChatClient">
       <UniqueIdentifier>{ecb2a0e9-6cf3-47b8-863c-d87d0758fa67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Character\Mob State">
+      <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -113,28 +113,28 @@
       <Filter>Model\Character\Mob</Filter>
     </ClInclude>
     <ClInclude Include="aiState.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="uCamera.h">
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="aiStateOnHit.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="aiStateIdle.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="aiStateDead.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="aiStateMoveto.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="aiStateScan.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="aiStateAttack.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="DreamCoastD2D.h">
       <Filter>aMain</Filter>
@@ -266,10 +266,10 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="aiStateOnCasting.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="aiStateSkillEffect.h">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClInclude>
     <ClInclude Include="InEditUI.h">
       <Filter>Model\Screen\InScreenUI</Filter>
@@ -340,28 +340,28 @@
       <Filter>Model\Character\Mob</Filter>
     </ClCompile>
     <ClCompile Include="aiState.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="uCamera.cpp">
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="aiStateOnHit.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="aiStateIdle.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="aiStateDead.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="aiStateMoveto.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="aiStateScan.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="aiStateAttack.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="DreamCoastD2D.cpp">
       <Filter>aMain</Filter>
@@ -423,9 +423,6 @@
     <ClCompile Include="mPlayer.cpp">
       <Filter>Model\Character\Player</Filter>
     </ClCompile>
-    <ClCompile Include="mPlayerState.cpp">
-      <Filter>Model\Character\Player</Filter>
-    </ClCompile>
     <ClCompile Include="mPlayerSkill.cpp">
       <Filter>Model\Character\Player</Filter>
     </ClCompile>
@@ -469,10 +466,10 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="aiStateOnCasting.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="aiStateSkillEffect.cpp">
-      <Filter>AIStateFSM</Filter>
+      <Filter>Model\Character\Mob State</Filter>
     </ClCompile>
     <ClCompile Include="InEditUI.cpp">
       <Filter>Model\Screen\InScreenUI</Filter>
