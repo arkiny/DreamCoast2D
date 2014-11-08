@@ -195,226 +195,226 @@ void mPlayer::onAttack(float fdeltatime){
 // 이동간에 따른 무브무브
 // 아마 onMove 보단 onControl
 void mPlayer::onMove(float fdeltatime){
-	VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);
+	/*VECTOR2D vMover = VECTOR2D(0.0f, 0.0f);*/
 
 	// Animation Part
 	// TODO:: 키처리좀 제대로 하고 싶다..
-	if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-		m_SeeDir = LEFTDOWN;
-		m_MoveDir = LEFTDOWN;
+	//if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+	//	::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+	//	m_SeeDir = LEFTDOWN;
+	//	m_MoveDir = LEFTDOWN;
 
-		//m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->maxFrame);
-	}
+	//	//m_spriteAtlas->pickSpriteAtlas(360.0f, 0.0f, 39.0f, 94.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 0)->maxFrame);
+	//}
 
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-		m_SeeDir = LEFTUP;
-		m_MoveDir = LEFTUP;
-		//m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->maxFrame);
-	}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT] &&
+	//	::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+	//	m_SeeDir = LEFTUP;
+	//	m_MoveDir = LEFTUP;
+	//	//m_spriteAtlas->pickSpriteAtlas(360.0f, 100.0f, 44.0f, 95.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 1)->maxFrame);
+	//}
 
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-		m_SeeDir = RIGHTDOWN;
-		m_MoveDir = RIGHTDOWN;
-		//m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->maxFrame);
-	}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+	//	::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+	//	m_SeeDir = RIGHTDOWN;
+	//	m_MoveDir = RIGHTDOWN;
+	//	//m_spriteAtlas->pickSpriteAtlas(360.0f, 200.0f, 39.0f, 94.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 2)->maxFrame);
+	//}
 
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
-		::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-		m_SeeDir = RIGHTUP;
-		m_MoveDir = RIGHTUP;
-		//m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->maxFrame);
-	}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT] &&
+	//	::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+	//	m_SeeDir = RIGHTUP;
+	//	m_MoveDir = RIGHTUP;
+	//	//m_spriteAtlas->pickSpriteAtlas(360.0f, 300.0f, 44.0f, 95.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 3)->maxFrame);
+	//}
 
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
-		if (m_SeeDir == LEFTUP){
-			m_SeeDir = RIGHTUP;
-		}
-		else if (m_SeeDir == LEFTDOWN){
-			m_SeeDir = RIGHTDOWN;
-		}
-		m_MoveDir = RIGHT;
-		//m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->maxFrame);
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
-		if (m_SeeDir == RIGHTUP){
-			m_SeeDir = LEFTUP;
-		}
-		else if (m_SeeDir == RIGHTDOWN){
-			m_SeeDir = LEFTDOWN;
-		}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[VK_RIGHT]){
+	//	if (m_SeeDir == LEFTUP){
+	//		m_SeeDir = RIGHTUP;
+	//	}
+	//	else if (m_SeeDir == LEFTDOWN){
+	//		m_SeeDir = RIGHTDOWN;
+	//	}
+	//	m_MoveDir = RIGHT;
+	//	//m_spriteAtlas->pickSpriteAtlas(0.0f, 0.0f, 47.0f, 88.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 5)->maxFrame);
+	//}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[VK_LEFT]){
+	//	if (m_SeeDir == RIGHTUP){
+	//		m_SeeDir = LEFTUP;
+	//	}
+	//	else if (m_SeeDir == RIGHTDOWN){
+	//		m_SeeDir = LEFTDOWN;
+	//	}
 
-		m_MoveDir = LEFT;
-		//m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->maxFrame);
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
-		if (m_SeeDir == LEFTUP){
-			m_SeeDir = LEFTDOWN;
-		}
-		else if (m_SeeDir == RIGHTUP){
-			m_SeeDir = RIGHTDOWN;
-		}
+	//	m_MoveDir = LEFT;
+	//	//m_spriteAtlas->pickSpriteAtlas(0.0f, 185.0f, 47.0f, 88.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 4)->maxFrame);
+	//}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[VK_DOWN]){
+	//	if (m_SeeDir == LEFTUP){
+	//		m_SeeDir = LEFTDOWN;
+	//	}
+	//	else if (m_SeeDir == RIGHTUP){
+	//		m_SeeDir = RIGHTDOWN;
+	//	}
 
-		m_MoveDir = DOWN;
-		//m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->maxFrame);
-	}
-	else if (::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
-		if (m_SeeDir == LEFTDOWN){
-			m_SeeDir = LEFTUP;
-		}
-		else if (m_SeeDir == RIGHTDOWN){
-			m_SeeDir = RIGHTUP;
-		}
+	//	m_MoveDir = DOWN;
+	//	//m_spriteAtlas->pickSpriteAtlas(0.0f, 279.0f, 35.0f, 91.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 7)->maxFrame);
+	//}
+	//else if (::coControl::GetInstance().getKeyControlInfo()[VK_UP]){
+	//	if (m_SeeDir == LEFTDOWN){
+	//		m_SeeDir = LEFTUP;
+	//	}
+	//	else if (m_SeeDir == RIGHTDOWN){
+	//		m_SeeDir = RIGHTUP;
+	//	}
 
-		m_MoveDir = UP;
-		//m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f, 6);
-		m_spriteAtlas->pickSpriteAtlas(
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->x,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->y,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->width,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->height,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->offsetX,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->offsetY,
-			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->maxFrame);
-	}
-	else { // Idling
-		//if (m_SeeDir == RIGHTDOWN){
-		//	// idle right down
-		//	m_spriteAtlas->pickSpriteAtlas(
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->x,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->y,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->width,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->height,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->offsetX,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->offsetY,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->maxFrame);
-		//}
-		//else if (m_SeeDir == LEFTUP){
-		//	m_spriteAtlas->pickSpriteAtlas(
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->x,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->y,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->width,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->height,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->offsetX,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->offsetY,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->maxFrame);
-		//}
-		//else if (m_SeeDir == RIGHTUP){
-		//	//m_spriteAtlas->pickSpriteAtlas(360.0f, 500.0f, 42.0f, 89.0f, 4);
-		//	m_spriteAtlas->pickSpriteAtlas(
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->x,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->y,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->width,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->height,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->offsetX,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->offsetY,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->maxFrame);
-		//}
-		//else if (m_SeeDir == LEFTDOWN){
-		//	//SpriteAnimationInfo a = *cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0);
-		//	m_spriteAtlas->pickSpriteAtlas(
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->x,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->y,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->width,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->height,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->offsetX,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->offsetY,
-		//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->maxFrame);
-		//	//m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 19.5f, 0.0f, 4);
-		//}
-		//m_MoveDir = NOMOVE;
-	}
+	//	m_MoveDir = UP;
+	//	//m_spriteAtlas->pickSpriteAtlas(0.0f, 373.0f, 37.0f, 92.0f, 6);
+	//	m_spriteAtlas->pickSpriteAtlas(
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->x,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->y,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->width,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->height,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->offsetX,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->offsetY,
+	//		cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->maxFrame);
+	//}
+	//else { // Idling
+	//	//if (m_SeeDir == RIGHTDOWN){
+	//	//	// idle right down
+	//	//	m_spriteAtlas->pickSpriteAtlas(
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->x,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->y,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->width,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->height,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->offsetX,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->offsetY,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 2)->maxFrame);
+	//	//}
+	//	//else if (m_SeeDir == LEFTUP){
+	//	//	m_spriteAtlas->pickSpriteAtlas(
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->x,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->y,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->width,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->height,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->offsetX,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->offsetY,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 1)->maxFrame);
+	//	//}
+	//	//else if (m_SeeDir == RIGHTUP){
+	//	//	//m_spriteAtlas->pickSpriteAtlas(360.0f, 500.0f, 42.0f, 89.0f, 4);
+	//	//	m_spriteAtlas->pickSpriteAtlas(
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->x,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->y,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->width,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->height,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->offsetX,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->offsetY,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 3)->maxFrame);
+	//	//}
+	//	//else if (m_SeeDir == LEFTDOWN){
+	//	//	//SpriteAnimationInfo a = *cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0);
+	//	//	m_spriteAtlas->pickSpriteAtlas(
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->x,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->y,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->width,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->height,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->offsetX,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->offsetY,
+	//	//		cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->maxFrame);
+	//	//	//m_spriteAtlas->pickSpriteAtlas(0.0f, 500.0f, 64.0f, 92.0f, 19.5f, 0.0f, 4);
+	//	//}
+	//	//m_MoveDir = NOMOVE;
+	//}
 	// frame update
-	m_spriteAtlas->nextFrame(fdeltatime);
-	vMover = 
-		mCharacter::vectorMove(fdeltatime, m_MoveDir);
+	//m_spriteAtlas->nextFrame(fdeltatime);
+	//vMover = 
+	//	mCharacter::vectorMove(fdeltatime, m_MoveDir);
 
-	// Todo
-	// 맵 포인터에서 맵 정보를 받아와서 이동 불가 컨트롤, 차후 동적할당식으로 전환
-	// 맵 포인터는 스테이지가 바뀔때마다 업데이트를 해줘야 한다.
-	// 컨트롤 클래스나, 월드클래스에서 조정해주면 더 나으려나?
-	// 일단 자연스러운 오더링을 위해 이동불가는 둘 모두를 통해 이동불가 처리
-	// 가장 좋은 건 사각형을 써서 오더링을 하는 걸까나?
-	float topX = m_pTileMap->getTileCoordinates(*_drawVector + vMover).x;
-	float topY = m_pTileMap->getTileCoordinates(*_drawVector + vMover).y;
+	//// Todo
+	//// 맵 포인터에서 맵 정보를 받아와서 이동 불가 컨트롤, 차후 동적할당식으로 전환
+	//// 맵 포인터는 스테이지가 바뀔때마다 업데이트를 해줘야 한다.
+	//// 컨트롤 클래스나, 월드클래스에서 조정해주면 더 나으려나?
+	//// 일단 자연스러운 오더링을 위해 이동불가는 둘 모두를 통해 이동불가 처리
+	//// 가장 좋은 건 사각형을 써서 오더링을 하는 걸까나?
+	//float topX = m_pTileMap->getTileCoordinates(*_drawVector + vMover).x;
+	//float topY = m_pTileMap->getTileCoordinates(*_drawVector + vMover).y;
 
-	float bottomX = m_pTileMap->getTileCoordinates(*_realVector + vMover).x;
-	float bottomY = m_pTileMap->getTileCoordinates(*_realVector + vMover).y;
+	//float bottomX = m_pTileMap->getTileCoordinates(*_realVector + vMover).x;
+	//float bottomY = m_pTileMap->getTileCoordinates(*_realVector + vMover).y;
 
-	// 외곽 충돌 처리
-	if (topX >= m_pTileMap->getMapLimit().x || topY >= m_pTileMap->getMapLimit().y ||
-		bottomX >= m_pTileMap->getMapLimit().x || bottomY >= m_pTileMap->getMapLimit().y ||
-		topX < 0 || topY < 0 || bottomX < 0 || bottomY < 0){
-		return;
-	}
+	//// 외곽 충돌 처리
+	//if (topX >= m_pTileMap->getMapLimit().x || topY >= m_pTileMap->getMapLimit().y ||
+	//	bottomX >= m_pTileMap->getMapLimit().x || bottomY >= m_pTileMap->getMapLimit().y ||
+	//	topX < 0 || topY < 0 || bottomX < 0 || bottomY < 0){
+	//	return;
+	//}
 
 
-	// 이동불가시 이동불가 처리
-	// move update, 여기서 float -> int 변환이 일어나 데이터 로스가 있을수도 있다.
-	// 게임 특성상 몬스터와의 충돌처리는 아직 없음(만약 보스형이라면 충돌 처리가 있어야할지도)
-	if (m_pTileMap->getMapinfo(static_cast<int>(topX), static_cast<int>(topY)) == 0
-		&& m_pTileMap->getMapinfo(static_cast<int>(bottomX), static_cast<int>(bottomY)) == 0){
-		*_realVector = *_realVector + vMover;
-		*_drawVector = *_drawVector + vMover;
-	}
+	//// 이동불가시 이동불가 처리
+	//// move update, 여기서 float -> int 변환이 일어나 데이터 로스가 있을수도 있다.
+	//// 게임 특성상 몬스터와의 충돌처리는 아직 없음(만약 보스형이라면 충돌 처리가 있어야할지도)
+	//if (m_pTileMap->getMapinfo(static_cast<int>(topX), static_cast<int>(topY)) == 0
+	//	&& m_pTileMap->getMapinfo(static_cast<int>(bottomX), static_cast<int>(bottomY)) == 0){
+	//	*_realVector = *_realVector + vMover;
+	//	*_drawVector = *_drawVector + vMover;
+	//}
 	//
 }
 

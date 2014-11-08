@@ -72,7 +72,7 @@ public:
 	void setSeeDir(int in) { m_SeeDir = (DIRECTION)in; }
 	//
 
-
+	float getDeltaTime(){ return m_fdeltatime; }
 	// 키보드 입력에 따른 움직임
 	// Helper methods -> 몬스터에게도 필요할경우 object로 이동
 	void onMove(float deltaTime);
@@ -96,6 +96,8 @@ private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	DIRECTION m_MoveDir;
 	OBJECTSTATE m_State;	
+
+	float m_fdeltatime = 0.0f;
 
 	// rendering alpha parameter control
 	float m_alpha = 1.0f;
