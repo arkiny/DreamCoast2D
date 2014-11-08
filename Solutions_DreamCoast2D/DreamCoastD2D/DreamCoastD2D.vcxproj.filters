@@ -68,11 +68,20 @@
     <Filter Include="Model\MapObject\Building">
       <UniqueIdentifier>{b3020239-3a56-4839-8099-aec739ef1aa9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ChatClient">
-      <UniqueIdentifier>{ecb2a0e9-6cf3-47b8-863c-d87d0758fa67}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Model\Character\Mob State">
       <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Character\NetWorkTest">
+      <UniqueIdentifier>{9bc76986-6a6f-44d9-a92b-f2722c188320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetWork">
+      <UniqueIdentifier>{c1bd3123-0c66-4d18-9eac-3840da77f49b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetWork\ChatClient">
+      <UniqueIdentifier>{ecb2a0e9-6cf3-47b8-863c-d87d0758fa67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetWork\CharClient">
+      <UniqueIdentifier>{01b87559-2f83-44db-92c5-5d9a1ed80ca1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -275,7 +284,7 @@
       <Filter>Model\Screen\InScreenUI</Filter>
     </ClInclude>
     <ClInclude Include="chat_client.h">
-      <Filter>ChatClient</Filter>
+      <Filter>NetWork\ChatClient</Filter>
     </ClInclude>
     <ClInclude Include="cChatManager.h">
       <Filter>Core</Filter>
@@ -300,6 +309,18 @@
     </ClInclude>
     <ClInclude Include="pStateOnSkillEffect.h">
       <Filter>Model\Character\Player State</Filter>
+    </ClInclude>
+    <ClInclude Include="mTestObject.h">
+      <Filter>Model\Character\NetWorkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="char_client.h">
+      <Filter>NetWork\CharClient</Filter>
+    </ClInclude>
+    <ClInclude Include="netWorkCharManager.h">
+      <Filter>NetWork\CharClient</Filter>
+    </ClInclude>
+    <ClInclude Include="movePacket.h">
+      <Filter>NetWork\CharClient</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -475,7 +496,7 @@
       <Filter>Model\Screen\InScreenUI</Filter>
     </ClCompile>
     <ClCompile Include="chat_client.cpp">
-      <Filter>ChatClient</Filter>
+      <Filter>NetWork\ChatClient</Filter>
     </ClCompile>
     <ClCompile Include="cChatManager.cpp">
       <Filter>Core</Filter>
@@ -500,6 +521,15 @@
     </ClCompile>
     <ClCompile Include="pStateOnSkillEffect.cpp">
       <Filter>Model\Character\Player State</Filter>
+    </ClCompile>
+    <ClCompile Include="mTestObject.cpp">
+      <Filter>Model\Character\NetWorkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="char_client.cpp">
+      <Filter>NetWork\CharClient</Filter>
+    </ClCompile>
+    <ClCompile Include="netWorkCharManager.cpp">
+      <Filter>NetWork\CharClient</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

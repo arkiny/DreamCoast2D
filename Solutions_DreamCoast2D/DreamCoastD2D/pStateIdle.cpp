@@ -14,6 +14,8 @@
 #include "pStateOnCasting.h"
 #include "pStateMove.h"
 
+#include "char_client.h"
+#include "netWorkCharManager.h"
 
 void pStateIdle::enter(mPlayer* pplayer){
 	pplayer->setState(ONIDLE);
@@ -62,6 +64,17 @@ void pStateIdle::enter(mPlayer* pplayer){
 			cResourceManager::GetInstance().getPlayerSpriteInfo(0, 0)->maxFrame);
 	}
 	pplayer->setMoveDir(NOMOVE);
+
+	movePacket toServer;
+	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
+	toServer.state = ONIDLE;
+	toServer.px = pplayer->getRealPos()->x;
+	toServer.py = pplayer->getRealPos()->y;
+	toServer.seedir = pplayer->getSeeDir();
+	toServer.speed = 0.0;
+	toServer.direction = pplayer->getMoveDir();
+
+	::CharCIPMessage::GetInstance().SendMessagePort(toServer);
 }
 
 void pStateIdle::execute(mPlayer* pplayer){

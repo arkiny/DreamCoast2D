@@ -14,6 +14,10 @@
 #include "pStateOnCasting.h"
 #include "pStateIdle.h"
 
+#include "movePacket.h"
+#include "netWorkCharManager.h"
+#include "char_client.h"
+
 //상태진입
 void pStateMove::enter(mPlayer* pplayer){
 	pplayer->setState(ONMOVE);
@@ -132,6 +136,17 @@ void pStateMove::enter(mPlayer* pplayer){
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->offsetY,
 			cResourceManager::GetInstance().getPlayerSpriteInfo(1, 6)->maxFrame);
 	}
+
+	movePacket toServer;
+	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
+	toServer.state = pplayer->getState();
+	toServer.px = pplayer->getRealPos()->x;
+	toServer.py = pplayer->getRealPos()->y;
+	toServer.seedir = pplayer->getSeeDir();
+	toServer.speed = pplayer->getMoveSpeed();
+	toServer.direction = pplayer->getMoveDir();
+
+	::CharCIPMessage::GetInstance().SendMessagePort(toServer);
 }
 //상태진행
 void pStateMove::execute(mPlayer* pplayer){	

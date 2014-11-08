@@ -5,10 +5,16 @@
 #include "cResourceManager.h"
 #include "cSoundManager.h"
 #include "cChatManager.h"
+#include "netWorkCharManager.h"
 #include "coControl.h"
 #include "mGFX.h"
 #include "cD2DRenderer.h"
+
+// network
 #include "chat_client.h"
+#include "char_client.h"
+//
+
 #include <MMSystem.h>
 #include  <atlstr.h>
 
@@ -19,6 +25,7 @@ cIGameMgr* g_pGameMgr;
 cIChatMgr* g_pChatMgr;
 cResourceManager* m_pResourceMng;
 cSoundManager* m_pSoundMng;
+netWorkCharManager* m_pNetCharMng;
 mGFX* m_pGFX;
 
 
@@ -40,6 +47,8 @@ HWND _hw;
 HWND _hwMemo;
 
 CIPMessage MyMessObj;
+CharCIPMessage MyCharMessObj;
+
 char buffer3[4096]; // out
 char buffer4[4096]; // in
 
@@ -96,7 +105,7 @@ cGameApplication::cGameApplication(cIGameMgr* pGameMgr, cIChatMgr* pChatMgr)
 	m_pResourceMng = nullptr;
 	m_pSoundMng = nullptr;
 	m_pGFX = nullptr;
-
+	m_pNetCharMng = new netWorkCharManager;
 }
 
 
@@ -257,6 +266,17 @@ UINT  MessageRecThread(LPVOID pParam)
 	return 0;
 }
 
+
+UINT  MessageRecThread2(LPVOID pParam)
+{
+	while (1)
+	{
+		if (MyCharMessObj.RecMessagePort())
+			break;
+	}
+	return 0;
+}
+
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -329,21 +349,34 @@ LRESULT CALLBACK cGameApplication::WndProc(HWND hWnd, UINT message, WPARAM wPara
 		//EnableWindow(GetDlgItem(hWnd, BUTTON1), TRUE);
 		EnableWindow(GetDlgItem(hWnd, EDIT2), FALSE);
 		EnableWindow(GetDlgItem(hWnd, EDIT3), FALSE);
+
 		MyMessObj.Init(sServerAddress, 8084);
+		MyCharMessObj.Init(sServerAddress, 8085);
+
 		if (!MyMessObj.IsConnected())
 		{
 			//MessageBox(hWnd, L"Unable to connect to the IPaddress specified in server.ini", L"Warning", MB_OK);
-			cChatManager::GetInstance().addToChatLog("서버접속불가");
+			cChatManager::GetInstance().addToChatLog("채팅 서버접속불가");
 			EnableWindow(GetDlgItem(hWnd, EDIT1), FALSE);
+
+			if (!MyCharMessObj.IsConnected()){
+				cChatManager::GetInstance().addToChatLog("캐릭터서버접속불가");
+			}
+
 			break;
 			//PostQuitMessage(NULL);
 		}
+		else if (!MyCharMessObj.IsConnected()){
+			cChatManager::GetInstance().addToChatLog("캐릭터서버접속불가");
+		}
 		else {
-			cChatManager::GetInstance().addToChatLog("채팅 서버접속완료");
+			cChatManager::GetInstance().addToChatLog("채팅 및 캐릭터 서버접속완료");
 		}
 		EnableWindow(GetDlgItem(hWnd, EDIT1), TRUE);
+		
 		AfxBeginThread(MessageRecThread, 0);
-
+		AfxBeginThread(MessageRecThread2, 0);
+				
 		SetFocus(hWnd);
 		break;
 	}

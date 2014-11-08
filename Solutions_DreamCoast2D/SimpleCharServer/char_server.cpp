@@ -95,9 +95,14 @@ void CCharServer::StartListenClient()
 		char buf[sizeof(movePacket)];
 		memcpy(&buf, &idsend, sizeof(movePacket));
 
-		send(m_SClient, buf, sizeof(movePacket), 0);
+		//send(m_SClient, buf, sizeof(movePacket), 0);
+		std::map<SOCKET, int>::iterator itr;
+		for (itr = m_vClientList.begin(); itr != m_vClientList.end(); itr++){
+			send(itr->first, buf, sizeof(movePacket), 0);
+		}
 
 		cout << "Current Num Player" << m_vClientList.size() << endl;
+		cout << idsend.id << " sended" << endl;
 	}
 	AfxBeginThread(ServerRecThread, (void *)m_SClient);
 
@@ -126,6 +131,21 @@ int CCharServer::SendMessagePort(movePacket sMessage)
 		}*/
 	}
 
+	int id;
+	int state;
+	int direction;
+	int seedir;
+	float px;
+	float py;
+	float speed;
+
+	cout << "id: "<<sMessage.id 
+		<< ", state: " << sMessage.state 
+		<< ", dir: " << sMessage.direction
+		<< ", seedir: " << sMessage.seedir
+		<< ", position: (" << sMessage.px << ", " << sMessage.py << ")"
+		<< ", Speed: " << sMessage.speed 
+		<< endl;
 	/*for (itl = m_vClientList.begin(); itl != m_vClientList.end(); itl++)
 	{
 		iStat = send(*itl, sMessage.c_str(), sMessage.size() + 1, 0);
@@ -161,7 +181,7 @@ int CCharServer::RecClient(SOCKET sRecSocket)
 	}
 	else
 	{		
-		cout << buf.id << "\n";
+		cout << "from: " << buf.id << "Recieved\n";
 
 		SendMessagePort(buf);
 		return 0;
