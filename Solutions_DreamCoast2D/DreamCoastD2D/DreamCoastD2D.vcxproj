@@ -126,8 +126,11 @@
     <ClInclude Include="mMonster.h" />
     <ClInclude Include="movePacket.h" />
     <ClInclude Include="mPlayer.h" />
-    <ClInclude Include="mTestObject.h" />
+    <ClInclude Include="mNetworkObject.h" />
     <ClInclude Include="netWorkCharManager.h" />
+    <ClInclude Include="niState.h" />
+    <ClInclude Include="nStateIdle.h" />
+    <ClInclude Include="nStateMove.h" />
     <ClInclude Include="piState.h" />
     <ClInclude Include="pStateAttack.h" />
     <ClInclude Include="pStateIdle.h" />
@@ -202,8 +205,11 @@
     <ClCompile Include="mMonster.cpp" />
     <ClCompile Include="mPlayer.cpp" />
     <ClCompile Include="mPlayerSkill.cpp" />
-    <ClCompile Include="mTestObject.cpp" />
+    <ClCompile Include="mNetworkObject.cpp" />
     <ClCompile Include="netWorkCharManager.cpp" />
+    <ClCompile Include="niState.cpp" />
+    <ClCompile Include="nStateIdle.cpp" />
+    <ClCompile Include="nStateMove.cpp" />
     <ClCompile Include="piState.cpp" />
     <ClCompile Include="pStateAttack.cpp" />
     <ClCompile Include="pStateIdle.cpp" />

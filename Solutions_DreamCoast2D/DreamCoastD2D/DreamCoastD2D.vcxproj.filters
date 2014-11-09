@@ -71,9 +71,6 @@
     <Filter Include="Model\Character\Mob State">
       <UniqueIdentifier>{49d56e9f-2ba0-41f4-8d39-4719d436e638}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Model\Character\NetWorkTest">
-      <UniqueIdentifier>{9bc76986-6a6f-44d9-a92b-f2722c188320}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NetWork">
       <UniqueIdentifier>{c1bd3123-0c66-4d18-9eac-3840da77f49b}</UniqueIdentifier>
     </Filter>
@@ -82,6 +79,12 @@
     </Filter>
     <Filter Include="NetWork\CharClient">
       <UniqueIdentifier>{01b87559-2f83-44db-92c5-5d9a1ed80ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Character\NetWorkObject">
+      <UniqueIdentifier>{9bc76986-6a6f-44d9-a92b-f2722c188320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Character\NetWorkObject State">
+      <UniqueIdentifier>{de4dbb40-b0ad-4712-8a9b-328da031a802}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -310,9 +313,6 @@
     <ClInclude Include="pStateOnSkillEffect.h">
       <Filter>Model\Character\Player State</Filter>
     </ClInclude>
-    <ClInclude Include="mTestObject.h">
-      <Filter>Model\Character\NetWorkTest</Filter>
-    </ClInclude>
     <ClInclude Include="char_client.h">
       <Filter>NetWork\CharClient</Filter>
     </ClInclude>
@@ -321,6 +321,18 @@
     </ClInclude>
     <ClInclude Include="movePacket.h">
       <Filter>NetWork\CharClient</Filter>
+    </ClInclude>
+    <ClInclude Include="mNetworkObject.h">
+      <Filter>Model\Character\NetWorkObject</Filter>
+    </ClInclude>
+    <ClInclude Include="niState.h">
+      <Filter>Model\Character\NetWorkObject State</Filter>
+    </ClInclude>
+    <ClInclude Include="nStateIdle.h">
+      <Filter>Model\Character\NetWorkObject State</Filter>
+    </ClInclude>
+    <ClInclude Include="nStateMove.h">
+      <Filter>Model\Character\NetWorkObject State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -522,14 +534,23 @@
     <ClCompile Include="pStateOnSkillEffect.cpp">
       <Filter>Model\Character\Player State</Filter>
     </ClCompile>
-    <ClCompile Include="mTestObject.cpp">
-      <Filter>Model\Character\NetWorkTest</Filter>
-    </ClCompile>
     <ClCompile Include="char_client.cpp">
       <Filter>NetWork\CharClient</Filter>
     </ClCompile>
     <ClCompile Include="netWorkCharManager.cpp">
       <Filter>NetWork\CharClient</Filter>
+    </ClCompile>
+    <ClCompile Include="mNetworkObject.cpp">
+      <Filter>Model\Character\NetWorkObject</Filter>
+    </ClCompile>
+    <ClCompile Include="niState.cpp">
+      <Filter>Model\Character\NetWorkObject State</Filter>
+    </ClCompile>
+    <ClCompile Include="nStateIdle.cpp">
+      <Filter>Model\Character\NetWorkObject State</Filter>
+    </ClCompile>
+    <ClCompile Include="nStateMove.cpp">
+      <Filter>Model\Character\NetWorkObject State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

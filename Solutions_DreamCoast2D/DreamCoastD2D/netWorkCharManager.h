@@ -4,7 +4,7 @@
 #include "movePacket.h"
 
 
-class mTestObject;
+class mNetworkObject;
 class uCamera;
 
 class netWorkCharManager : public Singleton<netWorkCharManager>
@@ -12,7 +12,7 @@ class netWorkCharManager : public Singleton<netWorkCharManager>
 public:
 	netWorkCharManager();
 	~netWorkCharManager();
-	void addToCharList(mTestObject* character){}
+	void addToCharList(mNetworkObject* character){}
 	
 
 	void update(float delta);
@@ -30,6 +30,6 @@ public:
 
 private:
 	int m_nMyId;
-	std::map<int, mTestObject*> m_mChars;
+	std::map<int, mNetworkObject*> m_mChars;
 };
 
