@@ -15,6 +15,8 @@
 //
 #include "mBuilding.h"
 
+#include "netWorkCharManager.h"
+
 wTileMap::wTileMap()
 {	
 	m_player = nullptr;
@@ -188,6 +190,8 @@ void wTileMap::removeMapObjectFromTile(float x, float y){
 		m_mapObjects.push_back(m_mapObjectsTemp.front());
 		m_mapObjectsTemp.pop();
 	}
+
+
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
@@ -218,6 +222,9 @@ void wTileMap::onUpdate(float fdeltatime){
 	// 일단 mob들이 타일에 뿌려진 뒤에 처리를 해야한다.
 	// 킄... 선공은 몬스터가 먼저인가 킄....
 	m_player->onUpdate(fdeltatime);
+
+	//
+	netWorkCharManager::GetInstance().update(fdeltatime);
 }
 
 void wTileMap::onRender(){
@@ -232,6 +239,9 @@ void wTileMap::onRender(){
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
 		::wTileMap::drawHealthBar(m_mobs[i]);
 	}
+
+	//
+	netWorkCharManager::GetInstance().render(m_Cam);
 }
 
 void wTileMap::onRenderEdit(){
@@ -358,6 +368,8 @@ void wTileMap::renderMap(){
 	//m_MapObjects->render();
 	// 반투명처리해서 장애물 뒤에서도 보이게
 	m_player->onRender(true);
+
+	
 }
 
 

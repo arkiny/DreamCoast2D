@@ -5,6 +5,7 @@
 
 
 class mTestObject;
+class uCamera;
 
 class netWorkCharManager : public Singleton<netWorkCharManager>
 {
@@ -14,14 +15,17 @@ public:
 	void addToCharList(mTestObject* character){}
 	
 
-	void update(){}
-	void render(){}
+	void update(float delta);
+	void render(uCamera* cam);
 
 	void setMyId(int i);
 	int getMyId(){ return m_nMyId; }
 
 	bool hasCharacter(int id);
 	void addToCharList(movePacket in);
+
+	void updateState(movePacket in);
+
 	void removeFromList(int id);
 
 private:

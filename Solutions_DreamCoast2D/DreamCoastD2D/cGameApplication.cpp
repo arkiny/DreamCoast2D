@@ -511,6 +511,8 @@ void cGameApplication::Render()
 		g_pGameMgr->Render();
 	if (g_pChatMgr != nullptr)
 		g_pChatMgr->Render();
+	//if (m_pNetCharMng != nullptr)
+	//	m_pNetCharMng->render();
 
 	hr = d2dRender.GetRenderTarget()->EndDraw();
 	assert(hr == S_OK);
@@ -522,4 +524,5 @@ void cGameApplication::Update(float deltaTime)
 {
 	g_pGameMgr->Update(deltaTime);
 	g_pChatMgr->Update(deltaTime);
+	/*m_pNetCharMng->update(deltaTime);*/
 }

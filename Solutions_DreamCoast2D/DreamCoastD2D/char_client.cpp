@@ -98,7 +98,7 @@ int CharCIPMessage::RecMessagePort()
 		if (netWorkCharManager::GetInstance().getMyId() != m_mPacket.id){
 			// check if exist
 			if (netWorkCharManager::GetInstance().hasCharacter(m_mPacket.id)){
-				// update the move packet
+				netWorkCharManager::GetInstance().updateState(m_mPacket);
 			}
 			else {
 				netWorkCharManager::GetInstance().addToCharList(m_mPacket);
