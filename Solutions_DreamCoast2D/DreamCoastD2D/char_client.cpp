@@ -102,6 +102,7 @@ int CharCIPMessage::RecMessagePort()
 			}
 			else {
 				netWorkCharManager::GetInstance().addToCharList(m_mPacket);
+				netWorkCharManager::GetInstance().updateState(m_mPacket);
 				// add the id and its movepacket
 			}
 		}

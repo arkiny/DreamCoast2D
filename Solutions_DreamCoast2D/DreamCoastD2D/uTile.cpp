@@ -5,6 +5,7 @@
 #include "uSprite.h"
 #include "cD2DRenderer.h"
 #include "IMapObject.h"
+#include "mNetworkObject.h"
 #include "cResourceManager.h"
 
 uTile::uTile()
@@ -208,6 +209,16 @@ void uTile::renderMapObject(float x, float y){
 	}
 }
 
+
+void uTile::renderNetObject(float x, float y){
+	mNetworkObject* ptr;
+	while (!m_qNetworkObject.empty()){
+		ptr = m_qNetworkObject.back();
+		ptr->render(m_Cam);
+		m_qNetworkObject.pop_back();
+	}
+}
+
 void uTile::addObject(ICharacter* in){
 	m_vObjects.push_back(in);
 }
@@ -217,6 +228,10 @@ void uTile::addMapObject(IMapObject* in){
 	m_qMapObject.push_back(in);
 }
 //
+void uTile::addNetObject(mNetworkObject* in){
+	m_qNetworkObject.push_back(in);
+}
+
 
 void uTile::onHit(float dmg){
 	for (ICharacter* obj : m_vObjects){

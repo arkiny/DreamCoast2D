@@ -7,6 +7,7 @@ class uSprite;
 class uCamera;
 class uTile;
 class cResourceManager;
+class mNetworkObject;
 //
 
 //
@@ -37,6 +38,8 @@ public:
 	// 타일에 오브젝트를 주입
 	void addRenderObjectToTile(float x, float y, ICharacter* in);
 	void addRenderMapObjectToTile(float x, float y, IMapObject* in);
+	void addRenderNetObjectToTile(float x, float y, mNetworkObject* in);
+
 	uTile* getTile(float x, float y);
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
 	VECTOR2D twoDtoISO(VECTOR2D in);

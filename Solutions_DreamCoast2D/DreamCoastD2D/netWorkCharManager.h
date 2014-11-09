@@ -27,6 +27,7 @@ public:
 	void updateState(movePacket in);
 
 	void removeFromList(int id);
+	std::map<int, mNetworkObject*>* getNetObjectList(){ return &m_mChars; }
 
 private:
 	int m_nMyId;

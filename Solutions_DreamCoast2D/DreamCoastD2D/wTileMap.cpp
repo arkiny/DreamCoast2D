@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <math.h>
 #include <queue>
+#include <map>
 //
 #include "cD2DRenderer.h"
 #include "VECTOR2D.h"
@@ -16,6 +17,7 @@
 #include "mBuilding.h"
 
 #include "netWorkCharManager.h"
+#include "mNetworkObject.h"
 
 wTileMap::wTileMap()
 {	
@@ -190,8 +192,6 @@ void wTileMap::removeMapObjectFromTile(float x, float y){
 		m_mapObjects.push_back(m_mapObjectsTemp.front());
 		m_mapObjectsTemp.pop();
 	}
-
-
 }
 
 void wTileMap::onUpdate(float fdeltatime){	
@@ -217,14 +217,24 @@ void wTileMap::onUpdate(float fdeltatime){
 		VECTOR2D pos = getTileCoordinates(objpos);
 		::wTileMap::addRenderMapObjectToTile(pos.x, pos.y, m_mapObjects[i]);		
 	}
-	
+
+	netWorkCharManager::GetInstance().update(fdeltatime);
+	std::map<int, mNetworkObject*>::iterator itr;
+
+	for (itr = netWorkCharManager::GetInstance().getNetObjectList()->begin(); 
+		itr != netWorkCharManager::GetInstance().getNetObjectList()->end(); itr++){
+		VECTOR2D objpos(itr->second->getCurrentPacket().px, itr->second->getCurrentPacket().py);
+		VECTOR2D pos = getTileCoordinates(objpos);
+		::wTileMap::addRenderNetObjectToTile(pos.x, pos.y, itr->second);
+	}
+
 	// player는 고정되어 있는 메모리이므로
 	// 일단 mob들이 타일에 뿌려진 뒤에 처리를 해야한다.
 	// 킄... 선공은 몬스터가 먼저인가 킄....
 	m_player->onUpdate(fdeltatime);
 
 	//
-	netWorkCharManager::GetInstance().update(fdeltatime);
+	
 }
 
 void wTileMap::onRender(){
@@ -241,7 +251,7 @@ void wTileMap::onRender(){
 	}
 
 	//
-	netWorkCharManager::GetInstance().render(m_Cam);
+	//netWorkCharManager::GetInstance().render(m_Cam);
 }
 
 void wTileMap::onRenderEdit(){
@@ -321,16 +331,6 @@ void wTileMap::renderMap(){
 
 			pt = twoDtoISO(in);
 
-			// 플레이어가 타일위에 있을때 
-			//if (test.x == i && test.y == j){
-			//	type = 1;				
-			//	onTilecheck = true;				
-			//}
-			//else {
-			//	//type = m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->getType();
-			//	//type = m_vMapinfo[i+j*static_cast<int>(_vertical)];
-			//}
-
 			/*if (test2.x == i && test2.y == j){
 				onTilecheck = true;
 			}*/
@@ -353,9 +353,12 @@ void wTileMap::renderMap(){
 	for (int j = 0; j < _vertical; j++){
 		for (int i = 0; i < _horizontal; i++){
 			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderMapObject
-				(pt.x, pt.y);
+				(pt.x, pt.y);		
 
 			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderObject
+				(pt.x, pt.y);
+
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderNetObject
 				(pt.x, pt.y);
 
 			if (test.x == i && test.y == j) {
@@ -481,44 +484,12 @@ void wTileMap::setSize(float horizontal, float vertical){
 	_horizontal = horizontal;
 	_vertical = vertical;
 
-	/*for (int i = 0; i < _horizontal * _vertical; i++){
-		m_vMapinfo.push_back(0);
-	}*/
-
 	uTile* ptr = nullptr;
 	for (int i = 0; i < _horizontal * _vertical; i++){
 		ptr = new uTile(0, m_Cam);
 		m_vMapObjectHandler.push_back(ptr);
 	}
 	ptr = nullptr;
-	
-	//debug및 테스트용 코드
-	/*for (int i = 0; i < 25; i++){
-		setTile(static_cast<float>(i), 0.0f, 2);
-	}
-
-	for (int i = 0; i < 25; i++){
-		setTile(0.0f, static_cast<float>(i), 2);
-	}
-
-	for (int i = 0; i < 25; i++){
-		setTile(24.0f, static_cast<float>(i), 2);
-	}
-
-	for (int i = 0; i < 25; i++){
-		setTile(static_cast<float>(i), 24.0f, 2);
-	}
-
-	setTile(11.0f, 12.0f, 3);
-	setTile(12.0f, 12.0f, 3);
-	setTile(11.0f, 11.0f, 3);
-	setTile(12.0f, 11.0f, 3);*/
-	//
-	
-	/*mapSize.left = _offsetX - ((_RectTileWidth * _horizontal));
-	mapSize.right = _offsetX + ((_RectTileWidth * _horizontal));
-	mapSize.top = _offsetY - (_RectTileHeight / 2.0f);
-	mapSize.bottom = _offsetY + ((_RectTileHeight * _vertical) - (_RectTileHeight / 2.0f));*/
 }
 
 int wTileMap::getMapinfo(int x, int y) { 	
@@ -535,6 +506,14 @@ void wTileMap::addRenderMapObjectToTile(float x, float y, IMapObject* in){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
 	m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addMapObject(in);
+}
+
+void wTileMap::addRenderNetObjectToTile(float x, float y, mNetworkObject* in){
+	int nx = static_cast<int>(x);
+	int ny = static_cast<int>(y);
+	if (nx >= 0 && ny >= 0){
+		m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addNetObject(in);
+	}
 }
 
 VECTOR2D wTileMap::getMapLimit(){ 
