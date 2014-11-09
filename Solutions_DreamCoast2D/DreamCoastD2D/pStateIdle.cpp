@@ -68,8 +68,8 @@ void pStateIdle::enter(mPlayer* pplayer){
 	movePacket toServer;
 	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
 	toServer.state = ONIDLE;
-	toServer.px = pplayer->getRealPos()->x;
-	toServer.py = pplayer->getRealPos()->y;
+	toServer.px = pplayer->getDrawPos()->x;
+	toServer.py = pplayer->getDrawPos()->y;
 	toServer.seedir = pplayer->getSeeDir();
 	toServer.speed = 0.0;
 	toServer.direction = pplayer->getMoveDir();

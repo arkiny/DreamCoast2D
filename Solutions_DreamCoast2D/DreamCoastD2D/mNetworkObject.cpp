@@ -46,7 +46,7 @@ void mNetworkObject::render(uCamera* cam){
 	VECTOR2D cpos = cam->translasteToScreen(&pos);
 
 
-	if (m_ipD2DBitmap != nullptr){
+	if (::cResourceManager::GetInstance().getPlayerBitMap()!=nullptr){
 		// Pivot 이미지의 한가운데 바닥 -> dxArea에서 지정
 		::D2D1_RECT_F dxArea
 			= m_spriteAtlas->getCoordinateFromPivot(cpos);
@@ -55,7 +55,8 @@ void mNetworkObject::render(uCamera* cam){
 		::D2D1_RECT_F srcArea
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(m_ipD2DBitmap, dxArea, 1.0f,
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(
+			::cResourceManager::GetInstance().getPlayerBitMap(), dxArea, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);	
 	}

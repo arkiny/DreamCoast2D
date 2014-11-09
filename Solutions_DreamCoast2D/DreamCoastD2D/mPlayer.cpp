@@ -346,6 +346,14 @@ void mPlayer::onRender(){
 			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 			srcArea);
 		
+		::D2D1_RECT_F pointer;
+		pointer.top = dxArea.top - 8.0f;
+		pointer.left = cpos.x - 3.0f;
+		pointer.bottom = dxArea.top - 2.0f;
+		pointer.right = cpos.x + 3.0f;
+
+		::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(pointer, ::cD2DRenderer::GetInstance().GetRedBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pointer, ::cD2DRenderer::GetInstance().GetBlackBrush());
 		//if (this->getDmg() > 0){
 		//	/// 텍스트 출력
 		//	wchar_t* wszText_ = new wchar_t[20];

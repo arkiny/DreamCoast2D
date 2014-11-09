@@ -222,6 +222,8 @@ BOOL cGameApplication::InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	g_pGameMgr->OnInit();
 	g_pChatMgr->OnInit();
+	//oninit
+	m_pNetCharMng;
 
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);

@@ -140,8 +140,8 @@ void pStateMove::enter(mPlayer* pplayer){
 	movePacket toServer;
 	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
 	toServer.state = pplayer->getState();
-	toServer.px = pplayer->getRealPos()->x;
-	toServer.py = pplayer->getRealPos()->y;
+	toServer.px = pplayer->getDrawPos()->x;
+	toServer.py = pplayer->getDrawPos()->y;
 	toServer.seedir = pplayer->getSeeDir();
 	toServer.speed = pplayer->getMoveSpeed();
 	toServer.direction = pplayer->getMoveDir();
