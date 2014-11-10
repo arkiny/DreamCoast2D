@@ -1,5 +1,0 @@
-#Normal Sprite info
-#Token SpriteID, FilePath
-a 0 ./Data/Player_Sprite_Data.txt
-a 1 ./Data/MapTile_Sprite_Data.txt
-a 2 ./Data/Effect1_Sprite_Data.txt

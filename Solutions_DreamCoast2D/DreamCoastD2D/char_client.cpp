@@ -90,26 +90,61 @@ int CharCIPMessage::RecMessagePort()
 
 	// 만약 해당 id를 캐릭터 매니저가 가지고 있지 않으면 해당 아이디를 추가
 	// 만약 해당 id를 캐릭터 매니저가 가지고 있으면 해당 아이디 업데이트
+	//
 	if (m_bFirstConnect == true){
 		netWorkCharManager::GetInstance().setMyId(m_mPacket.id);
 		m_bFirstConnect = false;
 	}
 	else {
-		if (netWorkCharManager::GetInstance().getMyId() != m_mPacket.id){
-			// check if exist
-			if (netWorkCharManager::GetInstance().hasCharacter(m_mPacket.id)){
-				netWorkCharManager::GetInstance().updateState(m_mPacket);
+		if (m_mPacket.msgtype == MESSAGETYPE_ID::PLAYER_ID_UPDATE){
+
+			if (netWorkCharManager::GetInstance().getMyId() != m_mPacket.id){
+				// check if exist
+				if (netWorkCharManager::GetInstance().hasCharacter(m_mPacket.id)){
+					netWorkCharManager::GetInstance().updateState(m_mPacket);
+				}
+				else {
+					netWorkCharManager::GetInstance().addToCharList(m_mPacket);
+					netWorkCharManager::GetInstance().updateState(m_mPacket);
+					// add the id and its movepacket
+				}
 			}
 			else {
-				netWorkCharManager::GetInstance().addToCharList(m_mPacket);
-				netWorkCharManager::GetInstance().updateState(m_mPacket);
-				// add the id and its movepacket
+				// ignore
+			}
+
+		}
+		else if (m_mPacket.msgtype == MESSAGETYPE_ID::PLAYER_ID_LOGOUT){
+			if (netWorkCharManager::GetInstance().getMyId() != m_mPacket.id){
+				// check if exist
+				if (netWorkCharManager::GetInstance().hasCharacter(m_mPacket.id)){
+					netWorkCharManager::GetInstance().removeFromList(m_mPacket.id);
+				}
+				else {
+				}
+			}
+			else {
+				// ignore
 			}
 		}
+		else if (m_mPacket.msgtype == MESSAGETYPE_ID::PLAYER_ID_ENTRY){
+
+		}
+
+		else if (m_mPacket.msgtype == MESSAGETYPE_ID::MOB_ID_ENTRY){
+
+		}
+		else if (m_mPacket.msgtype == MESSAGETYPE_ID::MOB_ID_UPDATE){
+
+		}
+		else if (m_mPacket.msgtype == MESSAGETYPE_ID::MOB_ID_LOGOUT){
+
+		}
 		else {
-			// ignore
+			// 쓰레기 신호
 		}
 	}
+
 	//cout << "-->" << m_mPacket.id << "\n";
 	if (iStat == -1)
 		return 1;

@@ -10,23 +10,23 @@ class mNetworkObject
 public:
 	mNetworkObject();
 	mNetworkObject(movePacket in);
-	~mNetworkObject();
+	virtual ~mNetworkObject();
 
-	void init();
-	void render(uCamera* cam);
-	void update(float delta);
+	virtual void init();
+	virtual void render(uCamera* cam);
+	virtual void update(float delta);
 
-	movePacket getCurrentPacket(){ return m_CurrentPacket; }
-	void setCurrentPacket(movePacket in) { m_CurrentPacket = in; }
+	virtual movePacket getCurrentPacket(){ return m_CurrentPacket; }
+	virtual void setCurrentPacket(movePacket in) { m_CurrentPacket = in; }
 
-	float getDelta(){ return m_fDelta; }
-	void setDelta(float in) { m_fDelta = in; }
+	virtual float getDelta(){ return m_fDelta; }
+	virtual void setDelta(float in) { m_fDelta = in; }
 
-	void changeState(niState* pnew);
-	VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
+	virtual void changeState(niState* pnew);
+	virtual VECTOR2D vectorMove(float fdeltatime, DIRECTION dir);
 
-	void setPacketPosition(float x, float y);
-	uSprite* getSprite(){ return m_spriteAtlas; }
+	virtual void setPacketPosition(float x, float y);
+	virtual uSprite* getSprite(){ return m_spriteAtlas; }
 private:
 	
 	movePacket m_CurrentPacket;

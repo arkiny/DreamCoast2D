@@ -11,6 +11,11 @@ netWorkCharManager::netWorkCharManager()
 
 netWorkCharManager::~netWorkCharManager()
 {
+	std::map<int, mNetworkObject*>::iterator itr;
+	for (itr = m_mChars.begin(); itr != m_mChars.end(); itr++){
+		delete itr->second;
+		m_mChars.erase(itr);
+	}
 }
 
 void netWorkCharManager::setMyId(int i){
@@ -38,6 +43,7 @@ void netWorkCharManager::addToCharList(movePacket in){
 void netWorkCharManager::removeFromList(int id){
 	std::map<int, mNetworkObject*>::iterator it = m_mChars.find(id);
 	if (it != m_mChars.end()){
+		delete it->second;
 		m_mChars.erase(it);
 	}
 }

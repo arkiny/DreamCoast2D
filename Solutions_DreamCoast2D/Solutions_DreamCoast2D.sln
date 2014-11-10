@@ -15,8 +15,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleCharServer", "SimpleC
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleCharClient", "SimpleCharClient\SimpleCharClient.vcxproj", "{EF2F4794-5946-434E-BC93-D202B21487FE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DreamCoastD2DClient", "DreamCoastD2DClient\DreamCoastD2DClient.vcxproj", "{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -75,14 +73,6 @@ Global
 		{EF2F4794-5946-434E-BC93-D202B21487FE}.Release|Win32.ActiveCfg = Release|Win32
 		{EF2F4794-5946-434E-BC93-D202B21487FE}.Release|Win32.Build.0 = Release|Win32
 		{EF2F4794-5946-434E-BC93-D202B21487FE}.Release|x64.ActiveCfg = Release|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Debug|ARM.ActiveCfg = Debug|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Debug|Win32.Build.0 = Debug|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Debug|x64.ActiveCfg = Debug|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Release|ARM.ActiveCfg = Release|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Release|Win32.ActiveCfg = Release|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Release|Win32.Build.0 = Release|Win32
-		{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

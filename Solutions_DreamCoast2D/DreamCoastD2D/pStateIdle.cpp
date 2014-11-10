@@ -66,7 +66,9 @@ void pStateIdle::enter(mPlayer* pplayer){
 	pplayer->setMoveDir(NOMOVE);
 
 	movePacket toServer;
+	toServer.msgtype = ::MESSAGETYPE_ID::PLAYER_ID_UPDATE;
 	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
+	toServer.mob_type = NMOB_NOT_MOB;
 	toServer.state = ONIDLE;
 	toServer.px = pplayer->getDrawPos()->x;
 	toServer.py = pplayer->getDrawPos()->y;

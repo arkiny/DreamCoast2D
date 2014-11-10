@@ -1,3 +1,0 @@
-#token id x y width height offsetX offsetY maxFrame
-a 0 0 0.0 0.0 110.6 104.0 0.0 35.0 9
-a 1 0 0.0 0.0 168.0 118.0 0.0 0.0 5
