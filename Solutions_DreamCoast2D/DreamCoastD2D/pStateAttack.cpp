@@ -89,7 +89,9 @@ void pStateAttack::enter(mPlayer* pplayer){
 //상태진행
 void pStateAttack::execute(mPlayer* pplayer){
 	m_sprite->nextFrame(pplayer->getDeltaTime()*pplayer->getAttackSpeed());
+
 	pplayer->dmgToTile(pplayer->getDeltaTime(), pplayer->getAttackPower());
+
 	if (m_sprite->getCurrentFrame() == 7){
 		m_sprite->setCurrentFrame(0);
 		pplayer->changeStatus(new pStateIdle);

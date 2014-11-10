@@ -526,6 +526,7 @@ void wTileMap::addRenderNetObjectToTile(float x, float y, mNetworkObject* in){
 	int ny = static_cast<int>(y);
 	if (nx >= 0 && ny >= 0 && nx <= _vertical && ny <= _horizontal){
 		m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addNetObject(in);
+		in->setTileMapPointer(this);
 	}
 }
 

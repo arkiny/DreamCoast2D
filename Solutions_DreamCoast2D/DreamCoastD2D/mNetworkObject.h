@@ -4,6 +4,7 @@
 class uCamera;
 class uSprite;
 class niState;
+class wTileMap;
 
 class mNetworkObject
 {
@@ -15,6 +16,7 @@ public:
 	void init();
 	void render(uCamera* cam);
 	void update(float delta);
+	void setTileMapPointer(wTileMap* in){ m_pTileMap = in; }
 
 	movePacket getCurrentPacket(){ return m_CurrentPacket; }
 	void setCurrentPacket(movePacket in) { m_CurrentPacket = in; }
@@ -27,10 +29,16 @@ public:
 
 	void setPacketPosition(float x, float y);
 	uSprite* getSprite(){ return m_spriteAtlas; }
+
+	void dmgToTile(float delta, float dmg);
+	void setAttackAccumTime(float in){ m_attackaccumtime = in; }
+
 private:
-	
+	float m_attackaccumtime = 0.0f;
+
 	movePacket m_CurrentPacket;
 	float m_fDelta = 0.0f;
+	wTileMap *m_pTileMap;
 
 	uSprite* m_spriteAtlas;			// 스프라이트 정보
 	niState* m_CurrentState;		// 현재 상태 머신

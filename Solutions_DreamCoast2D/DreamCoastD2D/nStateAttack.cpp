@@ -59,7 +59,7 @@ void nStateAttack::enter(mNetworkObject* pobj){
 			cResourceManager::GetInstance().getPlayerSpriteInfo(2, 3)->offsetY,
 			cResourceManager::GetInstance().getPlayerSpriteInfo(2, 3)->maxFrame);
 	}
-
+	pobj->setAttackAccumTime(0.0f);
 	cSoundManager::GetInstance().executeAttack();
 }
 
@@ -75,7 +75,8 @@ void nStateAttack::execute(mNetworkObject* pobj){
 		return;
 	}
 
-	m_sprite->nextFrame(pobj->getDelta());
+	pobj->dmgToTile(pobj->getDelta(), 10.0f);
+	m_sprite->nextFrame(pobj->getDelta() * 2.0f);
 }
 
 //╩Себ юле╩

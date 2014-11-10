@@ -9,6 +9,9 @@
 #include "uSprite.h"
 
 #include "nStateIdle.h"
+#include "wTileMap.h"
+#include "uTile.h"
+#include "uSprite.h"
 
 mNetworkObject::mNetworkObject()
 {
@@ -157,4 +160,39 @@ VECTOR2D mNetworkObject::vectorMove(float fdeltatime, DIRECTION dir){
 	vMover = vDir*(m_CurrentPacket.speed * fdeltatime);
 
 	return vMover;
+}
+
+// 공격 속도 조정
+void mNetworkObject::dmgToTile(float delta, float dmg){
+	m_attackaccumtime += delta;
+	VECTOR2D currentVector(m_CurrentPacket.px, m_CurrentPacket.py);
+	VECTOR2D currentTile = m_pTileMap->getTileCoordinates(currentVector);
+
+	float fx, fy;
+
+	if (m_attackaccumtime > FRAMERATE * 2.5f){
+	//if (m_spriteAtlas->getCurrentFrame() == 4){
+		//attacktrigger = true;
+		m_attackaccumtime = 0.0f;
+		if (m_CurrentPacket.seedir == LEFTDOWN){
+			fx = currentTile.x + 1.0f;
+			fy = currentTile.y;
+		}
+		else if (m_CurrentPacket.seedir == LEFTUP){
+			fx = currentTile.x;
+			fy = currentTile.y - 1.0f;
+		}
+		else if (m_CurrentPacket.seedir == RIGHTDOWN){
+			fx = currentTile.x;
+			fy = currentTile.y + 1.0f;
+		}
+		else if (m_CurrentPacket.seedir == RIGHTUP){
+			fx = currentTile.x - 1.0f;;
+			fy = currentTile.y;
+		}
+		else {}
+		// 같은 타일내에 겹쳐 있을수도 있으므로...
+		m_pTileMap->getTile(currentTile.x, currentTile.y)->onHit(dmg);
+		m_pTileMap->getTile(fx, fy)->onHit(dmg);
+	}
 }
