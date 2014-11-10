@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{49C780C0-E4AA-45E8-8C19-FDD449FF1F9F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>DreamCoastD2D</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>.\irr\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Arkiny\Documents\GitHub\DreamCoast2D\Solutions_DreamCoast2D\DreamCoastD2D\irr;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\irr\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="aiState.h" />
+    <ClInclude Include="aiStateAttack.h" />
+    <ClInclude Include="aiStateDead.h" />
+    <ClInclude Include="aiStateIdle.h" />
+    <ClInclude Include="aiStateMoveto.h" />
+    <ClInclude Include="aiStateOnCasting.h" />
+    <ClInclude Include="aiStateOnHit.h" />
+    <ClInclude Include="aiStateScan.h" />
+    <ClInclude Include="aiStateSkillEffect.h" />
+    <ClInclude Include="cChatManager.h" />
+    <ClInclude Include="cD2DRenderer.h" />
+    <ClInclude Include="cGameApplication.h" />
+    <ClInclude Include="cGameManager.h" />
+    <ClInclude Include="char_client.h" />
+    <ClInclude Include="chat_client.h" />
+    <ClInclude Include="cIChatMgr.h" />
+    <ClInclude Include="cIGameMgr.h" />
+    <ClInclude Include="coControl.h" />
+    <ClInclude Include="cResourceID.h" />
+    <ClInclude Include="cResourceManager.h" />
+    <ClInclude Include="cSoundManager.h" />
+    <ClInclude Include="DB_Skill_Area_List.h" />
+    <ClInclude Include="DreamCoastD2D.h" />
+    <ClInclude Include="IEffect.h" />
+    <ClInclude Include="IGObject.h" />
+    <ClInclude Include="iInScreenUI.h" />
+    <ClInclude Include="IInventory.h" />
+    <ClInclude Include="IItem.h" />
+    <ClInclude Include="IMapObject.h" />
+    <ClInclude Include="InEditUI.h" />
+    <ClInclude Include="InGameUI.h" />
+    <ClInclude Include="InMainUI.h" />
+    <ClInclude Include="mBuilding.h" />
+    <ClInclude Include="mCharacter.h" />
+    <ClInclude Include="mEffect.h" />
+    <ClInclude Include="mEquipped.h" />
+    <ClInclude Include="mGFX.h" />
+    <ClInclude Include="mInventory.h" />
+    <ClInclude Include="mItem.h" />
+    <ClInclude Include="mMonster.h" />
+    <ClInclude Include="movePacket.h" />
+    <ClInclude Include="mPlayer.h" />
+    <ClInclude Include="mNetworkObject.h" />
+    <ClInclude Include="netWorkCharManager.h" />
+    <ClInclude Include="niState.h" />
+    <ClInclude Include="nStateIdle.h" />
+    <ClInclude Include="nStateMove.h" />
+    <ClInclude Include="piState.h" />
+    <ClInclude Include="pStateAttack.h" />
+    <ClInclude Include="pStateIdle.h" />
+    <ClInclude Include="pStateMove.h" />
+    <ClInclude Include="pStateOnCasting.h" />
+    <ClInclude Include="pStateOnDead.h" />
+    <ClInclude Include="pStateOnHit.h" />
+    <ClInclude Include="pStateOnSkillEffect.h" />
+    <ClInclude Include="sEditScreen.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="sMainMenuScreen.h" />
+    <ClInclude Include="sResourceLoad.h" />
+    <ClInclude Include="uAnimationLoader.h" />
+    <ClInclude Include="uCamera.h" />
+    <ClInclude Include="uFileControl.h" />
+    <ClInclude Include="uiBelt.h" />
+    <ClInclude Include="uiButton.h" />
+    <ClInclude Include="uiGameMiniMap.h" />
+    <ClInclude Include="uiInGameMenu.h" />
+    <ClInclude Include="uiInterface.h" />
+    <ClInclude Include="uiInventory.h" />
+    <ClInclude Include="uiMenu.h" />
+    <ClInclude Include="uiPlayerStatBar.h" />
+    <ClInclude Include="uiStat.h" />
+    <ClInclude Include="wTileMap.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="sGameScreen.h" />
+    <ClInclude Include="sIScreen.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="uSprite.h" />
+    <ClInclude Include="uTile.h" />
+    <ClInclude Include="VECTOR2D.h" />
+    <ClInclude Include="wWorld.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="aiState.cpp" />
+    <ClCompile Include="aiStateAttack.cpp" />
+    <ClCompile Include="aiStateDead.cpp" />
+    <ClCompile Include="aiStateIdle.cpp" />
+    <ClCompile Include="aiStateMoveto.cpp" />
+    <ClCompile Include="aiStateOnCasting.cpp" />
+    <ClCompile Include="aiStateOnHit.cpp" />
+    <ClCompile Include="aiStateScan.cpp" />
+    <ClCompile Include="aiStateSkillEffect.cpp" />
+    <ClCompile Include="cChatManager.cpp" />
+    <ClCompile Include="cD2DRenderer.cpp" />
+    <ClCompile Include="cGameApplication.cpp" />
+    <ClCompile Include="cGameManager.cpp" />
+    <ClCompile Include="char_client.cpp" />
+    <ClCompile Include="chat_client.cpp" />
+    <ClCompile Include="cIChatMgr.cpp" />
+    <ClCompile Include="cIGameMgr.cpp" />
+    <ClCompile Include="coControl.cpp" />
+    <ClCompile Include="cResourceManager.cpp" />
+    <ClCompile Include="cSoundManager.cpp" />
+    <ClCompile Include="DreamCoastD2D.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Heedong\Documents\GitHub\DreamCoast2D\Solutions_DreamCoast2D\DreamCoastD2D\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Heedong\Documents\GitHub\DreamCoast2D\Solutions_DreamCoast2D\DreamCoastD2D\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="iInScreenUI.cpp" />
+    <ClCompile Include="InEditUI.cpp" />
+    <ClCompile Include="InGameUI.cpp" />
+    <ClCompile Include="InMainUI.cpp" />
+    <ClCompile Include="mBuilding.cpp" />
+    <ClCompile Include="mCharacter.cpp" />
+    <ClCompile Include="mEffect.cpp" />
+    <ClCompile Include="mEquipped.cpp" />
+    <ClCompile Include="mGFX.cpp" />
+    <ClCompile Include="mInventory.cpp" />
+    <ClCompile Include="mItem.cpp" />
+    <ClCompile Include="mMonster.cpp" />
+    <ClCompile Include="mPlayer.cpp" />
+    <ClCompile Include="mPlayerSkill.cpp" />
+    <ClCompile Include="mNetworkObject.cpp" />
+    <ClCompile Include="netWorkCharManager.cpp" />
+    <ClCompile Include="niState.cpp" />
+    <ClCompile Include="nStateIdle.cpp" />
+    <ClCompile Include="nStateMove.cpp" />
+    <ClCompile Include="piState.cpp" />
+    <ClCompile Include="pStateAttack.cpp" />
+    <ClCompile Include="pStateIdle.cpp" />
+    <ClCompile Include="pStateMove.cpp" />
+    <ClCompile Include="pStateOnCasting.cpp" />
+    <ClCompile Include="pStateOnDead.cpp" />
+    <ClCompile Include="pStateOnHit.cpp" />
+    <ClCompile Include="pStateOnSkillEffect.cpp" />
+    <ClCompile Include="sEditScreen.cpp" />
+    <ClCompile Include="sMainMenuScreen.cpp" />
+    <ClCompile Include="sResourceLoad.cpp" />
+    <ClCompile Include="uAnimationLoader.cpp" />
+    <ClCompile Include="uCamera.cpp" />
+    <ClCompile Include="uFileControl.cpp" />
+    <ClCompile Include="uiBelt.cpp" />
+    <ClCompile Include="uiButton.cpp" />
+    <ClCompile Include="uiGameMiniMap.cpp" />
+    <ClCompile Include="uiInGameMenu.cpp" />
+    <ClCompile Include="uiInterface.cpp" />
+    <ClCompile Include="uiInventory.cpp" />
+    <ClCompile Include="uiMenu.cpp" />
+    <ClCompile Include="uiPlayerStatBar.cpp" />
+    <ClCompile Include="uiStat.cpp" />
+    <ClCompile Include="wTileMap.cpp" />
+    <ClCompile Include="sGameScreen.cpp" />
+    <ClCompile Include="sIScreen.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Trash.cpp" />
+    <ClCompile Include="uSprite.cpp" />
+    <ClCompile Include="uTile.cpp" />
+    <ClCompile Include="VECTOR2D.cpp" />
+    <ClCompile Include="wWorld.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DreamCoastD2D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="DreamCoastD2D.ico" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="irrKlang.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ikpFlac.dll" />
+    <None Include="ikpMP3.dll" />
+    <None Include="irrKlang.dll" />
+    <None Include="map1.dat" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
