@@ -66,6 +66,9 @@ public:
 	float getSkillAccumtime() { return m_skillAccumtime; }
 	void setSkillAccumtime(float in) { m_skillAccumtime = in; }
 
+	int getMobID(){ return m_nMobID; }
+	void setMobID(int id);
+
 private:
 	DIRECTION m_SeeDir; // 보고 있는 방향
 	OBJECTSTATE m_State;
@@ -95,5 +98,7 @@ private:
 	// skill cooltime은 차후 스킬 DB에 따라서 유동화
 	const float m_skillCooltime = 10.0f;
 	float m_skillAccumtime = 0.0f;
+
+	int m_nMobID = 0;
 };
 

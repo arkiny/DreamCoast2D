@@ -11,6 +11,10 @@
 #include "mGFX.h"
 #include "mEffect.h"
 
+#include "char_client.h"
+#include "movePacket.h"
+#include "netWorkCharManager.h"
+
 mMonster::mMonster()
 {
 	//
@@ -81,6 +85,10 @@ void mMonster::onInit(){
 
 	m_pState = new aiStateIdle();
 	m_pState->enter(this);	
+}
+
+void mMonster::setMobID(int id){
+	m_nMobID = id;
 }
 
 //void mMonster::onInit(cD2DRenderer& renderer){
@@ -418,7 +426,13 @@ void mMonster::onRender(){
 		//		layoutRect,
 		//		::cD2DRenderer::GetInstance().GetRedBrush());
 		//}
-
+		::D2D1_RECT_F pointer;
+		pointer.top = dxArea.top - 8.0f;
+		pointer.left = cpos.x - 3.0f;
+		pointer.bottom = dxArea.top - 2.0f;
+		pointer.right = cpos.x + 3.0f;
+		::cD2DRenderer::GetInstance().GetRenderTarget()->FillRectangle(pointer, ::cD2DRenderer::GetInstance().GetRedBrush());
+		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawRectangle(pointer, ::cD2DRenderer::GetInstance().GetBlackBrush());
 
 		//회전등에 필요한 부분
 		//renderer.GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
@@ -464,24 +478,38 @@ void mMonster::setDest(float x, float y){
 	m_dest->x = x;
 	m_dest->y = y;
 }
+
 // todo: 상하좌우 움직임 없앨것 (알고리즘을 그렇게 처리)
 void mMonster::moveToDest(float deltaTime){
 	VECTOR2D vMover;
+
+	//movePacket toServer;
+
+	
+
 	if (m_dest->x < _realVector->x && m_dest->y < _realVector->y){
 		vMover= mCharacter::vectorMove(deltaTime, LEFTUP);
 		m_SeeDir = LEFTUP;
+		/*toServer.direction = LEFTUP;
+		toServer.seedir = LEFTUP;*/
 	}
 	else if (m_dest->x > _realVector->x && m_dest->y > _realVector->y){
 		vMover= mCharacter::vectorMove(deltaTime, RIGHTDOWN);
 		m_SeeDir = RIGHTDOWN;
+		/*toServer.direction = RIGHTDOWN;
+		toServer.seedir = RIGHTDOWN;*/
 	}
 	else if (m_dest->x < _realVector->x && m_dest->y > _realVector->y){
 		vMover = mCharacter::vectorMove(deltaTime, LEFTDOWN);
 		m_SeeDir = LEFTDOWN;
+		/*toServer.direction = LEFTDOWN;
+		toServer.seedir = LEFTDOWN;*/
 	}
 	else if (m_dest->x > _realVector->x && m_dest->y < _realVector->y){
 		vMover= mCharacter::vectorMove(deltaTime, RIGHTUP);
 		m_SeeDir = RIGHTUP;
+		/*toServer.direction = RIGHTUP;
+		toServer.seedir = RIGHTUP;*/
 	}
 	else if (m_dest->x < _realVector->x){
 		vMover = mCharacter::vectorMove(deltaTime, LEFT);
@@ -492,6 +520,9 @@ void mMonster::moveToDest(float deltaTime){
 			m_SeeDir = LEFTDOWN;
 		}*/		
 		m_SeeDir = LEFTDOWN;
+
+	/*	toServer.direction = LEFT;
+		toServer.seedir = LEFTDOWN;*/
 	}
 	else if (m_dest->x > _realVector->x){
 		vMover = mCharacter::vectorMove(deltaTime, RIGHT);
@@ -502,23 +533,34 @@ void mMonster::moveToDest(float deltaTime){
 			m_SeeDir = RIGHTDOWN;
 		}*/
 		m_SeeDir = RIGHTDOWN;
+
+		/*toServer.direction = RIGHT;
+		toServer.seedir = RIGHTDOWN;*/
 	}
 	else if (m_dest->y < _realVector->y){
 		vMover= mCharacter::vectorMove(deltaTime, UP);
+		//toServer.direction = UP;
+		
 		if (m_SeeDir == LEFTDOWN){
 			m_SeeDir = LEFTUP;
+			//toServer.seedir = LEFTUP;
 		}
 		else if (m_SeeDir == RIGHTDOWN){
 			m_SeeDir = RIGHTUP;
+			//toServer.seedir = RIGHTUP;
 		}
 	}
 	else if (m_dest->y > _realVector->y){
 		vMover = mCharacter::vectorMove(deltaTime, DOWN);
+		//toServer.direction = DOWN;
+
 		if (m_SeeDir == LEFTUP){
 			m_SeeDir = LEFTDOWN;
+			//toServer.seedir = LEFTDOWN;
 		}
 		else if (m_SeeDir == RIGHTUP){
 			m_SeeDir = RIGHTDOWN;
+			//toServer.seedir = RIGHTDOWN;
 		}
 	}
 
@@ -535,6 +577,17 @@ void mMonster::moveToDest(float deltaTime){
 	if (abs(_realVector->y - m_dest->y) < tolerance){
 		m_dest->y = _realVector->y;
 	}	
+
+	/*toServer.msgtype = ::MESSAGETYPE_ID::MOB_ID_UPDATE;
+	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
+	toServer.mob_uniq_id = getMobID();
+	toServer.mob_type = getMonsterType();
+	toServer.state = ONMOVE;
+	toServer.px = getDrawPos()->x;
+	toServer.py = getDrawPos()->y;
+	toServer.speed = getMoveSpeed();
+	
+	::CharCIPMessage::GetInstance().SendMessagePort(toServer);*/
 }
 
 void mMonster::moveRandom(){

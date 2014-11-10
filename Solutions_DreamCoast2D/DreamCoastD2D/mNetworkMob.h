@@ -37,7 +37,7 @@ public:
 	void onDeath();
 	void onMove();
 	void onCasting();
-
+	void moveToDest(float deltaTime);
 private:
 	movePacket m_CurrentPacket;
 	float m_fDelta = 0.0f;

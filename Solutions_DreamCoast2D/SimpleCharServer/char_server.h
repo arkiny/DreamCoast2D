@@ -21,9 +21,17 @@ enum MESSAGETYPE_ID{
 	MOB_ID_LOGOUT
 };
 
+enum MESSAGE_MOB_TYPE{
+	NMOB_NOT_MOB,
+	NMOB_PASSIVE_PORING,
+	NMOB_ACTIVE_PORING,
+	NMOB_BAPO
+};
+
 struct movePacket{
 	int msgtype;
 	int id;
+	int mob_uniq_id;
 	int mob_type;
 	int state;
 	int direction;
@@ -31,7 +39,11 @@ struct movePacket{
 	float px;
 	float py;
 	float speed;
+
+	float dx;
+	float dy;
 };
+
 
 
 class CCharServer
@@ -53,4 +65,6 @@ private:
 
 	SOCKET m_SClient;
 	SOCKET m_SListenClient; // socket listening for client calls
+
+	int m_mobid = 0;
 };

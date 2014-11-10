@@ -8,6 +8,7 @@ class uCamera;
 class uTile;
 class cResourceManager;
 class mNetworkObject;
+class mNetworkMob;
 //
 
 //
@@ -38,7 +39,11 @@ public:
 	// 타일에 오브젝트를 주입
 	void addRenderObjectToTile(float x, float y, ICharacter* in);
 	void addRenderMapObjectToTile(float x, float y, IMapObject* in);
+	
+	//
 	void addRenderNetObjectToTile(float x, float y, mNetworkObject* in);
+	void addRenderNetMobObjectToTile(float x, float y, mNetworkMob* in);
+	//
 
 	uTile* getTile(float x, float y);
 	// 2D좌표를 ISO좌표로 변환하는 함수인데 먼가 이상하게 됬다 ㅡㅡ
@@ -111,8 +116,6 @@ private:
 
 	// monster의 시야 스캐닝
 	void scanVision(float sight, VECTOR2D monsterpos, VECTOR2D playerPos, bool* ret);
-
-
 };
 
 // IsoMetrictile의 기본 크기는 가로90 세로45로 설정했음 (sprite타일의 크기)

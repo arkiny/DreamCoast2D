@@ -132,10 +132,28 @@ int CharCIPMessage::RecMessagePort()
 		}
 
 		else if (m_mPacket.msgtype == MESSAGETYPE_ID::MOB_ID_ENTRY){
-
+			if (netWorkCharManager::GetInstance().getMyId() != m_mPacket.id){
+				if (netWorkCharManager::GetInstance().hasMob(m_mPacket.mob_uniq_id)){
+					netWorkCharManager::GetInstance().updateMobState(m_mPacket);
+				}
+				else {
+					netWorkCharManager::GetInstance().addToMobList(m_mPacket);
+					netWorkCharManager::GetInstance().updateMobState(m_mPacket);
+					// add the id and its movepacket
+				}
+			}
 		}
 		else if (m_mPacket.msgtype == MESSAGETYPE_ID::MOB_ID_UPDATE){
-
+			if (netWorkCharManager::GetInstance().getMyId() != m_mPacket.id){
+				if (netWorkCharManager::GetInstance().hasMob(m_mPacket.mob_uniq_id)){
+					netWorkCharManager::GetInstance().updateMobState(m_mPacket);
+				}
+				else {
+					netWorkCharManager::GetInstance().addToMobList(m_mPacket);
+					netWorkCharManager::GetInstance().updateMobState(m_mPacket);
+					// add the id and its movepacket
+				}
+			}
 		}
 		else if (m_mPacket.msgtype == MESSAGETYPE_ID::MOB_ID_LOGOUT){
 

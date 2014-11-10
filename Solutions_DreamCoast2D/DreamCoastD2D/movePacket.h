@@ -19,6 +19,7 @@ enum MESSAGE_MOB_TYPE{
 struct movePacket{
 	int msgtype;
 	int id;
+	int mob_uniq_id;
 	int mob_type;
 	int state;
 	int direction;
@@ -26,4 +27,7 @@ struct movePacket{
 	float px;
 	float py;
 	float speed;
+
+	float dx;
+	float dy;
 };

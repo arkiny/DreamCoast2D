@@ -86,6 +86,9 @@
     <Filter Include="Model\Character\NetWorkObject State">
       <UniqueIdentifier>{de4dbb40-b0ad-4712-8a9b-328da031a802}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Character\NetWorkMob State">
+      <UniqueIdentifier>{0064d487-127a-4ad8-8ede-5cc741c2d019}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -334,6 +337,21 @@
     <ClInclude Include="nStateMove.h">
       <Filter>Model\Character\NetWorkObject State</Filter>
     </ClInclude>
+    <ClInclude Include="mNetworkMob.h">
+      <Filter>Model\Character\NetWorkObject</Filter>
+    </ClInclude>
+    <ClInclude Include="niMobState.h">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClInclude>
+    <ClInclude Include="niMobStateIdle.h">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClInclude>
+    <ClInclude Include="niMobStateMove.h">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClInclude>
+    <ClInclude Include="nStateAttack.h">
+      <Filter>Model\Character\NetWorkObject State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -550,6 +568,21 @@
       <Filter>Model\Character\NetWorkObject State</Filter>
     </ClCompile>
     <ClCompile Include="nStateMove.cpp">
+      <Filter>Model\Character\NetWorkObject State</Filter>
+    </ClCompile>
+    <ClCompile Include="mNetworkMob.cpp">
+      <Filter>Model\Character\NetWorkObject</Filter>
+    </ClCompile>
+    <ClCompile Include="niMobState.cpp">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClCompile>
+    <ClCompile Include="niMobStateIdle.cpp">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClCompile>
+    <ClCompile Include="niMobStateMove.cpp">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClCompile>
+    <ClCompile Include="nStateAttack.cpp">
       <Filter>Model\Character\NetWorkObject State</Filter>
     </ClCompile>
   </ItemGroup>

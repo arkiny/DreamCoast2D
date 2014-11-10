@@ -14,22 +14,16 @@ void niMobStateMove::enter(mNetworkMob* pobj){
 }
 
 void niMobStateMove::execute(mNetworkMob* pobj){
+	// 이동방향 갱신
+	pobj->onMove();
+	//
+	pobj->moveToDest(pobj->getDelta());
+	m_sprite->nextFrame(pobj->getDelta());
+
 	if (pobj->getCurrentPacket().state == ONIDLE){
 		pobj->changeState(new niMobStateIdle);
 		return;
 	}
-
-	// 이동방향 갱신
-	pobj->onMove();
-	//
-
-	VECTOR2D vMover;
-	vMover = pobj->vectorMove(pobj->getDelta(), (DIRECTION)pobj->getCurrentPacket().direction);
-	VECTOR2D pos(pobj->getCurrentPacket().px, pobj->getCurrentPacket().py);
-	pos = pos + vMover;
-	pobj->setPacketPosition(pos.x, pos.y);
-
-	m_sprite->nextFrame(pobj->getDelta());
 }
 
 void niMobStateMove::exit(mNetworkMob* pobj){

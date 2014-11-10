@@ -9,12 +9,31 @@
 #include "aiStateDead.h"
 #include "VECTOR2D.h"
 
+#include "movePacket.h"
+#include "char_client.h"
+#include "netWorkCharManager.h"
+
 void aiStateIdle::enter(mMonster* pmon){
 	// todo:: sprite setter를 object에 추가한후
 	// idling sprite를 설정 (보고 있는 방향마다)
 	// pointer initial 할때 써야하나?
 	m_sprite = pmon->getSprite();
 	pmon->onIdle();
+
+	movePacket toServer;
+
+	toServer.msgtype = ::MESSAGETYPE_ID::MOB_ID_UPDATE;
+	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
+	toServer.mob_uniq_id = pmon->getMobID();
+	toServer.mob_type = pmon->getMonsterType();
+	toServer.state = ONIDLE;
+	toServer.px = pmon->getDrawPos()->x;
+	toServer.py = pmon->getDrawPos()->y;
+	toServer.seedir = pmon->getDir();
+	toServer.speed = 0.0;
+	toServer.direction = pmon->getDir();
+
+	::CharCIPMessage::GetInstance().SendMessagePort(toServer);
 }
 
 void aiStateIdle::execute(mMonster* pmon){

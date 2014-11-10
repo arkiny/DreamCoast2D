@@ -274,3 +274,98 @@ void mNetworkMob::onCasting(){
 			in->maxFrame);
 	}
 }
+
+// todo: 상하좌우 움직임 없앨것 (알고리즘을 그렇게 처리)
+void mNetworkMob::moveToDest(float deltaTime){
+	VECTOR2D vMover;
+
+	if (m_CurrentPacket.dx < m_CurrentPacket.px && m_CurrentPacket.dy < m_CurrentPacket.py){
+		vMover = vectorMove(deltaTime, LEFTUP);
+		m_CurrentPacket.seedir = LEFTUP;
+		/*toServer.direction = LEFTUP;
+		toServer.seedir = LEFTUP;*/
+	}
+	else if (m_CurrentPacket.dx > m_CurrentPacket.px && m_CurrentPacket.dy > m_CurrentPacket.py){
+		vMover = vectorMove(deltaTime, RIGHTDOWN);
+		m_CurrentPacket.seedir = RIGHTDOWN;
+		/*toServer.direction = RIGHTDOWN;
+		toServer.seedir = RIGHTDOWN;*/
+	}
+	else if (m_CurrentPacket.dx < m_CurrentPacket.px && m_CurrentPacket.dy >  m_CurrentPacket.py){
+		vMover = vectorMove(deltaTime, LEFTDOWN);
+		m_CurrentPacket.seedir = LEFTDOWN;
+		/*toServer.direction = LEFTDOWN;
+		toServer.seedir = LEFTDOWN;*/
+	}
+	else if (m_CurrentPacket.dx > m_CurrentPacket.px && m_CurrentPacket.dy < m_CurrentPacket.py){
+		vMover = vectorMove(deltaTime, RIGHTUP);
+		m_CurrentPacket.seedir = RIGHTUP;
+		/*toServer.direction = RIGHTUP;
+		toServer.seedir = RIGHTUP;*/
+	}
+	else if (m_CurrentPacket.dx < m_CurrentPacket.px){
+		vMover = vectorMove(deltaTime, LEFT);
+		/*if (m_SeeDir == RIGHTUP){
+		m_SeeDir = LEFTUP;
+		}
+		else if (m_SeeDir == RIGHTDOWN){
+		m_SeeDir = LEFTDOWN;
+		}*/
+		m_CurrentPacket.seedir = LEFTDOWN;
+
+		/*	toServer.direction = LEFT;
+		toServer.seedir = LEFTDOWN;*/
+	}
+	else if (m_CurrentPacket.dx > m_CurrentPacket.px){
+		vMover = vectorMove(deltaTime, RIGHT);
+		/*if (m_SeeDir == LEFTUP){
+		m_SeeDir = RIGHTUP;
+		}
+		else if (m_SeeDir == LEFTDOWN){
+		m_SeeDir = RIGHTDOWN;
+		}*/
+		m_CurrentPacket.seedir = RIGHTDOWN;
+
+		/*toServer.direction = RIGHT;
+		toServer.seedir = RIGHTDOWN;*/
+	}
+	else if (m_CurrentPacket.dy < m_CurrentPacket.py){
+		vMover = vectorMove(deltaTime, UP);
+		//toServer.direction = UP;
+
+		if (m_CurrentPacket.seedir == LEFTDOWN){
+			m_CurrentPacket.seedir = LEFTUP;
+			//toServer.seedir = LEFTUP;
+		}
+		else if (m_CurrentPacket.seedir == RIGHTDOWN){
+			m_CurrentPacket.seedir = RIGHTUP;
+			//toServer.seedir = RIGHTUP;
+		}
+	}
+	else if (m_CurrentPacket.dy > m_CurrentPacket.py){
+		vMover = vectorMove(deltaTime, DOWN);
+		//toServer.direction = DOWN;
+
+		if (m_CurrentPacket.seedir == LEFTUP){
+			m_CurrentPacket.seedir = LEFTDOWN;
+			//toServer.seedir = LEFTDOWN;
+		}
+		else if (m_CurrentPacket.seedir == RIGHTUP){
+			m_CurrentPacket.seedir = RIGHTDOWN;
+			//toServer.seedir = RIGHTDOWN;
+		}
+	}
+	m_CurrentPacket.px = m_CurrentPacket.px + vMover.x;
+	m_CurrentPacket.py = m_CurrentPacket.py + vMover.y;
+
+	// 플롯 벡터 움직임 오차범위
+	// 플롯이고, 또한 벡터 무빙으로 움직이기 때문에 어느정도의 오차는 발생한다.
+	// 오차범위내에 들어가면 도착한걸로 결정
+	float tolerance = 2.0f;
+	if (abs(m_CurrentPacket.px - m_CurrentPacket.dx) < tolerance){
+		m_CurrentPacket.dx = m_CurrentPacket.px;
+	}
+	if (abs(m_CurrentPacket.py - m_CurrentPacket.dy) < tolerance){
+		m_CurrentPacket.dy = m_CurrentPacket.py;
+	}
+}

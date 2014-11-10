@@ -4,6 +4,8 @@
 
 #include "nStateIdle.h"
 #include "nStateMove.h"
+#include "nStateAttack.h"
+
 #include "mNetworkObject.h"
 #include "uSprite.h"
 
@@ -60,6 +62,12 @@ void nStateIdle::execute(mNetworkObject* pobj){
 		pobj->changeState(new nStateMove);
 		return;
 	}
+
+	if (pobj->getCurrentPacket().state == ONATTACK){
+		pobj->changeState(new nStateAttack);
+		return;
+	}
+
 	m_sprite->nextFrame(pobj->getDelta());
 }
 

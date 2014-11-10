@@ -18,6 +18,7 @@
 
 #include "netWorkCharManager.h"
 #include "mNetworkObject.h"
+#include "mNetworkMob.h"
 
 wTileMap::wTileMap()
 {	
@@ -128,8 +129,9 @@ void wTileMap::onInit(){
 	for (unsigned int i = 0; i < m_mobs.size(); i++){
 		m_mobs[i]->onInit();
 		m_mobs[i]->setCam(m_Cam);
+		//host가 id를 정해준다
+		((mMonster*)m_mobs[i])->setMobID(i);
 	}
-
 
 
 	for (unsigned int i = 0; i < m_mapObjects.size(); i++){
@@ -226,6 +228,14 @@ void wTileMap::onUpdate(float fdeltatime){
 		VECTOR2D objpos(itr->second->getCurrentPacket().px, itr->second->getCurrentPacket().py);
 		VECTOR2D pos = getTileCoordinates(objpos);
 		::wTileMap::addRenderNetObjectToTile(pos.x, pos.y, itr->second);
+	}
+
+	std::map<int, mNetworkMob*>::iterator itr2;
+	for (itr2 = netWorkCharManager::GetInstance().getNetMobObjectList()->begin();
+		itr2 != netWorkCharManager::GetInstance().getNetMobObjectList()->end(); itr2++){
+		VECTOR2D objpos(itr2->second->getCurrentPacket().px, itr2->second->getCurrentPacket().py);
+		VECTOR2D pos = getTileCoordinates(objpos);
+		::wTileMap::addRenderNetMobObjectToTile(pos.x, pos.y, itr2->second);
 	}
 
 	// player는 고정되어 있는 메모리이므로
@@ -359,6 +369,9 @@ void wTileMap::renderMap(){
 				(pt.x, pt.y);
 
 			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderNetObject
+				(pt.x, pt.y);
+
+			m_vMapObjectHandler[i + j*static_cast<int>(_vertical)]->renderNetMobObject
 				(pt.x, pt.y);
 
 			if (test.x == i && test.y == j) {
@@ -511,8 +524,16 @@ void wTileMap::addRenderMapObjectToTile(float x, float y, IMapObject* in){
 void wTileMap::addRenderNetObjectToTile(float x, float y, mNetworkObject* in){
 	int nx = static_cast<int>(x);
 	int ny = static_cast<int>(y);
-	if (nx >= 0 && ny >= 0){
+	if (nx >= 0 && ny >= 0 && nx <= _vertical && ny <= _horizontal){
 		m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addNetObject(in);
+	}
+}
+
+void wTileMap::addRenderNetMobObjectToTile(float x, float y, mNetworkMob* in) {
+	int nx = static_cast<int>(x);
+	int ny = static_cast<int>(y);
+	if (nx >= 0 && ny >= 0 && nx < _vertical && ny < _horizontal){
+		m_vMapObjectHandler[(static_cast<int>(_vertical)*ny) + nx]->addNetMobObject(in);
 	}
 }
 

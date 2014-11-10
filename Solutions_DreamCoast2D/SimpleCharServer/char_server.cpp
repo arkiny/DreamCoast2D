@@ -131,7 +131,10 @@ int CCharServer::SendMessagePort(movePacket sMessage)
 		}*/
 	}
 
+	int msgtype;
 	int id;
+	int mob_uniq_id;
+	int mob_type;
 	int state;
 	int direction;
 	int seedir;
@@ -139,7 +142,10 @@ int CCharServer::SendMessagePort(movePacket sMessage)
 	float py;
 	float speed;
 
-	cout << "id: "<<sMessage.id 
+	cout << "MSGTYPE: " << sMessage.msgtype 
+		<< ", sender id: "<<sMessage.id
+		<< ", mobid: " << sMessage.mob_uniq_id
+		<< ", mobtype: " << sMessage.mob_type << endl
 		<< ", state: " << sMessage.state 
 		<< ", dir: " << sMessage.direction
 		<< ", seedir: " << sMessage.seedir
@@ -170,6 +176,13 @@ int CCharServer::RecClient(SOCKET sRecSocket)
 	//cout <<inet_ntoa(from.sin_addr) <<":"<<temp<<"\r\n";
 	iStat = recv(sRecSocket, temp, sizeof(movePacket), 0);
 	memcpy(&buf, &temp, sizeof(movePacket));
+
+	// 새로운 몹 추가시 id 지정
+	//if (buf.msgtype == MOB_ID_ENTRY){
+	//	buf.mob_uniq_id = m_mobid;
+	//	m_mobid++;
+	//}
+	//
 
 	if (iStat == -1)
 	{

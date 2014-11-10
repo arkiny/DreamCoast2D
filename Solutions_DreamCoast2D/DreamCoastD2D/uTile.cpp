@@ -6,6 +6,7 @@
 #include "cD2DRenderer.h"
 #include "IMapObject.h"
 #include "mNetworkObject.h"
+#include "mNetworkMob.h"
 #include "cResourceManager.h"
 
 uTile::uTile()
@@ -236,5 +237,18 @@ void uTile::addNetObject(mNetworkObject* in){
 void uTile::onHit(float dmg){
 	for (ICharacter* obj : m_vObjects){
 		obj->getHit(dmg);
+	}
+}
+
+void uTile::addNetMobObject(mNetworkMob* in){
+	m_qNetMobObject.push_back(in);
+}
+
+void uTile::renderNetMobObject(float x, float y){
+	mNetworkMob* ptr;
+	while (!m_qNetMobObject.empty()){
+		ptr = m_qNetMobObject.back();
+		ptr->render(m_Cam);
+		m_qNetMobObject.pop_back();
 	}
 }

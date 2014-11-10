@@ -9,10 +9,31 @@
 #include "wTileMap.h"
 #include "VECTOR2D.h"
 
+#include "movePacket.h"
+#include "char_client.h"
+#include "netWorkCharManager.h"
+
 void aiStateMoveto::enter(mMonster* pmon)
 {
 	m_sprite = pmon->getSprite();
 	pmon->onMove();
+
+	movePacket toServer;
+
+	toServer.msgtype = ::MESSAGETYPE_ID::MOB_ID_UPDATE;
+	toServer.id = ::netWorkCharManager::GetInstance().getMyId();
+	toServer.mob_uniq_id = pmon->getMobID();
+	toServer.mob_type = pmon->getMonsterType();
+	toServer.state = ONMOVE;
+	toServer.px = pmon->getDrawPos()->x;
+	toServer.py = pmon->getDrawPos()->y;
+	toServer.dx = pmon->getDest()->x;
+	toServer.dy = pmon->getDest()->y;
+	toServer.seedir = pmon->getDir();
+	toServer.speed = pmon->getMoveSpeed();
+	toServer.direction = pmon->getDir();
+
+	::CharCIPMessage::GetInstance().SendMessagePort(toServer);
 }
 
 

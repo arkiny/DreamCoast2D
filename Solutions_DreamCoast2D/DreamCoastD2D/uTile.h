@@ -13,6 +13,7 @@ class uCamera;
 class VECTOR2D;
 class uSprite;
 class mNetworkObject;
+class mNetworkMob;
 
 struct ID2D1Bitmap;
 
@@ -28,6 +29,7 @@ public:
 	void addObject(ICharacter* in);
 	void addMapObject(IMapObject* in);
 	void addNetObject(mNetworkObject* in);
+	void addNetMobObject(mNetworkMob* in);
 
 	void deleteAllObject();
 	void setType(int in){ _type = in; }
@@ -45,6 +47,8 @@ public:
 	void renderMapObject(float x, float y);
 
 	void renderNetObject(float x, float y);
+
+	void renderNetMobObject(float x, float y);
 	
 	void onHit(float dmg);
 private:
@@ -53,6 +57,7 @@ private:
 	std::vector<ICharacter*> m_vObjects;
 	std::vector<IMapObject*> m_qMapObject;
 	std::vector<mNetworkObject*> m_qNetworkObject;
+	std::vector<mNetworkMob*> m_qNetMobObject;
 
 	void hRender(VECTOR2D tilePos,
 		uSprite* m_spriteAtlas, ID2D1Bitmap* m_ipD2DBitmap);
