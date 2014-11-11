@@ -65,7 +65,7 @@ void pStateOnDead::execute(mPlayer* pplayer){
 	pplayer->setDeadFadeOutTime(pplayer->getDeadFadeOutTime() + pplayer->getDeltaTime());
 	//m_deadFadeOutTime += delta;
 	//m_alpha -= 0.025f;
-	pplayer->setAlpha(pplayer->getAlpha() - 0.025);
+	pplayer->setAlpha(pplayer->getAlpha() - 0.025f);
 	if (pplayer->getAlpha() <= 0.0f){
 		//if (m_alpha <= 0.0f){
 		// todo: 페이드아웃 종료후 게임 오버 처리

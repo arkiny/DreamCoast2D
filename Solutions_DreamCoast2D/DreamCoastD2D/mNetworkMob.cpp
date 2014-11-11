@@ -39,6 +39,9 @@ void mNetworkMob::init(){
 }
 
 void mNetworkMob::render(uCamera* cam){
+
+
+
 	VECTOR2D pos(m_CurrentPacket.px, m_CurrentPacket.py);
 	VECTOR2D cpos = cam->translasteToScreen(&pos);
 
@@ -52,10 +55,23 @@ void mNetworkMob::render(uCamera* cam){
 		::D2D1_RECT_F srcArea
 			= m_spriteAtlas->getSrcFrameFromSprite();
 
-		::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(
-			::cResourceManager::GetInstance().getMobBitMap(m_CurrentPacket.mob_type), dxArea, 1.0f,
-			D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-			srcArea);
+		if (m_CurrentPacket.seedir == LEFTDOWN || m_CurrentPacket.seedir == LEFTUP){
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(
+				::cResourceManager::GetInstance().getMobBitMap(m_CurrentPacket.mob_type), dxArea, 1.0f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+		}
+		else if (m_CurrentPacket.seedir == RIGHTDOWN || m_CurrentPacket.seedir == RIGHTUP){
+			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(
+				D2D1::Matrix3x2F::Scale(D2D1::Size(-1.0f, 1.0f), D2D1::Point2F(cpos.x, cpos.y)));
+
+			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(
+				::cResourceManager::GetInstance().getMobBitMap(m_CurrentPacket.mob_type), dxArea, 1.0f,
+				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+				srcArea);
+
+			::cD2DRenderer::GetInstance().GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+		}
 	}
 }
 
@@ -282,24 +298,28 @@ void mNetworkMob::moveToDest(float deltaTime){
 	if (m_CurrentPacket.dx < m_CurrentPacket.px && m_CurrentPacket.dy < m_CurrentPacket.py){
 		vMover = vectorMove(deltaTime, LEFTUP);
 		m_CurrentPacket.seedir = LEFTUP;
+		m_CurrentPacket.direction = LEFTUP;
 		/*toServer.direction = LEFTUP;
 		toServer.seedir = LEFTUP;*/
 	}
 	else if (m_CurrentPacket.dx > m_CurrentPacket.px && m_CurrentPacket.dy > m_CurrentPacket.py){
 		vMover = vectorMove(deltaTime, RIGHTDOWN);
 		m_CurrentPacket.seedir = RIGHTDOWN;
+		m_CurrentPacket.direction = RIGHTDOWN;
 		/*toServer.direction = RIGHTDOWN;
 		toServer.seedir = RIGHTDOWN;*/
 	}
 	else if (m_CurrentPacket.dx < m_CurrentPacket.px && m_CurrentPacket.dy >  m_CurrentPacket.py){
 		vMover = vectorMove(deltaTime, LEFTDOWN);
 		m_CurrentPacket.seedir = LEFTDOWN;
+		m_CurrentPacket.direction = LEFTDOWN;
 		/*toServer.direction = LEFTDOWN;
 		toServer.seedir = LEFTDOWN;*/
 	}
 	else if (m_CurrentPacket.dx > m_CurrentPacket.px && m_CurrentPacket.dy < m_CurrentPacket.py){
 		vMover = vectorMove(deltaTime, RIGHTUP);
 		m_CurrentPacket.seedir = RIGHTUP;
+		m_CurrentPacket.direction = RIGHTUP;
 		/*toServer.direction = RIGHTUP;
 		toServer.seedir = RIGHTUP;*/
 	}
@@ -312,7 +332,7 @@ void mNetworkMob::moveToDest(float deltaTime){
 		m_SeeDir = LEFTDOWN;
 		}*/
 		m_CurrentPacket.seedir = LEFTDOWN;
-
+		m_CurrentPacket.direction = LEFTDOWN;
 		/*	toServer.direction = LEFT;
 		toServer.seedir = LEFTDOWN;*/
 	}
@@ -325,7 +345,7 @@ void mNetworkMob::moveToDest(float deltaTime){
 		m_SeeDir = RIGHTDOWN;
 		}*/
 		m_CurrentPacket.seedir = RIGHTDOWN;
-
+		m_CurrentPacket.direction = RIGHTDOWN;
 		/*toServer.direction = RIGHT;
 		toServer.seedir = RIGHTDOWN;*/
 	}
@@ -335,10 +355,12 @@ void mNetworkMob::moveToDest(float deltaTime){
 
 		if (m_CurrentPacket.seedir == LEFTDOWN){
 			m_CurrentPacket.seedir = LEFTUP;
+			m_CurrentPacket.direction = LEFTUP;
 			//toServer.seedir = LEFTUP;
 		}
 		else if (m_CurrentPacket.seedir == RIGHTDOWN){
 			m_CurrentPacket.seedir = RIGHTUP;
+			m_CurrentPacket.direction = RIGHTUP;
 			//toServer.seedir = RIGHTUP;
 		}
 	}
@@ -348,10 +370,12 @@ void mNetworkMob::moveToDest(float deltaTime){
 
 		if (m_CurrentPacket.seedir == LEFTUP){
 			m_CurrentPacket.seedir = LEFTDOWN;
+			m_CurrentPacket.direction = LEFTDOWN;
 			//toServer.seedir = LEFTDOWN;
 		}
 		else if (m_CurrentPacket.seedir == RIGHTUP){
 			m_CurrentPacket.seedir = RIGHTDOWN;
+			m_CurrentPacket.direction = RIGHTDOWN;
 			//toServer.seedir = RIGHTDOWN;
 		}
 	}

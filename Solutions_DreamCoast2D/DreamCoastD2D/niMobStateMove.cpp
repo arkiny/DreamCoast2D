@@ -15,9 +15,9 @@ void niMobStateMove::enter(mNetworkMob* pobj){
 
 void niMobStateMove::execute(mNetworkMob* pobj){
 	// 이동방향 갱신
-	pobj->onMove();
-	//
+	
 	pobj->moveToDest(pobj->getDelta());
+	pobj->onMove();
 	m_sprite->nextFrame(pobj->getDelta());
 
 	if (pobj->getCurrentPacket().state == ONIDLE){
