@@ -130,8 +130,11 @@
     <ClInclude Include="mNetworkObject.h" />
     <ClInclude Include="netWorkCharManager.h" />
     <ClInclude Include="niMobState.h" />
+    <ClInclude Include="niMobStateDead.h" />
     <ClInclude Include="niMobStateIdle.h" />
     <ClInclude Include="niMobStateMove.h" />
+    <ClInclude Include="niMobStateOnCasting.h" />
+    <ClInclude Include="niMobStateOnHit.h" />
     <ClInclude Include="niState.h" />
     <ClInclude Include="nStateAttack.h" />
     <ClInclude Include="nStateIdle.h" />
@@ -214,8 +217,11 @@
     <ClCompile Include="mNetworkObject.cpp" />
     <ClCompile Include="netWorkCharManager.cpp" />
     <ClCompile Include="niMobState.cpp" />
+    <ClCompile Include="niMobStateDead.cpp" />
     <ClCompile Include="niMobStateIdle.cpp" />
     <ClCompile Include="niMobStateMove.cpp" />
+    <ClCompile Include="niMobStateOnCasting.cpp" />
+    <ClCompile Include="niMobStateOnHit.cpp" />
     <ClCompile Include="niState.cpp" />
     <ClCompile Include="nStateAttack.cpp" />
     <ClCompile Include="nStateIdle.cpp" />

@@ -57,7 +57,7 @@ void mNetworkMob::render(uCamera* cam){
 
 		if (m_CurrentPacket.seedir == LEFTDOWN || m_CurrentPacket.seedir == LEFTUP){
 			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(
-				::cResourceManager::GetInstance().getMobBitMap(m_CurrentPacket.mob_type), dxArea, 1.0f,
+				::cResourceManager::GetInstance().getMobBitMap(m_CurrentPacket.mob_type), dxArea, m_fAlpha,
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 				srcArea);
 		}
@@ -66,7 +66,7 @@ void mNetworkMob::render(uCamera* cam){
 				D2D1::Matrix3x2F::Scale(D2D1::Size(-1.0f, 1.0f), D2D1::Point2F(cpos.x, cpos.y)));
 
 			::cD2DRenderer::GetInstance().GetRenderTarget()->DrawBitmap(
-				::cResourceManager::GetInstance().getMobBitMap(m_CurrentPacket.mob_type), dxArea, 1.0f,
+				::cResourceManager::GetInstance().getMobBitMap(m_CurrentPacket.mob_type), dxArea, m_fAlpha,
 				D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
 				srcArea);
 

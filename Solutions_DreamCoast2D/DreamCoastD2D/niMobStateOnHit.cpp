@@ -1,28 +1,31 @@
 #include "stdafx.h"
-#include "niMobStateIdle.h"
-#include "mNetworkMob.h"
-
-#include "uSprite.h"
-
-#include "niMobStateMove.h"
 #include "niMobStateOnHit.h"
+
+#include "mNetworkMob.h"
+#include "VECTOR2D.h"
+#include "uSprite.h"
+#include "niMobStateIdle.h"
+#include "niMobStateMove.h"
 #include "niMobStateOnCasting.h"
 #include "niMobStateDead.h"
 
-void niMobStateIdle::enter(mNetworkMob* pobj){
+
+
+void niMobStateOnHit::enter(mNetworkMob* pobj){
 	m_sprite = pobj->getSprite();
 	m_sprite->setCurrentFrame(0);
-	pobj->onIdle();
+	pobj->onHit();
 }
 
-void niMobStateIdle::execute(mNetworkMob* pobj){
-	if (pobj->getCurrentPacket().state == ONMOVE){
-		pobj->changeState(new niMobStateMove);
+void niMobStateOnHit::execute(mNetworkMob* pobj){
+	// 이동방향 갱신
+	if (pobj->getCurrentPacket().state == ONIDLE){
+		pobj->changeState(new niMobStateIdle);
 		return;
 	}
 
-	if (pobj->getCurrentPacket().state == ONHIT){
-		pobj->changeState(new niMobStateOnHit);
+	if (pobj->getCurrentPacket().state == ONMOVE){
+		pobj->changeState(new niMobStateMove);
 		return;
 	}
 
@@ -36,10 +39,9 @@ void niMobStateIdle::execute(mNetworkMob* pobj){
 		return;
 	}
 
-
 	m_sprite->nextFrame(pobj->getDelta());
 }
 
-void niMobStateIdle::exit(mNetworkMob* pobj){
+void niMobStateOnHit::exit(mNetworkMob* pobj){
 
 }

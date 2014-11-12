@@ -352,6 +352,15 @@
     <ClInclude Include="nStateAttack.h">
       <Filter>Model\Character\NetWorkObject State</Filter>
     </ClInclude>
+    <ClInclude Include="niMobStateDead.h">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClInclude>
+    <ClInclude Include="niMobStateOnHit.h">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClInclude>
+    <ClInclude Include="niMobStateOnCasting.h">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cGameApplication.cpp">
@@ -584,6 +593,15 @@
     </ClCompile>
     <ClCompile Include="nStateAttack.cpp">
       <Filter>Model\Character\NetWorkObject State</Filter>
+    </ClCompile>
+    <ClCompile Include="niMobStateDead.cpp">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClCompile>
+    <ClCompile Include="niMobStateOnHit.cpp">
+      <Filter>Model\Character\NetWorkMob State</Filter>
+    </ClCompile>
+    <ClCompile Include="niMobStateOnCasting.cpp">
+      <Filter>Model\Character\NetWorkMob State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

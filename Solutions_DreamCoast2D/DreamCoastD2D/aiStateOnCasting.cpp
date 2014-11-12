@@ -5,6 +5,8 @@
 #include "uSprite.h"
 #include "cSoundManager.h"
 
+
+
 void aiStateOnCasting::enter(mMonster* pmon){
 	m_sprite = pmon->getSprite();
 	m_sprite->setCurrentFrame(0);

@@ -29,6 +29,8 @@ public:
 	void setPacketPosition(float x, float y);
 	uSprite* getSprite(){ return m_spriteAtlas; }
 
+	float getAlpha(){ return m_fAlpha; }
+	void setAlpha(float in) { m_fAlpha = in; }
 
 	// Sprite initializing
 	void onIdle();
@@ -41,6 +43,7 @@ public:
 private:
 	movePacket m_CurrentPacket;
 	float m_fDelta = 0.0f;
+	float m_fAlpha = 1.0f;
 
 	uSprite* m_spriteAtlas;			// 스프라이트 정보
 	niMobState* m_CurrentState;		// 현재 상태 머신
